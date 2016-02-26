@@ -16,8 +16,9 @@
 	<jsp.version>2.2</jsp.version>
 	<jstl.version>1.2</jstl.version>
 	<servlet.version>2.5</servlet.version>
-	
+
 	<jersey.version>1.18</jersey.version>
+
   </properties>
   
   <dependencies>
