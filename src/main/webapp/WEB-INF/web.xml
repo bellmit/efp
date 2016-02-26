@@ -48,11 +48,7 @@
 		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>com.baiwang.qz.resource</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>com.bwplat.eqz.pdfadapter.sign.service</param-value>
+			<param-value>com.baiwang.einvoice.qz.resource</param-value>
 		</init-param>
 		<init-param>
 	        <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
