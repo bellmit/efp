@@ -1,8 +1,10 @@
 package com.baiwang.einvoice.qz.mq;
 
 import javax.annotation.Resource;
+import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
@@ -21,7 +23,9 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 	
 	private Log logger = LogFactory.getLog(EInvoceKjfpListener.class);
 
-
+	@Resource
+	private Destination einvoiceKjfpfhMQ;
+	
 	@Resource
 	private SkService skService;
 
@@ -35,8 +39,13 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 		
 		String returnSK = skService.reqestSK(xml);
 		String ubl = afterRequestSK(xml, returnSK);
+		logger.info("//////sk返回：////"+ubl);
 		if(ubl != null && (ubl.equals("5000") || ubl.equals("5004"))){//税控失败
 			//TODO
+			
+			MessageProducer producer = session.createProducer(einvoiceKjfpfhMQ);  
+	        Message textMessage = session.createTextMessage(returnSK);  
+	        producer.send(textMessage); 
 			
 		}else{
 			while(!tsService.reqestTsPlat(ubl).equals("0000")){

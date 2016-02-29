@@ -31,12 +31,13 @@
 	<!-- Spring JMS Template -->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
+        
+        <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false--> 
         <property name="explicitQosEnabled" value="true" /> 
 
-        <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false--> 
+        <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久-->  
         <property name="deliveryMode" value="1" /> 
 
-        <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久-->  
         <property name="pubSubDomain" value="false" />  
 
 	</bean>
@@ -57,12 +58,28 @@
 	
 	<bean id="QueueReceiverContainer"  
         class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <!-- <property name="concurrentConsumers" value="1" /> -->
+        <property name="concurrentConsumers" value="5" />
         <property name="connectionFactory" ref="connectionFactory" />  
         <!-- 监听的队列 -->  
         <property name="destinationName" value="baiwang.einvoice.kjfp" />  
         <property name="messageListener" ref="EInvoceKjfpListener" />  
-        <!-- <property name="pubSubNoLocal" value="false"/> -->     
+        <property name="pubSubNoLocal" value="false"/>     
+    </bean>
+    
+	<bean id="EInvoceKjfpfhListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpfhListener"></bean>
+	
+    <bean id="einvoiceKjfpfhMQ" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="baiwang.einvoice.kjfpfh" />
+	</bean>
+    
+    <bean id="controllerQueueReceiverContainer"  
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="concurrentConsumers" value="1" />
+        <property name="connectionFactory" ref="connectionFactory" />  
+        <!-- 监听的队列 -->  
+        <property name="destinationName" value="baiwang.einvoice.kjfpfh" /><!-- 开具发票返回 -->
+        <property name="messageListener" ref="EInvoceKjfpfhListener" />  
+        <property name="pubSubNoLocal" value="false"/>     
     </bean>					
 						
     
