@@ -53,13 +53,13 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 	
 	public String afterRequestSK(String xml, String returnSK){
 		
-		logger.info("-----￥----税控接口返回："+returnSK);
+		logger.info("/////////-----￥----税控接口返回：////////"+returnSK);
 
-		logger.info("-----￥----税控服务器返回的returncode"+InvoiceUtil.getIntervalValue(returnSK,"<RETURNCODE>","</RETURNCODE>"));
+		logger.info("/////////-----￥----税控服务器返回的returncode:///////////"+InvoiceUtil.getIntervalValue(returnSK,"<RETURNCODE>","</RETURNCODE>"));
 		if("0000".equals(InvoiceUtil.getIntervalValue(returnSK,"<RETURNCODE>","</RETURNCODE>"))){
 			
 			if("此发票已经开具过".equals( InvoiceUtil.getIntervalValue(returnSK, "<RETURNMSG>", "</RETURNMSG>"))){
-				logger.info("-----￥----发票请求流水号：" + InvoiceUtil.getIntervalValue(returnSK, "<FPQQLSH>", "</FPQQLSH>") + ",此发票已经开具过。");
+				logger.info("///////-----￥----发票请求流水号：////////" + InvoiceUtil.getIntervalValue(returnSK, "<FPQQLSH>", "</FPQQLSH>") + ",此发票已经开具过。");
 				return "5000";
 			}
 			
@@ -84,7 +84,7 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 			String ubl = com.baiwang.einvoice.util.XmlToUbl.xmlToUbl(xml);
 			long l2 = System.currentTimeMillis();
 			long l3 = l2 - l1;
-			logger.info("---------//////xml==>ubl---转换时间：/////////" + l3 + "//////------://////"+ubl);
+			logger.info("//////---------//////xml==>ubl---转换时间：/////////" + l3 + "//////------://////"+ubl);
 			
 			return ubl;
 		}else{
