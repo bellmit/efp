@@ -39,23 +39,6 @@ public class InvoiceResource {
 		
 		return "success";
 	}
-
-	public EInSenders getSender() {
-		return sender;
-	}
-
-	public void setSender(EInSenders sender) {
-		this.sender = sender;
-	}
-
-	public ActiveMQQueue getEinvoiceMQ() {
-		return einvoiceMQ;
-	}
-
-	@Autowired
-	public void setEinvoiceMQ(ActiveMQQueue einvoiceMQ) {
-		this.einvoiceMQ = einvoiceMQ;
-	}
 	
 	
 	
