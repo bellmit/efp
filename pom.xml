@@ -16,6 +16,7 @@
 	<jsp.version>2.2</jsp.version>
 	<jstl.version>1.2</jstl.version>
 	<servlet.version>2.5</servlet.version>
+	<mybatis.version>3.2.6</mybatis.version>
 
 	<!-- <jersey.version>1.18</jersey.version> -->
 	<jersey.version>1.8</jersey.version>
@@ -183,6 +184,52 @@
             <version>5.7.0</version>
         </dependency>
 		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.15</version>
+		</dependency>
+		<!-- mybatis核心包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+		<!-- mybatis/spring包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		
+		<!-- 导入java ee jar 包 
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+		</dependency>-->
+		
+		<!-- 导入Mysql数据库链接jar包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.30</version>
+		</dependency>
+		<dependency>
+	        <groupId>com.github.miemiedev</groupId>
+	        <artifactId>mybatis-paginator</artifactId>
+	        <version>1.2.17</version>
+	        <exclusions>
+	        	<exclusion>
+	        		<groupId>org.mybatis</groupId>
+					<artifactId>mybatis</artifactId>
+	        	</exclusion>
+	        	<!-- <exclusion>
+	        		<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+	        	</exclusion> -->
+	        </exclusions>
+    	</dependency>
   </dependencies>
   <build>
     <finalName>einvoice</finalName>
