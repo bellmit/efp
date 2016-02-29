@@ -1,7 +1,6 @@
 package com.baiwang.einvoice.service.skService;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -23,7 +22,7 @@ public class TsPlatService {
 	public String reqestTsPlat(String ubl){
 		logger.info("////////////////请求ts发票平台接收ubl//////////////" + ubl);
 		BufferedReader in = null;
-		String success = "0000";
+		String success = "";
 		try{
 			URL url = new URL(tsUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -42,22 +41,15 @@ public class TsPlatService {
 			out.flush();
 			out.close();
 			logger.error("////////请求ts发票平台//////responseCode///////" + conn.getResponseCode());
-			if (conn.getResponseCode() == 200){
-				String line ="";
-				in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-				while ((line = in.readLine()) != null) {
-					success += line;
-				}
-//				return success;
-			}else if(conn.getResponseCode() > 200 && conn.getResponseCode() < 300){
-//				return InvoiceUtil.backMsg("0000", "开具成功。", xml);
+			if(conn.getResponseCode() >= 200 && conn.getResponseCode() < 300){
+				success = "0000";
 			}else{
-//				return InvoiceUtil.backMsg(Integer.toString(conn.getResponseCode()), "开具失败。", xml);
 				success = "4000";
-//				return "4000";
 			}
 		}catch(Exception e){
+			success = "4000";
 			logger.error("////////////////请求ts发票平台///////请求异常//////////////////");
+			e.printStackTrace();
 		}finally{
 			try {
                 if (in != null) {
