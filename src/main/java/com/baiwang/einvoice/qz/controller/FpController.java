@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("einvoice")
 @Controller
-public class KjfpController {
+public class FpController {
 
 	@RequestMapping("kjfp")
 	@ResponseBody
