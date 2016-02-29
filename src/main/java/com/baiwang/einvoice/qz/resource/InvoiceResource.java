@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.baiwang.einvoice.qz.mq.EInSenders;
+import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 
 @Controller
 @Path("einvoice")
@@ -19,7 +19,7 @@ import com.baiwang.einvoice.qz.mq.EInSenders;
 public class InvoiceResource {
 	
 	@Resource
-	private EInSenders sender;
+	private EInvoiceSenders sender;
 	
 	@Autowired(required=true)
 	@Qualifier("einvoiceMQ")

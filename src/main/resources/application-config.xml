@@ -50,18 +50,18 @@
 	<!-- mq队列模式 -->
 	<bean id="einvoiceMQ" class="org.apache.activemq.command.ActiveMQQueue">
 		<!-- 设置消息队列的名字 -->
-		<constructor-arg index="0" value="baiwang.einvoice" />
+		<constructor-arg index="0" value="baiwang.einvoice.kjfp" />
 	</bean>
 						
-	<bean id="EInvoceReceivers" class="com.baiwang.einvoice.qz.mq.EInvoceReceivers"></bean>
+	<bean id="EInvoceKjfpListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpListener"></bean>
 	
 	<bean id="QueueReceiverContainer"  
         class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <!-- <property name="concurrentConsumers" value="1" /> -->
         <property name="connectionFactory" ref="connectionFactory" />  
         <!-- 监听的队列 -->  
-        <property name="destinationName" value="baiwang.einvoice" />  
-        <property name="messageListener" ref="EInvoceReceivers" />  
+        <property name="destinationName" value="baiwang.einvoice.kjfp" />  
+        <property name="messageListener" ref="EInvoceKjfpListener" />  
         <!-- <property name="pubSubNoLocal" value="false"/> -->     
     </bean>					
 						
