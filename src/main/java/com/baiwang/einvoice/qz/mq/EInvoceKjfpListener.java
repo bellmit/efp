@@ -7,7 +7,8 @@ import javax.jms.TextMessage;
 
 import org.springframework.jms.listener.SessionAwareMessageListener;
 
-public class EInvoceReceivers implements SessionAwareMessageListener{
+@SuppressWarnings("rawtypes")
+public class EInvoceKjfpListener implements SessionAwareMessageListener{
 
 	
 	public void onMessage(Message message, Session session) throws JMSException {

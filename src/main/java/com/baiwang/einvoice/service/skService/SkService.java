@@ -30,6 +30,9 @@ public class SkService {
             conn.setDoInput(true);
             conn.setRequestMethod("POST");
             
+            conn.setConnectTimeout(300000);  
+			conn.setReadTimeout(30000); 
+            
             OutputStream out = conn.getOutputStream();
             
             byte[] content = IOUtils.toByteArray(new ByteArrayInputStream(xml.getBytes("gbk")));
