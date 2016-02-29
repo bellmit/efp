@@ -48,40 +48,40 @@ public class ObjectFactory {
      * Create an instance of {@link Business.REQUESTCOMMONFPKJ }
      * 
      */
-    public Business.REQUESTCOMMONFPKJ createBusinessREQUESTCOMMONFPKJ() {
-        return new Business.REQUESTCOMMONFPKJ();
+    public RequestCommonFpkj createBusinessREQUESTCOMMONFPKJ() {
+        return new RequestCommonFpkj();
     }
 
     /**
      * Create an instance of {@link Business.REQUESTCOMMONFPKJ.COMMONFPKJXMXXS }
      * 
      */
-    public Business.REQUESTCOMMONFPKJ.COMMONFPKJXMXXS createBusinessREQUESTCOMMONFPKJCOMMONFPKJXMXXS() {
-        return new Business.REQUESTCOMMONFPKJ.COMMONFPKJXMXXS();
+    public CommonFpkjXmxxs createBusinessREQUESTCOMMONFPKJCOMMONFPKJXMXXS() {
+        return new CommonFpkjXmxxs();
     }
 
     /**
      * Create an instance of {@link Business.REQUESTCOMMONFPKJ.COMMONFPKJFPT }
      * 
      */
-    public Business.REQUESTCOMMONFPKJ.COMMONFPKJFPT createBusinessREQUESTCOMMONFPKJCOMMONFPKJFPT() {
-        return new Business.REQUESTCOMMONFPKJ.COMMONFPKJFPT();
+    public CommonFpkjFpt createBusinessREQUESTCOMMONFPKJCOMMONFPKJFPT() {
+        return new CommonFpkjFpt();
     }
 
     /**
      * Create an instance of {@link Business.REQUESTCOMMONFPKJ.COMMONFPKJXMXXS.COMMONFPKJXMXX }
      * 
      */
-    public Business.REQUESTCOMMONFPKJ.COMMONFPKJXMXXS.COMMONFPKJXMXX createBusinessREQUESTCOMMONFPKJCOMMONFPKJXMXXSCOMMONFPKJXMXX() {
-        return new Business.REQUESTCOMMONFPKJ.COMMONFPKJXMXXS.COMMONFPKJXMXX();
+    public CommonFpkjXmxx createBusinessREQUESTCOMMONFPKJCOMMONFPKJXMXXSCOMMONFPKJXMXX() {
+        return new CommonFpkjXmxx();
     }
 
     /**
      * Create an instance of {@link Business.REQUESTCOMMONFPKJ.COMMONFPKJFPT.Expand }
      * 
      */
-    public Business.REQUESTCOMMONFPKJ.COMMONFPKJFPT.Expand createBusinessREQUESTCOMMONFPKJCOMMONFPKJFPTExpand() {
-        return new Business.REQUESTCOMMONFPKJ.COMMONFPKJFPT.Expand();
+    public Expand createBusinessREQUESTCOMMONFPKJCOMMONFPKJFPTExpand() {
+        return new Expand();
     }
 
 }
