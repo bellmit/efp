@@ -8,6 +8,7 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jms.listener.SessionAwareMessageListener;
@@ -37,6 +38,9 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 		TextMessage msg = (TextMessage)message;  
 		String xml = msg.getText();
 		
+		System.out.println("第一次 接收到信息 id：JMSMessageID/" + msg.getJMSMessageID());
+		System.out.println("第一次 接收到信息 getJMSCorrelationID/" + msg.getJMSCorrelationID());
+		
 		String returnSK = skService.reqestSK(xml);
 		String ubl = afterRequestSK(xml, returnSK);
 		logger.info("//////sk返回：////"+ubl);
@@ -45,8 +49,12 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 			
 			MessageProducer producer = session.createProducer(einvoiceKjfpfhMQ);
 	        Message textMessage = session.createTextMessage(returnSK);
+	        textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
+	        
 	        logger.info("///Listener sender ...///" +  returnSK);
-	        producer.send(textMessage); 
+	        System.out.println("第2次发送到的mes id：getJMSCorrelationID/" + textMessage.getJMSCorrelationID());
+	        System.out.println("222222222222222////"+((ActiveMQQueue) message.getJMSReplyTo()).getQueueName());
+	        producer.send(message.getJMSReplyTo(),textMessage); 
 			
 		}else{
 			while(!tsService.reqestTsPlat(ubl).equals("0000")){

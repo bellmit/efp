@@ -26,7 +26,11 @@
        <property name="connectionFactory" ref="connectionFactory"></property>
 	</bean>
 
-      
+    <!-- mq队列模式 -->
+	<bean id="einvoiceMQ" class="org.apache.activemq.command.ActiveMQQueue">
+		<!-- 设置消息队列的名字 -->
+		<constructor-arg index="0" value="baiwang.einvoice.kjfp" />
+	</bean>
 
 	<!-- Spring JMS Template -->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
@@ -35,10 +39,12 @@
         <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false--> 
         <property name="explicitQosEnabled" value="true" /> 
 
-        <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久-->  
-        <property name="deliveryMode" value="1" /> 
+        <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久 默认-->  
+        <property name="deliveryMode" value="2" /> 
 
         <property name="pubSubDomain" value="false" />  
+        
+        <property name="defaultDestination" ref="einvoiceKjfpfhMQ" />
 
 	</bean>
 
@@ -48,11 +54,7 @@
 		<constructor-arg index="0" value="baiwang.subject" />
 	</bean>
 	
-	<!-- mq队列模式 -->
-	<bean id="einvoiceMQ" class="org.apache.activemq.command.ActiveMQQueue">
-		<!-- 设置消息队列的名字 -->
-		<constructor-arg index="0" value="baiwang.einvoice.kjfp" />
-	</bean>
+	
 						
 	<bean id="EInvoceKjfpListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpListener"></bean>
 	

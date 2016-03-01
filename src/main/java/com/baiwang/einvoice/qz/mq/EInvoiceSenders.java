@@ -3,8 +3,9 @@ package com.baiwang.einvoice.qz.mq;
 import javax.annotation.Resource;
 import javax.jms.Destination;  
 import javax.jms.JMSException;  
-import javax.jms.Message;  
+import javax.jms.Message;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,39 @@ public class EInvoiceSenders {
 	
 	@Autowired
 	private ActiveMQQueue einvoiceMQ;
+	
+	@Resource
+	private Destination einvoiceKjfpfhMQ;
 
 	@Autowired
     private JmsTemplate jmsTemplate;
 	
-	public void sendMessageOfKjfp(final String message) {
+	public void sendMessage(final String message) {
 		
-		sendMessage(einvoiceMQ, message);
+		sendMessage(einvoiceMQ, message, null);
 		
 	}
 	
 	public void sendMessage(Destination destination, final String message) {
+		
+		sendMessage(einvoiceMQ, message, null);
+		
+	}
+	
+	public void sendMessage(Destination destination, final String message, final String correlationId) {
         
         jmsTemplate.send(destination, new MessageCreator() {
+        	
             public Message createMessage(Session session) throws JMSException {
-                return session.createTextMessage(message);
+            	TextMessage textMessage = session.createTextMessage(message);
+            	
+            	textMessage.setJMSReplyTo(einvoiceKjfpfhMQ);
+            	textMessage.setJMSCorrelationID(correlationId);
+            	
+                return textMessage;
             }
         });
+        System.out.println("send -----------------------------------");
     }
 	
 }
