@@ -43,8 +43,9 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 		if(ubl != null && (ubl.equals("5000") || ubl.equals("5004"))){//税控失败
 			//TODO
 			
-			MessageProducer producer = session.createProducer(einvoiceKjfpfhMQ);  
-	        Message textMessage = session.createTextMessage(returnSK);  
+			MessageProducer producer = session.createProducer(einvoiceKjfpfhMQ);
+	        Message textMessage = session.createTextMessage(returnSK);
+	        logger.info("///Listener sender ...///" +  returnSK);
 	        producer.send(textMessage); 
 			
 		}else{
