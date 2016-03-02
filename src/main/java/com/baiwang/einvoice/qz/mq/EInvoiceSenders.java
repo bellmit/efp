@@ -37,6 +37,12 @@ public class EInvoiceSenders {
 		
 	}
 	
+	public void sendMessage(String message, String correlationId) {
+		
+		sendMessage(einvoiceMQ, message, correlationId);
+		
+	}
+	
 	public void sendMessage(Destination destination, final String message, final String correlationId) {
         
         jmsTemplate.send(destination, new MessageCreator() {
