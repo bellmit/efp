@@ -13,9 +13,10 @@
     <result column="xmje" property="xmje" jdbcType="REAL" />
     <result column="sl" property="sl" jdbcType="REAL" />
     <result column="se" property="se" jdbcType="REAL" />
+    <result column="hsbz" property="hsbz" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, fpqqlsh, fphxz, xmmc, ggxh, dw, xmsl, xmdj, xmje, sl, se
+    id, fpqqlsh, fphxz, xmmc, ggxh, dw, xmsl, xmdj, xmje, sl, se, hsbz
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -30,23 +31,24 @@
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
     insert into fpmx (id, fpqqlsh, fphxz, 
       xmmc, ggxh, dw, xmsl, 
-      xmdj, xmje, sl, se
-      )
+      xmdj, xmje, sl, se, 
+      hsbz)
     values (#{id,jdbcType=BIGINT}, #{fpqqlsh,jdbcType=VARCHAR}, #{fphxz,jdbcType=BIT}, 
       #{xmmc,jdbcType=VARCHAR}, #{ggxh,jdbcType=VARCHAR}, #{dw,jdbcType=VARCHAR}, #{xmsl,jdbcType=REAL}, 
-      #{xmdj,jdbcType=REAL}, #{xmje,jdbcType=REAL}, #{sl,jdbcType=REAL}, #{se,jdbcType=REAL}
-      )
+      #{xmdj,jdbcType=REAL}, #{xmje,jdbcType=REAL}, #{sl,jdbcType=REAL}, #{se,jdbcType=REAL}, 
+      #{hsbz,jdbcType=BIT})
   </insert>
   <insert id="insertFromList" parameterType="java.util.List">
   	insert into fpmx (fpqqlsh, fphxz, 
       xmmc, ggxh, dw, xmsl, 
-      xmdj, xmje, sl, se
+      xmdj, xmje, sl, se,hsbz
       )values
     <foreach collection="list" item="item" index="index"
    separator=",">
     ( #{item.fpqqlsh,jdbcType=VARCHAR}, #{item.fphxz,jdbcType=BIT}, 
       #{item.xmmc,jdbcType=VARCHAR}, #{item.ggxh,jdbcType=VARCHAR}, #{item.dw,jdbcType=VARCHAR}, #{item.xmsl,jdbcType=REAL}, 
       #{item.xmdj,jdbcType=REAL}, #{item.xmje,jdbcType=REAL}, #{item.sl,jdbcType=REAL}, #{item.se,jdbcType=REAL}
+      ,#{item.hsbz,jdbcType=BIT}
       )
   </foreach>
   </insert>
@@ -86,13 +88,16 @@
       <if test="se != null" >
         se,
       </if>
+      <if test="hsbz != null" >
+        hsbz,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
       <if test="fpqqlsh != null" >
-        #{fpqqlsh,jdbcType=INTEGER},
+        #{fpqqlsh,jdbcType=VARCHAR},
       </if>
       <if test="fphxz != null" >
         #{fphxz,jdbcType=BIT},
@@ -121,13 +126,16 @@
       <if test="se != null" >
         #{se,jdbcType=REAL},
       </if>
+      <if test="hsbz != null" >
+        #{hsbz,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
     update fpmx
     <set >
       <if test="fpqqlsh != null" >
-        fpqqlsh = #{fpqqlsh,jdbcType=INTEGER},
+        fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR},
       </if>
       <if test="fphxz != null" >
         fphxz = #{fphxz,jdbcType=BIT},
@@ -156,12 +164,15 @@
       <if test="se != null" >
         se = #{se,jdbcType=REAL},
       </if>
+      <if test="hsbz != null" >
+        hsbz = #{hsbz,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
     update fpmx
-    set fpqqlsh = #{fpqqlsh,jdbcType=INTEGER},
+    set fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR},
       fphxz = #{fphxz,jdbcType=BIT},
       xmmc = #{xmmc,jdbcType=VARCHAR},
       ggxh = #{ggxh,jdbcType=VARCHAR},
@@ -170,7 +181,8 @@
       xmdj = #{xmdj,jdbcType=REAL},
       xmje = #{xmje,jdbcType=REAL},
       sl = #{sl,jdbcType=REAL},
-      se = #{se,jdbcType=REAL}
+      se = #{se,jdbcType=REAL},
+      hsbz = #{hsbz,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

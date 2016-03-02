@@ -1,6 +1,8 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -19,13 +21,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Business;
+import com.baiwang.einvoice.qz.beans.CustomOrder;
 import com.baiwang.einvoice.qz.beans.Fpmx;
+import com.baiwang.einvoice.qz.beans.Kpxx;
+import com.baiwang.einvoice.qz.dao.CustomOrderMapper;
 import com.baiwang.einvoice.qz.dao.FpmxMapper;
 import com.baiwang.einvoice.qz.dao.KpxxMapper;
 import com.baiwang.einvoice.qz.mq.EInvoceKjfpfhListener;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
+import com.baiwang.einvoice.qz.utils.ValidateXML;
 import com.baiwang.einvoice.qz.utils.XmlCheck;
+import com.baiwang.einvoice.qz.utils.XmlUtil;
 
 @RequestMapping("einvoice")
 @Controller
@@ -36,6 +43,8 @@ public class FpController {
 	private KpxxMapper dao;
 	@Resource
 	private FpmxMapper fpmxDao;
+	@Resource
+	private CustomOrderMapper orderDao;
 	@Resource
 	private EInvoiceSenders sender;
 	@RequestMapping("kjfp")
@@ -51,20 +60,27 @@ public class FpController {
 	@ResponseBody
 	public String SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
 		
-		String chk = XmlCheck.checkXml(xml);
-		if( !"0000".equals(chk) ){
-			return chk;
+		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("utf-8")) ){
+			return null;
 		}
+		
+		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
 		
 		UUID uuid = UUID.randomUUID();
 		String correlationId = uuid.toString();
 		sender.sendMessage(xml, correlationId);
 
-		Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
-		String fpqqlsh = business.getREQUESTCOMMONFPKJ().getKpxx().getFpqqlsh();
+		String fpqqlsh = XmlUtil.random();
+		CustomOrder customOrder = business.getCustomOrder();
+		orderDao.insert(customOrder);
+		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
+		kpxx.setFpqqlsh(fpqqlsh);
+		kpxx.setDdhm(customOrder.getDdhm());
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		kpxx.setKprq(sf.format(new Date()));
 		try{
-			dao.insert(business.getREQUESTCOMMONFPKJ().getKpxx());
-			List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCOMMONFPKJXMXXS().getFpmx();
+			dao.insert(kpxx);
+			List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
 			if(list.size()>0){
 				for(Fpmx fpmx: list){
 					fpmx.setFpqqlsh(fpqqlsh);

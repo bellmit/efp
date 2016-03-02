@@ -10,12 +10,12 @@ public interface FpmxMapper {
     int insert(Fpmx record);
 
     int insertSelective(Fpmx record);
-    
-    int insertFromList(List<Fpmx> list);
 
     Fpmx selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(Fpmx record);
 
     int updateByPrimaryKey(Fpmx record);
+    
+    int insertFromList(List<Fpmx> list);
 }

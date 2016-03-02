@@ -3,13 +3,13 @@ package com.baiwang.einvoice.qz.dao;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 
 public interface KpxxMapper {
-    int deleteByPrimaryKey(Integer fpqqlsh);
+    int deleteByPrimaryKey(String fpqqlsh);
 
     int insert(Kpxx record);
 
     int insertSelective(Kpxx record);
 
-    Kpxx selectByPrimaryKey(Integer fpqqlsh);
+    Kpxx selectByPrimaryKey(String fpqqlsh);
 
     int updateByPrimaryKeySelective(Kpxx record);
 
