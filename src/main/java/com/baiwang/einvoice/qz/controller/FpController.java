@@ -10,6 +10,8 @@ import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +31,7 @@ import com.baiwang.einvoice.qz.utils.XmlCheck;
 @Controller
 public class FpController {
 	
+	private static final Log logger = LogFactory.getLog(FpController.class);
 	@Resource
 	private KpxxMapper dao;
 	@Resource
@@ -59,16 +62,21 @@ public class FpController {
 
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
 		String fpqqlsh = business.getREQUESTCOMMONFPKJ().getKpxx().getFpqqlsh();
-		dao.insert(business.getREQUESTCOMMONFPKJ().getKpxx());
-		
-		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCOMMONFPKJXMXXS().getFpmx();
-		if(list.size()>0){
-			for(Fpmx fpmx: list){
-				fpmx.setFpqqlsh(fpqqlsh);
+		try{
+			dao.insert(business.getREQUESTCOMMONFPKJ().getKpxx());
+			List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCOMMONFPKJXMXXS().getFpmx();
+			if(list.size()>0){
+				for(Fpmx fpmx: list){
+					fpmx.setFpqqlsh(fpqqlsh);
+				}
+				
+				fpmxDao.insertFromList(list);
 			}
-			
-			fpmxDao.insertFromList(list);
+		}catch(Exception e){
+			logger.error(".....保存数据库失败");
+			e.printStackTrace();
 		}
+		
 		
 		Map<String, String> map = EInvoceKjfpfhListener.getMap();
 		
