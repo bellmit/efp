@@ -19,27 +19,14 @@ public class EInvoceKjfpfhListener implements SessionAwareMessageListener{
 	
 	private Log logger = LogFactory.getLog(EInvoceKjfpfhListener.class);
 
-	private String returnMsg = "";
 	private static Map<String, String> map = new HashMap<String, String>();
 	
 	public void onMessage(Message message, Session session) throws JMSException {
-		TextMessage msg = (TextMessage)message;  
-		returnMsg = msg.getText();
-		logger.info("///////////////////ts/sk////////////返回：" + returnMsg);
-		System.out.println("**************msg.getJMSCorrelationID()**************"+ msg.getJMSCorrelationID());
-		System.out.println("第2次接收到mes id：" + msg.getJMSMessageID());
+		TextMessage msg = (TextMessage)message;
 		
-		map.put(msg.getJMSCorrelationID(),returnMsg);
-		System.out.println("map map  map ----第2次接收到mes id：" + map.get(msg.getJMSCorrelationID()));
+		logger.info("************开票结果*****correlationId:" + msg.getJMSCorrelationID() + "****返回：" + msg.getText());
 		
-	}
-
-	public String getReturnMsg() {
-		return returnMsg;
-	}
-
-	public void setReturnMsg(String returnMsg) {
-		this.returnMsg = returnMsg;
+		map.put(msg.getJMSCorrelationID(),msg.getText());
 	}
 
 	public static Map<String, String> getMap() {

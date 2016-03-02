@@ -50,7 +50,7 @@ public class EInvoiceSenders {
                 return textMessage;
             }
         });
-        System.out.println("send -----------------------------------");
+        
     }
 	
 }

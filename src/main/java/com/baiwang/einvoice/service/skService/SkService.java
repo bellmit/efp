@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.baiwang.einvoice.util.ConfigUtil;
+import com.baiwang.einvoice.util.InvoiceUtil;
 
 @Service
 public class SkService {
@@ -44,6 +45,7 @@ public class SkService {
         } catch (Exception e) {
         	logger.error("///////请求税控error///////////");
             e.printStackTrace();
+            return InvoiceUtil.backMsg("4006", "请求税控系统失败", xml);
         }
 		
 		return resultXml;
