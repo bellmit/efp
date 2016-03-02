@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiwang.einvoice.qz.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="TINYINT" />
+    <result column="user_pass" property="userPass" jdbcType="VARCHAR" />
+    <result column="ap_name" property="apName" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="islock" property="islock" jdbcType="BIT" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="last_log_time" property="lastLogTime" jdbcType="TIMESTAMP" />
+    <result column="last_log_ip" property="lastLogIp" jdbcType="VARCHAR" />
+    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="reg_ip" property="regIp" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_ip" property="updateIp" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_name, user_type, user_pass, ap_name, mail, islock, telephone, last_log_time, 
+    last_log_ip, reg_time, reg_ip, update_time, update_ip, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.User" >
+    insert into user (id, user_name, user_type, 
+      user_pass, ap_name, mail, 
+      islock, telephone, last_log_time, 
+      last_log_ip, reg_time, reg_ip, 
+      update_time, update_ip, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userType,jdbcType=TINYINT}, 
+      #{userPass,jdbcType=VARCHAR}, #{apName,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
+      #{islock,jdbcType=BIT}, #{telephone,jdbcType=VARCHAR}, #{lastLogTime,jdbcType=TIMESTAMP}, 
+      #{lastLogIp,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, #{regIp,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateIp,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="userPass != null" >
+        user_pass,
+      </if>
+      <if test="apName != null" >
+        ap_name,
+      </if>
+      <if test="mail != null" >
+        mail,
+      </if>
+      <if test="islock != null" >
+        islock,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="lastLogTime != null" >
+        last_log_time,
+      </if>
+      <if test="lastLogIp != null" >
+        last_log_ip,
+      </if>
+      <if test="regTime != null" >
+        reg_time,
+      </if>
+      <if test="regIp != null" >
+        reg_ip,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateIp != null" >
+        update_ip,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=TINYINT},
+      </if>
+      <if test="userPass != null" >
+        #{userPass,jdbcType=VARCHAR},
+      </if>
+      <if test="apName != null" >
+        #{apName,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null" >
+        #{islock,jdbcType=BIT},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLogTime != null" >
+        #{lastLogTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLogIp != null" >
+        #{lastLogIp,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null" >
+        #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regIp != null" >
+        #{regIp,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateIp != null" >
+        #{updateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baiwang.einvoice.qz.beans.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=TINYINT},
+      </if>
+      <if test="userPass != null" >
+        user_pass = #{userPass,jdbcType=VARCHAR},
+      </if>
+      <if test="apName != null" >
+        ap_name = #{apName,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null" >
+        islock = #{islock,jdbcType=BIT},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLogTime != null" >
+        last_log_time = #{lastLogTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLogIp != null" >
+        last_log_ip = #{lastLogIp,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null" >
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regIp != null" >
+        reg_ip = #{regIp,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateIp != null" >
+        update_ip = #{updateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=TINYINT},
+      user_pass = #{userPass,jdbcType=VARCHAR},
+      ap_name = #{apName,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      islock = #{islock,jdbcType=BIT},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      last_log_time = #{lastLogTime,jdbcType=TIMESTAMP},
+      last_log_ip = #{lastLogIp,jdbcType=VARCHAR},
+      reg_time = #{regTime,jdbcType=TIMESTAMP},
+      reg_ip = #{regIp,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_ip = #{updateIp,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
