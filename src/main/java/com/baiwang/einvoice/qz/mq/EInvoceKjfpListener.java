@@ -8,7 +8,6 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jms.listener.SessionAwareMessageListener;
@@ -38,35 +37,32 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 		TextMessage msg = (TextMessage)message;  
 		String xml = msg.getText();
 		
-		System.out.println("第一次 接收到信息 id：JMSMessageID/" + msg.getJMSMessageID());
-		System.out.println("第一次 接收到信息 getJMSCorrelationID/" + msg.getJMSCorrelationID());
+		MessageProducer producer = session.createProducer(einvoiceKjfpfhMQ);
+		Message textMessage = null;
 		
 		String returnSK = skService.reqestSK(xml);
 		String ubl = afterRequestSK(xml, returnSK);
-		logger.info("//////sk返回：////"+ubl);
-		if(ubl != null && (ubl.equals("5000") || ubl.equals("5004"))){//税控失败
-			//TODO
-			
-			MessageProducer producer = session.createProducer(einvoiceKjfpfhMQ);
-	        Message textMessage = session.createTextMessage(returnSK);
-	        textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
-	        
-	        logger.info("///Listener sender ...///" +  returnSK);
-	        System.out.println("第2次发送到的mes id：getJMSCorrelationID/" + textMessage.getJMSCorrelationID());
-	        System.out.println("222222222222222////"+((ActiveMQQueue) message.getJMSReplyTo()).getQueueName());
-	        producer.send(message.getJMSReplyTo(),textMessage); 
-			
+		logger.info("***********转换ubl****************" + ubl);
+		logger.info("***********转换ubl****************returnCode:" + InvoiceUtil.getIntervalValue(ubl,"<RETURNCODE>","</RETURNCODE>"));
+		if(ubl == null || !InvoiceUtil.getIntervalValue(ubl,"<RETURNCODE>","</RETURNCODE>").equals("") ){//税控失败
+	        textMessage = session.createTextMessage(returnSK);
+	        logger.info("******请求sk失败**********");
 		}else{
 			while(!tsService.reqestTsPlat(ubl).equals("0000")){
 				try {
 					Thread.currentThread().sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn("***请求ts wait exception。。");
 				}
 				tsService.reqestTsPlat(ubl);
 			}
+			
+			textMessage = session.createTextMessage(InvoiceUtil.backMsg("0000", "开具成功。", xml));
 		}
+		
+		
+		textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
+		producer.send(message.getJMSReplyTo(),textMessage); 
 	}
 	
 	public String afterRequestSK(String xml, String returnSK){
@@ -78,7 +74,7 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 			
 			if("此发票已经开具过".equals( InvoiceUtil.getIntervalValue(returnSK, "<RETURNMSG>", "</RETURNMSG>"))){
 				logger.info("///////-----￥----发票请求流水号：////////" + InvoiceUtil.getIntervalValue(returnSK, "<FPQQLSH>", "</FPQQLSH>") + ",此发票已经开具过。");
-				return "5000";
+				return InvoiceUtil.backMsg("4007", "此发票已经开具过。", xml);
 			}
 			
 			int xtbs = xml.indexOf("<XTBS>");
@@ -106,7 +102,7 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 			
 			return ubl;
 		}else{
-			return "5004";
+			return returnSK;
 		}
 		
 	}

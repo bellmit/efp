@@ -1,0 +1,18 @@
+/*自定义样式*/
+.toolbar_div{
+	padding:5px;
+	border:1px solid #ddd;
+}
+
+.ftitle {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 9px 0;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.dlg_north_div{
+	height:30px;
+	border:0px;
+}
