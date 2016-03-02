@@ -12,7 +12,7 @@
 						http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- Uncomment and your base-package here:-->
-	<context:component-scan base-package="com.baiwang.banktaxcms.controller" />
+	<context:component-scan base-package="com.baiwang.einvoice" />
 
     <mvc:annotation-driven />
     
