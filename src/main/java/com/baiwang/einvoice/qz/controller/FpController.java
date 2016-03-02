@@ -49,7 +49,7 @@ public class FpController {
 		}
 		
 		sender.sendMessage(xml);
-		
+
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
 		String fpqqlsh = business.getREQUESTCOMMONFPKJ().getKpxx().getFpqqlsh();
 		dao.insert(business.getREQUESTCOMMONFPKJ().getKpxx());
