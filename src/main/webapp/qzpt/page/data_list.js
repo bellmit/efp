@@ -1,0 +1,36 @@
+var themeData = [{
+	"id":1,
+	"text":"黑色背景",
+	"attributes":{
+		"color":"black",
+		"url":"/themes/black/easyui.css"
+	}
+},{
+	"id":2,
+	"text":"默认背景",
+	"attributes":{
+		"color":"default",
+		"url":"/themes/default/easyui.css"
+	}
+},{
+	"id":3,
+	"text":"灰色背景",
+	"attributes":{
+		"color":"gray",
+		"url":"/themes/gray/easyui.css"
+	}
+},{
+	"id":4,
+	"text":"bootstrap背景",
+	"attributes":{
+		"color":"bootstrap",
+		"url":"/themes/bootstrap/easyui.css"
+	}
+},{
+	"id":5,
+	"text":"metro背景",
+	"attributes":{
+		"color":"metro",
+		"url":"/themes/metro/easyui.css"
+	}
+}];

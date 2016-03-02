@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>百望股份平台</title>
+<link rel="stylesheet" id="easyuiTheme" type="text/css" href="../../css/easyui.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/easyui_global.css"/>
+
+<link rel="stylesheet" type="text/css" href="index.css"/>
+
+<script type="text/javascript" src="../../js/jquery/jquery.js"></script>
+<script type="text/javascript" src="../../js/jquery/jquery.md5.js"></script>
+<script type="text/javascript" src="../../js/jquery/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../dwr/engine.js"></script>
+<script type="text/javascript" src="../../../dwr/util.js"></script>
+
+<!-- basic -->
+<script type="text/javascript" src="../../js/common/util.js"></script>
+
+<!-- 自定义js -->
+<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="layout.js"></script>
+<script type="text/javascript" src="relogin.js"></script>
+</head>
+<body>
+<body class="easyui-layout" onload="init();">
+
+	<div data-options="region:'north'" class="north_div" >
+		<div class="north_content">
+			<img src="../../css/images/baiwang.png" />
+			<img src="../../css/images/bw_head.png" />
+			<!-- 
+			<span class="selectTheme">
+				<input id="them_id" name="them_style" size="8" >
+			</span>
+			 -->
+		</div>
+	</div>
+	<div data-options="region:'west',split:true,title:'功能导航'" class="west-div" >
+		<div id="menu_div" class="easyui-accordion body_border" data-options="fit:true">
+				<!-- 
+				<div title="系统管理" class="west_index_div">
+					 <a href="javascript:void(0);"  src="../tenant/tenantmanage/tenant_manage.html" class="cs-navigate-tab">租户管理</a></p>
+				</div>
+				 -->
+				<div title="系统功能" class="west_index_div">
+					<ul class="easyui-tree" id="tt" data-options="url:'qz_data1.json'">
+					</ul>
+				</div>
+				<!-- 
+				<div title="Easyui API/DEMO" class="west_index_div">
+					<a href="../../../jquery_easyui_api/index-api.html" class="cs-navi-tab" target="_blank" >Easyui API</a></p>
+					<a href="../../../jquery_easyui_demo/index-demo.html"  class="cs-navi-tab" target="_blank">Easyui Demo</a></p>
+				</div>
+				 --> 
+			</div>
+	</div>
+	<div data-options="region:'south'" class="south_div" >
+		<label id="messageDiv">百望股份平台消息区</label>
+	</div>
+	
+	<div data-options="region:'center'">
+        <div id="tabs" class="easyui-tabs body_border" data-options="bodyCls:'ribi'" fit="true" >
+            <div title="Home">
+	            <div class="cs-home-remark center_div"  >
+                    <iframe  class="center_frame"  name="contentIframe" frameborder="0" src="../../canvas/index_new.html" ></iframe>
+                    <br>
+                </div>
+             </div>
+        </div>        
+	</div>
+	
+	<div id="tabs_menu" class="easyui-menu cs-tab-menu tab-menu-div" >
+		<div id="refresh">刷新</div>
+	    <div id="close">关闭</div>  
+	    <div id="other">关闭其他</div>  
+	    <div id="all">关闭所有</div>
+	  </div> 
+</body>
+</body>
+</html>

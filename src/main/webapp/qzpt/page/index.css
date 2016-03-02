@@ -1,0 +1,110 @@
+.north_div{
+	height:70px;
+	padding:10px;
+	
+	background:url(../../css/images/body_bg.png) repeat-x;
+	border:0px;
+	
+}
+
+.west-div{
+	width:200px;
+	padding:0px;
+}
+
+.body_border{
+	border:0px;
+}
+
+.west_index_div{
+	padding:0px;
+}
+
+.south_div{
+	height:25px;
+	text-align:center;
+}
+
+.center_div{
+	text-align:center;
+}
+
+.center_frame{
+	width:100%;
+	/**width:800px;*/
+	height:500px;
+}
+
+.tab-menu-div{
+	width:120px;
+}
+
+.selectTheme {
+	float:right;
+	width:100px;
+}
+
+.password_div{
+	float:right;
+}
+	
+.cs-tab-menu {
+	width:120px;
+}
+
+.lock-screen-background{
+	filter:alpha(opacity=50); 
+	-moz-opacity:0.5; 
+	opacity:0.5;
+	height: 100%;
+	width:100%;
+	background-color: #696969;
+	z-index:16;
+	position:relative;
+	padding-top: 380px;
+	padding-bottom: 420px;
+	text-align: center;
+	display: none;
+}
+
+.lock-screen{
+	height: auto;
+	width:auto;
+	z-index:999;
+	position:absolute;
+	top:40%;
+	left:40%;
+	text-align: center;
+	display: none;
+	
+}
+
+.loginuser-style{
+	margin-top:70px;
+	width: 300px;float: left;
+}
+
+input[type=text],input[type=password]{
+	height:30px;
+	width:250px;
+	padding:0 5px;
+	border:1px solid #13A89E;
+	border-radius:3px;
+	letter-spacing:0.01em;
+}
+input[type=button]{
+	width:120px;
+	height:30px;
+	border:1px solid #13A89E;
+	border-radius:3px;
+	cursor:pointer;
+	font-size:16px;
+	color:#13A89E;
+	margin-left:120px;
+	transition:all 0.4s;
+}
+
+.search_btn{
+	background:url('../../css/icons/search.png') no-repeat center center;
+	text-decoration:none;
+}
