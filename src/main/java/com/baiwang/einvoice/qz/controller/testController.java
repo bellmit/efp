@@ -4,10 +4,13 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +41,7 @@ public class testController {
 	
 	@RequestMapping(value="kjfp",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String kjfp(@RequestParam String xml){
+	public String kjfp(@RequestParam String xml, HttpServletRequest request){
 		long l1 = System.currentTimeMillis();
 		System.out.println("接收xml:"+xml);
 //		String reqestSK = service.reqestSK(xml);
@@ -61,6 +64,14 @@ public class testController {
         long l2 = System.currentTimeMillis();
         long l3 = l2- l1;
         System.out.println("请求时间：" + l3);
+        
+        
+        String requestURL = request.getRequestURL().toString();
+        System.out.println("getRequestURL:"+ requestURL);
+        
+        String substring = requestURL.substring(0,requestURL.lastIndexOf("/"));
+        System.out.println("网址：" + substring);
+        
         
 //		System.out.println("税控返回："+reMsg);
 		if(null != map.get(correlationId)){

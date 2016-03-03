@@ -3,6 +3,7 @@ package com.baiwang.einvoice.qz.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.User;
+import com.baiwang.einvoice.qz.service.IUserService;
+import com.baiwang.einvoice.qz.service.impl.UserServiceImpl;
 
 @Controller
 @RequestMapping("user")
@@ -21,11 +24,15 @@ public class UserController {
 	
 	private Log logger = LogFactory.getLog(UserController.class);
 	
+	@Resource
+	private IUserService service;
+	
 	@RequestMapping(value="login",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String login(User user, HttpServletRequest request,HttpSession session){
-		System.out.println(user.getUserName() + "--" + user.getUserPass());
-		if(user != null && user.getUserName().equals("admin") && user.getUserPass().equals("e10adc3949ba59abbe56e057f20f883e")){
+		
+		User _user = service.getUserByName(user.getUserName());
+		if(_user != null && user.getUserPass().equals(_user.getUserPass())){
              
             session.setAttribute("user", user);
             logger.info("*********" + user.getUserName() + "登录成功");
