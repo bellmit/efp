@@ -1,37 +1,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.baiwang.qz</groupId>
-  <artifactId>einvoice</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>einovice Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  
-  <properties>
-  	<spring.version>3.2.3.RELEASE</spring.version>
-  	<log4j.version>1.2.17</log4j.version>
-  	
-  	<!-- Web -->
-	<jsp.version>2.2</jsp.version>
-	<jstl.version>1.2</jstl.version>
-	<servlet.version>2.5</servlet.version>
-	<mybatis.version>3.2.6</mybatis.version>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.baiwang.qz</groupId>
+	<artifactId>einvoice</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>einovice Maven Webapp</name>
+	<url>http://maven.apache.org</url>
 
-	<!-- <jersey.version>1.18</jersey.version> -->
-	<jersey.version>1.8</jersey.version>
+	<properties>
+		<spring.version>3.2.3.RELEASE</spring.version>
+		<log4j.version>1.2.17</log4j.version>
 
-  </properties>
-  
-  <dependencies>
-	    <dependency>
-	      <groupId>junit</groupId>
-	      <artifactId>junit</artifactId>
-	      <version>3.8.1</version>
-	      <scope>test</scope>
-	    </dependency>
-    
-   		<!-- Spring MVC -->
+		<!-- Web -->
+		<jsp.version>2.2</jsp.version>
+		<jstl.version>1.2</jstl.version>
+		<servlet.version>2.5</servlet.version>
+		<mybatis.version>3.2.6</mybatis.version>
+
+		<!-- <jersey.version>1.18</jersey.version> -->
+		<jersey.version>1.8</jersey.version>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Spring MVC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -77,25 +77,22 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.5</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.3.1</version>
 		</dependency>
-		
-		<!-- <dependency>
-		  <groupId>org.apache.activemq</groupId>
-		  <artifactId>activemq-core</artifactId>
-		  <version>5.2.0</version>
-		</dependency> -->
-		
+
+		<!-- <dependency> <groupId>org.apache.activemq</groupId> <artifactId>activemq-core</artifactId> 
+			<version>5.2.0</version> </dependency> -->
+
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
@@ -113,21 +110,21 @@
 			<version>${jsp.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- jersey -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
 			<version>${jersey.version}</version>
 		</dependency>
-		
-		<!-- jersey上传文件  两个jar -->
+
+		<!-- jersey上传文件 两个jar -->
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
 			<artifactId>jersey-multipart</artifactId>
 			<version>${jersey.version}</version>
 		</dependency>
-		
+
 		<!-- jersey + spring -->
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
@@ -160,30 +157,27 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- activemq -->
-		<!-- <dependency>
-            <groupId>javax.jms</groupId>
-            <artifactId>jms</artifactId>
-            <version>1.1</version>
-        </dependency> -->
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-core</artifactId>
-            <version>5.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-pool</artifactId>
-            <version>5.7.0</version>
-        </dependency>
-		
+		<!-- <dependency> <groupId>javax.jms</groupId> <artifactId>jms</artifactId> 
+			<version>1.1</version> </dependency> -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-core</artifactId>
+			<version>5.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-pool</artifactId>
+			<version>5.7.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
@@ -201,14 +195,10 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		
-		<!-- 导入java ee jar 包 
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
-		</dependency>-->
-		
+
+		<!-- 导入java ee jar 包 <dependency> <groupId>javax</groupId> <artifactId>javaee-api</artifactId> 
+			<version>7.0</version> </dependency> -->
+
 		<!-- 导入Mysql数据库链接jar包 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -216,36 +206,49 @@
 			<version>5.1.30</version>
 		</dependency>
 		<dependency>
-	        <groupId>com.github.miemiedev</groupId>
-	        <artifactId>mybatis-paginator</artifactId>
-	        <version>1.2.17</version>
-	        <exclusions>
-	        	<exclusion>
-	        		<groupId>org.mybatis</groupId>
+			<groupId>com.github.miemiedev</groupId>
+			<artifactId>mybatis-paginator</artifactId>
+			<version>1.2.17</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.mybatis</groupId>
 					<artifactId>mybatis</artifactId>
-	        	</exclusion>
-	        	<!-- <exclusion>
-	        		<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-	        	</exclusion> -->
-	        </exclusions>
-    	</dependency>
-  </dependencies>
-  <build>
-    <finalName>einvoice</finalName>
-    
-    <plugins>
-    	<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.3</version>
-			<configuration>
-				<source>1.7</source>
-				<target>1.7</target>
-				<encoding>UTF-8</encoding>
-			</configuration>
-		</plugin>
-    </plugins>
-    
-  </build>
+				</exclusion>
+				<!-- <exclusion> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+					</exclusion> -->
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.javydreamercsw</groupId>
+			<artifactId>JasperReport</artifactId>
+			<version>0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.13</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>einvoice</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
 </project>
