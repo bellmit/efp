@@ -42,6 +42,12 @@
     delete from kpxx
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </delete>
+  
+  <delete id="deleteByDdhm" parameterType="java.lang.String" >
+    delete from kpxx
+    where ddhm = #{ddhm,jdbcType=VARCHAR}
+  </delete>
+  
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
     insert into kpxx (fpqqlsh, ddhm, fplx, 
       kplx, xsfnsrsbh, xsfmc, 

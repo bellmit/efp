@@ -14,4 +14,6 @@ public interface CustomOrderMapper {
     int updateByPrimaryKeySelective(CustomOrder record);
 
     int updateByPrimaryKey(CustomOrder record);
+    
+    int count(String ddhm);
 }

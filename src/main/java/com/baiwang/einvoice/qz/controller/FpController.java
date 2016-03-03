@@ -47,7 +47,8 @@ public class FpController {
 	public String SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
 		
 		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("utf-8")) ){
-			return null;
+			logger.error("xml不符合规则");
+			return "xml不符合规则";
 		}
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));

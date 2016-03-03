@@ -26,6 +26,11 @@
     values (#{ddhm,jdbcType=VARCHAR}, #{ddssdq,jdbcType=VARCHAR}, #{ddywlx,jdbcType=VARCHAR}, 
       #{ddsj,jdbcType=VARCHAR})
   </insert>
+  
+  <select id="count" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	select count(*) from custom_order where  ddhm = #{ddhm,jdbcType=VARCHAR}
+  </select>
+
   <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.CustomOrder" >
     insert into custom_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
