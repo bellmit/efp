@@ -15,32 +15,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 @SuppressWarnings("rawtypes")
-public class EInvoceKjfpfhListener implements SessionAwareMessageListener{
-	
+public class EInvoceKjfpfhListener implements SessionAwareMessageListener {
+
 	private Log logger = LogFactory.getLog(EInvoceKjfpfhListener.class);
 
 	private static Map<String, String> map = new HashMap<String, String>();
-	
+
 	public void onMessage(Message message, Session session) throws JMSException {
-		TextMessage msg = (TextMessage)message;
-		
-		logger.info("************开票结果*****correlationId:" + msg.getJMSCorrelationID() + "****返回：" + msg.getText());
-		
-		map.put(msg.getJMSCorrelationID(),msg.getText());
+		TextMessage msg = (TextMessage) message;
+
+		logger.info("************开票结果*****correlationId:"
+				+ msg.getJMSCorrelationID() + "****返回：" + msg.getText());
+
+		synchronized (this) {
+			map.put(msg.getJMSCorrelationID(), msg.getText());
+		}
 	}
 
 	public static Map<String, String> getMap() {
 		return map;
 	}
-
-	public static void setMap(Map<String, String> map) {
-		EInvoceKjfpfhListener.map = map;
-	}
-	
-	
-	
-	
-	
-	
 
 }
