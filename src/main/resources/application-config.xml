@@ -56,7 +56,7 @@
 	
 	
 						
-	<bean id="EInvoceKjfpListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpListener"></bean>
+	<bean id="EInvoceKjfpListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpListener" ></bean>
 	
 	<bean id="QueueReceiverContainer"  
         class="org.springframework.jms.listener.DefaultMessageListenerContainer">

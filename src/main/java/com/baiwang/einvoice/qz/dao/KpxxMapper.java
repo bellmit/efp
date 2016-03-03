@@ -14,4 +14,6 @@ public interface KpxxMapper {
     int updateByPrimaryKeySelective(Kpxx record);
 
     int updateByPrimaryKey(Kpxx record);
+    
+    void deleteByDdhm(String ddhm);
 }

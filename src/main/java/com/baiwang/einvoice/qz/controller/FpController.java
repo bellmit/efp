@@ -3,6 +3,12 @@ package com.baiwang.einvoice.qz.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 import javax.jms.JMSException;
@@ -23,6 +29,7 @@ import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
+import com.baiwang.einvoice.qz.utils.XmlUtil;
 
 @RequestMapping("einvoice")
 @Controller
@@ -47,17 +54,34 @@ public class FpController {
 	public String SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
 		
 		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("utf-8")) ){
-			return null;
+			logger.error("xml不符合规则");
+			return "xml不符合规则";
 		}
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
 		
 		UUID uuid = UUID.randomUUID();
 		String correlationId = uuid.toString();
-		sender.sendMessage(xml, correlationId);
+		sender.sendMessage(XmlUtil.toEInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()).toString(), correlationId);
 
 		fpService.saveXmlInfo(business);
 		
+		//从响应队列检索响应消息
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<String> future = executor.submit(new EnumResposeMessageTask());
+        try{
+        	future.get(10, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException e) {   
+        	future.cancel(true);   
+        } catch (ExecutionException e) {   
+        	future.cancel(true);   
+        } catch (TimeoutException e) {   
+        	return "err--code-message";
+        } finally {   
+            executor.shutdown();   
+        }  
+        
 		Map<String, String> map = EInvoceKjfpfhListener.getMap();
 		
 		String requestURL = request.getRequestURL().toString();

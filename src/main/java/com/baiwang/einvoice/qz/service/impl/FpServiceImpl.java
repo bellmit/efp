@@ -53,14 +53,24 @@ public class FpServiceImpl implements FpService {
 
 		String fpqqlsh = XmlUtil.random();
 		CustomOrder customOrder = business.getCustomOrder();
-		orderDao.insert(customOrder);
+		//订单记录去重保存
+		int count = orderDao.count(customOrder.getDdhm());
+		if(count==0){
+			orderDao.insertSelective(customOrder);
+		}else{
+			orderDao.updateByPrimaryKeySelective(customOrder);
+		}
+		
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		kpxx.setFpqqlsh(fpqqlsh);
 		kpxx.setDdhm(customOrder.getDdhm());
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		kpxx.setKprq(sf.format(new Date()));
+		
 		try{
+			dao.deleteByDdhm(customOrder.getDdhm());
 			dao.insert(kpxx);
+			
 			List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
 			if(list.size()>0){
 				for(Fpmx fpmx: list){
