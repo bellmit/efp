@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head runat="server">
+    <title>百望电子发票</title>
+    <meta charset="UTF-8">
+    <link href="./alogin.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./../js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="./../js/jquery/jquery.md5.js"></script>
+    <script type="text/javascript" src="./../js/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    	/* $.ajax({
+    		type:"POST",
+            url: basePath+"/users/applyLoan/init_company",
+            data:params_id,
+            async:false,
+            success: function (data) {
+//            	alert(JSON.stringify(data))
+            	
+            },
+            error:function(e) {
+            	alert("加载失败!");
+            }
+    	}); */
+    });
+    
+    	
+	    function login(){
+	    	var userPass=$.md5($("#userPass_md5").val());
+	    	$("#userPass").val(userPass);
+	    	
+	        $.post("../user/login",
+	        	    $("#myform").serialize(),
+	        	    function(data) {
+	        	        if(data == '4001') {
+	                        alert("用户名或密码输入错误!");
+	                    }else if(data == '8888'){
+	                    	user = $("#userName").val();
+	                        location.href="../qzpt/page/index.html";
+	                    }
+	                }
+	        );
+	    }
+	    
+	    function keyLogin(et){
+	        if(et.keyCode == 13 || et.which == 13){
+	        	login();
+	        }
+	    }
+    
+	</script>
+</head>
+<body onkeydown="keyLogin(event);">
+    <form id="myform">
+    <div class="Main">
+        <ul>
+            <li class="top"></li>
+            <li class="top2"></li>
+            <li class="topA"></li>
+            <li class="topB">
+            	<span>
+                	<img src="./images/logo.png" alt="" style="" />
+            	</span>
+            </li>
+            <li class="topC"></li>
+            <li class="topD">
+                <ul class="login">
+                    <li>
+                    	<span class="left">用户名：</span>
+                    	<span style="left">
+                        	<input id="userName" name="userName" type="text" class="txt" value="" />  
+                    	</span>
+                    </li>
+                    <li>
+                    	<span class="left">密 码：</span>
+                    	<span style="left">
+                       		<input id="userPass_md5" name="userPass_md5" type="text" class="txt" value="" />  
+                       		<input id="userPass" name="userPass" type="hidden" value=""/>  
+                    	</span>
+                    </li>
+                    <!-- <li>
+                        <span class="left">验证码：</span> <span style="left">
+	                    	<input type="text" class="txtCode" />
+	                    </span>
+                   	</li> -->
+                    
+                </ul>
+            </li>
+            <li class="topE"></li>
+            <li class="middle_A"></li>
+            <li class="middle_B"></li>
+            <li class="middle_C">
+            	<input type="button" value="" class="loginBtn" onclick="login()"/>
+	            <!-- <span class="btn">
+	                <img alt="" src="./images/btnlogin.gif" />
+	            </span> -->
+            </li>
+            <li class="middle_D"></li>
+            <li class="bottom_A"></li>
+            <li class="bottom_B"></li>
+        </ul>
+    </div>
+    </form>
+</body>
+
+</html>

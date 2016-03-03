@@ -8,14 +8,16 @@
 
 <link rel="stylesheet" type="text/css" href="index.css"/>
 
+<script type="text/javascript" src="../../js/common/common.js"></script>
+
 <script type="text/javascript" src="../../js/jquery/jquery.js"></script>
 <script type="text/javascript" src="../../js/jquery/jquery.md5.js"></script>
 <script type="text/javascript" src="../../js/jquery/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../../dwr/engine.js"></script>
-<script type="text/javascript" src="../../../dwr/util.js"></script>
+<!-- <script type="text/javascript" src="../../dwr/engine.js"></script> -->
+<!-- <script type="text/javascript" src="../../../dwr/util.js"></script> -->
 
 <!-- basic -->
-<script type="text/javascript" src="../../js/common/util.js"></script>
+<!-- <script type="text/javascript" src="../../js/common/util.js"></script> -->
 
 <!-- 自定义js -->
 <script type="text/javascript" src="index.js"></script>
@@ -34,26 +36,16 @@
 				<input id="them_id" name="them_style" size="8" >
 			</span>
 			 -->
+			 <span class="" style="width: 80px; margin: 0 0 0 0;">欢迎<font id='currentUser' color="red">admin</font>登录电子发票平台系统！</span>
 		</div>
+		<!-- <div style="float: right;">用户名</div> -->
 	</div>
 	<div data-options="region:'west',split:true,title:'功能导航'" class="west-div" >
 		<div id="menu_div" class="easyui-accordion body_border" data-options="fit:true">
-				<!-- 
-				<div title="系统管理" class="west_index_div">
-					 <a href="javascript:void(0);"  src="../tenant/tenantmanage/tenant_manage.html" class="cs-navigate-tab">租户管理</a></p>
-				</div>
-				 -->
-				<div title="系统功能" class="west_index_div">
-					<ul class="easyui-tree" id="tt" data-options="url:'qz_data1.json'">
-					</ul>
-				</div>
-				<!-- 
-				<div title="Easyui API/DEMO" class="west_index_div">
-					<a href="../../../jquery_easyui_api/index-api.html" class="cs-navi-tab" target="_blank" >Easyui API</a></p>
-					<a href="../../../jquery_easyui_demo/index-demo.html"  class="cs-navi-tab" target="_blank">Easyui Demo</a></p>
-				</div>
-				 --> 
+			<div title="系统功能" class="west_index_div">
+				<ul class="easyui-tree" id="tt" data-options="url:'qz_data1.json'"></ul>
 			</div>
+		</div>
 	</div>
 	<div data-options="region:'south'" class="south_div" >
 		<label id="messageDiv">百望股份平台消息区</label>
@@ -63,7 +55,7 @@
         <div id="tabs" class="easyui-tabs body_border" data-options="bodyCls:'ribi'" fit="true" >
             <div title="Home">
 	            <div class="cs-home-remark center_div"  >
-                    <iframe  class="center_frame"  name="contentIframe" frameborder="0" src="../../canvas/index_new.html" ></iframe>
+                    <iframe  class="center_frame"  name="contentIframe" frameborder="0" src="./index_new.html" ></iframe>
                     <br>
                 </div>
              </div>
@@ -75,7 +67,7 @@
 	    <div id="close">关闭</div>  
 	    <div id="other">关闭其他</div>  
 	    <div id="all">关闭所有</div>
-	  </div> 
+	</div> 
 </body>
 </body>
 </html>
