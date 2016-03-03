@@ -18,4 +18,6 @@ public interface FpmxMapper {
     int updateByPrimaryKey(Fpmx record);
     
     int insertFromList(List<Fpmx> list);
+    
+    int deleteByFpqqlsh(String id);
 }

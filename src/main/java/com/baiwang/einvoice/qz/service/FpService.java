@@ -4,7 +4,12 @@
 
 package com.baiwang.einvoice.qz.service;
 
+import java.util.List;
+
 import com.baiwang.einvoice.qz.beans.Business;
+import com.baiwang.einvoice.qz.beans.CustomOrder;
+import com.baiwang.einvoice.qz.beans.Fpmx;
+import com.baiwang.einvoice.qz.beans.Kpxx;
 
 /**
   * @ClassName: FpService
@@ -15,4 +20,6 @@ import com.baiwang.einvoice.qz.beans.Business;
 public interface FpService {
 
 	void saveXmlInfo(Business business);
+	
+	void saveInfo(CustomOrder customOrder, Kpxx kpxx, List<Fpmx> fpmxList);
 }

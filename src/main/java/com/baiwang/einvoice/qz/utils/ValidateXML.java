@@ -43,7 +43,6 @@ public class ValidateXML {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(1231);
 		return false;
 	}
 	

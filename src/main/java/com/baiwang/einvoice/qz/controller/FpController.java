@@ -1,6 +1,7 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Business;
+import com.baiwang.einvoice.qz.beans.CustomOrder;
+import com.baiwang.einvoice.qz.beans.Fpmx;
+import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.ResultOfKp;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
@@ -76,23 +80,28 @@ public class FpController {
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
 		
-		ResultOfKp result = resultService.queryResult(business.getCustomOrder().getDdhm());
+		String fpqqlsh = XmlUtil.random();
+		CustomOrder customOrder = business.getCustomOrder();
+		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
+		kpxx.setFpqqlsh(fpqqlsh);
+		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
+		
+		ResultOfKp result = resultService.queryResult(customOrder.getDdhm());
 		if(null != result && "0000".equals(result.getCode())){
-			logger.warn("*********订单号：" + business.getCustomOrder().getDdhm() + "已经开票成功，返回。");
+			logger.warn("*********订单号：" + customOrder.getDdhm() + "已经开票成功，返回。");
 			return "0000";
 		}
 		
 		try{
-			sender.sendMessage(XmlUtil.toEInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), 
-					business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()).toString(), 
-					business.getCustomOrder().getDdhm());
+			sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
+					customOrder.getDdhm());
 		}catch(Exception e){
-			logger.error("*********订单号：" + business.getCustomOrder().getDdhm() + "网络异常");
+			logger.error("*********订单号：" + customOrder.getDdhm() + "网络异常");
 			e.printStackTrace();
 			return "网络异常";
 		}
 
-		fpService.saveXmlInfo(business);
+		fpService.saveInfo(customOrder, kpxx, list);
 		
 		//从响应队列检索响应消息
 		ExecutorService executor = Executors.newSingleThreadExecutor();
