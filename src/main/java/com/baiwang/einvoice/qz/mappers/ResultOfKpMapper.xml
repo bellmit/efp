@@ -13,6 +13,14 @@
   <sql id="Base_Column_List" >
     id, ddhm, fpqqlsh, code, msg, operateTime, createTime
   </sql>
+  
+  <select id="queryResult" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from resultofkp 
+    where ddhm = #{ddhm,jdbcType=VARCHAR} 
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

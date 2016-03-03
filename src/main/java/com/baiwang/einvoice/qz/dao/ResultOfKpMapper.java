@@ -1,5 +1,7 @@
 package com.baiwang.einvoice.qz.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.baiwang.einvoice.qz.beans.ResultOfKp;
 
 public interface ResultOfKpMapper {
@@ -14,4 +16,6 @@ public interface ResultOfKpMapper {
     int updateByPrimaryKeySelective(ResultOfKp record);
 
     int updateByPrimaryKey(ResultOfKp record);
+
+	ResultOfKp queryResult(@Param("ddhm") String ddhm);
 }

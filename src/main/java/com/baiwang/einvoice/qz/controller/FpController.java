@@ -1,8 +1,6 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,10 +10,8 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.TextMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.POST;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,9 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Business;
-import com.baiwang.einvoice.qz.mq.EInvoceKjfpfhListener;
+import com.baiwang.einvoice.qz.beans.ResultOfKp;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.IResultOfKpService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
@@ -44,6 +41,9 @@ public class FpController {
 	private EInvoiceSenders sender;
 	@Resource
 	private FpService fpService;
+	
+	@Resource
+	private IResultOfKpService resultService;
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
@@ -76,45 +76,46 @@ public class FpController {
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
 		
+		ResultOfKp result = resultService.queryResult(business.getCustomOrder().getDdhm());
+		if(null != result && "0000".equals(result.getCode())){
+			logger.warn("*********订单号：" + business.getCustomOrder().getDdhm() + "已经开票成功，返回。");
+			return "0000";
+		}
 		
-		UUID uuid = UUID.randomUUID();
-		String correlationId = uuid.toString();
-
 		try{
-			sender.sendMessage(XmlUtil.toEInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()).toString(), correlationId);
+			sender.sendMessage(XmlUtil.toEInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), 
+					business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()).toString(), 
+					business.getCustomOrder().getDdhm());
 		}catch(Exception e){
-			return "";
+			logger.error("*********订单号：" + business.getCustomOrder().getDdhm() + "网络异常");
+			e.printStackTrace();
+			return "网络异常";
 		}
 
 		fpService.saveXmlInfo(business);
 		
 		//从响应队列检索响应消息
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<String> future = executor.submit(new EnumResposeMessageTask(correlationId));
+        Future<String> future = executor.submit(new EnumResposeMessageTask(business.getCustomOrder().getDdhm()));
+		String success = "";
         try{
-        	future.get(4, TimeUnit.SECONDS);
+        	success = future.get(4, TimeUnit.SECONDS);
         }
         catch (InterruptedException e) {   
         	future.cancel(true);   
         } catch (ExecutionException e) {   
         	future.cancel(true);   
-        } catch (TimeoutException e) {   
-        	return "err--code-message";
+        } catch (TimeoutException e) {
+        	
+        	String requestURL = request.getRequestURL().toString();
+    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?corre=" + business.getCustomOrder().getDdhm();
+    		
+        	return "正在处理中,请稍后查询" + url;
         } finally {
             executor.shutdown();
         }
         
-		Map<String, String> map = EInvoceKjfpfhListener.getMap();
-		
-		String requestURL = request.getRequestURL().toString();
-		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?corre=" + correlationId;
-		
-		
-		if(null != map.get(correlationId)){
-			return map.get(correlationId);
-		}else{
-			return "正在处理中,请查询" + url;
-		}
+		return success;
 	}
 	
 	@RequestMapping(value="query",method=RequestMethod.GET,produces="text/html;charset=UTF-8")
@@ -123,11 +124,15 @@ public class FpController {
 		if(null == corre || "".equals(corre)){
 			return "查询失败";
 		}
-		Map<String, String> map = EInvoceKjfpfhListener.getMap();
-		if(null != map.get(corre)){
-			return map.get(corre);
-		}else{
+		ResultOfKp result = resultService.queryResult(corre);
+		
+		if(null == result){
 			return "正在处理中,请稍等...";
+		}else if(null != result && "0000".equals(result.getCode())){
+			logger.warn("*********订单号：" + corre + "已经开票成功，返回。");
+			return "0000";
+		}else{
+			return result.getMsg();
 		}
 		
 	}
