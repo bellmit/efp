@@ -79,6 +79,7 @@ public class FpController {
 		
 		UUID uuid = UUID.randomUUID();
 		String correlationId = uuid.toString();
+
 		try{
 			sender.sendMessage(XmlUtil.toEInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()).toString(), correlationId);
 		}catch(Exception e){

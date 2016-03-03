@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
 
 /**
  * @ClassName: ValidateXML
- * @Description: TODO
+ * @Description: 通过xsd验证xml是符合规则
  * @author wsdoing
  * @date 2016年3月2日 下午5:23:47
  */

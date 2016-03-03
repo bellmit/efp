@@ -11,8 +11,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
@@ -59,11 +61,18 @@ public class ReportUtil {
 	  */
 	public static void xls4Report() throws SQLException, JRException {
 		
-		JRBeanCollectionDataSource datasource = new JRBeanCollectionDataSource(new HashSet());
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject("jasperTemplate/wyenTotal.jasper");
+		List<Integer> list = new ArrayList<>();
+		list.add(3);
+		JRBeanCollectionDataSource datasource = new JRBeanCollectionDataSource(list);
+		Connection con = getConnection();
+		PreparedStatement statement = con.prepareStatement(
+				"select * from kpxx ");
+		ResultSet resultSet = statement.executeQuery();
+		JRResultSetDataSource res = new JRResultSetDataSource(resultSet);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject("jasperTemplate/wyenTotal_bean.jasper");
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("month", "111月");
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap(),datasource);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,datasource);
 		JRXlsExporter xlsExporter = new JRXlsExporter();
 		xlsExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 		xlsExporter.setParameter(JRExporterParameter.OUTPUT_FILE, new File("reports/wyen1.xls"));
