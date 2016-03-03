@@ -6,7 +6,7 @@ package com.baiwang.einvoice.qz.beans;
 
 /**
   * @ClassName: ReportTotal
-  * @Description: 报表统计
+  * @Description: 订单统计
   * @author Administrator
   * @date 2016年3月2日 下午2:28:56
   */
