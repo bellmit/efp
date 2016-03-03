@@ -4,11 +4,14 @@ import javax.annotation.Resource;
 import javax.jms.Destination;  
 import javax.jms.JMSException;  
 import javax.jms.Message;
+import javax.jms.Queue;
+import javax.jms.QueueBrowser;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.BrowserCallback;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;  
 import org.springframework.stereotype.Service;
@@ -23,7 +26,7 @@ public class EInvoiceSenders {
 	private Destination einvoiceKjfpfhMQ;
 
 	@Autowired
-    private JmsTemplate jmsTemplate;
+    private JmsTemplate jmsTemplate1;
 	
 	public void sendMessage(final String message) {
 		
@@ -45,7 +48,7 @@ public class EInvoiceSenders {
 	
 	public void sendMessage(Destination destination, final String message, final String correlationId) {
         
-        jmsTemplate.send(destination, new MessageCreator() {
+		jmsTemplate1.send(destination, new MessageCreator() {
         	
             public Message createMessage(Session session) throws JMSException {
             	TextMessage textMessage = session.createTextMessage(message);

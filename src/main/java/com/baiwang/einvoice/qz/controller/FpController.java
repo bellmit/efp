@@ -12,11 +12,15 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.TextMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +33,7 @@ import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
+import com.baiwang.einvoice.qz.utils.XmlUtil;
 
 @RequestMapping("einvoice")
 @Controller
@@ -39,11 +44,23 @@ public class FpController {
 	private EInvoiceSenders sender;
 	@Resource
 	private FpService fpService;
-	@RequestMapping("kjfp")
+	
+	@Autowired
+    private JmsTemplate jmsTemplate2;
+	
+	@RequestMapping(value="kjfp",produces="text/html;charset=UTF-8")
 	@ResponseBody
-	@POST
 	public String kjfp(String xml){
 		
+		String messageSelector = "JMSCorrelationID = '81ee2fb5-b40e-45f5-9e0d-1fd1bde9cc86'";
+		TextMessage receive = (TextMessage) jmsTemplate2.receiveSelected(messageSelector );
+        
+        try {
+			System.out.println(receive.getText());
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "开具发票";
 	}
@@ -59,17 +76,22 @@ public class FpController {
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
 		
+		
 		UUID uuid = UUID.randomUUID();
 		String correlationId = uuid.toString();
-		sender.sendMessage(xml, correlationId);
+		try{
+			sender.sendMessage(XmlUtil.toEInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()).toString(), correlationId);
+		}catch(Exception e){
+			return "";
+		}
 
 		fpService.saveXmlInfo(business);
 		
 		//从响应队列检索响应消息
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<String> future = executor.submit(new EnumResposeMessageTask());
+        Future<String> future = executor.submit(new EnumResposeMessageTask(correlationId));
         try{
-        	future.get(10, TimeUnit.SECONDS);
+        	future.get(4, TimeUnit.SECONDS);
         }
         catch (InterruptedException e) {   
         	future.cancel(true);   
@@ -77,9 +99,9 @@ public class FpController {
         	future.cancel(true);   
         } catch (TimeoutException e) {   
         	return "err--code-message";
-        } finally {   
-            executor.shutdown();   
-        }  
+        } finally {
+            executor.shutdown();
+        }
         
 		Map<String, String> map = EInvoceKjfpfhListener.getMap();
 		

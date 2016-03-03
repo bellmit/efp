@@ -34,6 +34,12 @@
 			"attributes":{
 				"url":"../../qzmanager/accessconfig/access_config_list.html"
 			}
+		},{
+			"id":123,
+			"text":"修改密码",
+			"attributes":{
+				"url":"../../user/changePwd.html"
+			}
 		}
 	]},{
 		"id":13,

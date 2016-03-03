@@ -10,6 +10,8 @@ import javax.jms.TextMessage;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.SessionAwareMessageListener;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +34,15 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 	@Resource
 	private TsPlatService tsService;
 	
+	@Autowired
+    private JmsTemplate jmsTemplate2;
+	
 	@SuppressWarnings("static-access")
 	public void onMessage(Message message, Session session) throws JMSException {
 		TextMessage msg = (TextMessage)message;  
 		String xml = msg.getText();
 		
-		MessageProducer producer = session.createProducer(einvoiceKjfpfhMQ);
+//		MessageProducer producer = session.createProducer(einvoiceKjfpfhMQ);
 		Message textMessage = null;
 		
 		String returnSK = skService.reqestSK(xml);
@@ -62,7 +67,9 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 		
 		
 		textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
-		producer.send(message.getJMSReplyTo(),textMessage); 
+//		producer.send(message.getJMSReplyTo(),textMessage);
+		
+		jmsTemplate2.convertAndSend(textMessage);
 	}
 	
 	public String afterRequestSK(String xml, String returnSK){

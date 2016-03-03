@@ -31,12 +31,16 @@ public class Producers {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-config.xml");
         JmsTemplate template = (JmsTemplate) applicationContext.getBean("jmsTemplate");
         Destination destination = (Destination) applicationContext.getBean("einvoiceMQ");
-        template.send(destination, new MessageCreator() {
-            public Message createMessage(Session session) throws JMSException {
-                return session.createTextMessage("发送消息：Hello ActiveMQ invoice！");
-            }
-        });
-
+//        template.send(destination, new MessageCreator() {
+//            public Message createMessage(Session session) throws JMSException {
+//                return session.createTextMessage("发送消息：Hello ActiveMQ invoice！");
+//            }
+//        });
+        Message receive = template.receive();
+        
+        System.out.println(receive.toString());
+        
+        
         System.out.println("成功发送了一条JMS消息");
 
     }

@@ -33,7 +33,22 @@
 	</bean>
 
 	<!-- Spring JMS Template -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <bean id="jmsTemplate1" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        
+        <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false--> 
+        <property name="explicitQosEnabled" value="true" /> 
+
+        <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久 默认-->  
+        <property name="deliveryMode" value="2" /> 
+
+        <property name="pubSubDomain" value="false" />  
+        
+        <property name="defaultDestination" ref="einvoiceMQ" />
+
+	</bean>
+	
+	<bean id="jmsTemplate2" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
         
         <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false--> 
@@ -62,27 +77,27 @@
         class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="concurrentConsumers" value="5" />
         <property name="connectionFactory" ref="connectionFactory" />  
-        <!-- 监听的队列 -->  
+        <!-- 监听的队列 -->
         <property name="destinationName" value="baiwang.einvoice.kjfp" />  
         <property name="messageListener" ref="EInvoceKjfpListener" />  
         <property name="pubSubNoLocal" value="false"/>     
     </bean>
     
-	<bean id="EInvoceKjfpfhListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpfhListener"></bean>
+	<!-- <bean id="EInvoceKjfpfhListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpfhListener"></bean> -->
 	
     <bean id="einvoiceKjfpfhMQ" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg index="0" value="baiwang.einvoice.kjfpfh" />
 	</bean>
     
-    <bean id="controllerQueueReceiverContainer"  
+    <!-- <bean id="controllerQueueReceiverContainer"  
         class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="concurrentConsumers" value="1" />
         <property name="connectionFactory" ref="connectionFactory" />  
-        <!-- 监听的队列 -->  
-        <property name="destinationName" value="baiwang.einvoice.kjfpfh" /><!-- 开具发票返回 -->
+        监听的队列  
+        <property name="destinationName" value="baiwang.einvoice.kjfpfh" />开具发票返回
         <property name="messageListener" ref="EInvoceKjfpfhListener" />  
         <property name="pubSubNoLocal" value="false"/>     
-    </bean>					
+    </bean> -->					
 						
     
 </beans>
