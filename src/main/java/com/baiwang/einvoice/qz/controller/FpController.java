@@ -29,6 +29,7 @@ import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
+import com.baiwang.einvoice.qz.utils.XmlUtil;
 
 @RequestMapping("einvoice")
 @Controller
@@ -61,7 +62,7 @@ public class FpController {
 		
 		UUID uuid = UUID.randomUUID();
 		String correlationId = uuid.toString();
-		sender.sendMessage(xml, correlationId);
+		sender.sendMessage(XmlUtil.toEInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()).toString(), correlationId);
 
 		fpService.saveXmlInfo(business);
 		
