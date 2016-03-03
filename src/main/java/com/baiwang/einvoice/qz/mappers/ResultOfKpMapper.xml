@@ -21,6 +21,29 @@
     where ddhm = #{ddhm,jdbcType=VARCHAR} 
   </select>
   
+  <insert id="save" parameterType="com.baiwang.einvoice.qz.beans.ResultOfKp">
+  	insert into resultofkp (ddhm, fpqqlsh, 
+      code, msg, operateTime, 
+      createTime)
+    values ( #{ddhm,jdbcType=VARCHAR}, #{fpqqlsh,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, NOW(), 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <select id="selectByDdhm" resultType="string">
+  	select count(id) from resultofkp where ddhm = #{ddhm,jdbcType=VARCHAR} 
+  </select>
+  
+  <update id="updateByDdhm" parameterType="com.baiwang.einvoice.qz.beans.ResultOfKp">
+  	update resultofkp
+    set ddhm = #{ddhm,jdbcType=VARCHAR},
+      fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      msg = #{msg,jdbcType=VARCHAR},
+      operateTime = now()
+    where ddhm = #{ddhm,jdbcType=VARCHAR} 
+  </update>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
