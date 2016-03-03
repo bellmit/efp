@@ -6,8 +6,6 @@ var exceptionMsg;
 
 var exceptionInfo;
 
-var currentUser = null;
-
 $(function(){
 	//获得菜单项
 //	getMenuDemo();
@@ -73,10 +71,10 @@ function exitSystem(){
 }
 
 //显示当前登录用户
-function currentLoginUser(){
+/*function currentLoginUser(){
 	currentUser = callCommFunc(com.bwplat.portal.user.service.UserService.findCurrentUserAccount);
-	$("#currentUser").html('欢迎'+currentUser+'登录云平台系统！');
-}
+	$("#currentUser").html('欢迎'+currentUser+'登录电子发票平台系统！');
+}*/
 
 //在右边center区域打开菜单，新增tab
 function addTabs(text,url){
@@ -171,7 +169,7 @@ function tabClose() {
 
 //绑定右键菜单事件
 function tabCloseEven() {
-	setMessageRegion($('#messageDiv'));
+	/*setMessageRegion($('#messageDiv'));*/
 	//刷新
 	$('#refresh').click(function(){
 		var currTab = $('#tabs').tabs('getSelected');
@@ -524,10 +522,7 @@ function initialSearchComponent(){
 	westDiv.panel('setTitle',alink);
 }
 
-function getCurrentUser(){
-	var result = callCommFunc(com.bwplat.portal.user.service.UserService.findCurrentUserAccount);
-	$("#currentUser").html("欢迎"+result+"登录云平台系统！");
-}
+
 
 function changeBtnPosition(){
 	$('#position_id').combobox({

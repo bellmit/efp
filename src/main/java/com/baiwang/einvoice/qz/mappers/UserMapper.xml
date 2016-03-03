@@ -22,6 +22,16 @@
     id, user_name, user_type, user_pass, ap_name, mail, islock, telephone, last_log_time, 
     last_log_ip, reg_time, reg_ip, update_time, update_ip, remark
   </sql>
+  
+  <!-- 登陆查询 -->
+  <select id="getUserByName" resultType="string" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from user
+    where user_name = #{userName,jdbcType=VARCHAR} 
+  </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

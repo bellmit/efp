@@ -1,7 +1,7 @@
-dwr.engine.setAsync(false);//前后台调用同步
+/*dwr.engine.setAsync(false);//前后台调用同步
 
 //设置异常处理
-dwr.engine.setErrorHandler(eh);
+dwr.engine.setErrorHandler(eh);*/
 
 var messageRegion = null;
 
