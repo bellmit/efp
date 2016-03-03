@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baiwang.einvoice.qz.dao.KpxxMapper" >
   <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.Kpxx" >
-    <id column="fpqqlsh" property="fpqqlsh" jdbcType="INTEGER" />
-    <result column="xtbs" property="xtbs" jdbcType="VARCHAR" />
-    <result column="jhkey" property="jhkey" jdbcType="VARCHAR" />
+    <id column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="ddhm" property="ddhm" jdbcType="VARCHAR" />
+    <result column="fplx" property="fplx" jdbcType="VARCHAR" />
     <result column="kplx" property="kplx" jdbcType="BIT" />
     <result column="xsfnsrsbh" property="xsfnsrsbh" jdbcType="VARCHAR" />
     <result column="xsfmc" property="xsfmc" jdbcType="VARCHAR" />
-    <result column="xsfdzdh" property="xsfdzdh" jdbcType="VARCHAR" />
+    <result column="xsfdz" property="xsfdz" jdbcType="VARCHAR" />
+    <result column="xsfdh" property="xsfdh" jdbcType="VARCHAR" />
     <result column="xsfyhzh" property="xsfyhzh" jdbcType="VARCHAR" />
     <result column="gmfnsrsbh" property="gmfnsrsbh" jdbcType="VARCHAR" />
     <result column="gmfmc" property="gmfmc" jdbcType="VARCHAR" />
-    <result column="gmfdzdh" property="gmfdzdh" jdbcType="VARCHAR" />
+    <result column="gmfdz" property="gmfdz" jdbcType="VARCHAR" />
+    <result column="gmfdh" property="gmfdh" jdbcType="VARCHAR" />
     <result column="gmfyhzh" property="gmfyhzh" jdbcType="VARCHAR" />
-    <result column="gmfyx" property="gmfyx" jdbcType="VARCHAR" />
-    <result column="gmfsjh" property="gmfsjh" jdbcType="VARCHAR" />
     <result column="kpr" property="kpr" jdbcType="VARCHAR" />
     <result column="skr" property="skr" jdbcType="VARCHAR" />
     <result column="fhr" property="fhr" jdbcType="VARCHAR" />
@@ -28,37 +28,37 @@
     <result column="kprq" property="kprq" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    fpqqlsh, xtbs, jhkey, kplx, xsfnsrsbh, xsfmc, xsfdzdh, xsfyhzh, gmfnsrsbh, gmfmc, 
-    gmfdzdh, gmfyhzh, gmfyx, gmfsjh, kpr, skr, fhr, yfpdm, yfphm, jshj, hjje, hjse, bz, 
+    fpqqlsh, ddhm, fplx, kplx, xsfnsrsbh, xsfmc, xsfdz, xsfdh, xsfyhzh, gmfnsrsbh, gmfmc, 
+    gmfdz, gmfdh, gmfyhzh, kpr, skr, fhr, yfpdm, yfphm, jshj, hjje, hjse, bz, 
     kprq
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from kpxx
-    where fpqqlsh = #{fpqqlsh,jdbcType=INTEGER}
+    where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from kpxx
-    where fpqqlsh = #{fpqqlsh,jdbcType=INTEGER}
+    where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
-    insert into kpxx (fpqqlsh, xtbs, jhkey, 
+    insert into kpxx (fpqqlsh, ddhm, fplx, 
       kplx, xsfnsrsbh, xsfmc, 
-      xsfdzdh, xsfyhzh, gmfnsrsbh, 
-      gmfmc, gmfdzdh, gmfyhzh, 
-      gmfyx, gmfsjh, kpr, 
-      skr, fhr, yfpdm, yfphm, 
-      jshj, hjje, hjse, bz, 
-      kprq)
-    values (#{fpqqlsh,jdbcType=INTEGER}, #{xtbs,jdbcType=VARCHAR}, #{jhkey,jdbcType=VARCHAR}, 
+      xsfdz, xsfdh, xsfyhzh, 
+      gmfnsrsbh, gmfmc, gmfdz, 
+      gmfdh, gmfyhzh,
+      kpr, skr, fhr, yfpdm, 
+      yfphm, jshj, hjje, hjse, 
+      bz, kprq)
+    values (#{fpqqlsh,jdbcType=VARCHAR}, #{ddhm,jdbcType=VARCHAR}, #{fplx,jdbcType=VARCHAR}, 
       #{kplx,jdbcType=BIT}, #{xsfnsrsbh,jdbcType=VARCHAR}, #{xsfmc,jdbcType=VARCHAR}, 
-      #{xsfdzdh,jdbcType=VARCHAR}, #{xsfyhzh,jdbcType=VARCHAR}, #{gmfnsrsbh,jdbcType=VARCHAR}, 
-      #{gmfmc,jdbcType=VARCHAR}, #{gmfdzdh,jdbcType=VARCHAR}, #{gmfyhzh,jdbcType=VARCHAR}, 
-      #{gmfyx,jdbcType=VARCHAR}, #{gmfsjh,jdbcType=VARCHAR}, #{kpr,jdbcType=VARCHAR}, 
-      #{skr,jdbcType=VARCHAR}, #{fhr,jdbcType=VARCHAR}, #{yfpdm,jdbcType=VARCHAR}, #{yfphm,jdbcType=VARCHAR}, 
-      #{jshj,jdbcType=REAL}, #{hjje,jdbcType=REAL}, #{hjse,jdbcType=REAL}, #{bz,jdbcType=VARCHAR}, 
-      #{kprq,jdbcType=VARCHAR})
+      #{xsfdz,jdbcType=VARCHAR}, #{xsfdh,jdbcType=VARCHAR}, #{xsfyhzh,jdbcType=VARCHAR}, 
+      #{gmfnsrsbh,jdbcType=VARCHAR}, #{gmfmc,jdbcType=VARCHAR}, #{gmfdz,jdbcType=VARCHAR}, 
+      #{gmfdh,jdbcType=VARCHAR}, #{gmfyhzh,jdbcType=VARCHAR}, 
+      #{kpr,jdbcType=VARCHAR}, #{skr,jdbcType=VARCHAR}, #{fhr,jdbcType=VARCHAR}, #{yfpdm,jdbcType=VARCHAR}, 
+      #{yfphm,jdbcType=VARCHAR}, #{jshj,jdbcType=REAL}, #{hjje,jdbcType=REAL}, #{hjse,jdbcType=REAL}, 
+      #{bz,jdbcType=VARCHAR}, #{kprq,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
     insert into kpxx
@@ -66,11 +66,11 @@
       <if test="fpqqlsh != null" >
         fpqqlsh,
       </if>
-      <if test="xtbs != null" >
-        xtbs,
+      <if test="ddhm != null" >
+        ddhm,
       </if>
-      <if test="jhkey != null" >
-        jhkey,
+      <if test="fplx != null" >
+        fplx,
       </if>
       <if test="kplx != null" >
         kplx,
@@ -81,8 +81,11 @@
       <if test="xsfmc != null" >
         xsfmc,
       </if>
-      <if test="xsfdzdh != null" >
-        xsfdzdh,
+      <if test="xsfdz != null" >
+        xsfdz,
+      </if>
+      <if test="xsfdh != null" >
+        xsfdh,
       </if>
       <if test="xsfyhzh != null" >
         xsfyhzh,
@@ -93,17 +96,14 @@
       <if test="gmfmc != null" >
         gmfmc,
       </if>
-      <if test="gmfdzdh != null" >
-        gmfdzdh,
+      <if test="gmfdz != null" >
+        gmfdz,
+      </if>
+      <if test="gmfdh != null" >
+        gmfdh,
       </if>
       <if test="gmfyhzh != null" >
         gmfyhzh,
-      </if>
-      <if test="gmfyx != null" >
-        gmfyx,
-      </if>
-      <if test="gmfsjh != null" >
-        gmfsjh,
       </if>
       <if test="kpr != null" >
         kpr,
@@ -138,13 +138,13 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="fpqqlsh != null" >
-        #{fpqqlsh,jdbcType=INTEGER},
+        #{fpqqlsh,jdbcType=VARCHAR},
       </if>
-      <if test="xtbs != null" >
-        #{xtbs,jdbcType=VARCHAR},
+      <if test="ddhm != null" >
+        #{ddhm,jdbcType=VARCHAR},
       </if>
-      <if test="jhkey != null" >
-        #{jhkey,jdbcType=VARCHAR},
+      <if test="fplx != null" >
+        #{fplx,jdbcType=VARCHAR},
       </if>
       <if test="kplx != null" >
         #{kplx,jdbcType=BIT},
@@ -155,8 +155,11 @@
       <if test="xsfmc != null" >
         #{xsfmc,jdbcType=VARCHAR},
       </if>
-      <if test="xsfdzdh != null" >
-        #{xsfdzdh,jdbcType=VARCHAR},
+      <if test="xsfdz != null" >
+        #{xsfdz,jdbcType=VARCHAR},
+      </if>
+      <if test="xsfdh != null" >
+        #{xsfdh,jdbcType=VARCHAR},
       </if>
       <if test="xsfyhzh != null" >
         #{xsfyhzh,jdbcType=VARCHAR},
@@ -167,17 +170,14 @@
       <if test="gmfmc != null" >
         #{gmfmc,jdbcType=VARCHAR},
       </if>
-      <if test="gmfdzdh != null" >
-        #{gmfdzdh,jdbcType=VARCHAR},
+      <if test="gmfdz != null" >
+        #{gmfdz,jdbcType=VARCHAR},
+      </if>
+      <if test="gmfdh != null" >
+        #{gmfdh,jdbcType=VARCHAR},
       </if>
       <if test="gmfyhzh != null" >
         #{gmfyhzh,jdbcType=VARCHAR},
-      </if>
-      <if test="gmfyx != null" >
-        #{gmfyx,jdbcType=VARCHAR},
-      </if>
-      <if test="gmfsjh != null" >
-        #{gmfsjh,jdbcType=VARCHAR},
       </if>
       <if test="kpr != null" >
         #{kpr,jdbcType=VARCHAR},
@@ -214,11 +214,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
     update kpxx
     <set >
-      <if test="xtbs != null" >
-        xtbs = #{xtbs,jdbcType=VARCHAR},
+      <if test="ddhm != null" >
+        ddhm = #{ddhm,jdbcType=VARCHAR},
       </if>
-      <if test="jhkey != null" >
-        jhkey = #{jhkey,jdbcType=VARCHAR},
+      <if test="fplx != null" >
+        fplx = #{fplx,jdbcType=VARCHAR},
       </if>
       <if test="kplx != null" >
         kplx = #{kplx,jdbcType=BIT},
@@ -229,8 +229,11 @@
       <if test="xsfmc != null" >
         xsfmc = #{xsfmc,jdbcType=VARCHAR},
       </if>
-      <if test="xsfdzdh != null" >
-        xsfdzdh = #{xsfdzdh,jdbcType=VARCHAR},
+      <if test="xsfdz != null" >
+        xsfdz = #{xsfdz,jdbcType=VARCHAR},
+      </if>
+      <if test="xsfdh != null" >
+        xsfdh = #{xsfdh,jdbcType=VARCHAR},
       </if>
       <if test="xsfyhzh != null" >
         xsfyhzh = #{xsfyhzh,jdbcType=VARCHAR},
@@ -241,17 +244,14 @@
       <if test="gmfmc != null" >
         gmfmc = #{gmfmc,jdbcType=VARCHAR},
       </if>
-      <if test="gmfdzdh != null" >
-        gmfdzdh = #{gmfdzdh,jdbcType=VARCHAR},
+      <if test="gmfdz != null" >
+        gmfdz = #{gmfdz,jdbcType=VARCHAR},
+      </if>
+      <if test="gmfdh != null" >
+        gmfdh = #{gmfdh,jdbcType=VARCHAR},
       </if>
       <if test="gmfyhzh != null" >
         gmfyhzh = #{gmfyhzh,jdbcType=VARCHAR},
-      </if>
-      <if test="gmfyx != null" >
-        gmfyx = #{gmfyx,jdbcType=VARCHAR},
-      </if>
-      <if test="gmfsjh != null" >
-        gmfsjh = #{gmfsjh,jdbcType=VARCHAR},
       </if>
       <if test="kpr != null" >
         kpr = #{kpr,jdbcType=VARCHAR},
@@ -284,23 +284,23 @@
         kprq = #{kprq,jdbcType=VARCHAR},
       </if>
     </set>
-    where fpqqlsh = #{fpqqlsh,jdbcType=INTEGER}
+    where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
     update kpxx
-    set xtbs = #{xtbs,jdbcType=VARCHAR},
-      jhkey = #{jhkey,jdbcType=VARCHAR},
+    set ddhm = #{ddhm,jdbcType=VARCHAR},
+      fplx = #{fplx,jdbcType=VARCHAR},
       kplx = #{kplx,jdbcType=BIT},
       xsfnsrsbh = #{xsfnsrsbh,jdbcType=VARCHAR},
       xsfmc = #{xsfmc,jdbcType=VARCHAR},
-      xsfdzdh = #{xsfdzdh,jdbcType=VARCHAR},
+      xsfdz = #{xsfdz,jdbcType=VARCHAR},
+      xsfdh = #{xsfdh,jdbcType=VARCHAR},
       xsfyhzh = #{xsfyhzh,jdbcType=VARCHAR},
       gmfnsrsbh = #{gmfnsrsbh,jdbcType=VARCHAR},
       gmfmc = #{gmfmc,jdbcType=VARCHAR},
-      gmfdzdh = #{gmfdzdh,jdbcType=VARCHAR},
+      gmfdz = #{gmfdz,jdbcType=VARCHAR},
+      gmfdh = #{gmfdh,jdbcType=VARCHAR},
       gmfyhzh = #{gmfyhzh,jdbcType=VARCHAR},
-      gmfyx = #{gmfyx,jdbcType=VARCHAR},
-      gmfsjh = #{gmfsjh,jdbcType=VARCHAR},
       kpr = #{kpr,jdbcType=VARCHAR},
       skr = #{skr,jdbcType=VARCHAR},
       fhr = #{fhr,jdbcType=VARCHAR},
@@ -311,6 +311,6 @@
       hjse = #{hjse,jdbcType=REAL},
       bz = #{bz,jdbcType=VARCHAR},
       kprq = #{kprq,jdbcType=VARCHAR}
-    where fpqqlsh = #{fpqqlsh,jdbcType=INTEGER}
+    where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </update>
 </mapper>

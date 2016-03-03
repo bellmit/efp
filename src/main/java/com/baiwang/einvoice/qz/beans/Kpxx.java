@@ -1,3 +1,7 @@
+/**
+ *Copyright (c) 1997, 2015,BEST WONDER CO.,LTD. All rights reserved.
+ */
+
 package com.baiwang.einvoice.qz.beans;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -5,22 +9,28 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+  * @ClassName: Kpxx
+  * @Description: TODO
+  * @author wsdoing
+  * @date 2016年3月2日 下午2:31:12
+  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "fpqqlsh",
-    "xtbs",
-    "jhkey",
+	"fpqqlsh",
+	"ddhm",
+    "fplx",
     "kplx",
     "xsfnsrsbh",
     "xsfmc",
-    "xsfdzdh",
+    "xsfdz",
+    "xsfdh",
     "xsfyhzh",
     "gmfnsrsbh",
     "gmfmc",
-    "gmfdzdh",
+    "gmfdz",
+    "gmfdh",
     "gmfyhzh",
-    "gmfyx",
-    "gmfsjh",
     "kpr",
     "skr",
     "fhr",
@@ -33,244 +43,555 @@ import javax.xml.bind.annotation.XmlType;
     "kprq"
 })
 public class Kpxx {
-	@XmlElement(name = "FPQQLSH", required = true)
-    private String fpqqlsh;
-	@XmlElement(name = "XTBS", required = true)
-    private String xtbs;
-	@XmlElement(name = "JHKEY")
-    private String jhkey;
-	@XmlElement(name = "KPLX")
-    private Boolean kplx;
-	@XmlElement(name = "XSF_NSRSBH")
-    private String xsfnsrsbh;
-	@XmlElement(name = "XSF_MC", required = true)
-    private String xsfmc;
-	@XmlElement(name = "XSF_DZDH")
-    private String xsfdzdh;
-	@XmlElement(name = "XSF_YHZH")
-    private String xsfyhzh;
-	@XmlElement(name = "GMF_NSRSBH", required = true)
-    private String gmfnsrsbh;
-	@XmlElement(name = "GMF_MC", required = true)
-    private String gmfmc;
-	@XmlElement(name = "GMF_DZDH", required = true)
-    private String gmfdzdh;
-	@XmlElement(name = "GMF_YHZH")
-    private String gmfyhzh;
-	@XmlElement(name = "GMF_YX", required = true)
-    private String gmfyx;
-	@XmlElement(name = "GMF_SJH")
-    private String gmfsjh;
-	@XmlElement(name = "KPR", required = true)
-    private String kpr;
-	@XmlElement(name = "SKR", required = true)
-    private String skr;
-	@XmlElement(name = "FHR", required = true)
-    private String fhr;
-	@XmlElement(name = "YFP_DM", required = true)
-    private String yfpdm;
-	@XmlElement(name = "YFP_HM", required = true)
-    private String yfphm;
-	@XmlElement(name = "JSHJ")
-    private Float jshj;
-	@XmlElement(name = "HJJE")
-    private Float hjje;
-	@XmlElement(name = "HJSE")
-    private Float hjse;
-	@XmlElement(name = "BZ", required = true)
-    private String bz;
-	@XmlElement(name = "KPRQ", required = true)
+
+	@XmlElement(name = "DD_HM", required = true)
+    private String ddhm;
+    @XmlElement(name = "FPLX", required = true)
+    protected String fplx;
+    @XmlElement(name = "KPLX", required = true)
+    protected String kplx;
+    @XmlElement(name = "XSF_NSRSBH", required = true)
+    protected String xsfnsrsbh;
+    @XmlElement(name = "XSF_MC", required = true)
+    protected String xsfmc;
+    @XmlElement(name = "XSF_DZ", required = true)
+    protected String xsfdz;
+    @XmlElement(name = "XSF_DH", required = true)
+    protected String xsfdh;
+    @XmlElement(name = "XSF_YHZH", required = true)
+    protected String xsfyhzh;
+    @XmlElement(name = "GMF_NSRSBH", required = true)
+    protected String gmfnsrsbh;
+    @XmlElement(name = "GMF_MC", required = true)
+    protected String gmfmc;
+    @XmlElement(name = "GMF_DZ", required = true)
+    protected String gmfdz;
+    @XmlElement(name = "GMF_DH", required = true)
+    protected String gmfdh;
+    @XmlElement(name = "GMF_YHZH", required = true)
+    protected String gmfyhzh;
+    @XmlElement(name = "KPR", required = true)
+    protected String kpr;
+    @XmlElement(name = "SKR", required = true)
+    protected String skr;
+    @XmlElement(name = "FHR", required = true)
+    protected String fhr;
+    @XmlElement(name = "YFP_DM", required = true)
+    protected String yfpdm;
+    @XmlElement(name = "YFP_HM", required = true)
+    protected String yfphm;
+    @XmlElement(name = "JSHJ", required = true)
+    protected String jshj;
+    @XmlElement(name = "HJJE", required = true)
+    protected String hjje;
+    @XmlElement(name = "HJSE", required = true)
+    protected String hjse;
+    @XmlElement(name = "BZ", required = true)
+    protected String bz;
+    @XmlElement(name = "kprq", required = true)
     private String kprq;
 
-    public String getFpqqlsh() {
-        return fpqqlsh;
+    @XmlElement(name = "FPQQLSH", required = true)
+    private String fpqqlsh;
+    
+    
+    
+    public String getKprq() {
+	
+		return kprq;
+	}
+
+
+	public void setKprq(String kprq) {
+	
+		this.kprq = kprq;
+	}
+
+
+	public String getFpqqlsh() {
+	
+		return fpqqlsh;
+	}
+
+
+	public void setFpqqlsh(String fpqqlsh) {
+	
+		this.fpqqlsh = fpqqlsh;
+	}
+
+
+	public String getFPLX() {
+        return fplx;
     }
 
-    public void setFpqqlsh(String fpqqlsh) {
-        this.fpqqlsh = fpqqlsh;
+    
+    public void setFPLX(String value) {
+        this.fplx = value;
     }
 
-    public String getXtbs() {
-        return xtbs;
-    }
-
-    public void setXtbs(String xtbs) {
-        this.xtbs = xtbs == null ? null : xtbs.trim();
-    }
-
-    public String getJhkey() {
-        return jhkey;
-    }
-
-    public void setJhkey(String jhkey) {
-        this.jhkey = jhkey == null ? null : jhkey.trim();
-    }
-
-    public Boolean getKplx() {
+    
+    public String getKPLX() {
         return kplx;
     }
 
-    public void setKplx(Boolean kplx) {
-        this.kplx = kplx;
+    
+    public void setKPLX(String value) {
+        this.kplx = value;
     }
 
-    public String getXsfnsrsbh() {
+    
+    public String getXSFNSRSBH() {
         return xsfnsrsbh;
     }
 
-    public void setXsfnsrsbh(String xsfnsrsbh) {
-        this.xsfnsrsbh = xsfnsrsbh == null ? null : xsfnsrsbh.trim();
+   
+    public void setXSFNSRSBH(String value) {
+        this.xsfnsrsbh = value;
     }
 
-    public String getXsfmc() {
+    /**
+     * Gets the value of the xsfmc property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getXSFMC() {
         return xsfmc;
     }
 
-    public void setXsfmc(String xsfmc) {
-        this.xsfmc = xsfmc == null ? null : xsfmc.trim();
+    /**
+     * Sets the value of the xsfmc property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setXSFMC(String value) {
+        this.xsfmc = value;
     }
 
-    public String getXsfdzdh() {
-        return xsfdzdh;
+    /**
+     * Gets the value of the xsfdz property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getXSFDZ() {
+        return xsfdz;
     }
 
-    public void setXsfdzdh(String xsfdzdh) {
-        this.xsfdzdh = xsfdzdh == null ? null : xsfdzdh.trim();
+    /**
+     * Sets the value of the xsfdz property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setXSFDZ(String value) {
+        this.xsfdz = value;
     }
 
-    public String getXsfyhzh() {
+    /**
+     * Gets the value of the xsfdh property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getXSFDH() {
+        return xsfdh;
+    }
+
+    /**
+     * Sets the value of the xsfdh property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setXSFDH(String value) {
+        this.xsfdh = value;
+    }
+
+    /**
+     * Gets the value of the xsfyhzh property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getXSFYHZH() {
         return xsfyhzh;
     }
 
-    public void setXsfyhzh(String xsfyhzh) {
-        this.xsfyhzh = xsfyhzh == null ? null : xsfyhzh.trim();
+    /**
+     * Sets the value of the xsfyhzh property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setXSFYHZH(String value) {
+        this.xsfyhzh = value;
     }
 
-    public String getGmfnsrsbh() {
+    /**
+     * Gets the value of the gmfnsrsbh property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGMFNSRSBH() {
         return gmfnsrsbh;
     }
 
-    public void setGmfnsrsbh(String gmfnsrsbh) {
-        this.gmfnsrsbh = gmfnsrsbh == null ? null : gmfnsrsbh.trim();
+    /**
+     * Sets the value of the gmfnsrsbh property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGMFNSRSBH(String value) {
+        this.gmfnsrsbh = value;
     }
 
-    public String getGmfmc() {
+    /**
+     * Gets the value of the gmfmc property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGMFMC() {
         return gmfmc;
     }
 
-    public void setGmfmc(String gmfmc) {
-        this.gmfmc = gmfmc == null ? null : gmfmc.trim();
+    /**
+     * Sets the value of the gmfmc property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGMFMC(String value) {
+        this.gmfmc = value;
     }
 
-    public String getGmfdzdh() {
-        return gmfdzdh;
+    /**
+     * Gets the value of the gmfdz property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGMFDZ() {
+        return gmfdz;
     }
 
-    public void setGmfdzdh(String gmfdzdh) {
-        this.gmfdzdh = gmfdzdh == null ? null : gmfdzdh.trim();
+    /**
+     * Sets the value of the gmfdz property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGMFDZ(String value) {
+        this.gmfdz = value;
     }
 
-    public String getGmfyhzh() {
+    /**
+     * Gets the value of the gmfdh property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGMFDH() {
+        return gmfdh;
+    }
+
+    /**
+     * Sets the value of the gmfdh property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGMFDH(String value) {
+        this.gmfdh = value;
+    }
+
+    /**
+     * Gets the value of the gmfyhzh property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGMFYHZH() {
         return gmfyhzh;
     }
 
-    public void setGmfyhzh(String gmfyhzh) {
-        this.gmfyhzh = gmfyhzh == null ? null : gmfyhzh.trim();
+    /**
+     * Sets the value of the gmfyhzh property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGMFYHZH(String value) {
+        this.gmfyhzh = value;
     }
 
-    public String getGmfyx() {
-        return gmfyx;
-    }
-
-    public void setGmfyx(String gmfyx) {
-        this.gmfyx = gmfyx == null ? null : gmfyx.trim();
-    }
-
-    public String getGmfsjh() {
-        return gmfsjh;
-    }
-
-    public void setGmfsjh(String gmfsjh) {
-        this.gmfsjh = gmfsjh == null ? null : gmfsjh.trim();
-    }
-
-    public String getKpr() {
+    /**
+     * Gets the value of the kpr property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getKPR() {
         return kpr;
     }
 
-    public void setKpr(String kpr) {
-        this.kpr = kpr == null ? null : kpr.trim();
+    /**
+     * Sets the value of the kpr property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setKPR(String value) {
+        this.kpr = value;
     }
 
-    public String getSkr() {
+    /**
+     * Gets the value of the skr property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSKR() {
         return skr;
     }
 
-    public void setSkr(String skr) {
-        this.skr = skr == null ? null : skr.trim();
+    /**
+     * Sets the value of the skr property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSKR(String value) {
+        this.skr = value;
     }
 
-    public String getFhr() {
+    /**
+     * Gets the value of the fhr property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFHR() {
         return fhr;
     }
 
-    public void setFhr(String fhr) {
-        this.fhr = fhr == null ? null : fhr.trim();
+    /**
+     * Sets the value of the fhr property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFHR(String value) {
+        this.fhr = value;
     }
 
-    public String getYfpdm() {
+    /**
+     * Gets the value of the yfpdm property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getYFPDM() {
         return yfpdm;
     }
 
-    public void setYfpdm(String yfpdm) {
-        this.yfpdm = yfpdm == null ? null : yfpdm.trim();
+    /**
+     * Sets the value of the yfpdm property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setYFPDM(String value) {
+        this.yfpdm = value;
     }
 
-    public String getYfphm() {
+    /**
+     * Gets the value of the yfphm property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getYFPHM() {
         return yfphm;
     }
 
-    public void setYfphm(String yfphm) {
-        this.yfphm = yfphm == null ? null : yfphm.trim();
+    /**
+     * Sets the value of the yfphm property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setYFPHM(String value) {
+        this.yfphm = value;
     }
 
-    public Float getJshj() {
+    /**
+     * Gets the value of the jshj property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getJSHJ() {
         return jshj;
     }
 
-    public void setJshj(Float jshj) {
-        this.jshj = jshj;
+    /**
+     * Sets the value of the jshj property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setJSHJ(String value) {
+        this.jshj = value;
     }
 
-    public Float getHjje() {
+    /**
+     * Gets the value of the hjje property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getHJJE() {
         return hjje;
     }
 
-    public void setHjje(Float hjje) {
-        this.hjje = hjje;
+    /**
+     * Sets the value of the hjje property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setHJJE(String value) {
+        this.hjje = value;
     }
 
-    public Float getHjse() {
+    /**
+     * Gets the value of the hjse property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getHJSE() {
         return hjse;
     }
 
-    public void setHjse(Float hjse) {
-        this.hjse = hjse;
+    /**
+     * Sets the value of the hjse property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setHJSE(String value) {
+        this.hjse = value;
     }
 
-    public String getBz() {
+    /**
+     * Gets the value of the bz property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getBZ() {
         return bz;
     }
 
-    public void setBz(String bz) {
-        this.bz = bz == null ? null : bz.trim();
+    /**
+     * Sets the value of the bz property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setBZ(String value) {
+        this.bz = value;
     }
 
-    public String getKprq() {
-        return kprq;
-    }
 
-    public void setKprq(String kprq) {
-        this.kprq = kprq == null ? null : kprq.trim();
-    }
+	public String getDdhm() {
+	
+		return ddhm;
+	}
+
+
+	public void setDdhm(String ddhm) {
+	
+		this.ddhm = ddhm;
+	}
+
+    
 }

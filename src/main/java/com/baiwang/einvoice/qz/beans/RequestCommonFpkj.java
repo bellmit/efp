@@ -6,77 +6,44 @@ package com.baiwang.einvoice.qz.beans;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
-  * @ClassName: aaa
+  * @ClassName: RequestCommonFpkj
   * @Description: TODO
   * @author wsdoing
-  * @date 2016年2月29日 下午2:02:27
+  * @date 2016年3月2日 下午2:32:30
   */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "kpxx",
     "commonfpkjxmxxs"
 })
-public  class RequestCommonFpkj {
+public class RequestCommonFpkj {
 
-    @XmlElement(name = "COMMON_FPKJ_FPT", required = true)
-    protected Kpxx kpxx;
-    @XmlElement(name = "COMMON_FPKJ_XMXXS", required = true)
-    protected CommonFpkjXmxxs commonfpkjxmxxs;
-    @XmlAttribute(name = "class")
-    protected String clazz;
+	 @XmlElement(name = "COMMON_FPKJ_FPT", required = true)
+     protected Kpxx kpxx;
+     @XmlElement(name = "COMMON_FPKJ_XMXXS", required = true)
+     protected Commonfpkjxmxxs commonfpkjxmxxs;
 
-    
-    /*public CommonFpkjFpt getCOMMONFPKJFPT() {
-        return commonfpkjfpt;
-    }
-
-
-    public void setCOMMONFPKJFPT(CommonFpkjFpt value) {
-        this.commonfpkjfpt = value;
-    }*/
+     
+     public Kpxx getKpxx() {
+         return kpxx;
+     }
 
     
-    public CommonFpkjXmxxs getCOMMONFPKJXMXXS() {
-        return commonfpkjxmxxs;
-    }
+     public void setKpxx(Kpxx value) {
+         this.kpxx = value;
+     }
 
-   
-    public Kpxx getKpxx() {
-	
-		return kpxx;
-	}
+     
+     public Commonfpkjxmxxs getCommonfpkjxmxxs() {
+         return commonfpkjxmxxs;
+     }
 
-
-	public void setKpxx(Kpxx kpxx) {
-	
-		this.kpxx = kpxx;
-	}
-
-
-	public void setCOMMONFPKJXMXXS(CommonFpkjXmxxs value) {
-        this.commonfpkjxmxxs = value;
-    }
-
-    
-    public String getClazz() {
-        return clazz;
-    }
-
-    /**
-     * Sets the value of the clazz property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setClazz(String value) {
-        this.clazz = value;
-    }
-
-    }
+     
+     public void setCommonfpkjxmxxs(Commonfpkjxmxxs value) {
+         this.commonfpkjxmxxs = value;
+     }
+}

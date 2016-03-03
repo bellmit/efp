@@ -56,9 +56,69 @@ public class JAXBUtil{
 	
 	public static void main(String[] args) throws UnsupportedEncodingException {
 		
-		String xml = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"FPKJ\" comment=\"发票开具\"><REQUEST_COMMON_FPKJ class=\"REQUEST_COMMON_FPKJ\"><COMMON_FPKJ_FPT class=\"COMMON_FPKJ_FPT\"><FPQQLSH>18256001466415008145</FPQQLSH><XTBS>erp</XTBS><JHKEY>0001111000111</JHKEY><KPLX>0</KPLX><XSF_NSRSBH>110109004357777777</XSF_NSRSBH><XSF_MC>百旺亿城测试1</XSF_MC><XSF_DZDH>11012345678</XSF_DZDH><XSF_YHZH>6666666666666666666</XSF_YHZH><GMF_NSRSBH></GMF_NSRSBH><GMF_MC>个人</GMF_MC><GMF_DZDH></GMF_DZDH><GMF_YHZH>888888888888888</GMF_YHZH><GMF_YX>fapiaotest@baiwang.com</GMF_YX><GMF_SJH>15165253187</GMF_SJH><KPR>bw0701</KPR><SKR>bw0701</SKR><FHR>bw0701</FHR><YFP_DM></YFP_DM><YFP_HM></YFP_HM><JSHJ>58.50</JSHJ><HJJE>50.00</HJJE><HJSE>8.50</HJSE><BZ>备注</BZ><expand><name>名称</name><value>值</value></expand></COMMON_FPKJ_FPT><COMMON_FPKJ_XMXXS class=\"COMMON_FPKJ_XMXX\" size=\"2\"><COMMON_FPKJ_XMXX><FPHXZ>0</FPHXZ><XMMC>公牛（BULL）GN-H111</XMMC><GGXH></GGXH><DW></DW><XMSL>1</XMSL><XMDJ>10</XMDJ><XMJE>10.00</XMJE><SL>0.17</SL><SE>1.70</SE></COMMON_FPKJ_XMXX><COMMON_FPKJ_XMXX><FPHXZ>0</FPHXZ><XMMC>华潮 E386</XMMC><GGXH></GGXH><DW></DW><XMSL>2</XMSL><XMDJ>20</XMDJ><XMJE>40.00</XMJE><SL>0.17</SL><SE>6.80</SE></COMMON_FPKJ_XMXX></COMMON_FPKJ_XMXXS></REQUEST_COMMON_FPKJ></business>";
+		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
+				"<business id=\"FPKJ\">\n" + 
+				"	<CUSTOMDATA>\n" + 
+				"		<DD_HM>订单号码</DD_HM>\n" + 
+				"		<DD_SS_DQ>订单所属地区</DD_SS_DQ>\n" + 
+				"		<DD_YW_LX>订单业务类型，B2B,B2C</DD_YW_LX>\n" + 
+				"		<DD_SJ>订单生成时间</DD_SJ>\n" + 
+				"	</CUSTOMDATA>\n" + 
+				"	<REQUEST_COMMON_FPKJ>\n" + 
+				"		<COMMON_FPKJ_FPT>\n" + 
+				"			<FPLX>发票类型</FPLX>\n" + 
+				"			<KPLX>开票类型</KPLX>\n" + 
+				"			<XSF_NSRSBH>销售方纳税人识别号</XSF_NSRSBH>\n" + 
+				"			<XSF_MC>销售方名称</XSF_MC>\n" + 
+				"			<XSF_DZ>销售方地址</XSF_DZ>\n" + 
+				"			<XSF_DH>销售方电话</XSF_DH>\n" + 
+				"			<XSF_YHZH>销售方银行账号</XSF_YHZH>\n" + 
+				"			<GMF_NSRSBH>购买方纳税人识别号</GMF_NSRSBH>\n" + 
+				"			<GMF_MC>购买方名称</GMF_MC>\n" + 
+				"			<GMF_DZ>购买方地址</GMF_DZ>\n" + 
+				"			<GMF_DH>购买方电话</GMF_DH>\n" + 
+				"			<GMF_YHZH>购买方银行账号</GMF_YHZH>\n" + 
+				"			<KPR>开票人</KPR>\n" + 
+				"			<SKR>收款人</SKR>\n" + 
+				"			<FHR>复核人</FHR>\n" + 
+				"			<YFP_DM>原发票代码</YFP_DM>\n" + 
+				"			<YFP_HM>原发票号码</YFP_HM>\n" + 
+				"			<JSHJ>价税合计</JSHJ>\n" + 
+				"			<HJJE>合计金额</HJJE>\n" + 
+				"			<HJSE>合计税额</HJSE>\n" + 
+				"			<BZ>备注</BZ>\n" + 
+				"		</COMMON_FPKJ_FPT>\n" + 
+				"		<COMMON_FPKJ_XMXXS>\n" + 
+				"			<COMMON_FPKJ_XMXX>\n" + 
+				"				<FPHXZ>发票行性质</FPHXZ>\n" + 
+				"				<XMMC>项目名称</XMMC>\n" + 
+				"				<GGXH>规格型号</GGXH>\n" + 
+				"				<DW>单位</DW>\n" + 
+				"				<XMSL>项目数量</XMSL>\n" + 
+				"				<XMDJ>项目单价</XMDJ>\n" + 
+				"				<XMJE>项目金额</XMJE>\n" + 
+				"				<SL>税率</SL>\n" + 
+				"				<SE>税额</SE>\n" + 
+				"				<HSBZ>含税标志</HSBZ>\n" + 
+				"			</COMMON_FPKJ_XMXX>\n" + 
+				"			<COMMON_FPKJ_XMXX>\n" + 
+				"				<FPHXZ>发票行性质</FPHXZ>\n" + 
+				"				<XMMC>项目名称</XMMC>\n" + 
+				"				<GGXH>规格型号</GGXH>\n" + 
+				"				<DW>单位</DW>\n" + 
+				"				<XMSL>项目数量</XMSL>\n" + 
+				"				<XMDJ>项目单价</XMDJ>\n" + 
+				"				<XMJE>项目金额</XMJE>\n" + 
+				"				<SL>税率</SL>\n" + 
+				"				<SE>税额</SE>\n" + 
+				"				<HSBZ>含税标志</HSBZ>\n" + 
+				"			</COMMON_FPKJ_XMXX>\n" + 
+				"		</COMMON_FPKJ_XMXXS>\n" + 
+				"	</REQUEST_COMMON_FPKJ>\n" + 
+				"</business>";
 		/*String xml = readFile("E:\\kjfp\\kjfp.xml");*/
-		Business business = unmarshallObject(xml.getBytes("gbk"));
-		System.out.println(business.getREQUESTCOMMONFPKJ().getCOMMONFPKJXMXXS().getSize());
+		Business business = unmarshallObject(xml.getBytes("utf-8"));
+		
+		System.out.println(XmlUtil.toSpecialInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()));
 	}
 }
