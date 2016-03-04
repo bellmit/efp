@@ -38,7 +38,7 @@
 			"id":123,
 			"text":"修改密码",
 			"attributes":{
-				"url":"../../user/changePwd.html"
+				"url":"../../user/changePwd.jsp"
 			}
 		}
 	]},{
