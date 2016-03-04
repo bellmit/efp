@@ -4,9 +4,8 @@
 
 package com.baiwang.einvoice.qz.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,16 +13,17 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.ServletConfigAware;
 
 import com.baiwang.einvoice.qz.beans.ReportDetail;
 import com.baiwang.einvoice.qz.service.ReportDetailService;
+import com.baiwang.einvoice.util.ReportUtil;
 
 /**
   * @ClassName: ReportController
@@ -39,69 +39,61 @@ public class ReportController implements ServletConfigAware {
 	@Resource
 	private ReportDetailService reportDetailService;
 	
+	@RequestMapping(value="init")
+	public String initQuery(){
+		return "fp/queryDetail";
+	}
+	
 	@RequestMapping(value="query")
-	public String generateReport(HttpServletRequest request){
+	public String queryReport(HttpServletRequest request){
 		//获取查询条件
-		String dataS = request.getParameter("beginDate");
-		String dataE = request.getParameter("endDate");
-		if((null !=dataS && dataS.trim().length()!=0) || (null !=dataE && dataE.trim().length()!=0)){
-			Map<String, Object> condition = new HashMap<>();
-			condition.put("dataS", dataS);
-			condition.put("dataE", dataE);
-			System.out.println(condition);
-			List<ReportDetail> list = reportDetailService.selectByCondition(condition);//查询结果
-			request.setAttribute("fpxxList", list);
-		}
+		String ddh4q = request.getParameter("ddh4q");
+		request.setAttribute("ddh4q", ddh4q);
+		String fplx4q = request.getParameter("fplx4q");
+		String dateS = request.getParameter("beginDate");
+		String dateE = request.getParameter("endDate");
+		Map<String, Object> condition = new HashMap<>();
+		condition.put("dateS", dateS);
+		condition.put("dateE", dateE);
+		condition.put("ddh4q", ddh4q);
+		condition.put("fplx4q", fplx4q);
+		List<ReportDetail> list = reportDetailService.selectByCondition(condition);//查询结果
+		request.setAttribute("fpxxList", list);
 		return "fp/queryDetail";
 	}
 	@RequestMapping(value="download")
 	public void exportReport(HttpServletRequest request,HttpServletResponse response){
-		//获取查询条件
-		String dataS = request.getParameter("dataS");
-		String dataE = request.getParameter("dataE");
-		System.out.println(request.getParameter("ddh4ept"));
-		String[] tmp = request.getParameterValues("ddh4ept"); 
-		if(null != tmp){
-			System.out.println(tmp.length+","+tmp[0]+","+tmp[1]);
-		}
-//		List<ReportDetail> list = new ArrayList<>();//查询结果
-//		ReportDetail rd = new ReportDetail();
-//		rd.setDdh("123654789");
-//		list.add(rd);
-//		rd.setDdh("88888");
-//		list.add(rd);
-		response.setContentType("multipart/form-data");
-		response.setHeader("Content-Disposition", "attachment;fileName=a.xls");
-		ServletOutputStream outputStream = null;
-		FileInputStream inputStream = null;
-		//工程根目录
-		String rootPath = servletContext.getRealPath("/") ;
-		File file = new File("E:\\a_work_doc\\电子发票相关\\发票后台表样.xlsx");
-		try {
-			inputStream = new FileInputStream(file);
-			outputStream = response.getOutputStream();
-			 byte[] b = new byte[1024];
-             int length;
-             while ((length = inputStream.read(b)) > 0) {
-            	 outputStream.write(b, 0, length);
-             }
-			outputStream.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if(null != inputStream){
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		String[] ddh4ept = request.getParameterValues("ddh4ept"); 
+		List<ReportDetail> list = new ArrayList<>();
+		if(null == ddh4ept || ddh4ept.length==0){
+			//获取查询条件
+			String ddh4q = request.getParameter("ddh4q");
+			String fplx4q = request.getParameter("fplx4q");
+			String dateS = request.getParameter("beginDate");
+			String dateE = request.getParameter("endDate");
+			Map<String, Object> condition = new HashMap<>();
+			condition.put("dateS", dateS);
+			condition.put("dateE", dateE);
+			condition.put("ddh4q", ddh4q);
+			condition.put("fplx4q", fplx4q);
+			list = reportDetailService.selectByCondition(condition);//查询结果
+		}else{
+			for(String tmp:ddh4ept){
+				list.add(reportDetailService.selectByPrimaryKey(tmp));
 			}
-			if(null != outputStream){
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		}
+		//生成excel
+		if(list.size()>0){
+			try {
+				HSSFWorkbook wb = ReportUtil.exportExcel(list);
+				response.setContentType("application/ms-excel");
+				response.setHeader("Content-Disposition", "attachment;Filename=new.xls");
+				OutputStream os = response.getOutputStream();
+				wb.write(os);
+				os.flush();
+				os.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -117,5 +109,4 @@ public class ReportController implements ServletConfigAware {
 		this.servletContext = servletConfig.getServletContext();
 		
 	}
-
 }
