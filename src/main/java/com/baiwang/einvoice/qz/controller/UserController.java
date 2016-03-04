@@ -19,7 +19,7 @@ import com.baiwang.einvoice.qz.service.IUserService;
 import com.baiwang.einvoice.qz.service.impl.UserServiceImpl;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("")
 public class UserController {
 	
 	private Log logger = LogFactory.getLog(UserController.class);
@@ -27,7 +27,7 @@ public class UserController {
 	@Resource
 	private IUserService service;
 	
-	@RequestMapping(value="login",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	@RequestMapping(value="user/login",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String login(User user, HttpServletRequest request,HttpSession session){
 		
@@ -43,7 +43,7 @@ public class UserController {
         return "4001";
 	}
 	
-	@RequestMapping("getCurrentUser")
+	@RequestMapping("user/getCurrentUser")
 	@ResponseBody
 	public Map<String, String> init(HttpServletRequest request){
 		String basePath = request.getContextPath();
@@ -61,5 +61,12 @@ public class UserController {
 		return map;
 	}
 	
+	@RequestMapping("/logout")
+	@ResponseBody
+	public String exit(HttpServletRequest request){
+		request.getSession().removeAttribute("user");;
+		
+		return "0";
+	}
 
 }

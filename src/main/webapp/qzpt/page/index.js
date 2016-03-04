@@ -64,8 +64,21 @@ function exitSystem(){
 	
 	$.messager.confirm("","确定退出?",function(r){
 		if(r){
-//			var result = callCommFunc(com.bwplat.portal.user.service.UserService.exitSystem);
-			window.location.href= '/logout';
+			$.ajax({
+				type:"POST",
+		        url: basePath + '/logout',
+		        async:false,
+		        success: function (data) {
+		        	if(data== '0'){
+		        		window.location.href= basePath + '/login/login.html';
+		        	}
+		        },
+		        error:function(e) {
+		        	window.top.location.href = basePath + '/login/login.html';
+		        }
+			});
+			
+//			window.location.href= basePath + '/logout';
 		}
 	});
 }

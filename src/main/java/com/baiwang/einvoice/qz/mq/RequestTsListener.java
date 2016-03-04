@@ -1,6 +1,8 @@
 package com.baiwang.einvoice.qz.mq;
 
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.annotation.Resource;
 import javax.jms.Destination;
@@ -35,12 +37,24 @@ public class RequestTsListener  implements SessionAwareMessageListener{
 		String xml = (String) map.get("xml");
 		String returnSK = (String) map.get("returnSK");
 		
-		String ubl = afterRequestSK(xml, returnSK);
+		final String ubl = afterRequestSK(xml, returnSK);
 		
 		logger.info("***********转换ubl****************" + ubl);
 		
 		String reqestTsPlat = tsService.reqestTsPlat(ubl);
 		System.out.println("请求发票平台返回：" + reqestTsPlat);
+		if(!"0000".equals(reqestTsPlat)){
+			
+			final Timer timer = new Timer();
+			timer.scheduleAtFixedRate(new TimerTask() {
+				public void run() {
+					String res = tsService.reqestTsPlat(ubl);
+					if("0000".equals(res)){
+						timer.cancel();
+					}
+				}
+			}, 6*1000, 15*60*1000);
+		}
 			
 	}
 	
