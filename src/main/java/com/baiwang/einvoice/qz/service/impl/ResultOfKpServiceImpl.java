@@ -20,4 +20,18 @@ public class ResultOfKpServiceImpl implements IResultOfKpService {
 		return dao.queryResult(ddhm);
 	}
 
+	@Override
+	public int save(ResultOfKp result) {
+		
+		int count = dao.selectByDdhm(result.getDdhm());
+		System.out.println("-----=====" + count);
+		if(count == 0){
+			count = dao.save(result);
+		}else{
+			count = dao.updateByDdhm(result);
+		}
+		
+		return count;
+	}
+
 }

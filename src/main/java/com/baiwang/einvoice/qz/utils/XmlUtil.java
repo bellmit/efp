@@ -42,7 +42,7 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<fpqqlsh>"+kpxx.getFpqqlsh()+"</fpqqlsh>");
 		sb.append("\r\n");
-		sb.append("<kplx>"+kpxx.getFPLX()+"</kplx>");
+		sb.append("<kplx>"+kpxx.getKPLX()+"</kplx>");
 		sb.append("\r\n");
 		sb.append("<tspz>00</tspz>");
 		sb.append("\r\n");
@@ -150,7 +150,7 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<fpqqlsh>"+kpxx.getFpqqlsh()+"</fpqqlsh>");
 		sb.append("\r\n");
-		sb.append("<kplx>"+kpxx.getFPLX()+"</kplx>");
+		sb.append("<kplx>"+kpxx.getKPLX()+"</kplx>");
 		sb.append("\r\n");
 		sb.append("<tspz>00</tspz>");
 		sb.append("\r\n");
@@ -256,7 +256,7 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<FPQQLSH>"+kpxx.getFpqqlsh()+"</FPQQLSH>");//
 		sb.append("\r\n");
-		sb.append("<KPLX>"+kpxx.getFPLX()+"</KPLX>");
+		sb.append("<KPLX>"+kpxx.getKPLX()+"</KPLX>");
 		sb.append("\r\n");
 		sb.append("<XSF_NSRSBH>"+kpxx.getXSFNSRSBH()+"</XSF_NSRSBH>");
 		sb.append("\r\n");

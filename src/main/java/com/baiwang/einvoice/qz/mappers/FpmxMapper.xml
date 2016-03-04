@@ -28,6 +28,12 @@
     delete from fpmx
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  
+  <delete id="deleteByFpqqlsh" parameterType="java.lang.String" >
+    delete from fpmx
+    where fpqqlsh = #{id,jdbcType=BIGINT}
+  </delete>
+  
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
     insert into fpmx (id, fpqqlsh, fphxz, 
       xmmc, ggxh, dw, xmsl, 

@@ -1,6 +1,8 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Business;
+import com.baiwang.einvoice.qz.beans.CustomOrder;
+import com.baiwang.einvoice.qz.beans.Fpmx;
+import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.ResultOfKp;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
@@ -52,7 +57,7 @@ public class FpController {
 	@ResponseBody
 	public String kjfp(String xml){
 		
-		String messageSelector = "JMSCorrelationID = '81ee2fb5-b40e-45f5-9e0d-1fd1bde9cc86'";
+		String messageSelector = "JMSCorrelationID = '6158357d-1df5-470f-8223-f83892952f75'";
 		TextMessage receive = (TextMessage) jmsTemplate2.receiveSelected(messageSelector );
         
         try {
@@ -76,37 +81,49 @@ public class FpController {
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
 		
-		ResultOfKp result = resultService.queryResult(business.getCustomOrder().getDdhm());
+		String fpqqlsh = XmlUtil.random();
+		CustomOrder customOrder = business.getCustomOrder();
+		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
+		kpxx.setFpqqlsh(fpqqlsh);
+		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
+		System.out.println(customOrder.getDdhm());
+		
+		ResultOfKp result = resultService.queryResult(customOrder.getDdhm());
 		if(null != result && "0000".equals(result.getCode())){
-			logger.warn("*********订单号：" + business.getCustomOrder().getDdhm() + "已经开票成功，返回。");
+			logger.warn("*********订单号：" + customOrder.getDdhm() + "已经开票成功，返回。");
 			return "0000";
 		}
 		
+		String correlationId = "";
 		try{
-			sender.sendMessage(XmlUtil.toEInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), 
-					business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()).toString(), 
-					business.getCustomOrder().getDdhm());
+			UUID uuid = UUID.randomUUID();
+			correlationId = uuid.toString();
+			System.out.println("kp-------ddhm:"+correlationId);
+			sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
+					correlationId);
 		}catch(Exception e){
-			logger.error("*********订单号：" + business.getCustomOrder().getDdhm() + "网络异常");
+			logger.error("*********订单号：" + customOrder.getDdhm() + "网络异常");
 			e.printStackTrace();
 			return "网络异常";
 		}
 
-		fpService.saveXmlInfo(business);
+		fpService.saveInfo(customOrder, kpxx, list);
 		
 		//从响应队列检索响应消息
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<String> future = executor.submit(new EnumResposeMessageTask(business.getCustomOrder().getDdhm()));
-		String success = "";
+        Future<String> future = executor.submit(new EnumResposeMessageTask(customOrder.getDdhm(), correlationId, jmsTemplate2, resultService));
+		String success = "4400";
         try{
         	success = future.get(4, TimeUnit.SECONDS);
-        }
-        catch (InterruptedException e) {   
-        	future.cancel(true);   
+        	logger.info("响应队列检索响应消息:"+ success);
+        }catch (InterruptedException e) {   
+        	future.cancel(true);  
+        	e.printStackTrace();
         } catch (ExecutionException e) {   
-        	future.cancel(true);   
+        	future.cancel(true);
+        	e.printStackTrace();
         } catch (TimeoutException e) {
-        	
+        	e.printStackTrace();
         	String requestURL = request.getRequestURL().toString();
     		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?corre=" + business.getCustomOrder().getDdhm();
     		

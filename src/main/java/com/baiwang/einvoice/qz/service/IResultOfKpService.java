@@ -6,4 +6,6 @@ public interface IResultOfKpService {
 
 	ResultOfKp queryResult(String ddhm);
 
+	int save(ResultOfKp result);
+
 }

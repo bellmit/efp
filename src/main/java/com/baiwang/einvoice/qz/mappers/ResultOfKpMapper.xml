@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.ResultOfKp" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="ddhm" property="ddhm" jdbcType="VARCHAR" />
+    <result column="correlationID" property="correlationid" jdbcType="VARCHAR" />
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="msg" property="msg" jdbcType="VARCHAR" />
@@ -11,7 +12,7 @@
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, ddhm, fpqqlsh, code, msg, operateTime, createTime
+    id, ddhm, correlationID, fpqqlsh, code, msg, operateTime, createTime
   </sql>
   
   <select id="queryResult" resultMap="BaseResultMap">
@@ -21,6 +22,29 @@
     where ddhm = #{ddhm,jdbcType=VARCHAR} 
   </select>
   
+  <insert id="save" parameterType="com.baiwang.einvoice.qz.beans.ResultOfKp">
+  	insert into resultofkp (ddhm, correlationID, 
+      fpqqlsh, code, msg, 
+      operateTime, createTime)
+    values ( #{ddhm,jdbcType=VARCHAR}, #{correlationid,jdbcType=VARCHAR}, #{fpqqlsh,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, NOW(), 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <select id="selectByDdhm" parameterType="string" resultType="int">
+  	select count(id) from resultofkp where ddhm = #{ddhm,jdbcType=VARCHAR} 
+  </select>
+  
+  <update id="updateByDdhm" parameterType="com.baiwang.einvoice.qz.beans.ResultOfKp">
+  	update resultofkp
+    set ddhm = #{ddhm,jdbcType=VARCHAR}, 
+    correlationID = #{correlationid,jdbcType=VARCHAR}, 
+      fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}, 
+      code = #{code,jdbcType=VARCHAR},
+      msg = #{msg,jdbcType=VARCHAR},
+      operateTime = now()
+    where ddhm = #{ddhm,jdbcType=VARCHAR} 
+  </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -32,12 +56,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.ResultOfKp" >
-    insert into resultofkp (id, ddhm, fpqqlsh, 
-      code, msg, operateTime, 
-      createTime)
-    values (#{id,jdbcType=BIGINT}, #{ddhm,jdbcType=VARCHAR}, #{fpqqlsh,jdbcType=VARCHAR}, 
-      #{code,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, #{operatetime,jdbcType=TIMESTAMP}, 
-      #{createtime,jdbcType=TIMESTAMP})
+    insert into resultofkp (id, ddhm, correlationID, 
+      fpqqlsh, code, msg, 
+      operateTime, createTime)
+    values (#{id,jdbcType=BIGINT}, #{ddhm,jdbcType=VARCHAR}, #{correlationid,jdbcType=VARCHAR}, 
+      #{fpqqlsh,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, 
+      #{operatetime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.ResultOfKp" >
     insert into resultofkp
@@ -47,6 +71,9 @@
       </if>
       <if test="ddhm != null" >
         ddhm,
+      </if>
+      <if test="correlationid != null" >
+        correlationID,
       </if>
       <if test="fpqqlsh != null" >
         fpqqlsh,
@@ -71,6 +98,9 @@
       <if test="ddhm != null" >
         #{ddhm,jdbcType=VARCHAR},
       </if>
+      <if test="correlationid != null" >
+        #{correlationid,jdbcType=VARCHAR},
+      </if>
       <if test="fpqqlsh != null" >
         #{fpqqlsh,jdbcType=VARCHAR},
       </if>
@@ -94,6 +124,9 @@
       <if test="ddhm != null" >
         ddhm = #{ddhm,jdbcType=VARCHAR},
       </if>
+      <if test="correlationid != null" >
+        correlationID = #{correlationid,jdbcType=VARCHAR},
+      </if>
       <if test="fpqqlsh != null" >
         fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR},
       </if>
@@ -115,6 +148,7 @@
   <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.ResultOfKp" >
     update resultofkp
     set ddhm = #{ddhm,jdbcType=VARCHAR},
+      correlationID = #{correlationid,jdbcType=VARCHAR},
       fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR},
       code = #{code,jdbcType=VARCHAR},
       msg = #{msg,jdbcType=VARCHAR},

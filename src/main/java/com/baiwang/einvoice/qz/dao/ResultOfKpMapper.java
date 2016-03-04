@@ -18,4 +18,10 @@ public interface ResultOfKpMapper {
     int updateByPrimaryKey(ResultOfKp record);
 
 	ResultOfKp queryResult(@Param("ddhm") String ddhm);
+
+	int save(ResultOfKp result);
+
+	int selectByDdhm(@Param("ddhm") String ddhm);
+
+	int updateByDdhm(@Param("ddhm")ResultOfKp result);
 }

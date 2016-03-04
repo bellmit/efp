@@ -7,6 +7,8 @@ public class ResultOfKp {
 
     private String ddhm;
 
+    private String correlationid;
+
     private String fpqqlsh;
 
     private String code;
@@ -31,6 +33,14 @@ public class ResultOfKp {
 
     public void setDdhm(String ddhm) {
         this.ddhm = ddhm == null ? null : ddhm.trim();
+    }
+
+    public String getCorrelationid() {
+        return correlationid;
+    }
+
+    public void setCorrelationid(String correlationid) {
+        this.correlationid = correlationid == null ? null : correlationid.trim();
     }
 
     public String getFpqqlsh() {
