@@ -2,6 +2,7 @@ package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -56,7 +57,7 @@ public class FpController {
 	@ResponseBody
 	public String kjfp(String xml){
 		
-		String messageSelector = "JMSCorrelationID = '81ee2fb5-b40e-45f5-9e0d-1fd1bde9cc86'";
+		String messageSelector = "JMSCorrelationID = '6158357d-1df5-470f-8223-f83892952f75'";
 		TextMessage receive = (TextMessage) jmsTemplate2.receiveSelected(messageSelector );
         
         try {
@@ -85,16 +86,19 @@ public class FpController {
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		kpxx.setFpqqlsh(fpqqlsh);
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
-		
+		System.out.println(customOrder.getDdhm());
 		ResultOfKp result = resultService.queryResult(customOrder.getDdhm());
 		if(null != result && "0000".equals(result.getCode())){
 			logger.warn("*********订单号：" + customOrder.getDdhm() + "已经开票成功，返回。");
 			return "0000";
 		}
-		
+		String correlationId = "";
 		try{
+			UUID uuid = UUID.randomUUID();
+			correlationId = uuid.toString();
+			System.out.println("kp-------ddhm:"+correlationId);
 			sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
-					customOrder.getDdhm());
+					correlationId);
 		}catch(Exception e){
 			logger.error("*********订单号：" + customOrder.getDdhm() + "网络异常");
 			e.printStackTrace();
@@ -105,17 +109,19 @@ public class FpController {
 		
 		//从响应队列检索响应消息
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<String> future = executor.submit(new EnumResposeMessageTask(business.getCustomOrder().getDdhm()));
-		String success = "";
+        Future<String> future = executor.submit(new EnumResposeMessageTask(correlationId));
+		String success = "4400";
         try{
         	success = future.get(4, TimeUnit.SECONDS);
-        }
-        catch (InterruptedException e) {   
-        	future.cancel(true);   
+        	logger.info("响应队列检索响应消息:"+ success);
+        }catch (InterruptedException e) {   
+        	future.cancel(true);  
+        	e.printStackTrace();
         } catch (ExecutionException e) {   
-        	future.cancel(true);   
+        	future.cancel(true);
+        	e.printStackTrace();
         } catch (TimeoutException e) {
-        	
+        	e.printStackTrace();
         	String requestURL = request.getRequestURL().toString();
     		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?corre=" + business.getCustomOrder().getDdhm();
     		

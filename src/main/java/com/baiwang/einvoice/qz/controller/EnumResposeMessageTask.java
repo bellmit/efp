@@ -3,6 +3,7 @@ package com.baiwang.einvoice.qz.controller;
 import java.util.concurrent.Callable;
 
 import javax.annotation.Resource;
+import javax.jms.JMSException;
 import javax.jms.TextMessage;
 
 import org.apache.commons.logging.Log;
@@ -26,29 +27,37 @@ public class EnumResposeMessageTask implements  Callable<String>{
 	@Resource
 	private IResultOfKpService resultService;
 	
-	public EnumResposeMessageTask(String xx){
-		this.ddhm =  xx;
+	public EnumResposeMessageTask(String ddhm){
+		this.ddhm =  "JMSCorrelationID = '" + ddhm +"'";
+		System.out.println("-------------ddhm:"+ddhm);
 	}
 	
-	public String call() throws Exception {
-		
-		TextMessage receive = (TextMessage) jmsTemplate2.receiveSelected("JMSCorrelationID = '" + ddhm +"'");
-		logger.info("*****JMSCorrelationID为:" + ddhm + "接收到的message为：" + receive.getText());
+	public String call(){
+		System.out.println("*******ddhm-----" + ddhm);
+		String text = "";
+		try {
+			TextMessage receive = (TextMessage) jmsTemplate2.receiveSelected(ddhm);
+			text = receive.getText();
+			logger.info("*****JMSCorrelationID为:" + ddhm + "接收到的message为：" + text);
+		} catch (JMSException e1) {
+			System.out.println(" exception======"+e1.getMessage());
+			e1.printStackTrace();
+		}
 		
 		ResultOfKp result = new ResultOfKp();
-		result.setCode(InvoiceUtil.getIntervalValue(receive.getText(),"<RETURNCODE>","</RETURNCODE>"));
-		result.setMsg(InvoiceUtil.getIntervalValue(receive.getText(),"<RETURNMSG>","</RETURNMSG>"));
-		result.setFpqqlsh(InvoiceUtil.getIntervalValue(receive.getText(),"<FPQQLSH>","</FPQQLSH>"));
+		result.setCode(InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>"));
+		result.setMsg(InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>"));
+		result.setFpqqlsh(InvoiceUtil.getIntervalValue(text,"<FPQQLSH>","</FPQQLSH>"));
 		try{
 			resultService.save(result);
 		}catch(Exception e){
-			logger.error("*****订单号码：" + ddhm + "保存结果出现异常，code:"+InvoiceUtil.getIntervalValue(receive.getText(),"<RETURNMSG>","</RETURNMSG>")
-			+ ",msg:" + InvoiceUtil.getIntervalValue(receive.getText(),"<RETURNMSG>","</RETURNMSG>") + ",fpqqlsh:" +
-			InvoiceUtil.getIntervalValue(receive.getText(),"<FPQQLSH>","</FPQQLSH>"));
+			logger.error("*****订单号码：" + ddhm + "保存结果出现异常，code:"+InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>")
+			+ ",msg:" + InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>") + ",fpqqlsh:" +
+			InvoiceUtil.getIntervalValue(text,"<FPQQLSH>","</FPQQLSH>"));
 		}
 		
 		
-        return receive.getText();
+        return text;
     }
 	
 	

@@ -53,6 +53,9 @@
     
 	<!-- <bean id="EInvoceKjfpfhListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpfhListener"></bean> -->
 	
+    <bean id="einvoiceKjfpfhMQ" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="baiwang.einvoice.kjfpfh" />
+	</bean>
 	<bean id="jmsTemplate2" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
         <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false--> 
@@ -61,9 +64,6 @@
         <property name="deliveryMode" value="2" /> 
         <property name="pubSubDomain" value="false" />  
         <property name="defaultDestination" ref="einvoiceKjfpfhMQ" />
-	</bean>
-    <bean id="einvoiceKjfpfhMQ" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg index="0" value="baiwang.einvoice.kjfpfh" />
 	</bean>
     
     <!-- <bean id="controllerQueueReceiverContainer"  
