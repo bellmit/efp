@@ -316,7 +316,7 @@ public class XmlUtil {
 				sb.append("\r\n");
 				sb.append("<SE>"+ temp.getSE()+"</SE>");
 				sb.append("\r\n");
-				sb.append("<</COMMON_FPKJ_XMXX>");
+				sb.append("</COMMON_FPKJ_XMXX>");
 				sb.append("\r\n");
 			}
 			sb.append("</COMMON_FPKJ_XMXXS>");
