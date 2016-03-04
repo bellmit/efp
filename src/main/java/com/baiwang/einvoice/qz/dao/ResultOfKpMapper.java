@@ -23,5 +23,5 @@ public interface ResultOfKpMapper {
 
 	int selectByDdhm(@Param("ddhm") String ddhm);
 
-	int updateByDdhm(@Param("ddhm")ResultOfKp result);
+	int updateByDdhm(ResultOfKp result);
 }

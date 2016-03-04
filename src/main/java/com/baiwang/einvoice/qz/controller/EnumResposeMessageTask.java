@@ -30,7 +30,7 @@ public class EnumResposeMessageTask implements  Callable<String>{
 	
 	public EnumResposeMessageTask(String ddhm, String correlationId, JmsTemplate jmsTemplate2, IResultOfKpService resultService){
 		this.ddhm =  ddhm;
-		this.correlationId = "JMSCorrelationID = '" + correlationId +"'";
+		this.correlationId = correlationId;
 		this.jmsTemplate2 = jmsTemplate2;
 		this.resultService = resultService;
 	}
@@ -38,7 +38,7 @@ public class EnumResposeMessageTask implements  Callable<String>{
 	public String call(){
 		String text = "";
 		try {
-			TextMessage receive = (TextMessage) jmsTemplate2.receiveSelected(correlationId);
+			TextMessage receive = (TextMessage) jmsTemplate2.receiveSelected("JMSCorrelationID = '" + correlationId +"'");
 			text = receive.getText();
 			logger.info("*****JMSCorrelationID为:" + ddhm + "接收到的message为：" + text);
 		} catch (Exception e1) {
@@ -47,10 +47,16 @@ public class EnumResposeMessageTask implements  Callable<String>{
 			e1.printStackTrace();
 		}
 		
+		System.out.println("))))))))))sk  call   _____---" + text);
 		ResultOfKp result = new ResultOfKp();
 		result.setDdhm(ddhm);
-		result.setCode(InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>"));
-		result.setMsg(InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>"));
+		result.setCorrelationid(correlationId);
+		result.setCode(InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>").equals("")? 
+				InvoiceUtil.getIntervalValue(text,"<returncode>","</returncode>"):
+					InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>"));
+		result.setMsg(InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>").equals("")?
+				InvoiceUtil.getIntervalValue(text,"<returnmsg>","</returnmsg>"):
+					InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>"));
 		result.setFpqqlsh(InvoiceUtil.getIntervalValue(text,"<FPQQLSH>","</FPQQLSH>"));
 		try{
 			int suc = resultService.save(result);

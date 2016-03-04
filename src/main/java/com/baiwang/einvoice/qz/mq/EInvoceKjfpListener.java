@@ -43,9 +43,9 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 		String xml = msg.getText();
 		
 		Message textMessage = null;
-		
+		System.out.println("请求税控服务器的xml：" + xml);
 		String returnSK = skService.reqestSK(xml);
-		
+		System.out.println("税控服务器返回："+ returnSK);
 		logger.info("***********税控服务器返回****************" + returnSK);
 		logger.info("***********转换ubl****************returnCode:" + InvoiceUtil.getIntervalValue(returnSK,"<RETURNCODE>","</RETURNCODE>"));
 		if(returnSK == null || !InvoiceUtil.getIntervalValue(returnSK,"<RETURNCODE>","</RETURNCODE>").equals("0000") ){//税控失败

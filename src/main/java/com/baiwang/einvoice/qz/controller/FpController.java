@@ -98,11 +98,11 @@ public class FpController {
 		try{
 			UUID uuid = UUID.randomUUID();
 			correlationId = uuid.toString();
-			System.out.println("kp-------ddhm:"+correlationId);
+			logger.info("*****订单号为:" + customOrder.getDdhm() + "的关联id为:" + correlationId);
 			sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
 					correlationId);
 		}catch(Exception e){
-			logger.error("*********订单号：" + customOrder.getDdhm() + "网络异常");
+			logger.error("*********订单号：" + customOrder.getDdhm() + ",sendMsg网络异常");
 			e.printStackTrace();
 			return "网络异常";
 		}

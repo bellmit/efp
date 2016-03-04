@@ -28,7 +28,7 @@
       operateTime, createTime)
     values ( #{ddhm,jdbcType=VARCHAR}, #{correlationid,jdbcType=VARCHAR}, #{fpqqlsh,jdbcType=VARCHAR}, 
       #{code,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, NOW(), 
-      #{createtime,jdbcType=TIMESTAMP})
+      NOW())
   </insert>
   
   <select id="selectByDdhm" parameterType="string" resultType="int">
