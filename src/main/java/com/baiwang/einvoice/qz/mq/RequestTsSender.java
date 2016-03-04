@@ -28,7 +28,7 @@ public class RequestTsSender {
 	private Destination requestTsQuery;
 	
 	public void sendMessage(final Map<String, String> map) {
-        
+        logger.info("请求发票平台 xml：" + map.get("xml") + ",税控返回："+ map.get("returnSK"));
 		jmsTemplate3.send(requestTsQuery, new MessageCreator() {
         	
             public Message createMessage(Session session) throws JMSException {
