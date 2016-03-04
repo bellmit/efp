@@ -25,7 +25,7 @@ public class XmlUtil {
         return true;  
     }  
 	
-	public static byte[] toSpecialInvoice(Kpxx kpxx, List<Fpmx> fpmxList) throws UnsupportedEncodingException{
+	public static String toSpecialInvoice(Kpxx kpxx, List<Fpmx> fpmxList) throws UnsupportedEncodingException{
 		if (null == kpxx || null == fpmxList) {
 			return null;
 		}
@@ -128,12 +128,10 @@ public class XmlUtil {
 		sb.append("</body>");
 		sb.append("\r\n");
 		sb.append("</business>");
-		String content = sb.toString();
-		System.out.println(content);
-		return content.getBytes("gbk");
+		return sb.toString();
 	}
 	
-	public static byte[] toPlainInvoice(Kpxx kpxx, List<Fpmx> fpmxList) throws UnsupportedEncodingException{
+	public static String toPlainInvoice(Kpxx kpxx, List<Fpmx> fpmxList) throws UnsupportedEncodingException{
 		if (null == kpxx || null == fpmxList) {
 			return null;
 		}
@@ -236,12 +234,10 @@ public class XmlUtil {
 		sb.append("</body>");
 		sb.append("\r\n");
 		sb.append("</business>");
-		String content = sb.toString();
-		System.out.println(content);
-		return content.getBytes("gbk");
+		return sb.toString();
 	}
 	
-	public static byte[] toEInvoice(Kpxx kpxx, List<Fpmx> fpmxList) throws UnsupportedEncodingException{
+	public static String toEInvoice(Kpxx kpxx, List<Fpmx> fpmxList) throws UnsupportedEncodingException{
 		if (null == kpxx || null == fpmxList) {
 			return null;
 		}
@@ -273,6 +269,7 @@ public class XmlUtil {
 		sb.append("<GMF_DZDH>"+kpxx.getGMFDZ() + kpxx.getGMFDH()+"</GMF_DZDH>");
 		sb.append("\r\n");
 		sb.append("<GMF_YHZH>"+kpxx.getGMFYHZH()+"</GMF_YHZH>");
+		sb.append("\r\n");
 		sb.append("<KPR>"+ kpxx.getKPR() +"</KPR>");
 		sb.append("\r\n");
 		sb.append("<SKR>"+ kpxx.getSKR() +"</SKR>");
@@ -329,9 +326,7 @@ public class XmlUtil {
 		sb.append("</REQUEST_COMMON_FPKJ>");
 		sb.append("\r\n");
 		sb.append("</business>");
-		String content = sb.toString();
-		System.out.println(content);
-		return content.getBytes("gbk");
+		return sb.toString();
 	}
 	
 	public static String random() {
