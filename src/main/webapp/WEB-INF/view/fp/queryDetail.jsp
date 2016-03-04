@@ -13,7 +13,20 @@
 
 <script type="text/javascript">
 	function exportData(){
+		var chks = $('.chkbox_ex');
+		for(i=0;i<chks.length;i++){
+			if(chks[i].checked==true){
+				chks[i].Attr('name','ddh4ept');
+			}
+		}
 		$('#expForm').submit();
+	}
+	function checkAll(){
+		var chks = $('.chkbox_ex');
+		alert('是否全选'+$('#chkAll').checked+',选中多少个：'+chks.length);
+		for(i=0;i<chks.length;i++){
+			chks[i].checked=$('#chkAll').checked;
+		}
 	}
 </script>
 
@@ -22,18 +35,23 @@
 <body>
 <h4>查询条件</h4>
 <form action="<%=basePath %>/report/query" method="post">
-	开始时间：<input id="beginDate" name="beginDate" class="Wdate" 
+	订单号：<input type="text" name="ddh4q" value="${ddh4q}">
+	申请时间：<input id="beginDate" name="beginDate" class="Wdate" 
 	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
-	value="${param.beginDate }" style="width: 100px;"/>-结束时间
+	value="${param.beginDate }" style="width: 100px;"/>-
 	<input id="endDate" name="endDate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
 	value="${param.endDate }" style="width: 100px;"/>
+	<select name="fplx4q">
+		<option value="0">北京</option>
+		<option value="1">上海</option>
+	</select>
 	<input type="submit" value="查询">  <a href="javascript:void(0)" onclick="exportData()">导出</a>
 </form><br/>
 <form id="expForm" action="<%=basePath%>/report/download" method="post">
 <table border="1" cellspacing="0" >
 	<tr>
-		<td><input type="checkbox" id=""></td>
-		<td>序号</td>
+		<td><input type="checkbox" id="chkAll" onclick="checkAll()"></td>
+<!-- 		<td>序号</td> -->
 		<td>订单号</td>
 		<td>申请人</td>
 		<td>会员名</td>
@@ -57,8 +75,8 @@
 		<td>发票状态</td>
 	</tr>
 	<c:forEach items="${fpxxList}" var="fp">
-		<tr><td><input type="checkbox" id ="${fp.ddh}" name="ddh4ept" value="${fp.ddh}"></td>
-			<td><c:out value="${fp.number}"/></td>
+		<tr><td><input type="checkbox" id ="${fp.ddh}" class="chkbox_ex" value="${fp.ddh}"></td>
+<%-- 			<td><c:out value="${fp.number}"/></td> --%>
 			<td><c:out value="${fp.ddh}"/></td>
 			<td><c:out value="${fp.sqr}"/></td>
 			<td><c:out value="${fp.hym}"/></td>
@@ -83,6 +101,10 @@
 		</tr>
 	</c:forEach>
 </table>
+<input type="hidden" name="ddh4save" value="${ddh4save}">
+<input type="hidden" name="fplx4save" value="${fplx4save}">
+<input type="hidden" name="dateS4save" value="${dateS4save}">
+<input type="hidden" name="dateE4save" value="${dateE4save}">
 </form>
 </body>
 </html>

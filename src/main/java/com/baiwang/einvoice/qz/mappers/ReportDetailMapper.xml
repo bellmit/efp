@@ -23,10 +23,11 @@
     <result column="wldh" property="wldh" jdbcType="VARCHAR" />
     <result column="tkzt" property="tkzt" jdbcType="VARCHAR" />
     <result column="fpzt" property="fpzt" jdbcType="VARCHAR" />
+    <result column="ddzt" property="ddzt" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ddh, sqr, hym, hyid, ddsj, sqsj, fptt, fplx, fpzl, sqrk, je, shr, shrdh, jsdz, yjsj, 
-    fphm, fhr, wlgs, wldh, tkzt, fpzt
+    fphm, fhr, wlgs, wldh, tkzt, fpzt,ddzt
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -44,13 +45,13 @@
       fplx, fpzl, sqrk, je, 
       shr, shrdh, jsdz, yjsj, 
       fphm, fhr, wlgs, wldh, 
-      tkzt, fpzt)
+      tkzt, fpzt,ddzt)
     values (#{ddh,jdbcType=VARCHAR}, #{sqr,jdbcType=VARCHAR}, #{hym,jdbcType=VARCHAR}, 
       #{hyid,jdbcType=VARCHAR}, #{ddsj,jdbcType=DATE}, #{sqsj,jdbcType=DATE}, #{fptt,jdbcType=VARCHAR}, 
       #{fplx,jdbcType=VARCHAR}, #{fpzl,jdbcType=VARCHAR}, #{sqrk,jdbcType=VARCHAR}, #{je,jdbcType=INTEGER}, 
       #{shr,jdbcType=VARCHAR}, #{shrdh,jdbcType=VARCHAR}, #{jsdz,jdbcType=VARCHAR}, #{yjsj,jdbcType=DATE}, 
       #{fphm,jdbcType=VARCHAR}, #{fhr,jdbcType=VARCHAR}, #{wlgs,jdbcType=VARCHAR}, #{wldh,jdbcType=VARCHAR}, 
-      #{tkzt,jdbcType=VARCHAR}, #{fpzt,jdbcType=VARCHAR})
+      #{tkzt,jdbcType=VARCHAR}, #{fpzt,jdbcType=VARCHAR},#{ddzt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.ReportDetail" >
     insert into report_detail
@@ -118,6 +119,9 @@
       <if test="fpzt != null" >
         fpzt,
       </if>
+      <if test="ddzt != null" >
+        ddzt
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="ddh != null" >
@@ -182,6 +186,9 @@
       </if>
       <if test="fpzt != null" >
         #{fpzt,jdbcType=VARCHAR},
+      </if>
+      <if test="ddzt != null" >
+        #{ddzt,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -248,6 +255,9 @@
       <if test="fpzt != null" >
         fpzt = #{fpzt,jdbcType=VARCHAR},
       </if>
+      <if test="ddzt != null" >
+        ddzt = #{ddzt,jdbcType=VARCHAR},
+      </if>
     </set>
     where ddh = #{ddh,jdbcType=VARCHAR}
   </update>
@@ -272,7 +282,8 @@
       wlgs = #{wlgs,jdbcType=VARCHAR},
       wldh = #{wldh,jdbcType=VARCHAR},
       tkzt = #{tkzt,jdbcType=VARCHAR},
-      fpzt = #{fpzt,jdbcType=VARCHAR}
+      fpzt = #{fpzt,jdbcType=VARCHAR},
+      ddzt = #{ddzt,jdbcType=VARCHAR}
     where ddh = #{ddh,jdbcType=VARCHAR}
   </update>
   <select id="selectByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">

@@ -48,10 +48,13 @@ public class ReportController implements ServletConfigAware {
 	public String queryReport(HttpServletRequest request){
 		//获取查询条件
 		String ddh4q = request.getParameter("ddh4q");
-		request.setAttribute("ddh4q", ddh4q);
 		String fplx4q = request.getParameter("fplx4q");
 		String dateS = request.getParameter("beginDate");
 		String dateE = request.getParameter("endDate");
+		request.setAttribute("ddh4save", ddh4q);
+		request.setAttribute("fplx4save", fplx4q);
+		request.setAttribute("dateS4save", dateS);
+		request.setAttribute("dateE4save", dateE);
 		Map<String, Object> condition = new HashMap<>();
 		condition.put("dateS", dateS);
 		condition.put("dateE", dateE);
@@ -67,10 +70,10 @@ public class ReportController implements ServletConfigAware {
 		List<ReportDetail> list = new ArrayList<>();
 		if(null == ddh4ept || ddh4ept.length==0){
 			//获取查询条件
-			String ddh4q = request.getParameter("ddh4q");
-			String fplx4q = request.getParameter("fplx4q");
-			String dateS = request.getParameter("beginDate");
-			String dateE = request.getParameter("endDate");
+			String ddh4q = request.getParameter("ddh4save");
+			String fplx4q = request.getParameter("fplx4save");
+			String dateS = request.getParameter("dateS4save");
+			String dateE = request.getParameter("dateE4save");
 			Map<String, Object> condition = new HashMap<>();
 			condition.put("dateS", dateS);
 			condition.put("dateE", dateE);
