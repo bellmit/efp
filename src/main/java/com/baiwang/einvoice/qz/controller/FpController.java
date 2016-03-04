@@ -87,11 +87,13 @@ public class FpController {
 		kpxx.setFpqqlsh(fpqqlsh);
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
 		System.out.println(customOrder.getDdhm());
+		
 		ResultOfKp result = resultService.queryResult(customOrder.getDdhm());
 		if(null != result && "0000".equals(result.getCode())){
 			logger.warn("*********订单号：" + customOrder.getDdhm() + "已经开票成功，返回。");
 			return "0000";
 		}
+		
 		String correlationId = "";
 		try{
 			UUID uuid = UUID.randomUUID();
@@ -109,7 +111,7 @@ public class FpController {
 		
 		//从响应队列检索响应消息
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<String> future = executor.submit(new EnumResposeMessageTask(correlationId));
+        Future<String> future = executor.submit(new EnumResposeMessageTask(customOrder.getDdhm(), correlationId, jmsTemplate2, resultService));
 		String success = "4400";
         try{
         	success = future.get(4, TimeUnit.SECONDS);

@@ -24,6 +24,7 @@ public class ResultOfKpServiceImpl implements IResultOfKpService {
 	public int save(ResultOfKp result) {
 		
 		int count = dao.selectByDdhm(result.getDdhm());
+		System.out.println("-----=====" + count);
 		if(count == 0){
 			count = dao.save(result);
 		}else{
