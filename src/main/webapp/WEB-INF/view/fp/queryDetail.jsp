@@ -15,18 +15,21 @@
 	function exportData(){
 		var chks = $('.chkbox_ex');
 		for(i=0;i<chks.length;i++){
-			if(chks[i].checked==true){
-				chks[i].Attr('name','ddh4ept');
+			if(chks[i].checked == true){
+				chks[i].name = 'ddh4ept';
 			}
 		}
 		$('#expForm').submit();
 	}
 	function checkAll(){
 		var chks = $('.chkbox_ex');
-		alert('是否全选'+$('#chkAll').checked+',选中多少个：'+chks.length);
 		for(i=0;i<chks.length;i++){
-			chks[i].checked=$('#chkAll').checked;
+			chks[i].checked=$('#chkAll').attr('checked');
 		}
+	}
+	//取消全选的勾
+	function ccAll(){
+		$('#chkAll').attr('checked',false);
 	}
 </script>
 
@@ -42,6 +45,7 @@
 	<input id="endDate" name="endDate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
 	value="${param.endDate }" style="width: 100px;"/>
 	<select name="fplx4q">
+		<option value="">请选择</option>
 		<option value="0">北京</option>
 		<option value="1">上海</option>
 	</select>
@@ -75,7 +79,7 @@
 		<td>发票状态</td>
 	</tr>
 	<c:forEach items="${fpxxList}" var="fp">
-		<tr><td><input type="checkbox" id ="${fp.ddh}" class="chkbox_ex" value="${fp.ddh}"></td>
+		<tr><td><input type="checkbox" id ="${fp.ddh}" class="chkbox_ex" value="${fp.ddh}" onclick="ccAll()"></td>
 <%-- 			<td><c:out value="${fp.number}"/></td> --%>
 			<td><c:out value="${fp.ddh}"/></td>
 			<td><c:out value="${fp.sqr}"/></td>
