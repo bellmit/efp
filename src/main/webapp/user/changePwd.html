@@ -12,19 +12,42 @@
 <title>修改密码</title>
 </head>
 <body>
-<form role="form">
-	<div class="container"  style="padding: 20px 10px 20px 10px;">
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="form-group form-inline inner">
-					<label for="name" class='col-sm-4'>密码输入框</label>
-					<input type="password" class="form-control" placeholder="文本输入">
-				</div>
-			</div>
-			
-		</div>
-	
-	</div>
+
+<form class="form-horizontal" role="form">
+   <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">原密码</label>
+      <div class="col-sm-3">
+         <input type="password" class="form-control" id="firstname" 
+            placeholder="请输入原密码">
+      </div>
+      <div class="col-sm-3 text-left">
+            <span class="text-danger help-block">原密码输入错误</span>
+      </div>      
+   </div>
+   <div class="form-group">
+      <label for="lastname" class="col-sm-2 control-label">新密码</label>
+      <div class="col-sm-3">
+         <input type="password" class="form-control" id="lastname" 
+            placeholder="请输入新密码">
+      </div>
+      <div class="col-sm-3 text-left">
+            <p class="text-danger">原密码输入错误</p>
+      </div> 
+   </div>
+   <div class="form-group">
+      <label for="lastname2" class="col-sm-2 control-label">确认新密码</label>
+      <div class="col-sm-3">
+         <input type="password" class="form-control" id="lastname2" 
+            placeholder="请再次输入新密码">
+      </div>
+   </div>
+   
+   <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+         <button type="button" class="btn btn-default">修改</button>
+      </div>
+   </div>
 </form>
+
 </body>
 </html>

@@ -10,6 +10,8 @@ public interface KpxxMapper {
     int insertSelective(Kpxx record);
 
     Kpxx selectByPrimaryKey(String fpqqlsh);
+    
+    Kpxx selectByDdhm(String fpqqlsh);
 
     int updateByPrimaryKeySelective(Kpxx record);
 

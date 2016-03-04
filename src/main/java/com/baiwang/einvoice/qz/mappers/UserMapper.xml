@@ -38,6 +38,11 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectUserByPass" resultType="java.lang.Integer">
+  		select count(*)  from user
+    	where id = #{id,jdbcType=INTEGER} and user_pass = #{user_pass,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where id = #{id,jdbcType=INTEGER}
@@ -217,6 +222,12 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       update_ip = #{updateIp,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="changePass">
+  	update user
+    set 
+      user_pass = #{user_pass,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

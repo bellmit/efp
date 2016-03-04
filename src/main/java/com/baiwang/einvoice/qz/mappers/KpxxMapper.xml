@@ -38,6 +38,14 @@
     from kpxx
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectByDdhm" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from kpxx
+    where ddhm = #{ddhm,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from kpxx
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}

@@ -270,6 +270,10 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<GMF_YHZH>"+kpxx.getGMFYHZH()+"</GMF_YHZH>");
 		sb.append("\r\n");
+		sb.append("<GMF_YX>gaokemeng@baiwang.com</GMF_YX>");
+		sb.append("\r\n");
+		sb.append("<GMF_SJH>17710708213</GMF_SJH>");
+		sb.append("\r\n");
 		sb.append("<KPR>"+ kpxx.getKPR() +"</KPR>");
 		sb.append("\r\n");
 		sb.append("<SKR>"+ kpxx.getSKR() +"</SKR>");
