@@ -52,22 +52,20 @@ public class EInvoceKjfpListener implements SessionAwareMessageListener{
 	        textMessage = session.createTextMessage(returnSK);
 	        logger.info("******请求sk失败**********");
 	        
-	        textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
-			jmsTemplate2.convertAndSend(textMessage);
 		}else{
 			if("此发票已经开具过".equals( InvoiceUtil.getIntervalValue(returnSK, "<RETURNMSG>", "</RETURNMSG>"))){
 				logger.info("///////-----￥----发票请求流水号：////////" + InvoiceUtil.getIntervalValue(returnSK, "<FPQQLSH>", "</FPQQLSH>") + ",此发票已经开具过。");
 				textMessage = session.createTextMessage(InvoiceUtil.backMsg("4007", "此发票已经开具过。", xml));
-				textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
-				jmsTemplate2.convertAndSend(textMessage);
 			}else{
+				textMessage = session.createTextMessage(returnSK);
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("xml", xml);
 				map.put("returnSK", returnSK);
 				tsSender.sendMessage(map);
 			}
 		} 
-		
+		textMessage.setJMSCorrelationID(message.getJMSCorrelationID());
+		jmsTemplate2.convertAndSend(textMessage);
 		
 		
 	}

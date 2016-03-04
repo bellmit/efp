@@ -7,16 +7,12 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import org.apache.activemq.command.ActiveMQMapMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.SessionAwareMessageListener;
 
-import com.baiwang.einvoice.service.skService.SkService;
 import com.baiwang.einvoice.service.skService.TsPlatService;
 import com.baiwang.einvoice.util.InvoiceUtil;
 
@@ -25,8 +21,7 @@ public class RequestTsListener  implements SessionAwareMessageListener{
 
 	private Log logger = LogFactory.getLog(RequestTsListener.class);
 	
-	@Autowired
-    private JmsTemplate jmsTemplate3;
+	
 	
 	@Resource
 	private TsPlatService tsService;
@@ -44,7 +39,8 @@ public class RequestTsListener  implements SessionAwareMessageListener{
 		
 		logger.info("***********转换ubl****************" + ubl);
 		
-		tsService.reqestTsPlat(ubl);
+		String reqestTsPlat = tsService.reqestTsPlat(ubl);
+		System.out.println("请求发票平台返回：" + reqestTsPlat);
 			
 	}
 	
@@ -55,16 +51,16 @@ public class RequestTsListener  implements SessionAwareMessageListener{
 		logger.info("/////////-----￥----税控服务器返回的returncode:///////////"+InvoiceUtil.getIntervalValue(returnSK,"<RETURNCODE>","</RETURNCODE>"));
 		if("0000".equals(InvoiceUtil.getIntervalValue(returnSK,"<RETURNCODE>","</RETURNCODE>"))){
 			
-			int xtbs = xml.indexOf("<XTBS>");
-			int jhkey = xml.indexOf("</JHKEY>");
+//			int xtbs = xml.indexOf("<XTBS>");
+//			int jhkey = xml.indexOf("</JHKEY>");
+//			
+//			String shanchu = xml.substring(xtbs,jhkey+8);
 			
-			String shanchu = xml.substring(xtbs,jhkey+8);
-			
-			StringBuffer sb = new StringBuffer("<JQBH>");
+			StringBuffer sb = new StringBuffer("</KPLX><JQBH>");
 			sb.append(InvoiceUtil.getIntervalValue(returnSK,"<JQBH>","</EWM>"));
 			sb.append("</EWM>");
 			
-			xml = xml.replace(shanchu, sb.toString());
+			xml = xml.replace("</KPLX>", sb.toString());
 			
 			int encoding1 = xml.indexOf("encoding=\"");
 			int encoding2 = xml.indexOf("\"?>");

@@ -86,7 +86,7 @@ public class FpController {
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		kpxx.setFpqqlsh(fpqqlsh);
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
-		System.out.println(customOrder.getDdhm());
+		System.out.println("订单号："+customOrder.getDdhm());
 		
 		ResultOfKp result = resultService.queryResult(customOrder.getDdhm());
 		if(null != result && "0000".equals(result.getCode())){

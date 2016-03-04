@@ -8,7 +8,6 @@ import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,7 +33,8 @@ public class RequestTsSender {
         	
             public Message createMessage(Session session) throws JMSException {
             	MapMessage mapMessage = session.createMapMessage();
-            	mapMessage.setObjectProperty("map", map);
+            	mapMessage.setString("xml", map.get("xml"));
+            	mapMessage.setString("returnSK", map.get("returnSK"));
             	
 //            	textMessage.setJMSReplyTo(requestTsQuery);
 //            	textMessage.setJMSCorrelationID(correlationId);
