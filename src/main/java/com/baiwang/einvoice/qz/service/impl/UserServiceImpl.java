@@ -19,4 +19,34 @@ public class UserServiceImpl implements IUserService {
 		return dao.getUserByName(name);
 	}
 
+	/**
+	  * <p>Title: selectUserByPass</p>
+	  * <p>Description: </p>
+	  * @param userid
+	  * @param pass
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.IUserService#selectUserByPass(java.lang.String, java.lang.String)
+	  */
+	@Override
+	public int selectUserByPass(int userid, String pass) {
+		
+		// TODO Auto-generated method stub
+		return dao.selectUserByPass(userid, pass);
+		
+	}
+
+	/**
+	  * <p>Title: changePass</p>
+	  * <p>Description: </p>
+	  * @param id
+	  * @param user_pass
+	  * @see com.baiwang.einvoice.qz.service.IUserService#changePass(int, java.lang.String)
+	  */
+	@Override
+	public void changePass(int id, String user_pass) {
+		
+		// TODO Auto-generated method stub
+		dao.changePass(id, user_pass);
+	}
+
 }
