@@ -4,14 +4,11 @@ import javax.annotation.Resource;
 import javax.jms.Destination;  
 import javax.jms.JMSException;  
 import javax.jms.Message;
-import javax.jms.Queue;
-import javax.jms.QueueBrowser;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.BrowserCallback;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;  
 import org.springframework.stereotype.Service;
