@@ -57,6 +57,18 @@ public class ReportDetail {
 	private String tkzt;
 	//发票状态
 	private String fpzt;
+	//订单发票是否开具打印
+	private String ddzt;
+	
+	
+	public String getDdzt() {
+	
+		return ddzt;
+	}
+	public void setDdzt(String ddzt) {
+	
+		this.ddzt = ddzt;
+	}
 	public Integer getNumber() {
 	
 		return number;
