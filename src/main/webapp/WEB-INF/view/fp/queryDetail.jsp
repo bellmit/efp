@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <% String basePath = request.getContextPath(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,11 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查询发票</title>
 <script type="text/javascript" src="<%=basePath %>/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="<%=basePath %>/jquery/jquery.js"></script>
+<script type="text/javascript" src="<%=basePath %>/js/jquery/jquery.js"></script>
 
 <script type="text/javascript">
-
-
+	function exportData(){
+		$('#expForm').submit();
+	}
 </script>
 
 
@@ -27,7 +29,7 @@
 	value="${param.endDate }" style="width: 100px;"/>
 	<input type="submit" value="查询">  <a href="javascript:void(0)" onclick="exportData()">导出</a>
 </form><br/>
-<form action="<%=basePath%>/report/download" method="post">
+<form id="expForm" action="<%=basePath%>/report/download" method="post">
 <table border="1" cellspacing="0" >
 	<tr>
 		<td><input type="checkbox" id=""></td>
@@ -61,8 +63,8 @@
 			<td><c:out value="${fp.sqr}"/></td>
 			<td><c:out value="${fp.hym}"/></td>
 			<td><c:out value="${fp.hyid}"/></td>
-			<td><c:out value="${fp.ddsj}"/></td>
-			<td><c:out value="${fp.sqsj}"/></td>
+			<td><fmt:formatDate value="${fp.ddsj}" pattern="yyyy-MM-dd"/></td>
+			<td><fmt:formatDate value="${fp.sqsj}" pattern="yyyy-MM-dd"/></td>
 			<td><c:out value="${fp.fptt}"/></td>
 			<td><c:out value="${fp.fplx}"/></td>
 			<td><c:out value="${fp.fpzl}"/></td>
@@ -71,7 +73,7 @@
 			<td><c:out value="${fp.shr}"/></td>
 			<td><c:out value="${fp.shrdh}"/></td>
 			<td><c:out value="${fp.jsdz}"/></td>
-			<td><c:out value="${fp.yjsj}"/></td>
+			<td><fmt:formatDate value="${fp.yjsj}" pattern="yyyy-MM-dd"/></td>
 			<td><c:out value="${fp.fphm}"/></td>
 			<td><c:out value="${fp.fhr}"/></td>
 			<td><c:out value="${fp.wlgs}"/></td>

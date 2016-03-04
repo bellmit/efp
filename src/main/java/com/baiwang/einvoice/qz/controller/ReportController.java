@@ -7,8 +7,9 @@ package com.baiwang.einvoice.qz.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletConfig;
@@ -17,12 +18,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.util.StringUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.ServletConfigAware;
 
 import com.baiwang.einvoice.qz.beans.ReportDetail;
+import com.baiwang.einvoice.qz.service.ReportDetailService;
 
 /**
   * @ClassName: ReportController
@@ -35,17 +36,20 @@ import com.baiwang.einvoice.qz.beans.ReportDetail;
 public class ReportController implements ServletConfigAware {
 	@Resource
 	private ServletContext servletContext;
+	@Resource
+	private ReportDetailService reportDetailService;
 	
 	@RequestMapping(value="query")
 	public String generateReport(HttpServletRequest request){
 		//获取查询条件
 		String dataS = request.getParameter("beginDate");
 		String dataE = request.getParameter("endDate");
-		if(null !=dataS || null !=dataE){
-			List<ReportDetail> list = new ArrayList<>();//查询结果
-			ReportDetail rd = new ReportDetail();
-			rd.setDdh("123654789");
-			list.add(rd);
+		if((null !=dataS && dataS.trim().length()!=0) || (null !=dataE && dataE.trim().length()!=0)){
+			Map<String, Object> condition = new HashMap<>();
+			condition.put("dataS", dataS);
+			condition.put("dataE", dataE);
+			System.out.println(condition);
+			List<ReportDetail> list = reportDetailService.selectByCondition(condition);//查询结果
 			request.setAttribute("fpxxList", list);
 		}
 		return "fp/queryDetail";
@@ -55,17 +59,24 @@ public class ReportController implements ServletConfigAware {
 		//获取查询条件
 		String dataS = request.getParameter("dataS");
 		String dataE = request.getParameter("dataE");
-		List<ReportDetail> list = new ArrayList<>();//查询结果
-		ReportDetail rd = new ReportDetail();
-		rd.setDdh("123654789");
-		list.add(rd);
-		
+		System.out.println(request.getParameter("ddh4ept"));
+		String[] tmp = request.getParameterValues("ddh4ept"); 
+		if(null != tmp){
+			System.out.println(tmp.length+","+tmp[0]+","+tmp[1]);
+		}
+//		List<ReportDetail> list = new ArrayList<>();//查询结果
+//		ReportDetail rd = new ReportDetail();
+//		rd.setDdh("123654789");
+//		list.add(rd);
+//		rd.setDdh("88888");
+//		list.add(rd);
 		response.setContentType("multipart/form-data");
 		response.setHeader("Content-Disposition", "attachment;fileName=a.xls");
 		ServletOutputStream outputStream = null;
 		FileInputStream inputStream = null;
+		//工程根目录
 		String rootPath = servletContext.getRealPath("/") ;
-		File file = new File("C:\\Users\\Administrator\\git\\einvoice\\reports/wyen1.xls");
+		File file = new File("E:\\a_work_doc\\电子发票相关\\发票后台表样.xlsx");
 		try {
 			inputStream = new FileInputStream(file);
 			outputStream = response.getOutputStream();
