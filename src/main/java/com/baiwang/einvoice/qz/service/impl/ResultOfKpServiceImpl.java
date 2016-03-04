@@ -15,9 +15,9 @@ public class ResultOfKpServiceImpl implements IResultOfKpService {
 	private ResultOfKpMapper dao;
 
 	@Override
-	public ResultOfKp queryResult(String ddhm) {
+	public ResultOfKp queryResult(String ddhm, String correlationId) {
 		
-		return dao.queryResult(ddhm);
+		return dao.queryResult(ddhm,correlationId);
 	}
 
 	@Override

@@ -60,6 +60,7 @@ public class EnumResposeMessageTask implements  Callable<String>{
 		result.setFpqqlsh(InvoiceUtil.getIntervalValue(text,"<FPQQLSH>","</FPQQLSH>"));
 		try{
 			int suc = resultService.save(result);
+			logger.info("保存数据库结果：" + suc);
 		}catch(Exception e){
 			logger.error("*****订单号码：" + ddhm + "保存结果出现异常，code:"+InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>")
 			+ ",msg:" + InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>") + ",fpqqlsh:" +
@@ -67,8 +68,14 @@ public class EnumResposeMessageTask implements  Callable<String>{
 			e.printStackTrace();
 		}
 		
+		if(InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>").equals("0000")){
+			return "0000";
+		}else{
+			return InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>").equals("")?
+					InvoiceUtil.getIntervalValue(text,"<returnmsg>","</returnmsg>"):
+						InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>");
+		}
 		
-        return text;
     }
 	
 	

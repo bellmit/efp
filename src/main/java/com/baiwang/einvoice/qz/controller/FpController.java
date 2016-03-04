@@ -88,7 +88,7 @@ public class FpController {
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
 		System.out.println("订单号："+customOrder.getDdhm());
 		
-		ResultOfKp result = resultService.queryResult(customOrder.getDdhm());
+		ResultOfKp result = resultService.queryResult(customOrder.getDdhm(), "");
 		if(null != result && "0000".equals(result.getCode())){
 			logger.warn("*********订单号：" + customOrder.getDdhm() + "已经开票成功，返回。");
 			return "0000";
@@ -125,7 +125,7 @@ public class FpController {
         } catch (TimeoutException e) {
         	e.printStackTrace();
         	String requestURL = request.getRequestURL().toString();
-    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?corre=" + business.getCustomOrder().getDdhm();
+    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + customOrder.getDdhm() +"&correlationId=" + correlationId;
     		
         	return "正在处理中,请稍后查询" + url;
         } finally {
@@ -137,16 +137,16 @@ public class FpController {
 	
 	@RequestMapping(value="query",method=RequestMethod.GET,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String query(@RequestParam String corre) {
-		if(null == corre || "".equals(corre)){
-			return "查询失败";
+	public String query(@RequestParam String ddhm,@RequestParam String correlationId) {
+		if(null == ddhm || "".equals(ddhm) ||null == correlationId || "".equals(correlationId)){
+			return "查询订单失败";
 		}
-		ResultOfKp result = resultService.queryResult(corre);
+		ResultOfKp result = resultService.queryResult(ddhm,correlationId);
 		
 		if(null == result){
 			return "正在处理中,请稍等...";
 		}else if(null != result && "0000".equals(result.getCode())){
-			logger.warn("*********订单号：" + corre + "已经开票成功，返回。");
+			logger.warn("*********订单号：" + correlationId + "已经开票成功，返回。");
 			return "0000";
 		}else{
 			return result.getMsg();

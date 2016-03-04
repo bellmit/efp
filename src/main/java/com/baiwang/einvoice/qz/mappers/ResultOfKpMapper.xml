@@ -20,6 +20,9 @@
   	<include refid="Base_Column_List" />
     from resultofkp 
     where ddhm = #{ddhm,jdbcType=VARCHAR} 
+    <if test="correlationId != null and correlationId != '' ">
+         and correlationId = #{correlationId,jdbcType=VARCHAR}
+    </if>
   </select>
   
   <insert id="save" parameterType="com.baiwang.einvoice.qz.beans.ResultOfKp">

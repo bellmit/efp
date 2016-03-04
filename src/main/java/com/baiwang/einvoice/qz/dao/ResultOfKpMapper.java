@@ -17,7 +17,7 @@ public interface ResultOfKpMapper {
 
     int updateByPrimaryKey(ResultOfKp record);
 
-	ResultOfKp queryResult(@Param("ddhm") String ddhm);
+	ResultOfKp queryResult(@Param("ddhm")String ddhm, @Param("correlationId")String correlationId);
 
 	int save(ResultOfKp result);
 

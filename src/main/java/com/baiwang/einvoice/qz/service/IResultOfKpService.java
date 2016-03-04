@@ -4,7 +4,7 @@ import com.baiwang.einvoice.qz.beans.ResultOfKp;
 
 public interface IResultOfKpService {
 
-	ResultOfKp queryResult(String ddhm);
+	ResultOfKp queryResult(String ddhm, String corre);
 
 	int save(ResultOfKp result);
 
