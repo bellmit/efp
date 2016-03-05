@@ -1,5 +1,7 @@
 package com.baiwang.einvoice.qz.service.impl;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -32,6 +34,12 @@ public class ResultOfKpServiceImpl implements IResultOfKpService {
 		}
 		
 		return count;
+	}
+
+	@Override
+	public Map<String, String> queryResult(String zddh, String fddh, String fplx) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
