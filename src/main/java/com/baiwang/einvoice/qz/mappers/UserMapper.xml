@@ -6,6 +6,7 @@
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="user_type" property="userType" jdbcType="TINYINT" />
     <result column="user_pass" property="userPass" jdbcType="VARCHAR" />
+    <result column="xsfnsrsbh" property="xsfnsrsbh" jdbcType="VARCHAR" />
     <result column="ap_name" property="apName" jdbcType="VARCHAR" />
     <result column="mail" property="mail" jdbcType="VARCHAR" />
     <result column="islock" property="islock" jdbcType="BIT" />
@@ -19,8 +20,8 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, user_type, user_pass, ap_name, mail, islock, telephone, last_log_time, 
-    last_log_ip, reg_time, reg_ip, update_time, update_ip, remark
+    id, user_name, user_type, user_pass, xsfnsrsbh, ap_name, mail, islock, telephone, 
+    last_log_time, last_log_ip, reg_time, reg_ip, update_time, update_ip, remark
   </sql>
   
   <!-- 登陆查询 -->
@@ -31,6 +32,19 @@
     where user_name = #{userName,jdbcType=VARCHAR} 
   </select>
   
+  <!-- 修改密码查询 -->
+  <select id="selectUserByPass" resultType="java.lang.Integer">
+  		select count(*)  from user
+    	where id = #{id,jdbcType=INTEGER} and user_pass = #{user_pass,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 修改密码 -->
+  <update id="changePass">
+  	update user
+    set 
+      user_pass = #{user_pass,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -38,28 +52,23 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectUserByPass" resultType="java.lang.Integer">
-  		select count(*)  from user
-    	where id = #{id,jdbcType=INTEGER} and user_pass = #{user_pass,jdbcType=VARCHAR}
-  </select>
-  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.User" >
     insert into user (id, user_name, user_type, 
-      user_pass, ap_name, mail, 
-      islock, telephone, last_log_time, 
-      last_log_ip, reg_time, reg_ip, 
-      update_time, update_ip, remark
-      )
+      user_pass, xsfnsrsbh, ap_name, 
+      mail, islock, telephone, 
+      last_log_time, last_log_ip, reg_time, 
+      reg_ip, update_time, update_ip, 
+      remark)
     values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userType,jdbcType=TINYINT}, 
-      #{userPass,jdbcType=VARCHAR}, #{apName,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
-      #{islock,jdbcType=BIT}, #{telephone,jdbcType=VARCHAR}, #{lastLogTime,jdbcType=TIMESTAMP}, 
-      #{lastLogIp,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, #{regIp,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateIp,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
-      )
+      #{userPass,jdbcType=VARCHAR}, #{xsfnsrsbh,jdbcType=VARCHAR}, #{apName,jdbcType=VARCHAR}, 
+      #{mail,jdbcType=VARCHAR}, #{islock,jdbcType=BIT}, #{telephone,jdbcType=VARCHAR}, 
+      #{lastLogTime,jdbcType=TIMESTAMP}, #{lastLogIp,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, 
+      #{regIp,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateIp,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.User" >
     insert into user
@@ -75,6 +84,9 @@
       </if>
       <if test="userPass != null" >
         user_pass,
+      </if>
+      <if test="xsfnsrsbh != null" >
+        xsfnsrsbh,
       </if>
       <if test="apName != null" >
         ap_name,
@@ -123,6 +135,9 @@
       <if test="userPass != null" >
         #{userPass,jdbcType=VARCHAR},
       </if>
+      <if test="xsfnsrsbh != null" >
+        #{xsfnsrsbh,jdbcType=VARCHAR},
+      </if>
       <if test="apName != null" >
         #{apName,jdbcType=VARCHAR},
       </if>
@@ -170,6 +185,9 @@
       <if test="userPass != null" >
         user_pass = #{userPass,jdbcType=VARCHAR},
       </if>
+      <if test="xsfnsrsbh != null" >
+        xsfnsrsbh = #{xsfnsrsbh,jdbcType=VARCHAR},
+      </if>
       <if test="apName != null" >
         ap_name = #{apName,jdbcType=VARCHAR},
       </if>
@@ -211,6 +229,7 @@
     set user_name = #{userName,jdbcType=VARCHAR},
       user_type = #{userType,jdbcType=TINYINT},
       user_pass = #{userPass,jdbcType=VARCHAR},
+      xsfnsrsbh = #{xsfnsrsbh,jdbcType=VARCHAR},
       ap_name = #{apName,jdbcType=VARCHAR},
       mail = #{mail,jdbcType=VARCHAR},
       islock = #{islock,jdbcType=BIT},
@@ -222,12 +241,6 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       update_ip = #{updateIp,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="changePass">
-  	update user
-    set 
-      user_pass = #{user_pass,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

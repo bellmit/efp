@@ -11,6 +11,8 @@ public class User {
 
     private String userPass;
 
+    private String xsfnsrsbh;
+
     private String apName;
 
     private String mail;
@@ -63,6 +65,14 @@ public class User {
 
     public void setUserPass(String userPass) {
         this.userPass = userPass == null ? null : userPass.trim();
+    }
+
+    public String getXsfnsrsbh() {
+        return xsfnsrsbh;
+    }
+
+    public void setXsfnsrsbh(String xsfnsrsbh) {
+        this.xsfnsrsbh = xsfnsrsbh == null ? null : xsfnsrsbh.trim();
     }
 
     public String getApName() {

@@ -1,7 +1,9 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -12,7 +14,6 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 import javax.jms.JMSException;
-import javax.jms.TextMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -53,86 +54,100 @@ public class FpController {
 	@Autowired
     private JmsTemplate jmsTemplate2;
 	
-	@RequestMapping(value="kjfp",produces="text/html;charset=UTF-8")
-	@ResponseBody
-	public String kjfp(String xml){
-		
-		String messageSelector = "JMSCorrelationID = '6158357d-1df5-470f-8223-f83892952f75'";
-		TextMessage receive = (TextMessage) jmsTemplate2.receiveSelected(messageSelector );
-        
-        try {
-			System.out.println(receive.getText());
-		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "开具发票";
-	}
-	
 	@RequestMapping(value="save",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
+	public Map<String, String> SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
+		Map<String, String> map = new HashMap<>();
 		
 		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("utf-8")) ){
 			logger.error("xml不符合规则");
-			return "xml不符合规则";
+			map.put("returnCode", "4000");
+			map.put("returnMsg", "xml不符合规则");
+			return map;
 		}
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
 		
 		String fpqqlsh = XmlUtil.random();
 		CustomOrder customOrder = business.getCustomOrder();
+		
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		kpxx.setFpqqlsh(fpqqlsh);
+		
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
 		System.out.println("订单号："+customOrder.getDdhm());
 		
 		ResultOfKp result = resultService.queryResult(customOrder.getDdhm(), "");
 		if(null != result && "0000".equals(result.getCode())){
 			logger.warn("*********订单号：" + customOrder.getDdhm() + "已经开票成功，返回。");
-			return "0000";
+			map.put("returnCode", "0000");
+			map.put("returnMsg", "发票已开具成功");
+			return map;
 		}
 		
 		String correlationId = "";
-		try{
-			UUID uuid = UUID.randomUUID();
-			correlationId = uuid.toString();
-			logger.info("*****订单号为:" + customOrder.getDdhm() + "的关联id为:" + correlationId);
-			sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
-					correlationId);
-		}catch(Exception e){
-			logger.error("*********订单号：" + customOrder.getDdhm() + ",sendMsg网络异常");
-			e.printStackTrace();
-			return "网络异常";
+		if("026".equals(kpxx.getFplx())){
+			try{
+				UUID uuid = UUID.randomUUID();
+				correlationId = uuid.toString();
+				logger.info("*****订单号为:" + customOrder.getDdhm() + "的关联id为:" + correlationId);
+				sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
+						correlationId);
+			}catch(Exception e){
+				logger.error("*********订单号：" + customOrder.getDdhm() + ",sendMsg网络异常");
+				e.printStackTrace();
+				
+				map.put("returnCode", "4000");
+				map.put("returnMsg", "网络异常");
+				return map;
+			}
 		}
+		
 
 		fpService.saveInfo(customOrder, kpxx, list);
 		
-		//从响应队列检索响应消息
-		ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<String> future = executor.submit(new EnumResposeMessageTask(customOrder.getDdhm(), correlationId, jmsTemplate2, resultService));
-		String success = "4400";
-        try{
-        	success = future.get(4, TimeUnit.SECONDS);
-        	logger.info("响应队列检索响应消息:"+ success);
-        }catch (InterruptedException e) {   
-        	future.cancel(true);  
-        	e.printStackTrace();
-        } catch (ExecutionException e) {   
-        	future.cancel(true);
-        	e.printStackTrace();
-        } catch (TimeoutException e) {
-        	e.printStackTrace();
-        	String requestURL = request.getRequestURL().toString();
-    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + customOrder.getDdhm() +"&correlationId=" + correlationId;
-    		
-        	return "正在处理中,请稍后查询" + url;
-        } finally {
-            executor.shutdown();
-        }
-        
-		return success;
+		
+		if("026".equals(kpxx.getFplx())){
+			//从响应队列检索响应消息
+			ExecutorService executor = Executors.newSingleThreadExecutor();
+	        Future<String> future = executor.submit(new EnumResposeMessageTask(customOrder.getDdhm(), correlationId, jmsTemplate2, resultService));
+			String success = "4400";
+	        try{
+	        	success = future.get(4, TimeUnit.SECONDS);
+	        	logger.info("响应队列检索响应消息:"+ success);
+	        }catch (InterruptedException e) {
+	        	future.cancel(true);
+	        	e.printStackTrace();
+	        } catch (ExecutionException e) {
+	        	future.cancel(true);
+	        	e.printStackTrace();
+	        } catch (TimeoutException e) {
+	        	e.printStackTrace();
+	        	String requestURL = request.getRequestURL().toString();
+	    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + customOrder.getDdhm();
+	    		
+	    		map.put("returnCode", "2000");
+				map.put("returnMsg", "正在处理中,请稍后查询" + url);
+				return map;
+	        } finally {
+	            executor.shutdown();
+	        }
+	        
+	        if(!"0000".equals(success)){
+	        	map.put("returnCode", "4400");
+	        	map.put("returnMsg", success);
+	        }else{
+	        	map.put("returnCode", "0000");
+	        	map.put("returnMsg", "发票开具成功");
+	        }
+	        
+			return map;
+		}else{
+			map.put("returnCode", "0000");
+        	map.put("returnMsg", "订单成功");
+        	return map;
+		}
+		
 	}
 	
 	@RequestMapping(value="query",method=RequestMethod.GET,produces="text/html;charset=UTF-8")
