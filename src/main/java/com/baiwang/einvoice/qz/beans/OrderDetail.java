@@ -56,7 +56,7 @@ public class OrderDetail {
 	@XmlElement(name = "SPZL", required = true)
     private String spzl;
 	@XmlElement(name = "SQRK", required = true)
-    private Date sqrk;
+    private String sqrk;
 	@XmlElement(name = "SHR", required = true)
     private String shr;
 	@XmlElement(name = "SHRDH", required = true)
@@ -132,11 +132,11 @@ public class OrderDetail {
         this.spzl = spzl == null ? null : spzl.trim();
     }
 
-    public Date getSqrk() {
+    public String getSqrk() {
         return sqrk;
     }
 
-    public void setSqrk(Date sqrk) {
+    public void setSqrk(String sqrk) {
         this.sqrk = sqrk;
     }
 
