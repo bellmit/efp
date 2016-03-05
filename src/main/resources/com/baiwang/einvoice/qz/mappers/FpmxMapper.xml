@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiwang.einvoice.qz.dao.FpmxMapper" >
+  <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.Fpmx" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="fphxz" property="fphxz" jdbcType="BIT" />
+    <result column="xmmc" property="xmmc" jdbcType="VARCHAR" />
+    <result column="ggxh" property="ggxh" jdbcType="VARCHAR" />
+    <result column="dw" property="dw" jdbcType="VARCHAR" />
+    <result column="xmsl" property="xmsl" jdbcType="REAL" />
+    <result column="xmdj" property="xmdj" jdbcType="REAL" />
+    <result column="xmje" property="xmje" jdbcType="REAL" />
+    <result column="sl" property="sl" jdbcType="REAL" />
+    <result column="se" property="se" jdbcType="REAL" />
+    <result column="hsbz" property="hsbz" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fpqqlsh, fphxz, xmmc, ggxh, dw, xmsl, xmdj, xmje, sl, se, hsbz
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fpmx
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fpmx
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
+    insert into fpmx (id, fpqqlsh, fphxz, 
+      xmmc, ggxh, dw, xmsl, 
+      xmdj, xmje, sl, se, 
+      hsbz)
+    values (#{id,jdbcType=BIGINT}, #{fpqqlsh,jdbcType=VARCHAR}, #{fphxz,jdbcType=BIT}, 
+      #{xmmc,jdbcType=VARCHAR}, #{ggxh,jdbcType=VARCHAR}, #{dw,jdbcType=VARCHAR}, #{xmsl,jdbcType=REAL}, 
+      #{xmdj,jdbcType=REAL}, #{xmje,jdbcType=REAL}, #{sl,jdbcType=REAL}, #{se,jdbcType=REAL}, 
+      #{hsbz,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
+    insert into fpmx
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fpqqlsh != null" >
+        fpqqlsh,
+      </if>
+      <if test="fphxz != null" >
+        fphxz,
+      </if>
+      <if test="xmmc != null" >
+        xmmc,
+      </if>
+      <if test="ggxh != null" >
+        ggxh,
+      </if>
+      <if test="dw != null" >
+        dw,
+      </if>
+      <if test="xmsl != null" >
+        xmsl,
+      </if>
+      <if test="xmdj != null" >
+        xmdj,
+      </if>
+      <if test="xmje != null" >
+        xmje,
+      </if>
+      <if test="sl != null" >
+        sl,
+      </if>
+      <if test="se != null" >
+        se,
+      </if>
+      <if test="hsbz != null" >
+        hsbz,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fpqqlsh != null" >
+        #{fpqqlsh,jdbcType=VARCHAR},
+      </if>
+      <if test="fphxz != null" >
+        #{fphxz,jdbcType=BIT},
+      </if>
+      <if test="xmmc != null" >
+        #{xmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ggxh != null" >
+        #{ggxh,jdbcType=VARCHAR},
+      </if>
+      <if test="dw != null" >
+        #{dw,jdbcType=VARCHAR},
+      </if>
+      <if test="xmsl != null" >
+        #{xmsl,jdbcType=REAL},
+      </if>
+      <if test="xmdj != null" >
+        #{xmdj,jdbcType=REAL},
+      </if>
+      <if test="xmje != null" >
+        #{xmje,jdbcType=REAL},
+      </if>
+      <if test="sl != null" >
+        #{sl,jdbcType=REAL},
+      </if>
+      <if test="se != null" >
+        #{se,jdbcType=REAL},
+      </if>
+      <if test="hsbz != null" >
+        #{hsbz,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
+    update fpmx
+    <set >
+      <if test="fpqqlsh != null" >
+        fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR},
+      </if>
+      <if test="fphxz != null" >
+        fphxz = #{fphxz,jdbcType=BIT},
+      </if>
+      <if test="xmmc != null" >
+        xmmc = #{xmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ggxh != null" >
+        ggxh = #{ggxh,jdbcType=VARCHAR},
+      </if>
+      <if test="dw != null" >
+        dw = #{dw,jdbcType=VARCHAR},
+      </if>
+      <if test="xmsl != null" >
+        xmsl = #{xmsl,jdbcType=REAL},
+      </if>
+      <if test="xmdj != null" >
+        xmdj = #{xmdj,jdbcType=REAL},
+      </if>
+      <if test="xmje != null" >
+        xmje = #{xmje,jdbcType=REAL},
+      </if>
+      <if test="sl != null" >
+        sl = #{sl,jdbcType=REAL},
+      </if>
+      <if test="se != null" >
+        se = #{se,jdbcType=REAL},
+      </if>
+      <if test="hsbz != null" >
+        hsbz = #{hsbz,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
+    update fpmx
+    set fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR},
+      fphxz = #{fphxz,jdbcType=BIT},
+      xmmc = #{xmmc,jdbcType=VARCHAR},
+      ggxh = #{ggxh,jdbcType=VARCHAR},
+      dw = #{dw,jdbcType=VARCHAR},
+      xmsl = #{xmsl,jdbcType=REAL},
+      xmdj = #{xmdj,jdbcType=REAL},
+      xmje = #{xmje,jdbcType=REAL},
+      sl = #{sl,jdbcType=REAL},
+      se = #{se,jdbcType=REAL},
+      hsbz = #{hsbz,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
