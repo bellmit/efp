@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiwang.einvoice.qz.dao.OrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.OrderDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="zddh" property="zddh" jdbcType="VARCHAR" />
+    <result column="fddh" property="fddh" jdbcType="VARCHAR" />
+    <result column="sqr" property="sqr" jdbcType="VARCHAR" />
+    <result column="hym" property="hym" jdbcType="VARCHAR" />
+    <result column="hyid" property="hyid" jdbcType="VARCHAR" />
+    <result column="ddsj" property="ddsj" jdbcType="DATE" />
+    <result column="sqsj" property="sqsj" jdbcType="DATE" />
+    <result column="spzl" property="spzl" jdbcType="VARCHAR" />
+    <result column="sqrk" property="sqrk" jdbcType="DATE" />
+    <result column="shr" property="shr" jdbcType="VARCHAR" />
+    <result column="shrdh" property="shrdh" jdbcType="VARCHAR" />
+    <result column="jsdz" property="jsdz" jdbcType="VARCHAR" />
+    <result column="yjsj" property="yjsj" jdbcType="DATE" />
+    <result column="fhr" property="fhr" jdbcType="VARCHAR" />
+    <result column="wlgs" property="wlgs" jdbcType="VARCHAR" />
+    <result column="wldh" property="wldh" jdbcType="VARCHAR" />
+    <result column="tkzt" property="tkzt" jdbcType="VARCHAR" />
+    <result column="fpzt" property="fpzt" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fpqqlsh,zddh,fddh, sqr, hym, hyid, ddsj, sqsj, spzl, sqrk, shr, shrdh, jsdz, yjsj, fhr, wlgs, 
+    wldh, tkzt, fpzt
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.OrderDetail" >
+    insert into order_detail (id, fpqqlsh, zddh, fddh, sqr, 
+      hym, hyid, ddsj, sqsj, 
+      spzl, sqrk, shr, shrdh, 
+      jsdz, yjsj, fhr, wlgs, 
+      wldh, tkzt, fpzt)
+    values (#{id,jdbcType=BIGINT}, #{fpqqlsh,jdbcType=VARCHAR},#{zddh,jdbcType=VARCHAR},#{fddh,jdbcType=VARCHAR},
+      #{sqr,jdbcType=VARCHAR}, 
+      #{hym,jdbcType=VARCHAR}, #{hyid,jdbcType=VARCHAR}, #{ddsj,jdbcType=DATE}, #{sqsj,jdbcType=DATE}, 
+      #{spzl,jdbcType=VARCHAR}, #{sqrk,jdbcType=DATE}, #{shr,jdbcType=VARCHAR}, #{shrdh,jdbcType=VARCHAR}, 
+      #{jsdz,jdbcType=VARCHAR}, #{yjsj,jdbcType=DATE}, #{fhr,jdbcType=VARCHAR}, #{wlgs,jdbcType=VARCHAR}, 
+      #{wldh,jdbcType=VARCHAR}, #{tkzt,jdbcType=VARCHAR}, #{fpzt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.OrderDetail" >
+    insert into order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fpqqlsh != null" >
+        fpqqlsh,
+      </if>
+      <if test="zddh != null" >
+        zddh,
+      </if>
+      <if test="fddh != null" >
+        fddh,
+      </if>
+      <if test="sqr != null" >
+        sqr,
+      </if>
+      <if test="hym != null" >
+        hym,
+      </if>
+      <if test="hyid != null" >
+        hyid,
+      </if>
+      <if test="ddsj != null" >
+        ddsj,
+      </if>
+      <if test="sqsj != null" >
+        sqsj,
+      </if>
+      <if test="spzl != null" >
+        spzl,
+      </if>
+      <if test="sqrk != null" >
+        sqrk,
+      </if>
+      <if test="shr != null" >
+        shr,
+      </if>
+      <if test="shrdh != null" >
+        shrdh,
+      </if>
+      <if test="jsdz != null" >
+        jsdz,
+      </if>
+      <if test="yjsj != null" >
+        yjsj,
+      </if>
+      <if test="fhr != null" >
+        fhr,
+      </if>
+      <if test="wlgs != null" >
+        wlgs,
+      </if>
+      <if test="wldh != null" >
+        wldh,
+      </if>
+      <if test="tkzt != null" >
+        tkzt,
+      </if>
+      <if test="fpzt != null" >
+        fpzt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fpqqlsh != null" >
+        #{fpqqlsh,jdbcType=VARCHAR},
+      </if>
+      <if test="zddh != null" >
+        #{zddh,jdbcType=VARCHAR},
+      </if>
+      <if test="fddh != null" >
+        #{fddh,jdbcType=VARCHAR},
+      </if>
+      <if test="sqr != null" >
+        #{sqr,jdbcType=VARCHAR},
+      </if>
+      <if test="hym != null" >
+        #{hym,jdbcType=VARCHAR},
+      </if>
+      <if test="hyid != null" >
+        #{hyid,jdbcType=VARCHAR},
+      </if>
+      <if test="ddsj != null" >
+        #{ddsj,jdbcType=DATE},
+      </if>
+      <if test="sqsj != null" >
+        #{sqsj,jdbcType=DATE},
+      </if>
+      <if test="spzl != null" >
+        #{spzl,jdbcType=VARCHAR},
+      </if>
+      <if test="sqrk != null" >
+        #{sqrk,jdbcType=DATE},
+      </if>
+      <if test="shr != null" >
+        #{shr,jdbcType=VARCHAR},
+      </if>
+      <if test="shrdh != null" >
+        #{shrdh,jdbcType=VARCHAR},
+      </if>
+      <if test="jsdz != null" >
+        #{jsdz,jdbcType=VARCHAR},
+      </if>
+      <if test="yjsj != null" >
+        #{yjsj,jdbcType=DATE},
+      </if>
+      <if test="fhr != null" >
+        #{fhr,jdbcType=VARCHAR},
+      </if>
+      <if test="wlgs != null" >
+        #{wlgs,jdbcType=VARCHAR},
+      </if>
+      <if test="wldh != null" >
+        #{wldh,jdbcType=VARCHAR},
+      </if>
+      <if test="tkzt != null" >
+        #{tkzt,jdbcType=VARCHAR},
+      </if>
+      <if test="fpzt != null" >
+        #{fpzt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baiwang.einvoice.qz.beans.OrderDetail" >
+    update order_detail
+    <set >
+      <if test="fpqqlsh != null" >
+        fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR},
+      </if>
+      <if test="zddh != null" >
+        zddh = #{zddh,jdbcType=VARCHAR},
+      </if>
+      <if test="fddh != null" >
+        fddh = #{fddh,jdbcType=VARCHAR},
+      </if>
+      <if test="sqr != null" >
+        sqr = #{sqr,jdbcType=VARCHAR},
+      </if>
+      <if test="hym != null" >
+        hym = #{hym,jdbcType=VARCHAR},
+      </if>
+      <if test="hyid != null" >
+        hyid = #{hyid,jdbcType=VARCHAR},
+      </if>
+      <if test="ddsj != null" >
+        ddsj = #{ddsj,jdbcType=DATE},
+      </if>
+      <if test="sqsj != null" >
+        sqsj = #{sqsj,jdbcType=DATE},
+      </if>
+      <if test="spzl != null" >
+        spzl = #{spzl,jdbcType=VARCHAR},
+      </if>
+      <if test="sqrk != null" >
+        sqrk = #{sqrk,jdbcType=DATE},
+      </if>
+      <if test="shr != null" >
+        shr = #{shr,jdbcType=VARCHAR},
+      </if>
+      <if test="shrdh != null" >
+        shrdh = #{shrdh,jdbcType=VARCHAR},
+      </if>
+      <if test="jsdz != null" >
+        jsdz = #{jsdz,jdbcType=VARCHAR},
+      </if>
+      <if test="yjsj != null" >
+        yjsj = #{yjsj,jdbcType=DATE},
+      </if>
+      <if test="fhr != null" >
+        fhr = #{fhr,jdbcType=VARCHAR},
+      </if>
+      <if test="wlgs != null" >
+        wlgs = #{wlgs,jdbcType=VARCHAR},
+      </if>
+      <if test="wldh != null" >
+        wldh = #{wldh,jdbcType=VARCHAR},
+      </if>
+      <if test="tkzt != null" >
+        tkzt = #{tkzt,jdbcType=VARCHAR},
+      </if>
+      <if test="fpzt != null" >
+        fpzt = #{fpzt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.OrderDetail" >
+    update order_detail
+    set fpqqlsh = #{ddh = #{ddh,jdbcType=VARCHAR},,jdbcType=VARCHAR},
+      zddh = #{zddh,jdbcType=VARCHAR},
+      fddh = #{fddh,jdbcType=VARCHAR},
+      sqr = #{sqr,jdbcType=VARCHAR},
+      hym = #{hym,jdbcType=VARCHAR},
+      hyid = #{hyid,jdbcType=VARCHAR},
+      ddsj = #{ddsj,jdbcType=DATE},
+      sqsj = #{sqsj,jdbcType=DATE},
+      spzl = #{spzl,jdbcType=VARCHAR},
+      sqrk = #{sqrk,jdbcType=DATE},
+      shr = #{shr,jdbcType=VARCHAR},
+      shrdh = #{shrdh,jdbcType=VARCHAR},
+      jsdz = #{jsdz,jdbcType=VARCHAR},
+      yjsj = #{yjsj,jdbcType=DATE},
+      fhr = #{fhr,jdbcType=VARCHAR},
+      wlgs = #{wlgs,jdbcType=VARCHAR},
+      wldh = #{wldh,jdbcType=VARCHAR},
+      tkzt = #{tkzt,jdbcType=VARCHAR},
+      fpzt = #{fpzt,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

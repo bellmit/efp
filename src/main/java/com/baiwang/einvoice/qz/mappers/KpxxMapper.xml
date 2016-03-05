@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baiwang.einvoice.qz.dao.KpxxMapper" >
   <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.Kpxx" >
-    <id column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
-    <result column="ddhm" property="ddhm" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="zddh" property="zddh" jdbcType="VARCHAR" />
+    <result column="fddh" property="fddh" jdbcType="VARCHAR" />
     <result column="fplx" property="fplx" jdbcType="VARCHAR" />
     <result column="kplx" property="kplx" jdbcType="BIT" />
     <result column="xsfnsrsbh" property="xsfnsrsbh" jdbcType="VARCHAR" />
@@ -28,7 +30,7 @@
     <result column="kprq" property="kprq" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    fpqqlsh, ddhm, fplx, kplx, xsfnsrsbh, xsfmc, xsfdz, xsfdh, xsfyhzh, gmfnsrsbh, gmfmc, 
+    id,fpqqlsh, zddh, fddh, fplx, kplx, xsfnsrsbh, xsfmc, xsfdz, xsfdh, xsfyhzh, gmfnsrsbh, gmfmc, 
     gmfdz, gmfdh, gmfyhzh, kpr, skr, fhr, yfpdm, yfphm, jshj, hjje, hjse, bz, 
     kprq
   </sql>
@@ -39,25 +41,25 @@
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectByDdhm" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <!-- <select id="selectByDdhm" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from kpxx
     where ddhm = #{ddhm,jdbcType=VARCHAR}
-  </select>
+  </select> -->
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from kpxx
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </delete>
   
-  <delete id="deleteByDdhm" parameterType="java.lang.String" >
+  <!-- <delete id="deleteByDdhm" parameterType="java.lang.String" >
     delete from kpxx
     where ddhm = #{ddhm,jdbcType=VARCHAR}
-  </delete>
+  </delete> -->
   
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
-    insert into kpxx (fpqqlsh, ddhm, fplx, 
+    insert into kpxx (fpqqlsh, zddh, fddh, fplx, 
       kplx, xsfnsrsbh, xsfmc, 
       xsfdz, xsfdh, xsfyhzh, 
       gmfnsrsbh, gmfmc, gmfdz, 
@@ -65,7 +67,7 @@
       kpr, skr, fhr, yfpdm, 
       yfphm, jshj, hjje, hjse, 
       bz, kprq)
-    values (#{fpqqlsh,jdbcType=VARCHAR}, #{ddhm,jdbcType=VARCHAR}, #{fplx,jdbcType=VARCHAR}, 
+    values (#{fpqqlsh,jdbcType=VARCHAR}, #{zddh,jdbcType=VARCHAR},  #{fddh,jdbcType=VARCHAR},#{fplx,jdbcType=VARCHAR}, 
       #{kplx,jdbcType=BIT}, #{xsfnsrsbh,jdbcType=VARCHAR}, #{xsfmc,jdbcType=VARCHAR}, 
       #{xsfdz,jdbcType=VARCHAR}, #{xsfdh,jdbcType=VARCHAR}, #{xsfyhzh,jdbcType=VARCHAR}, 
       #{gmfnsrsbh,jdbcType=VARCHAR}, #{gmfmc,jdbcType=VARCHAR}, #{gmfdz,jdbcType=VARCHAR}, 
@@ -80,8 +82,11 @@
       <if test="fpqqlsh != null" >
         fpqqlsh,
       </if>
-      <if test="ddhm != null" >
-        ddhm,
+      <if test="zddh != null" >
+        zddh,
+      </if>
+      <if test="fddh != null" >
+        fddh,
       </if>
       <if test="fplx != null" >
         fplx,
@@ -154,8 +159,11 @@
       <if test="fpqqlsh != null" >
         #{fpqqlsh,jdbcType=VARCHAR},
       </if>
-      <if test="ddhm != null" >
-        #{ddhm,jdbcType=VARCHAR},
+      <if test="zddh != null" >
+        #{zddh,jdbcType=VARCHAR},
+      </if>
+      <if test="fddh != null" >
+        #{fddh,jdbcType=VARCHAR},
       </if>
       <if test="fplx != null" >
         #{fplx,jdbcType=VARCHAR},
@@ -229,7 +237,10 @@
     update kpxx
     <set >
       <if test="ddhm != null" >
-        ddhm = #{ddhm,jdbcType=VARCHAR},
+        zddh = #{zddh,jdbcType=VARCHAR},
+      </if>
+      <if test="fddh != null" >
+        fddh = #{fddh,jdbcType=VARCHAR},
       </if>
       <if test="fplx != null" >
         fplx = #{fplx,jdbcType=VARCHAR},
@@ -302,7 +313,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
     update kpxx
-    set ddhm = #{ddhm,jdbcType=VARCHAR},
+    set zddh = #{zddh,jdbcType=VARCHAR},
+  	  fddh = #{fddh,jdbcType=VARCHAR},
       fplx = #{fplx,jdbcType=VARCHAR},
       kplx = #{kplx,jdbcType=BIT},
       xsfnsrsbh = #{xsfnsrsbh,jdbcType=VARCHAR},
