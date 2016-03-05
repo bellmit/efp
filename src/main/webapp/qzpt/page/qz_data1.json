@@ -51,6 +51,18 @@
 			"attributes":{
 				"url":"../../specialInvoice/kjzyfp.html"
 			}
+		},{
+			"id":132,
+			"text":"增值税专项发票打印(单打)",
+			"attributes":{
+				"url":"../../specialInvoice/waitprintzp.html"
+			}
+		},{
+			"id":133,
+			"text":"增值税专项发票打印(连打)",
+			"attributes":{
+				"url":"../../specialInvoice/waitprintzps.html"
+			}
 		}]
 	},{
 		"id":14,
@@ -61,6 +73,18 @@
 			"text":"增值税普通发票开具",
 			"attributes":{
 				"url":"../../regularInvoice/kjptfp.html"
+			}
+		},{
+			"id":132,
+			"text":"增值税普通发票打印(单打)",
+			"attributes":{
+				"url":"../../regularInvoice/waitprintpp.html"
+			}
+		},{
+			"id":133,
+			"text":"增值税普通发票打印(连打)",
+			"attributes":{
+				"url":"../../regularInvoice/waitprintpps.html"
 			}
 		}]
 	}]
