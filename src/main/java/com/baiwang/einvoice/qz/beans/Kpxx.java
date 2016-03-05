@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
 		"id",
 	"fpqqlsh",
+	"fpdm",
+	"fphm",
 	"zddh",
 	"fddh",
     "fplx",
