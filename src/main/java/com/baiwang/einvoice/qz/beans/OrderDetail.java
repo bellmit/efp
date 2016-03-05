@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 	"fpqqlsh",
 	"zddh",
 	"fddh",
+	"kpdq",
     "sqr",
     "hym",
     "hyid",
@@ -40,6 +41,8 @@ public class OrderDetail {
     private String zddh;
 	@XmlElement(name = "FDDH", required = true)
     private String fddh;
+	@XmlElement(name = "KPDQ", required = true)
+	private Byte kpdq;
 	@XmlElement(name = "SQR", required = true)
     private String sqr;
 	@XmlElement(name = "HYM", required = true)
@@ -238,6 +241,16 @@ public class OrderDetail {
 	
 		this.fpqqlsh = fpqqlsh;
 	}
-    
+
+	public Byte getKpdq() {
+	
+		return kpdq;
+	}
+
+	public void setKpdq(Byte kpdq) {
+	
+		this.kpdq = kpdq;
+	}
+
     
 }

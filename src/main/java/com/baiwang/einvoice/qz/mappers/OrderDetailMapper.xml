@@ -6,6 +6,7 @@
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
     <result column="zddh" property="zddh" jdbcType="VARCHAR" />
     <result column="fddh" property="fddh" jdbcType="VARCHAR" />
+    <result column="kpdq" property="kpdq" jdbcType="TINYINT" />
     <result column="sqr" property="sqr" jdbcType="VARCHAR" />
     <result column="hym" property="hym" jdbcType="VARCHAR" />
     <result column="hyid" property="hyid" jdbcType="VARCHAR" />
@@ -24,7 +25,7 @@
     <result column="fpzt" property="fpzt" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, fpqqlsh,zddh,fddh, sqr, hym, hyid, ddsj, sqsj, spzl, sqrk, shr, shrdh, jsdz, yjsj, fhr, wlgs, 
+    id, fpqqlsh,zddh,fddh, kpdq,sqr, hym, hyid, ddsj, sqsj, spzl, sqrk, shr, shrdh, jsdz, yjsj, fhr, wlgs, 
     wldh, tkzt, fpzt
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -38,13 +39,13 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.OrderDetail" >
-    insert into order_detail (id, fpqqlsh, zddh, fddh, sqr, 
+    insert into order_detail (id, fpqqlsh, zddh, fddh,kpdq, sqr, 
       hym, hyid, ddsj, sqsj, 
       spzl, sqrk, shr, shrdh, 
       jsdz, yjsj, fhr, wlgs, 
       wldh, tkzt, fpzt)
     values (#{id,jdbcType=BIGINT}, #{fpqqlsh,jdbcType=VARCHAR},#{zddh,jdbcType=VARCHAR},#{fddh,jdbcType=VARCHAR},
-      #{sqr,jdbcType=VARCHAR}, 
+      #{kpdq,jdbcType=VARCHAR},#{sqr,jdbcType=VARCHAR}, 
       #{hym,jdbcType=VARCHAR}, #{hyid,jdbcType=VARCHAR}, #{ddsj,jdbcType=DATE}, #{sqsj,jdbcType=DATE}, 
       #{spzl,jdbcType=VARCHAR}, #{sqrk,jdbcType=DATE}, #{shr,jdbcType=VARCHAR}, #{shrdh,jdbcType=VARCHAR}, 
       #{jsdz,jdbcType=VARCHAR}, #{yjsj,jdbcType=DATE}, #{fhr,jdbcType=VARCHAR}, #{wlgs,jdbcType=VARCHAR}, 
@@ -64,6 +65,9 @@
       </if>
       <if test="fddh != null" >
         fddh,
+      </if>
+      <if test="kpdq != null" >
+        kpdq,
       </if>
       <if test="sqr != null" >
         sqr,
@@ -127,6 +131,9 @@
       <if test="fddh != null" >
         #{fddh,jdbcType=VARCHAR},
       </if>
+      <if test="kpdq != null" >
+        #{kpdq,jdbcType=VARCHAR},
+      </if>
       <if test="sqr != null" >
         #{sqr,jdbcType=VARCHAR},
       </if>
@@ -189,6 +196,9 @@
       <if test="fddh != null" >
         fddh = #{fddh,jdbcType=VARCHAR},
       </if>
+       <if test="kpdq != null" >
+        kpdq = #{kpdq,jdbcType=VARCHAR},
+      </if>
       <if test="sqr != null" >
         sqr = #{sqr,jdbcType=VARCHAR},
       </if>
@@ -245,6 +255,7 @@
     set fpqqlsh = #{ddh = #{ddh,jdbcType=VARCHAR},,jdbcType=VARCHAR},
       zddh = #{zddh,jdbcType=VARCHAR},
       fddh = #{fddh,jdbcType=VARCHAR},
+      kpdq = #{kpdq,jdbcType=VARCHAR},
       sqr = #{sqr,jdbcType=VARCHAR},
       hym = #{hym,jdbcType=VARCHAR},
       hyid = #{hyid,jdbcType=VARCHAR},
