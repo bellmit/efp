@@ -2,41 +2,75 @@ package com.baiwang.einvoice.qz.beans;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+		"id",
+	"fpqqlsh",
+	"zddh",
+	"fddh",
+    "sqr",
+    "hym",
+    "hyid",
+    "ddsj",
+    "sqsj",
+    "spzl",
+    "sqrk",
+    "shr",
+    "shrdh",
+    "jsdz",
+    "yjsj",
+    "fhr",
+    "wlgs",
+    "wldh",
+    "tkzt",
+    "fpzt"
+    
+})
 public class OrderDetail {
+	@XmlElement(name = "ID", required = true)
     private Long id;
-
-    private String ddh;
-
+	@XmlElement(name = "FPQQLSH", required = true)
+	private String fpqqlsh;
+	@XmlElement(name = "ZDDH", required = true)
+    private String zddh;
+	@XmlElement(name = "FDDH", required = true)
+    private String fddh;
+	@XmlElement(name = "SQR", required = true)
     private String sqr;
-
+	@XmlElement(name = "HYM", required = true)
     private String hym;
-
+	@XmlElement(name = "HYID", required = true)
     private String hyid;
-
+	@XmlElement(name = "DDSJ", required = true)
     private Date ddsj;
-
+	@XmlElement(name = "SQSJ", required = true)
     private Date sqsj;
-
+	@XmlElement(name = "SPZL", required = true)
     private String spzl;
-
+	@XmlElement(name = "SQRK", required = true)
     private Date sqrk;
-
+	@XmlElement(name = "SHR", required = true)
     private String shr;
-
+	@XmlElement(name = "SHRDH", required = true)
     private String shrdh;
-
+	@XmlElement(name = "JSDZ", required = true)
     private String jsdz;
-
+	@XmlElement(name = "YJSJ", required = true)
     private Date yjsj;
-
+	@XmlElement(name = "FHR", required = true)
     private String fhr;
-
+	@XmlElement(name = "WLGS", required = true)
     private String wlgs;
-
+	@XmlElement(name = "WLDH", required = true)
     private String wldh;
-
+	@XmlElement(name = "TKZT", required = true)
     private String tkzt;
-
+	@XmlElement(name = "FPZT", required = true)
     private String fpzt;
 
     public Long getId() {
@@ -45,14 +79,6 @@ public class OrderDetail {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDdh() {
-        return ddh;
-    }
-
-    public void setDdh(String ddh) {
-        this.ddh = ddh == null ? null : ddh.trim();
     }
 
     public String getSqr() {
@@ -182,4 +208,36 @@ public class OrderDetail {
     public void setFpzt(String fpzt) {
         this.fpzt = fpzt == null ? null : fpzt.trim();
     }
+
+	public String getZddh() {
+	
+		return zddh;
+	}
+
+	public void setZddh(String zddh) {
+	
+		this.zddh = zddh;
+	}
+
+	public String getFddh() {
+	
+		return fddh;
+	}
+
+	public void setFddh(String fddh) {
+	
+		this.fddh = fddh;
+	}
+
+	public String getFpqqlsh() {
+	
+		return fpqqlsh;
+	}
+
+	public void setFpqqlsh(String fpqqlsh) {
+	
+		this.fpqqlsh = fpqqlsh;
+	}
+    
+    
 }

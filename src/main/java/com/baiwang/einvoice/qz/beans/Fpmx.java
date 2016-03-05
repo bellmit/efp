@@ -1,28 +1,50 @@
 package com.baiwang.einvoice.qz.beans;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+		"id",
+	"fpqqlsh",
+    "fphxz",
+    "xmmc",
+    "ggxh",
+    "dw",
+    "xmsl",
+    "xmdj",
+    "xmje",
+    "sl",
+    "se",
+    "hsbz"
+})
 public class Fpmx {
+	
+	@XmlElement(name = "ID", required = true)
     private Long id;
-
+	@XmlElement(name = "FPQQLSH", required = true)
     private String fpqqlsh;
-
+	@XmlElement(name = "FPHXZ", required = true)
     private Boolean fphxz;
-
+	@XmlElement(name = "XMMC", required = true)
     private String xmmc;
-
+	@XmlElement(name = "GGXH", required = true)
     private String ggxh;
-
+	@XmlElement(name = "DW", required = true)
     private String dw;
-
+	@XmlElement(name = "XMSL", required = true)
     private Float xmsl;
-
+	@XmlElement(name = "XMDJ", required = true)
     private Float xmdj;
-
+	@XmlElement(name = "XMJE", required = true)
     private Float xmje;
-
+	@XmlElement(name = "SL", required = true)
     private Float sl;
-
+	@XmlElement(name = "SE", required = true)
     private Float se;
-
+	@XmlElement(name = "HSBZ", required = true)
     private Boolean hsbz;
 
     public Long getId() {

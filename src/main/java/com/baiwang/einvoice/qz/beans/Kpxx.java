@@ -1,64 +1,101 @@
 package com.baiwang.einvoice.qz.beans;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+		"id",
+	"fpqqlsh",
+	"zddh",
+	"fddh",
+    "fplx",
+    "kplx",
+    "xsfnsrsbh",
+    "xsfmc",
+    "xsfdz",
+    "xsfdh",
+    "xsfyhzh",
+    "gmfnsrsbh",
+    "gmfmc",
+    "gmfdz",
+    "gmfdh",
+    "gmfyhzh",
+    "kpr",
+    "skr",
+    "fhr",
+    "yfpdm",
+    "yfphm",
+    "jshj",
+    "hjje",
+    "hjse",
+    "bz",
+    "kprq"
+})
 public class Kpxx {
+	@XmlElement(name = "ID", required = true)
     private Long id;
-
+	@XmlElement(name = "FPQQLSH", required = true)
     private String fpqqlsh;
-
+	@XmlElement(name = "FPDM", required = true)
     private String fpdm;
-
+	@XmlElement(name = "FPHM", required = true)
     private String fphm;
-
+	@XmlElement(name = "FPZT", required = true)
     private String fpzt;
-
+	@XmlElement(name = "RESULT_CODE", required = true)
     private String resultcode;
-
+	@XmlElement(name = "RESULT_MSG", required = true)
     private String resultmsg;
-
-    private String ddhm;
-
+	@XmlElement(name = "ZDDH", required = true)
+    private String zddh;
+	@XmlElement(name = "FDDH", required = true)
+    private String fddh;
+	@XmlElement(name = "FPLX", required = true)
     private String fplx;
-
+	@XmlElement(name = "KPLX", required = true)
     private Boolean kplx;
-
+	@XmlElement(name = "XSFNSRSBH", required = true)
     private String xsfnsrsbh;
-
+	@XmlElement(name = "XSFMC", required = true)
     private String xsfmc;
-
+	@XmlElement(name = "XSFDZ", required = true)
     private String xsfdz;
-
+	@XmlElement(name = "XSFDH", required = true)
     private String xsfdh;
-
+	@XmlElement(name = "XSFYHZH", required = true)
     private String xsfyhzh;
-
+	@XmlElement(name = "GMFNSRSBH", required = true)
     private String gmfnsrsbh;
-
+	@XmlElement(name = "GMFMC", required = true)
     private String gmfmc;
-
+	@XmlElement(name = "GMFDZ", required = true)
     private String gmfdz;
-
+	@XmlElement(name = "GMFDH", required = true)
     private String gmfdh;
-
+	@XmlElement(name = "GMFYHZH", required = true)
     private String gmfyhzh;
-
+	@XmlElement(name = "KPR", required = true)
     private String kpr;
-
+	@XmlElement(name = "SKR", required = true)
     private String skr;
-
+	@XmlElement(name = "FHR", required = true)
     private String fhr;
-
+	@XmlElement(name = "YFPDM", required = true)
     private String yfpdm;
-
+	@XmlElement(name = "YFPHM", required = true)
     private String yfphm;
-
+	@XmlElement(name = "JSHJ", required = true)
     private Float jshj;
-
+	@XmlElement(name = "HJJE", required = true)
     private Float hjje;
-
+	@XmlElement(name = "HJSE", required = true)
     private Float hjse;
-
+	@XmlElement(name = "BZ", required = true)
     private String bz;
-
+	@XmlElement(name = "KPRQ", required = true)
     private String kprq;
 
     public Long getId() {
@@ -115,14 +152,6 @@ public class Kpxx {
 
     public void setResultmsg(String resultmsg) {
         this.resultmsg = resultmsg == null ? null : resultmsg.trim();
-    }
-
-    public String getDdhm() {
-        return ddhm;
-    }
-
-    public void setDdhm(String ddhm) {
-        this.ddhm = ddhm == null ? null : ddhm.trim();
     }
 
     public String getFplx() {
@@ -300,4 +329,26 @@ public class Kpxx {
     public void setKprq(String kprq) {
         this.kprq = kprq == null ? null : kprq.trim();
     }
+
+	public String getZddh() {
+	
+		return zddh;
+	}
+
+	public void setZddh(String zddh) {
+	
+		this.zddh = zddh;
+	}
+
+	public String getFddh() {
+	
+		return fddh;
+	}
+
+	public void setFddh(String fddh) {
+	
+		this.fddh = fddh;
+	}
+    
+    
 }
