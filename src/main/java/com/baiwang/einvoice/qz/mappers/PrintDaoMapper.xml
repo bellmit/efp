@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baiwang.einvoice.qz.dao.PrintDaoMapper" >
   
-  <resultMap id="QueryMap" type="hashmap">
+  <resultMap id="QueryPrintPpMap" type="hashmap">
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
     <result column="zddh" property="zddh" jdbcType="VARCHAR" />
     <result column="fddh" property="fddh" jdbcType="VARCHAR" />
@@ -21,12 +21,12 @@
     <result column="fphm" property="fphm" jdbcType="VARCHAR" />
   </resultMap>
   
-  <select id="getPrintPpList" resultMap="QueryMap" parameterType="map">
+  <select id="getPrintPpList" resultMap="QueryPrintPpMap" parameterType="map">
   select a.fpqqlsh fpqqlsh, a.zddh zddh, a.fddh fddh, b.hym hym, b.shr shr, b.sqsj, b.kpdq, a.fplx fpzl,
   a.gmfmc tt, b.spzl ppnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
   from kpxx a  
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
-  WHERE 1=1 and a.fpzt = '2' 
+  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
    <if test="beginDate != null and beginDate!=''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>
@@ -42,6 +42,39 @@
   
   </select>
   
+  <resultMap id="QueryPrintPpsMap" type="hashmap">
+    <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="kprq" property="kprq" jdbcType="VARCHAR" /><!-- 开票日期 -->
+    <result column="fphm" property="fphm" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="getPrintPpsList" parameterType="map" resultMap="QueryPrintPpsMap">
+  	select a.fpqqlsh fpqqlsh, a.kprq kprq, a.fphm fphm 
+  	from kpxx a 
+  	WHERE 1=1  and a.fpzt = '2' and a.fplx = #{fplx} 
+  	<if test="beginDate != null and beginDate!=''" >
+     <![CDATA[and a.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate !=''" >
+     <![CDATA[and a.kprq <= #{endDate} ]]>
+    </if>
+    <if test="beginfphm != null and beginfphm !=''" >
+     <![CDATA[and a.fphm >= #{beginfphm} ]]>
+    </if>
+    <if test="endfphm != null and endfphm !=''" >
+     <![CDATA[and a.fphm <= #{endfphm} ]]>
+    </if> 
+    order by CAST(a.fphm AS SIGNED)
+  </select>
+  
+  <select id="showDetail" resultMap="QueryPrintPpMap" parameterType="map">
+  select a.fpqqlsh fpqqlsh, a.zddh zddh, a.fddh fddh, b.hym hym, b.shr shr, b.sqsj, b.kpdq, a.fplx fpzl,
+  a.gmfmc tt, b.spzl ppnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
+  from kpxx a  
+  LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
+  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
+  <![CDATA[and a.fphm <= #{end} and a.fphm <= #{begin} ]]>
+  </select>
   
   
   

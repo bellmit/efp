@@ -14,78 +14,35 @@
 CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F" 
 codebase="NISEC_SKSCX.ocx#version=1,0,0,1">
 </OBJECT>
-<script type="text/javascript"
-	src="<%=basePath%>/My97DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
+<script type="text/javascript" src="<%=basePath%>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/jquery/jquery.js"></script>
-<style type="text/css">
-body,table{
-font-size:12px;
-}
-table{
-table-layout:fixed;
-empty-cells:show;
-border-collapse: collapse;
-margin:0 auto;
-}
-td{
-height:30px;
-}
-h1,h2,h3{
-font-size:12px;
-margin:0;
-padding:0;
-}
-.table{
-border:1px solid #cad9ea;
-color:#666;
-}
-.table th {
-background-repeat:repeat-x;
-height:30px;
-}
-.table td,.table th{
-border:1px solid #cad9ea;
-padding:0 1em 0;
-}
-.table tr.alter{
-background-color:#f5fafe;
-}
-</style> 
+<script type="text/javascript" src="<%=basePath%>/js/jquery.pagination.js"></script>
+
 </head>
 <body>
+	<h4>待开普通发票查询</h4>
 	<form action="<%=basePath%>/fpkj/plain" method="post">
-		<table>
-		<tr><td>开始时间：<input id="beginDate" name="beginDate" class="Wdate"
+		开始时间:&nbsp;&nbsp;<input id="beginDate" name="beginDate" class="Wdate"
 			onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})"
-			value="${param.beginDate }" style="width: 100px;" />
-			</td>
-			<td>结束时间 <input id="endDate" name="endDate" class="Wdate"
+			value="${param.beginDate }" style="width: 100px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		结束时间:&nbsp;&nbsp;<input id="endDate" name="endDate" class="Wdate"
 			onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})"
-			value="${param.endDate }" style="width: 100px;" /></td></tr>
-		<tr>
-		<td>
-			主订单号码：<input type="text" id="zddh" name="zddh" value="${param.zddh }" /></td>
-		<td>
-			开票地区：<select id="kpdq" name="kpdq">
-					<option value="" >-请选择-</option>
+			value="${param.endDate }" style="width: 100px;" /><br/>
+		主订单号码：<input type="text" id="zddh" name="zddh" value="${param.zddh }" />
+		开票地区：<select id="kpdq" name="kpdq">
+					<option value="-1" <c:if test="${param.kpdq == -1 }">selected="selected"</c:if>>-请选择-</option>
 					<option value="0" <c:if test="${param.kpdq == 0 }">selected="selected"</c:if>>北京</option>
 					<option value="1" <c:if test="${param.kpdq == 1 }">selected="selected"</c:if>>上海</option>
-			</select>
+					</select>
 			<br/>
-		</td>
-		<td>
-			<input	type="submit" value="查询"/>
-		</td>
-		</tr>
-		<tr>
-			<td><input id="kp"	type="button" value="多张开票" onclick="multi_kjfp()"/> </td>
-		</tr>
-			 
-	</table>
+		<input id="currentPage" name="currentPage" type="hidden"/>
+		<input	type="submit" value="查询"/>
+		<input id="kp"	type="button" value="多张开票" onclick="multi_kjfp()"/> 
 	</form>
-	<br />
-		<table border="1" cellspacing="0">
-			<tr>
+	<br/>
+	<table border="1" cellspacing="0">
+		<tr>
 				<th><input type="checkbox" id="chkAll" onclick="checkAll()"></th>
 				<th>序号</th>
 				<th>主订单号</th>
@@ -118,8 +75,8 @@ background-color:#f5fafe;
 					</td>
 					<td>
 						<c:if test="${fp.fplx == '004' }">增值税普通发票</c:if>
-						<c:if test="${fp.kpdq == '007' }">增值税专用发票</c:if>
-						<c:if test="${fp.kpdq == '026' }">增值税电子发票</c:if>
+						<c:if test="${fp.fplx == '007' }">增值税专用发票</c:if>
+						<c:if test="${fp.fplx == '026' }">增值税电子发票</c:if>
 					</td>
 					<td><c:out value="${fp.gmfmc}" /></td>
 					<td><c:out value="${fp.spzl}" /></td>
@@ -130,7 +87,9 @@ background-color:#f5fafe;
 				</tr>
 			</c:forEach>
 		</table>
+		<div class="pagination" id="Pagination"></div>
 </body>
+<!-- 发票开具 -->
 <script type="text/javascript">
 	function kjfp(fpqqlsh){
 		alert(fpqqlsh);
@@ -161,6 +120,10 @@ background-color:#f5fafe;
 				fpList[i]=chks[i].value;
 			}
 		} 
+	    if(fpList.length<1){
+	    	alert("请选择至少一张发票！");
+	    	return;
+	    }
 		alert(fpList);
 		var param = {"arr":fpList};
 		alert(param);
@@ -197,4 +160,32 @@ background-color:#f5fafe;
 	}
 	
 </script>
+<!-- 分页 -->
+<script type="text/javascript">
+	 var pageIndex = ${page.pageIndex};
+     var pageSize = ${page.pageSize};
+     var totalPages = ${page.totalPages};
+     var totalCounts = ${page.totalCounts};
+     $(document).ready(function(){ 
+     $("#Pagination").pagination(totalCounts,{
+                 items_per_page: pageSize,
+                 current_page:pageIndex,
+                 prev_text:'<',    
+                 next_text:'>',            
+                 callback:function(page){
+                     gotoPage(page);
+                 }
+         });            
+         /* showPageInfo(); */
+     });
+     
+     function gotoPage(page) {
+         window.location = "<%=basePath%>/fpkj/plain?pageIndex=" + page;            
+     }
+     
+     /* function showPageInfo(){
+         $("#page-info").html(pageSize + "条/页，共" + totalCounts + "条，第" + "${page.pageIndex+1}" + "页，共" + totalPages + "页");
+     }	 */
+
+</script> 
 </html>

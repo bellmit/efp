@@ -5,6 +5,10 @@ import java.util.Map;
 
 public interface IPrintPpService {
 
-	List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh);
+	List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx);
+
+	List<Map<String, String>> getPrintPpsList(String beginDate, String endDate, String beginfphm, String endfphm, String fplx);
+
+	List<Map<String, String>> showDetail(String begin, String end, String fplx);
 
 }

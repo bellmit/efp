@@ -8,6 +8,11 @@ import org.apache.ibatis.annotations.Param;
 public interface PrintDaoMapper {
 
 	List<Map<String, String>> getPrintPpList(@Param("beginDate")String beginDate, 
-			@Param("endDate")String endDate, @Param("kpdq")String kpdq, @Param("zddh")String zddh);
+			@Param("endDate")String endDate, @Param("kpdq")String kpdq, @Param("zddh")String zddh, @Param("fplx")String fplx);
+
+	List<Map<String, String>> getPrintPpsList(@Param("beginDate")String beginDate, @Param("endDate")String endDate, 
+			@Param("beginfphm")String beginfphm, @Param("endfphm")String endfphm, @Param("fplx")String fplx);
+
+	List<Map<String, String>> showDetail(@Param("begin")String begin, @Param("end")String end, @Param("fplx")String fplx);
 
 }

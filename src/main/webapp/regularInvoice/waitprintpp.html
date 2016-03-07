@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>待打印普通发票(单打)</title>
-<script type="text/javascript" src="../js/jquery/jquery-2.1.1.min.js"></script>
+<OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
+<!-- <script type="text/javascript" src="../js/jquery/jquery-2.1.1.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 <script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -13,17 +16,15 @@
          <script src="../js/respond.min.js"></script>
       <![endif]-->
       
-<link rel="stylesheet" type="text/css" href="./pageGroup.css"/>
-<script type="text/javascript" src="./pageGroup.js"></script>      
+<link rel="stylesheet" type="text/css" href="../js/page/pageGroup.css"/>
+<script type="text/javascript" src="../js/page/pageGroup.js"></script>      
 <style type="text/css">
-th{width: 100px; height: 35px;}
+th,td{width: 100px; height: 35px;text-align:center;}
 </style>
 
 <script type="text/javascript">
 function chaxun(){
-	
 	var params = $('#queryForm').serialize();
-	//alert(params);
 	
 	$.ajax({
 		type:"GET",
@@ -81,6 +82,31 @@ function dayin(ele){
 	alert(ele);
 }
 
+function PrintInvoice(){	
+	//01页边距设置
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"鍙戠エ鎵撳嵃\"><body yylxdm=\"1\"><kpzdbs>12345612346</kpzdbs><fplxdm>007</fplxdm><fpdm>1110000452</fpdm><fphm>38148009</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+	var sMarginsInfo = " <?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20003\" comment=\"页边距设置\">\r\n<body yylxdm=\"1\">\r\n<fplxdm>1</fplxdm>\r\n<top>-1</top>\r\n<left>-3</left>\r\n</body>\r\n</business>";		
+	sMargret = sk.Operate(sMarginsInfo);
+	var returncodesMarg = getTotalMidValue(sMargret, "<returncode>","</returncode>");
+	var returnmsgsMarg = getTotalMidValue(sMargret, "<returnmsg>","</returnmsg>");	
+	if(returncodesMarg==0&&returnmsgsMarg=="成功"){
+		//02、打印发票
+		var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>004</fplxdm><fpdm>1100098082</fpdm><fphm>74560017</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+		alert(sPrintInfo);
+		sPrintInret = sk.Operate(sPrintInfo);
+		var returncodesPrintIn = getTotalMidValue(sPrintInret, "<returncode>","</returncode>");
+		var returnmsgsPrintIn = getTotalMidValue(sPrintInret, "<returnmsg>","</returnmsg>");
+		if(returncodesPrintIn==0&&returnmsgsPrintIn=="成功"){
+			alert("打印成功！");
+		}else{
+			alert("打印失败，失败原因："+returnmsgsPrintIn);
+		}
+	}else{
+		    alert("页面距设置失败，失败原因："+returnmsgsMarg);
+	}		
+		
+}
+
 </script>
 
 </head>
@@ -115,8 +141,8 @@ function dayin(ele){
 		<div class="form-group col-sm-5">
 	      <label for="zddh" class="col-sm-3 control-label">订单号：</label>
 	      <div class="col-sm-6">
-	         <input type="text" class="form-control" id="zddh" name="zddh"
-	            placeholder="订单号">
+	         <input type="text" class="form-control" id="zddh" name="zddh" placeholder="订单号">
+	         <input type="hidden" id='fplx' name='fplx' value='007'><!-- 发票类型 普票 -->
 	      </div>
 	   </div>
 	   <div class="form-group col-sm-5">
@@ -148,7 +174,7 @@ function dayin(ele){
 	<th>发票号码</th>
 	<th>操作</th>
 </thead>
-<tr>
+
 <tbody id="printBody">
 <!-- <tr>
 <td>123123</td>
@@ -191,7 +217,7 @@ function dayin(ele){
     </div>
     <div class="pageDown">下一页</div>
 </div>
-<div class="tcdPageCode"></div>
+
 
 
 </body>
