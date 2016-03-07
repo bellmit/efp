@@ -49,7 +49,7 @@
 			"id":131,
 			"text":"增值税专项发票开具",
 			"attributes":{
-				"url":"../../specialInvoice/kjzyfp.html"
+				"url":"../../queryStatistics/goToSpecial.jsp"
 			}
 		},{
 			"id":132,
@@ -72,7 +72,7 @@
 			"id":141,
 			"text":"增值税普通发票开具",
 			"attributes":{
-				"url":"../../regularInvoice/kjptfp.html"
+				"url":"../../queryStatistics/goToPlain.jsp"
 			}
 		},{
 			"id":132,

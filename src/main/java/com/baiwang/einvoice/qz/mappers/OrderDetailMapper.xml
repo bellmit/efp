@@ -30,7 +30,7 @@
     <result column="zddh" property="zddh" jdbcType="VARCHAR" />
     <result column="fddh" property="fddh" jdbcType="VARCHAR" />
     <result column="kpdq" property="kpdq" jdbcType="TINYINT" />
-    <!-- <result column="kprq" property="kprq" jdbcType="VARCHAR" /> -->
+    <result column="kprq" property="kprq" jdbcType="VARCHAR" /> 
     <result column="hym" property="hym" jdbcType="VARCHAR" />
     <result column="sqsj" property="sqsj" jdbcType="DATE" />
     <result column="spzl" property="spzl" jdbcType="VARCHAR" />
@@ -300,16 +300,16 @@
 	ON a.zddh = b.zddh
 	AND a.fddh = b.fddh
 	WHERE a.fpzt = '1' and a.fplx = '004' 
-    <if test="beginDate != null" >
+    <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>
-    <if test="endDate != null" >
+    <if test="endDate != null and endDate != ''" >
      <![CDATA[and b.ddsj <= #{endDate} ]]>
     </if>
     <if test="zddh != null" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
-    <if test="kpdq != null" >
+    <if test="kpdq != null and kpdq != '-1'" >
      and b.kpdq = #{kpdq}
     </if>
   </select>
@@ -322,16 +322,16 @@
 	ON a.zddh = b.zddh
 	AND a.fddh = b.fddh
 	WHERE a.fpzt = '1' and  a.fplx = '007'
-    <if test="beginDate != null" >
+    <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>
-    <if test="endDate != null" >
+    <if test="endDate != null and endDate != ''" >
      <![CDATA[and b.ddsj <= #{endDate} ]]>
     </if>
     <if test="zddh != null" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
-    <if test="kpdq != null" >
+    <if test="kpdq != null and kpdq != '-1'" >
      and b.kpdq = #{kpdq}
     </if>
   </select>
