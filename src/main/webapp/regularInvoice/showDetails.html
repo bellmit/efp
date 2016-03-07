@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>详情</title>
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<!--[if lt IE 9]>
+         <script src="../js/html5shiv.js"></script>
+         <script src="../js/respond.min.js"></script>
+      <![endif]-->
+      
+<link rel="stylesheet" type="text/css" href="../js/page/pageGroup.css"/>
+<script type="text/javascript" src="../js/page/pageGroup.js"></script>      
+<style type="text/css">
+th,td{width: 120px; height: 35px;text-align:center;}
+</style>
+
+<script type="text/javascript">
+function request(paras) {
+    var url = location.href;
+    var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+    var paraObj = { };
+    for (i = 0; j = paraString[i]; i++) {
+        paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
+    }
+    var returnValue = paraObj[paras.toLowerCase()];
+    if (typeof (returnValue) == "undefined") {
+        return "";
+    } else {
+        return returnValue;
+    }
+}
+
+var begin = decodeURI(request("begin"));
+var end = decodeURI(request("end"));
+var fplx = decodeURI(request("fplx"));
+
+var params = {'begin' : begin, 'end' : end, 'fplx': fplx};
+
+$.ajax({
+	type:"POST",
+    url: "../printpps/showDetail",
+    data: params,
+    async: false,
+    success: function (data) {
+    	alert(JSON.stringify(data))
+    		
+    		$("#printBody").children().remove();
+    	alert(data.length)
+    		if(data.length>0){
+				var tbo = '';
+    			for(var i=0;i<data.length;i++){
+    				tbo = tbo + '<tr>'
+   						+'<td class="">'+data[i].zddh+'</td>'
+   						+'<td>'+data[i].hym+'</td>'
+   						+'<td>'+data[i].shr+'</td>'
+   						+'<td>'+data[i].sqsj+'</td>'
+   						+'<td>'+data[i].kpdq+'</td>'
+   						+'<td>'+data[i].fpzl+'</td>'
+   						+'<td>'+data[i].fptt+'</td>'
+   						+'<td>'+data[i].fpnr+'</td>'
+   						+'<td>'+data[i].hjje+'</td>'
+   						+'<td>'+data[i].hjse+'</td>'
+   						+'<td>'+data[i].jshj+'</td>'
+   						+'<td>'+data[i].kprq+'</td>'
+   						+'<td>'+data[i].fpdm+'</td>'
+   						+'<td>'+data[i].fphm+'</td>'
+   						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
+   						//+'<td>'+'<a href="javascript:" onclick="dayin(' + data[i].fpqqlsh + ');">打印</a>' + '</td>'
+   						
+   						+'</tr>';
+    			}
+    			//alert(tbo)
+    			$("#printBody").html(tbo);
+    			/* $('.invitetable1 tr:odd').css('background','#fffceb');
+    			parent.dyniframesize('openli');  */
+    		}else{
+    			//alert(0)
+    		}
+    	
+    },
+    error:function(XMLHttpRequest, textStatus, errorThrown) {
+    	if(XMLHttpRequest.responseText=="timeOut"){
+    		location.reload();
+    	}else{
+    		alert("Error");
+    	}
+    }
+});
+
+</script>
+
+</head>
+<body>
+
+<table border="1" cellspacing="0" >
+<thead>
+	<th>订单号</th>
+	<th>会员名</th>
+	<th>收货人</th>
+	<th>申请时间</th>
+	<th>开票地区</th>
+	<th>发票种类</th>
+	<th>发票抬头</th>
+	<th>发票内容</th>
+	<th>合计金额</th>
+	<th>合计税额</th>
+	<th>价税合计</th>
+	<th>开票日期</th>
+	<th>发票代码</th>
+	<th>发票号码</th>
+</thead>
+
+<tbody id="printBody">
+
+</tbody>
+</table>
+
+<div id="pageGro" class="cb">
+	<div class="pageUp">上一页</div>
+    <div class="pageList">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+    <div class="pageDown">下一页</div>
+</div>
+
+</body>
+</html>
