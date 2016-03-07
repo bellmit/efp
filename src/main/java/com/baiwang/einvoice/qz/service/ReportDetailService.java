@@ -4,10 +4,12 @@
 
 package com.baiwang.einvoice.qz.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.baiwang.einvoice.qz.beans.ReportDetail;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: ReportDetailService
@@ -18,5 +20,7 @@ import com.baiwang.einvoice.qz.beans.ReportDetail;
 public interface ReportDetailService {
 	ReportDetail getFpByLSH(String fpqqlsh);
 	
-    List<ReportDetail> getFpListByCondition(Map<String, Object> condition);
+	PageList<HashMap<String,Object>> getFpListByCondition(Map<String, Object> condition);
+	
+	List<ReportDetail> getFpListByCondition4d(Map<String, Object> condition);
 }
