@@ -51,6 +51,19 @@
     from order_detail
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="selectByDdh" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_detail
+    where zddh = #{zddh,jdbcType=VARCHAR} and fddh = #{fddh,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByFpqqlsh" parameterType="java.lang.String" >
+    delete from order_detail
+    where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
+  </delete>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from order_detail
     where id = #{id,jdbcType=BIGINT}

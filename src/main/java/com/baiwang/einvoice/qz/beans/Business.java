@@ -18,30 +18,45 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "customOrder",
+    "orderDetail",
     "requestcommonfpkj"
 })
 @XmlRootElement(name = "business")
 public class Business {
 
     @XmlElement(name = "CUSTOMDATA", required = true)
-    protected CustomOrder customOrder;
+    protected OrderDetail orderDetail;
     @XmlElement(name = "REQUEST_COMMON_FPKJ", required = true)
     protected RequestCommonFpkj requestcommonfpkj;
     @XmlAttribute(name = "id")
     protected String id;
 
-    public CustomOrder getCustomOrder() {
-        return customOrder;
-    }
-
-   
-    public void setCustomOrder(CustomOrder value) {
-        this.customOrder = value;
-    }
-
     
-    public RequestCommonFpkj getREQUESTCOMMONFPKJ() {
+    public OrderDetail getOrderDetail() {
+	
+		return orderDetail;
+	}
+
+
+	public void setOrderDetail(OrderDetail orderDetail) {
+	
+		this.orderDetail = orderDetail;
+	}
+
+
+	public RequestCommonFpkj getRequestcommonfpkj() {
+	
+		return requestcommonfpkj;
+	}
+
+
+	public void setRequestcommonfpkj(RequestCommonFpkj requestcommonfpkj) {
+	
+		this.requestcommonfpkj = requestcommonfpkj;
+	}
+
+
+	public RequestCommonFpkj getREQUESTCOMMONFPKJ() {
         return requestcommonfpkj;
     }
 

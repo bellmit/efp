@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Business;
-import com.baiwang.einvoice.qz.beans.CustomOrder;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
+import com.baiwang.einvoice.qz.beans.OrderDetail;
 import com.baiwang.einvoice.qz.beans.ResultOfKp;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
@@ -68,7 +68,7 @@ public class FpController {
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
 		
-		CustomOrder customOrder = business.getCustomOrder();
+		OrderDetail orderDetail = business.getOrderDetail();
 		
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		
@@ -76,24 +76,24 @@ public class FpController {
 		kpxx.setFpqqlsh(fpqqlsh);
 		
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
-		System.out.println("订单号："+customOrder.getDdhm());
+		System.out.println("订单号："+orderDetail.getZddh());
 		
 		/*ResultOfKp result = resultService.queryResult(customOrder.getDdhm(), "");*/
 		Map<String, String> result = resultService.queryResult(kpxx.getZddh(), kpxx.getFddh(), kpxx.getFplx());//根据两个订单号查
 		
 		if(null == result){
-			fpService.saveInfo(customOrder, kpxx, list);
+			fpService.saveInfo(orderDetail, kpxx, list,fpqqlsh);
 			
 			String correlationId = "";
 			if("026".equals(kpxx.getFplx())){
 				try{
 					UUID uuid = UUID.randomUUID();
 					correlationId = uuid.toString();
-					logger.info("*****订单号为:" + customOrder.getDdhm() + "的关联id为:" + correlationId);
+					logger.info("*****订单号为:" + orderDetail.getZddh() + "的关联id为:" + correlationId);
 					sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
 							correlationId);
 				}catch(Exception e){
-					logger.error("*********订单号：" + customOrder.getDdhm() + ",sendMsg网络异常");
+					logger.error("*********订单号：" + orderDetail.getZddh() + ",sendMsg网络异常");
 					e.printStackTrace();
 					
 					map.put("returnCode", "4000");
@@ -103,7 +103,7 @@ public class FpController {
 			
 				//从响应队列检索响应消息
 				ExecutorService executor = Executors.newSingleThreadExecutor();
-		        Future<String> future = executor.submit(new EnumResposeMessageTask(customOrder.getDdhm(), correlationId, jmsTemplate2, resultService));
+		        Future<String> future = executor.submit(new EnumResposeMessageTask(orderDetail.getZddh(), correlationId, jmsTemplate2, resultService));
 				String success = "4400";
 		        try{
 		        	success = future.get(4, TimeUnit.SECONDS);
@@ -117,7 +117,7 @@ public class FpController {
 		        } catch (TimeoutException e) {
 		        	e.printStackTrace();
 		        	String requestURL = request.getRequestURL().toString();
-		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + customOrder.getDdhm();
+		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + orderDetail.getZddh();
 		    		
 		    		map.put("returnCode", "2000");
 					map.put("returnMsg", "正在处理中,请稍后查询" + url);
@@ -141,7 +141,7 @@ public class FpController {
 	        	return map;
 			}
 		}else if("0000".equals(result.get("returnCode"))){
-			logger.warn("*********订单号：" + customOrder.getDdhm() + "已经开票成功，返回。");
+			logger.warn("*********订单号：" + orderDetail.getZddh() + "已经开票成功，返回。");
 			map.put("returnCode", "0000");
 			map.put("returnMsg", "发票已开具成功");
 			return map;
@@ -173,6 +173,29 @@ public class FpController {
 		
 	}
 	
-	
+	@RequestMapping(value="receive",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String receive(String xml) throws UnsupportedEncodingException{
+		
+		if(null == xml || !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("utf-8")) ){
+			logger.error("xml不符合规则");
+			return "xml不符合规则";
+		}
+		
+		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
+		
+		OrderDetail orderDetail = business.getOrderDetail();
+		
+		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
+		
+		String fpqqlsh = XmlUtil.random();
+		kpxx.setFpqqlsh(fpqqlsh);
+		
+		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
+		
+		fpService.saveInfo(orderDetail, kpxx, list , fpqqlsh);
+		
+		return "success";
+	}
 	
 }

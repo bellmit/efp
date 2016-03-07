@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.baiwang.einvoice.qz.beans.Business;
-import com.baiwang.einvoice.qz.beans.CustomOrder;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
+import com.baiwang.einvoice.qz.beans.OrderDetail;
 
 /**
   * @ClassName: FpService
@@ -21,9 +21,8 @@ import com.baiwang.einvoice.qz.beans.Kpxx;
   */
 public interface FpService {
 
-	void saveXmlInfo(Business business);
 	
-	void saveInfo(CustomOrder customOrder, Kpxx kpxx, List<Fpmx> fpmxList);
+	void saveInfo(OrderDetail orderDetail, Kpxx kpxx, List<Fpmx> fpmxList , String fpqqlsh);
 	
 	List<Map<String, String>> getPlainList(HashMap<String, String> param);
 	

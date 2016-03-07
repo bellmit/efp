@@ -61,12 +61,13 @@
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </select>
   
-  <!-- <select id="selectByFpqqlsh" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByDdhm" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from kpxx
-    where ddhm = #{ddhm,jdbcType=VARCHAR}
-  </select> -->
+    where zddh = #{zddh,jdbcType=VARCHAR}  and fddh = #{fddh,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByFpqqlsh" resultType="com.baiwang.einvoice.qz.beans.Kpxx" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
