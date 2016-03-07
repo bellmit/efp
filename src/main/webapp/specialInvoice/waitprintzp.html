@@ -36,7 +36,7 @@ function chaxun(){
         data: params,
         async: false,
         success: function (data) {
-        	alert(JSON.stringify(data))
+        	//alert(JSON.stringify(data))
         		
         		$("#printBody").children().remove();
         		if(data.length>0){
@@ -178,7 +178,7 @@ function PrintInvoice(){
 	<th>发票号码</th>
 	<th>操作</th>
 </thead>
-<tr>
+
 <tbody id="printBody">
 <!-- <tr>
 <td>123123</td>
