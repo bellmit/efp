@@ -4,9 +4,12 @@
 
 package com.baiwang.einvoice.qz.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -21,6 +24,7 @@ import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.dao.CustomOrderMapper;
 import com.baiwang.einvoice.qz.dao.FpmxMapper;
 import com.baiwang.einvoice.qz.dao.KpxxMapper;
+import com.baiwang.einvoice.qz.dao.OrderDetailMapper;
 import com.baiwang.einvoice.qz.service.FpService;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
 
@@ -41,6 +45,8 @@ public class FpServiceImpl implements FpService {
 	private FpmxMapper fpmxDao;
 	@Resource
 	private CustomOrderMapper orderDao;
+	@Resource
+	private OrderDetailMapper orderDetailDao;
 	
 	/**
 	  * <p>Title: saveXmlInfo</p>
@@ -65,7 +71,7 @@ public class FpServiceImpl implements FpService {
 		
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		kpxx.setFpqqlsh(fpqqlsh);
-		kpxx.setDdhm(customOrder.getDdhm());
+		//kpxx.setDdhm(customOrder.getDdhm());
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		kpxx.setKprq(sf.format(new Date()));
 		
@@ -106,7 +112,7 @@ public class FpServiceImpl implements FpService {
 			logger.info("更新订单号为【"+customOrder.getDdhm()+"】的订单信息！");
 		}
 		
-		kpxx.setDdhm(customOrder.getDdhm());
+		kpxx.setZddh(customOrder.getDdhm());
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		kpxx.setKprq(sf.format(new Date()));
 		
@@ -127,6 +133,113 @@ public class FpServiceImpl implements FpService {
 			logger.info("存入流水号为【"+kpxx.getFpqqlsh()+"】的发票明细！");
 		}
 		
+	}
+
+	/**
+	  * <p>Title: getPlainList</p>
+	  * <p>Description: </p>
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.FpService#getPlainList()
+	  */
+	@Override
+	public List<Map<String, String>> getPlainList(HashMap<String, String> param) {
+		
+		// TODO Auto-generated method stub
+		return orderDetailDao.getPlainList(param);
+		
+	}
+
+	/**
+	  * <p>Title: getKpxxByFpqqlsh</p>
+	  * <p>Description: </p>
+	  * @param fpqqlsh
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.FpService#getKpxxByFpqqlsh(java.lang.String)
+	  */
+	@Override
+	public Kpxx getKpxxByFpqqlsh(String fpqqlsh) {
+		
+		// TODO Auto-generated method stub
+		return dao.selectByFpqqlsh(fpqqlsh);
+		
+	}
+
+	/**
+	  * <p>Title: getFpmxByFpqqlsh</p>
+	  * <p>Description: </p>
+	  * @param fpqqlsh
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.FpService#getFpmxByFpqqlsh(java.lang.String)
+	  */
+	@Override
+	public List<Fpmx> getFpmxByFpqqlsh(String fpqqlsh) {
+		
+		// TODO Auto-generated method stub
+		return fpmxDao.selectByFpqqlsh(fpqqlsh);
+		
+	}
+
+	/**
+	  * <p>Title: updateFpztByFpqqlsh</p>
+	  * <p>Description: </p>
+	  * @param fpqqlsh
+	  * @see com.baiwang.einvoice.qz.service.FpService#updateFpztByFpqqlsh(java.lang.String)
+	  */
+	@Override
+	public void updateFpztByFpqqlsh(String fpqqlsh) {
+		
+		// TODO Auto-generated method stub
+		dao.updateFpztByFpqqlsh(fpqqlsh);
+	}
+
+	/**
+	  * <p>Title: getSpecialList</p>
+	  * <p>Description: </p>
+	  * @param param
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.FpService#getSpecialList(java.util.HashMap)
+	  */
+	@Override
+	public List<Map<String, String>> getSpecialList(HashMap<String, String> param) {
+		
+		// TODO Auto-generated method stub
+		return orderDetailDao.getSpecialList(param);
+		
+	}
+
+	/**
+	  * <p>Title: getXml</p>
+	  * <p>Description: </p>
+	  * @param kpxx
+	  * @param fpmxList
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.FpService#getXml(com.baiwang.einvoice.qz.beans.Kpxx, java.util.List)
+	  */
+	@Override
+	public String getXml(Kpxx kpxx, List<Fpmx> fpmxList) {
+		
+		String xml = "";
+		
+		if(kpxx != null){
+			try {
+			if("004".equals(kpxx.getFplx())){
+				xml = XmlUtil.toSpecialInvoice(kpxx, fpmxList);
+				logger.info("开具增值税纸质专用发票，报文为："+ xml);
+			}else if("007".equals(kpxx.getFplx())){
+				xml = XmlUtil.toPlainInvoice(kpxx, fpmxList);
+				logger.info("开具增值税纸质普通发票，报文为："+ xml);
+			}else if("026".equals(kpxx.getFplx())){
+				xml = XmlUtil.toEInvoice(kpxx, fpmxList);
+				logger.info("开具增值税电子普通发票，报文为："+ xml);
+			}
+			} catch (UnsupportedEncodingException e) {
+				
+				e.printStackTrace();
+				logger.error("报文封装失败：" + e.getMessage());
+			}
+		}
+		
+		return xml;
 	}
 
 }

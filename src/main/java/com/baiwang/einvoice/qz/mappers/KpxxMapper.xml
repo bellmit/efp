@@ -8,6 +8,7 @@
     <result column="fddh" property="fddh" jdbcType="VARCHAR" />
     <result column="fpdm" property="fpdm" jdbcType="VARCHAR" />
     <result column="fphm" property="fphm" jdbcType="VARCHAR" />
+    <result column="fpzt" property="fpzt" jdbcType="VARCHAR" />
     <result column="fplx" property="fplx" jdbcType="VARCHAR" />
     <result column="kplx" property="kplx" jdbcType="BIT" />
     <result column="xsfnsrsbh" property="xsfnsrsbh" jdbcType="VARCHAR" />
@@ -31,8 +32,25 @@
     <result column="bz" property="bz" jdbcType="VARCHAR" />
     <result column="kprq" property="kprq" jdbcType="VARCHAR" />
   </resultMap>
+  <!-- <resultMap id="QueryMap" type="hashmap">
+    <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="zddh" property="zddh" jdbcType="VARCHAR" />
+    <result column="fddh" property="fddh" jdbcType="VARCHAR" />
+    <result column="kpdq" property="kpdq" jdbcType="TINYINT" />
+    <result column="kprq" property="kprq" jdbcType="VARCHAR" />
+    <result column="hym" property="hym" jdbcType="VARCHAR" />
+    <result column="sqsj" property="sqsj" jdbcType="DATE" />
+    <result column="spzl" property="spzl" jdbcType="VARCHAR" />
+    <result column="shr" property="shr" jdbcType="VARCHAR" />
+    <result column="jshj" property="jshj" jdbcType="REAL" />
+    <result column="hjje" property="hjje" jdbcType="REAL" />
+    <result column="hjse" property="hjse" jdbcType="REAL" />
+    <result column="gmfmc" property="gmfmc" jdbcType="VARCHAR" />
+    <result column="fplx" property="fplx" jdbcType="VARCHAR" />
+  </resultMap> -->
+  
   <sql id="Base_Column_List" >
-    id,fpqqlsh, zddh, fddh, fplx,fphm,fpdm, kplx, xsfnsrsbh, xsfmc, xsfdz, xsfdh, xsfyhzh, gmfnsrsbh, gmfmc, 
+    id,fpqqlsh, zddh, fddh, fplx,fphm,fpdm, fpzt, kplx, xsfnsrsbh, xsfmc, xsfdz, xsfdh, xsfyhzh, gmfnsrsbh, gmfmc, 
     gmfdz, gmfdh, gmfyhzh, kpr, skr, fhr, yfpdm, yfphm, jshj, hjje, hjse, bz, 
     kprq
   </sql>
@@ -43,12 +61,18 @@
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </select>
   
-  <!-- <select id="selectByDdhm" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <!-- <select id="selectByFpqqlsh" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from kpxx
     where ddhm = #{ddhm,jdbcType=VARCHAR}
   </select> -->
+  <select id="selectByFpqqlsh" resultType="com.baiwang.einvoice.qz.beans.Kpxx" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from kpxx
+    where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from kpxx
@@ -69,8 +93,8 @@
       kpr, skr, fhr, yfpdm, 
       yfphm, jshj, hjje, hjse, 
       bz, kprq)
-    values (#{fpqqlsh,jdbcType=VARCHAR}, #{zddh,jdbcType=VARCHAR},  #{fddh,jdbcType=VARCHAR},#{fplx,jdbcType=VARCHAR}, 
-      #{fpdm,jdbcType=VARCHAR},#{fphm,jdbcType=VARCHAR}, 
+    values (#{fpqqlsh,jdbcType=VARCHAR}, #{zddh,jdbcType=VARCHAR},  #{fddh,jdbcType=VARCHAR},
+      #{fpdm,jdbcType=VARCHAR},#{fphm,jdbcType=VARCHAR}, #{fplx,jdbcType=VARCHAR}, 
       #{kplx,jdbcType=BIT}, #{xsfnsrsbh,jdbcType=VARCHAR}, #{xsfmc,jdbcType=VARCHAR}, 
       #{xsfdz,jdbcType=VARCHAR}, #{xsfdh,jdbcType=VARCHAR}, #{xsfyhzh,jdbcType=VARCHAR}, 
       #{gmfnsrsbh,jdbcType=VARCHAR}, #{gmfmc,jdbcType=VARCHAR}, #{gmfdz,jdbcType=VARCHAR}, 
@@ -362,4 +386,53 @@
       kprq = #{kprq,jdbcType=VARCHAR}
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </update>
+   <update id="updateFpztByFpqqlsh">
+    update kpxx
+    set fpzt = '2'
+    where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
+  </update>
+  
+ <!--  <select id="getPlainList" resultMap="QueryMap" parameterType="map" >
+	select a.fpqqlsh,b.zddh,b.fddh,
+	b.hym,b.shr,b.sqsj,b.kpdq,b.spzl,a.kprq,a.gmfmc,a.jshj,a.hjse,a.hjje,a.fplx
+	from kpxx a
+	LEFT JOIN order_detail b
+	ON a.zddh = b.zddh
+	AND a.fddh = b.fddh
+	WHERE a.fpzt = '1' and a.fplx = '004' 
+    <if test="beginDate != null" >
+     <![CDATA[and b.ddsj >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null" >
+     <![CDATA[and b.ddsj <= #{endDate} ]]>
+    </if>
+    <if test="zddh != null" >
+     and b.zddh like CONCAT('%',#{zddh },'%' )
+    </if>
+    <if test="kpdq != null" >
+     and b.kpdq = #{kpdq}
+    </if>
+  </select>
+  
+  <select id="getSpecialList" resultMap="QueryMap" parameterType="map" >
+	select a.fpqqlsh,b.zddh,b.fddh,
+	b.hym,b.shr,b.sqsj,b.kpdq,b.spzl,a.kprq,a.gmfmc,a.jshj,a.hjse,a.hjje,a.fplx
+	from kpxx a
+	LEFT JOIN order_detail b
+	ON a.zddh = b.zddh
+	AND a.fddh = b.fddh
+	WHERE a.fpzt = '1' and  a.fplx = '007'
+    <if test="beginDate != null" >
+     <![CDATA[and b.ddsj >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null" >
+     <![CDATA[and b.ddsj <= #{endDate} ]]>
+    </if>
+    <if test="zddh != null" >
+     and b.zddh like CONCAT('%',#{zddh },'%' )
+    </if>
+    <if test="kpdq != null" >
+     and b.kpdq = #{kpdq}
+    </if>
+  </select> -->
 </mapper>
