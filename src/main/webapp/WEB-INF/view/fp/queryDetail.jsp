@@ -10,6 +10,8 @@
 <title>查询发票</title>
 <script type="text/javascript" src="<%=basePath %>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=basePath %>/js/jquery/jquery.js"></script>
+<link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
+<script type="text/javascript" src="<%=basePath%>/js/jquery.pagination.js"></script>
 
 <script type="text/javascript">
 	function exportData(){
@@ -41,39 +43,39 @@
 	
 	申请起止日期：<input id="beginDate" name="beginDate" class="Wdate" 
 	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
-	value="${param.beginDate }" style="width: 100px;"/>-
+	value="${dateS4save}" style="width: 100px;"/>-
 	<input id="endDate" name="endDate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
-	value="${param.endDate }" style="width: 100px;"/>&nbsp;&nbsp;&nbsp;
+	value="${dateE4save}" style="width: 100px;"/>&nbsp;&nbsp;&nbsp;
 	开票地区：
-	<select name="kpdq4q">
+	<select name="kpdq4q" >
 		<option value="">请选择</option>
-		<option value="0">北京</option>
-		<option value="1">上海</option>
+		<option value="0" <c:if test="${kpdq4save=='0'}">selected="selected"</c:if>>北京</option>
+		<option value="1" <c:if test="${kpdq4save=='1'}">selected="selected"</c:if>>上海</option>
 	</select>
 	<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	订单号：<input type="text" name="ddh4q" value="${ddh4q}">
+	订单号：<input type="text" name="ddh4q" value="${ddh4save}">
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	发票种类：<select name="fpzl4q">
 		<option value="">请选择</option>
-		<option value="007">增值税普通发票</option>
-		<option value="004">增值税专用发票</option>
-		<option value="026">增值税电子发票</option>
+		<option value="007" <c:if test="${fpzl4save=='007'}">selected="selected"</c:if>>增值税普通发票</option>
+		<option value="004" <c:if test="${fpzl4save=='004'}">selected="selected"</c:if>>增值税专用发票</option>
+		<option value="026" <c:if test="${fpzl4save=='026'}">selected="selected"</c:if>>增值税电子发票</option>
 	</select>
 	<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	发票类型：
-	<select name="fplx4q">
+	<select name="fplx4q"  >
 		<option value="">请选择</option>
-		<option >服务费</option>
-		<option >咨询费</option>
+		<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
+		<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
 	</select>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	发票抬头：
 	<select name="fptt4q">
 		<option value="">请选择</option>
-		<option >个人</option>
-		<option >公司</option>
+		<option value ="0" <c:if test="${fptt4save=='0'}">selected="selected"</c:if>>个人</option>
+		<option value ="1" <c:if test="${fptt4save=='1'}">selected="selected"</c:if>>公司</option>
 	</select>
 	<input type="submit" value="查询">  <a href="javascript:void(0)" onclick="exportData()">导出excel</a>
 </form><br/>
@@ -115,7 +117,11 @@
 			<td><fmt:formatDate value="${fp.sqsj}" pattern="yyyy-MM-dd"/></td>
 			<td><c:out value="${fp.fptt}"/></td>
 			<td><c:out value="${fp.fplx}"/></td>
-			<td><c:out value="${fp.fpzl}"/></td>
+			<td>
+			<c:if test="${fp.fpzl=='007'}">增值税普通发票</c:if>
+			<c:if test="${fp.fpzl=='004'}">增值税专用发票</c:if>
+			<c:if test="${fp.fpzl=='026'}">增值税电子发票</c:if>
+			</td>
 			<td><c:out value="${fp.sqrk}"/></td>
 			<td><c:out value="${fp.je}"/></td>
 			<td><c:out value="${fp.shr}"/></td>
@@ -131,6 +137,9 @@
 		</tr>
 	</c:forEach>
 </table>
+<div class="pagination" id="Pagination"></div>
+<input id="currentPage" name="currentPage" type="hidden"/>
+
 <input type="hidden" name="dateS4save" value="${dateS4save}">
 <input type="hidden" name="dateE4save" value="${dateE4save}">
 <input type="hidden" name="kpdq4save" value="${kpdq4save}">
@@ -140,4 +149,32 @@
 <input type="hidden" name="fptt4save" value="${fptt4save}">
 </form>
 </body>
+<!-- 分页 -->
+<script type="text/javascript">
+	 var pageIndex = ${page.pageIndex};
+     var pageSize = ${page.pageSize};
+     var totalPages = ${page.totalPages};
+     var totalCounts = ${page.totalCounts};
+     $(document).ready(function(){ 
+     $("#Pagination").pagination(totalCounts,{
+                 items_per_page: pageSize,
+                 current_page:pageIndex,
+                 prev_text:'<',    
+                 next_text:'>',            
+                 callback:function(page){
+                     gotoPage(page);
+                 }
+         });            
+         /* showPageInfo(); */
+     });
+     
+     function gotoPage(page) {
+         window.location = "<%=basePath%>/report/query?pageIndex=" + page;            
+     }
+     
+     /* function showPageInfo(){
+         $("#page-info").html(pageSize + "条/页，共" + totalCounts + "条，第" + "${page.pageIndex+1}" + "页，共" + totalPages + "页");
+     }	 */
+
+</script> 
 </html>

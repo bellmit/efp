@@ -178,7 +178,13 @@ public class ReportUtil {
 			cell = row.createCell(8);
 			cell.setCellValue(report.getFplx());  //发票类型
 			cell = row.createCell(9);
-			cell.setCellValue(report.getFpzl());  //发票种类
+			if("004".equals(report.getFpzl())){
+				cell.setCellValue("增值税专用发票");  //发票种类
+			}else if ("007".equals(report.getFpzl())){
+				cell.setCellValue("增值税普通发票");  //发票种类
+			}else if ("026".equals(report.getFpzl())){
+				cell.setCellValue("增值税电子发票");  //发票种类
+			}
 			cell = row.createCell(10);
 			cell.setCellValue(report.getSqrk());  //申请入口
 			cell = row.createCell(11);

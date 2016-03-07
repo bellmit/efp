@@ -21,9 +21,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.ServletConfigAware;
 
+import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.beans.ReportDetail;
 import com.baiwang.einvoice.qz.service.ReportDetailService;
 import com.baiwang.einvoice.util.ReportUtil;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: ReportController
@@ -45,7 +47,7 @@ public class ReportController implements ServletConfigAware {
 	}
 	
 	@RequestMapping(value="query")
-	public String queryReport(HttpServletRequest request){
+	public String queryReport(HttpServletRequest request,Page page){
 		//获取查询条件
 		String ddh4q = request.getParameter("ddh4q");
 		String fplx4q = request.getParameter("fplx4q");
@@ -69,8 +71,21 @@ public class ReportController implements ServletConfigAware {
 		condition.put("kpdq4q", kpdq4q);
 		condition.put("fpzl4q", fpzl4q);
 		condition.put("fptt4q", fptt4q);
-		List<ReportDetail> list = reportDetailService.getFpListByCondition(condition);//查询结果
-		request.setAttribute("fpxxList", list);
+		
+		String currentPage = request.getParameter("currentPage");
+		if (!(null == currentPage || "".equals(currentPage))) {
+			page.setPageIndex(Integer.parseInt(currentPage));
+		}
+		condition.put("pageIndex", page.getPageIndex());
+		condition.put("pageSize", page.getPageSize());
+//		List<ReportDetail> list = reportDetailService.getFpListByCondition(condition);//查询结果
+		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) reportDetailService.getFpListByCondition(condition);
+		page.setPageSize(fpxxList.getPaginator().getLimit()); 
+		page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
+		page.setTotalPages(fpxxList.getPaginator().getTotalPages());
+		request.setAttribute("page", page);
+		
+		request.setAttribute("fpxxList", fpxxList);
 		return "fp/queryDetail";
 	}
 	@RequestMapping(value="download")
@@ -94,7 +109,7 @@ public class ReportController implements ServletConfigAware {
 			condition.put("kpdq4q", kpdq4q);
 			condition.put("fpzl4q", fpzl4q);
 			condition.put("fptt4q", fptt4q);
-			list = reportDetailService.getFpListByCondition(condition);//查询结果
+			list = reportDetailService.getFpListByCondition4d(condition);//查询结果
 		}else{
 			for(String tmp:lsh4ept){
 				list.add(reportDetailService.getFpByLSH(tmp));
