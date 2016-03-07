@@ -24,18 +24,12 @@
 		"state":"closed",
 		"children":[{
 			"id":121,
-			"text":"打印设置",
+			"text":"系统设置",
 			"attributes":{
-				"url":"../../settings/printSetting.html"
+				"url":"../../settings/syssetting.html"
 			}
 		},{
 			"id":122,
-			"text":"税控系统设置",
-			"attributes":{
-				"url":"../../settings/skSetting.html"
-			}
-		},{
-			"id":123,
 			"text":"修改密码",
 			"attributes":{
 				"url":"../../user/changePwd.jsp"

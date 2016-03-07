@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiwang.einvoice.qz.dao.PrintConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.PrintConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fplx" property="fplx" jdbcType="VARCHAR" />
+    <result column="top" property="top" jdbcType="VARCHAR" />
+    <result column="left" property="left" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fplx, top, 'left'
+  </sql>
+  
+  <select id="queryPrintsetting" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List"/>
+    from printconfig 
+    where fplx = #{fplx,jdbcType=VARCHAR} 
+  </select>
+  
+  <insert id="savePrintsetting" parameterType="com.baiwang.einvoice.qz.beans.PrintConfig">
+  	insert into printconfig (fplx, top, 'left')
+    values ( #{fplx,jdbcType=VARCHAR}, #{top,jdbcType=VARCHAR}, 
+      #{left,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" /> 
+    from printconfig 
+    where id = #{id,jdbcType=INTEGER} 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from printconfig
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.PrintConfig" >
+    insert into printconfig (id, fplx, top, 
+      left)
+    values (#{id,jdbcType=INTEGER}, #{fplx,jdbcType=VARCHAR}, #{top,jdbcType=VARCHAR}, 
+      #{left,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.PrintConfig" >
+    insert into printconfig
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fplx != null" >
+        fplx,
+      </if>
+      <if test="top != null" >
+        top,
+      </if>
+      <if test="left != null" >
+        left,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fplx != null" >
+        #{fplx,jdbcType=VARCHAR},
+      </if>
+      <if test="top != null" >
+        #{top,jdbcType=VARCHAR},
+      </if>
+      <if test="left != null" >
+        #{left,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baiwang.einvoice.qz.beans.PrintConfig" >
+    update printconfig
+    <set >
+      <if test="fplx != null" >
+        fplx = #{fplx,jdbcType=VARCHAR},
+      </if>
+      <if test="top != null" >
+        top = #{top,jdbcType=VARCHAR},
+      </if>
+      <if test="left != null" >
+        left = #{left,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.PrintConfig" >
+    update printconfig
+    set fplx = #{fplx,jdbcType=VARCHAR},
+      top = #{top,jdbcType=VARCHAR},
+      left = #{left,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

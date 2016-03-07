@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>税控系统设置</title>
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<!--
+[if lt IE 9]>
+   <script src="../js/html5shiv.js"></script>
+   <script src="../js/respond.min.js"></script>
+<![endif]
+-->
+<script type="text/javascript">
+
+function baocunsk(){
+	var params = $('#skForm').serialize();
+	
+	$.ajax({
+		type:"GET",
+        url: "../set/sksetting",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data == 1){
+        		alert("保存成功");
+        	}else{
+        		alert("保存失败")
+        	}
+        	
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
+function baocundy(){
+	var params = $('#dyForm').serialize();
+	$.ajax({
+		type:"GET",
+        url: "../set/dysetting",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data == 1){
+        		alert("保存成功");
+        	}else{
+        		alert("保存失败")
+        	}
+        	
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});	
+		
+}
+
+</script>
+      
+</head>
+<body>
+
+<h4>税控服务设置</h4>
+<form id="skForm" name='skForm' class="form-horizontal" role="skForm">
+	<!-- <div class="form-inline form-group"> -->
+		<div class="form-group col-sm-7">
+	      <label for="kpdq" class="col-sm-3 control-label">开票地区：</label>
+	      <div class="col-sm-5">
+	         <select class="form-control" id="kpdq" name="kpdq">
+		         <option value="">请选择</option>
+		         <option value="0">北京</option>
+			 	 <option value="1">上海</option>
+		     </select>
+	      </div>
+	   </div>
+	<!-- </div> -->
+	
+	<!-- <div class="form-inline form-group"> -->
+		<div class="form-group col-sm-7">
+	      <label for="ipdz" class="col-sm-3 control-label">IP地址：</label>
+	      <div class="col-sm-6">
+	         <input type="text" class="form-control" id="url" name="url" placeholder="服务器IP地址">
+	      </div>
+	   </div>
+	<!-- </div> -->
+	
+	<!-- <div class="form-inline form-group"> -->
+		<div class="form-group col-sm-7">
+	      <label for="ipdk" class="col-sm-3 control-label">IP端口：</label>
+	      <div class="col-sm-6">
+	         <input type="text" class="form-control" id="port" name="port" placeholder="服务器IP端口号">
+	      </div>
+	   </div>
+	<!-- </div> -->
+	<div class="form-inline form-group">
+	   <div class="form-group col-sm-7">
+	      <div class="col-sm-offset-3 col-sm-10">
+	         <button type="button" class="btn btn-default" onclick="baocunsk();">保存</button>
+	      </div>
+	   </div>
+	</div>
+</form>
+<br/>
+<h4>打印服务设置</h4>
+<form id="dyForm" name='skForm' class="form-horizontal" role="dyForm">
+	<!-- <div class="form-inline form-group"> -->
+		<div class="form-group col-sm-7">
+	      <label for="fplx" class="col-sm-3 control-label">发票类型：</label>
+	      <div class="col-sm-6">
+	         <select class="form-control" id="fplx" name="fplx">
+		         <option value="">请选择</option>
+		         <option value='004'>增值税纸质专用发票</option>
+			 	 <option value='007'>增值税纸质普通发票</option>
+		     </select>
+	      </div>
+	   </div>
+	<!-- </div> -->
+	
+	<!-- <div class="form-inline form-group"> -->
+		<div class="form-group col-sm-7">
+	      <label for="topside" class="col-sm-3 control-label">上边距：</label>
+	      <div class="col-sm-6">
+	         <input type="text" class="form-control" id="topside" name="topside" placeholder="">
+	      </div>
+	   </div>
+	<!-- </div> -->
+	
+	<!-- <div class="form-inline form-group"> -->
+		<div class="form-group col-sm-7">
+	      <label for="leftside" class="col-sm-3 control-label">左边距：</label>
+	      <div class="col-sm-6">
+	         <input type="text" class="form-control" id="leftside" name="leftside" placeholder="">
+	      </div>
+	   </div>
+	<!-- </div> -->
+	<div class="form-inline form-group">
+	   <div class="form-group col-sm-7">
+	      <div class="col-sm-offset-3 col-sm-10">
+	         <button type="button" class="btn btn-default" onclick="baocundy();">保存</button>
+	      </div>
+	   </div>
+	</div>
+</form>
+
+</body>
+</html>

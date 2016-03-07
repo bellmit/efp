@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiwang.einvoice.qz.dao.SkConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.SkConfig" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="kpdq" property="kpdq" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="port" property="port" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, kpdq, url, port
+  </sql>
+  
+  <select id="querySksetting" parameterType="java.lang.Integer" resultType="com.baiwang.einvoice.qz.beans.SkConfig">
+	  select 
+	  <include refid="Base_Column_List" />
+	  from skconfig
+	  where kpdq = #{kpdq,jdbcType=INTEGER} 
+  </select>
+  
+  <insert id="saveSksetting" parameterType="com.baiwang.einvoice.qz.beans.SkConfig">
+  	insert into skconfig ( kpdq, url, port)
+    values ( #{kpdq,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+      #{port,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from skconfig
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from skconfig
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.SkConfig" >
+    insert into skconfig (id, kpdq, url, 
+      port)
+    values (#{id,jdbcType=BIGINT}, #{kpdq,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+      #{port,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.SkConfig" >
+    insert into skconfig
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="kpdq != null" >
+        kpdq,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="port != null" >
+        port,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="kpdq != null" >
+        #{kpdq,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        #{port,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baiwang.einvoice.qz.beans.SkConfig" >
+    update skconfig
+    <set >
+      <if test="kpdq != null" >
+        kpdq = #{kpdq,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        port = #{port,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.SkConfig" >
+    update skconfig
+    set kpdq = #{kpdq,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      port = #{port,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
