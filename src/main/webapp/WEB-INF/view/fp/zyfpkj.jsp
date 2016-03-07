@@ -63,7 +63,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	<div class="form-inline form-group">
 		<div class="form-group col-sm-6">
 	      <div class="col-sm-offset-1 col-sm-5">
-	         	<input type="submit" value="查询" /> 
+	         	<input type="submit" value="查询" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<input id="kp" type="button" value="多张开票" onclick="multi_kjfp()" />
 	      </div>
 	   </div>
@@ -90,7 +90,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 		</tr>
 		<c:forEach items="${kpxxList}" var="fp" varStatus="f">
 			<tr>
-				<td><input type="checkbox" id="fpqqlsh" name="fpqqlsh"
+				<td><input type="checkbox" id="fpqqlsh" name="fpqqlsh" onclick="ccAll()"
 					class="chkbox_ex" value="${fp.fpqqlsh}"></td>
 				<td>${f.count }</td>
 				<td><c:out value="${fp.zddh}" /></td>
@@ -175,12 +175,12 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	function checkAll(){
 		var chks = $('.chkbox_ex');
 		for(i=0;i<chks.length;i++){
-			chks[i].checked=$('#chkAll').attr('checked');
+			chks[i].checked=$('#chkAll').prop('checked',true);
 		}
 	}
 	//取消全选的勾
 	function ccAll(){
-		$('#chkAll').attr('checked',false);
+		$('#chkAll').prop('checked',false);
 	}
 </script>
 <!-- 分页 -->

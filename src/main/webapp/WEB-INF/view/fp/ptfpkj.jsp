@@ -80,7 +80,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 			</tr>
 			<c:forEach items="${kpxxList}" var="fp" varStatus="f">
 				<tr>
-					<td><input type="checkbox" id="fpqqlsh" name="fpqqlsh" class="chkbox_ex"
+					<td><input type="checkbox" id="fpqqlsh" name="fpqqlsh" class="chkbox_ex" onclick="ccAll()"
 						value="${fp.fpqqlsh}"></td>
 					<td>${f.count }</td>
 					<td><c:out value="${fp.zddh}" /></td>
@@ -170,7 +170,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	function checkAll(){
 		var chks = $('.chkbox_ex');
 		for(i=0;i<chks.length;i++){
-			chks[i].checked=$('#chkAll').attr('checked');
+			chks[i].checked=$('#chkAll').prop('checked',true);
 		}
 	}
 	//取消全选的勾
