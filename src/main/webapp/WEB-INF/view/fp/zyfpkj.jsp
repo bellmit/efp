@@ -112,7 +112,10 @@ background-color:#f5fafe;
 						<c:if test="${fp.kpdq == 0 }">北京</c:if>
 						<c:if test="${fp.kpdq == 1 }">上海</c:if>
 					</td>
-					<td><c:out value="${fp.fplx}" /></td>
+					<td><c:if test="${fp.fplx == '004' }">增值税普通发票</c:if>
+						<c:if test="${fp.kpdq == '007' }">增值税专用发票</c:if>
+						<c:if test="${fp.kpdq == '026' }">增值税电子发票</c:if>
+					</td>
 					<td><c:out value="${fp.gmfmc}" /></td>
 					<td><c:out value="${fp.spzl}" /></td>
 					<td><c:out value="${fp.hjje}" /></td>
@@ -133,6 +136,13 @@ background-color:#f5fafe;
 			dataType:'json', 
 			success : function(data) {
 			alert(data.xml);
+			try{
+				ret = sk.Operate(data.xml);
+				alert(ret);
+		    }
+			catch(e){
+				alert(e.message + ",errno:" + e.number);
+		    }	
 		}
 	});
 	}
@@ -155,6 +165,17 @@ background-color:#f5fafe;
 		dataType:'text', 
 		success : function(data) {
 			alert(data.msg);
+			var xml = data.xml;
+			for(var i=0;i<xml.length;i++){
+				alert(xml[i]);
+				try{
+					ret = sk.Operate(xml[i]);
+					alert(ret);
+			    }
+				catch(e){
+					alert(e.message + ",errno:" + e.number);
+			    }	
+			}
 		}
 	});
 	}

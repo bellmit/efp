@@ -94,11 +94,12 @@ public class InvoiceController {
 	
 		String[] fp =request.getParameterValues("arr[]");
 		HashMap<String, Object> param = new HashMap<>();
-		if(fp.length<0){
+		if(null==fp || fp.length<0){
 			param.put("status", "error");
 			param.put("msg", "请勾选至少一张发票！");
 			return param;
 		}
+		logger.info("获取到需要开票的发票请求流水号：" + fp.toString());
 		String[] xmlList = new String[fp.length];
 		for(int i =0;i<fp.length;i++){
 			String fpqqlsh = fp[i];
@@ -127,6 +128,7 @@ public class InvoiceController {
 			param.put("msg", "请至少选择一张发票!");
 			return param;
 		}
+		logger.info("获取到需要开票的发票请求流水号：" + fpqqlsh);
 		Kpxx kpxx = fpService.getKpxxByFpqqlsh(fpqqlsh);
 		List<Fpmx> fpmxList = fpService.getFpmxByFpqqlsh(fpqqlsh);
 		String xml = fpService.getXml(kpxx, fpmxList);
@@ -136,5 +138,15 @@ public class InvoiceController {
 			param.put("xml", xml);
 		}
 		return param;
+	}
+	
+	@RequestMapping("/updateStatus")
+	@ResponseBody
+	public String updateStatusByFpqqlsh(String fpqqlsh){
+		if(StringUtils.isEmpty(fpqqlsh)){
+			return "error";
+		}
+		fpService.updateFpztByFpqqlsh(fpqqlsh);
+		return "success";
 	}
 }

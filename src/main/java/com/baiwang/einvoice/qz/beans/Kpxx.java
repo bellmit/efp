@@ -34,7 +34,10 @@ import javax.xml.bind.annotation.XmlType;
     "hjje",
     "hjse",
     "bz",
-    "kprq"
+    "kprq",
+    "fpzt",
+    "resultcode",
+    "resultmsg"
 })
 public class Kpxx {
 	@XmlElement(name = "ID", required = true)
@@ -58,26 +61,26 @@ public class Kpxx {
 	@XmlElement(name = "FPLX", required = true)
     private String fplx;
 	@XmlElement(name = "KPLX", required = true)
-    private Boolean kplx;
-	@XmlElement(name = "XSFNSRSBH", required = true)
+    private Byte kplx;
+	@XmlElement(name = "XSF_NSRSBH", required = true)
     private String xsfnsrsbh;
-	@XmlElement(name = "XSFMC", required = true)
+	@XmlElement(name = "XSF_MC", required = true)
     private String xsfmc;
-	@XmlElement(name = "XSFDZ", required = true)
+	@XmlElement(name = "XSF_DZ", required = true)
     private String xsfdz;
-	@XmlElement(name = "XSFDH", required = true)
+	@XmlElement(name = "XSF_DH", required = true)
     private String xsfdh;
-	@XmlElement(name = "XSFYHZH", required = true)
+	@XmlElement(name = "XSF_YHZH", required = true)
     private String xsfyhzh;
-	@XmlElement(name = "GMFNSRSBH", required = true)
+	@XmlElement(name = "GMF_NSRSBH", required = true)
     private String gmfnsrsbh;
-	@XmlElement(name = "GMFMC", required = true)
+	@XmlElement(name = "GMF_MC", required = true)
     private String gmfmc;
-	@XmlElement(name = "GMFDZ", required = true)
+	@XmlElement(name = "GMF_DZ", required = true)
     private String gmfdz;
-	@XmlElement(name = "GMFDH", required = true)
+	@XmlElement(name = "GMF_DH", required = true)
     private String gmfdh;
-	@XmlElement(name = "GMFYHZH", required = true)
+	@XmlElement(name = "GMF_YHZH", required = true)
     private String gmfyhzh;
 	@XmlElement(name = "KPR", required = true)
     private String kpr;
@@ -85,9 +88,9 @@ public class Kpxx {
     private String skr;
 	@XmlElement(name = "FHR", required = true)
     private String fhr;
-	@XmlElement(name = "YFPDM", required = true)
+	@XmlElement(name = "YFP_DM", required = true)
     private String yfpdm;
-	@XmlElement(name = "YFPHM", required = true)
+	@XmlElement(name = "YFP_HM", required = true)
     private String yfphm;
 	@XmlElement(name = "JSHJ", required = true)
     private Float jshj;
@@ -164,15 +167,17 @@ public class Kpxx {
         this.fplx = fplx == null ? null : fplx.trim();
     }
 
-    public Boolean getKplx() {
-        return kplx;
-    }
+    public Byte getKplx() {
+	
+		return kplx;
+	}
 
-    public void setKplx(Boolean kplx) {
-        this.kplx = kplx;
-    }
+	public void setKplx(Byte kplx) {
+	
+		this.kplx = kplx;
+	}
 
-    public String getXsfnsrsbh() {
+	public String getXsfnsrsbh() {
         return xsfnsrsbh;
     }
 

@@ -59,10 +59,24 @@ public class JAXBUtil{
 		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
 				"<business id=\"FPKJ\">\n" + 
 				"	<CUSTOMDATA>\n" + 
-				"		<DD_HM>10001</DD_HM>\n" + 
-				"		<DD_SS_DQ>北京市海淀区</DD_SS_DQ>\n" + 
-				"		<DD_YW_LX>B2C</DD_YW_LX>\n" + 
-				"		<DD_SJ>2016-03-03</DD_SJ>\n" + 
+				"		<ZDDH>10000</ZDDH>\n" + 
+				"		<FDDH>001</FDDH>\n" + 
+				"		<SQR>张三</SQR>\n" + 
+				"		<HYM>偶尔上会网</HYM>\n" + 
+				"		<HYID>861124106</HYID>\n" + 
+				"		<DDSJ>2016年3月5日</DDSJ>\n" + 
+				"		<SQSJ>2016年3月5日</SQSJ>\n" + 
+				"		<SPZL>服务费</SPZL>\n" + 
+				"		<SQRK>ERP</SQRK>\n" + 
+				"		<SHR>李四</SHR>\n" + 
+				"		<SHRDH>13718099648</SHRDH>\n" + 
+				"		<JSDZ>北京市海淀区亿城国际7层711</JSDZ>\n" + 
+				"		<YJSJ>2016年3月5日</YJSJ>\n" + 
+				"		<FHR>复核人XXX</FHR>\n" + 
+				"		<WLSJ>申通</WLSJ>\n" + 
+				"		<WLDH>1234567890</WLDH>\n" + 
+				"		<WLSJ>申通</WLSJ>\n" + 
+				"		<TKZT>已退款</TKZT>\n" + 
 				"	</CUSTOMDATA>\n" + 
 				"	<REQUEST_COMMON_FPKJ>\n" + 
 				"		<COMMON_FPKJ_FPT>\n" + 
