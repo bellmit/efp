@@ -49,10 +49,16 @@ public class ReportController implements ServletConfigAware {
 		//获取查询条件
 		String ddh4q = request.getParameter("ddh4q");
 		String fplx4q = request.getParameter("fplx4q");
+		String kpdq4q = request.getParameter("kpdq4q");
+		String fpzl4q = request.getParameter("fpzl4q");
+		String fptt4q = request.getParameter("fptt4q");
 		String dateS = request.getParameter("beginDate");
 		String dateE = request.getParameter("endDate");
 		request.setAttribute("ddh4save", ddh4q);
 		request.setAttribute("fplx4save", fplx4q);
+		request.setAttribute("kpdq4save", kpdq4q);
+		request.setAttribute("fpzl4save", fpzl4q);
+		request.setAttribute("fptt4save", fptt4q);
 		request.setAttribute("dateS4save", dateS);
 		request.setAttribute("dateE4save", dateE);
 		Map<String, Object> condition = new HashMap<>();
@@ -60,29 +66,38 @@ public class ReportController implements ServletConfigAware {
 		condition.put("dateE", dateE);
 		condition.put("ddh4q", ddh4q);
 		condition.put("fplx4q", fplx4q);
-		List<ReportDetail> list = reportDetailService.selectByCondition(condition);//查询结果
+		condition.put("kpdq4q", kpdq4q);
+		condition.put("fpzl4q", fpzl4q);
+		condition.put("fptt4q", fptt4q);
+		List<ReportDetail> list = reportDetailService.getFpListByCondition(condition);//查询结果
 		request.setAttribute("fpxxList", list);
 		return "fp/queryDetail";
 	}
 	@RequestMapping(value="download")
 	public void exportReport(HttpServletRequest request,HttpServletResponse response){
-		String[] ddh4ept = request.getParameterValues("ddh4ept"); 
+		String[] lsh4ept = request.getParameterValues("lsh4ept"); 
 		List<ReportDetail> list = new ArrayList<>();
-		if(null == ddh4ept || ddh4ept.length==0){
+		if(null == lsh4ept || lsh4ept.length==0){
 			//获取查询条件
-			String ddh4q = request.getParameter("ddh4save");
-			String fplx4q = request.getParameter("fplx4save");
 			String dateS = request.getParameter("dateS4save");
 			String dateE = request.getParameter("dateE4save");
+			String ddh4q = request.getParameter("ddh4save");
+			String fplx4q = request.getParameter("fplx4save");
+			String kpdq4q = request.getParameter("kpdq4save");
+			String fpzl4q = request.getParameter("fpzl4save");
+			String fptt4q = request.getParameter("fptt4save");
 			Map<String, Object> condition = new HashMap<>();
 			condition.put("dateS", dateS);
 			condition.put("dateE", dateE);
 			condition.put("ddh4q", ddh4q);
 			condition.put("fplx4q", fplx4q);
-			list = reportDetailService.selectByCondition(condition);//查询结果
+			condition.put("kpdq4q", kpdq4q);
+			condition.put("fpzl4q", fpzl4q);
+			condition.put("fptt4q", fptt4q);
+			list = reportDetailService.getFpListByCondition(condition);//查询结果
 		}else{
-			for(String tmp:ddh4ept){
-				list.add(reportDetailService.selectByPrimaryKey(tmp));
+			for(String tmp:lsh4ept){
+				list.add(reportDetailService.getFpByLSH(tmp));
 			}
 		}
 		//生成excel

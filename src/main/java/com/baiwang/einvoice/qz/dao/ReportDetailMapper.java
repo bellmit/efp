@@ -6,17 +6,8 @@ import java.util.Map;
 import com.baiwang.einvoice.qz.beans.ReportDetail;
 
 public interface ReportDetailMapper {
-    int deleteByPrimaryKey(String ddh);
 
-    int insert(ReportDetail record);
-
-    int insertSelective(ReportDetail record);
-
-    ReportDetail selectByPrimaryKey(String ddh);
-
-    int updateByPrimaryKeySelective(ReportDetail record);
-
-    int updateByPrimaryKey(ReportDetail record);
+    ReportDetail getFpByLSH(String fpqqlsh);
     
-    List<ReportDetail> selectByCondition(Map<String, Object> condition);
+    List<ReportDetail> getFpListByCondition(Map<String, Object> condition);
 }

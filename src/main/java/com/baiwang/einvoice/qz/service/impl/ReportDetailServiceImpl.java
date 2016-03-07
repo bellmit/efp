@@ -26,115 +26,16 @@ public class ReportDetailServiceImpl implements ReportDetailService {
 	@Resource
 	private ReportDetailMapper reportDao;
 
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param ddh
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
 	@Override
-	public int deleteByPrimaryKey(String ddh) {
+	public List<ReportDetail> getFpListByCondition(Map<String, Object> condition) {
 		
-		// TODO Auto-generated method stub
-		return reportDao.deleteByPrimaryKey(ddh);
+		return reportDao.getFpListByCondition(condition);
 		
 	}
 
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param record
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
 	@Override
-	public int insert(ReportDetail record) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.insert(record);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param record
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public int insertSelective(ReportDetail record) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.insertSelective(record);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param ddh
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public ReportDetail selectByPrimaryKey(String ddh) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.selectByPrimaryKey(ddh);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param record
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public int updateByPrimaryKeySelective(ReportDetail record) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.updateByPrimaryKeySelective(record);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param record
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public int updateByPrimaryKey(ReportDetail record) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.updateByPrimaryKey(record);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param condition
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public List<ReportDetail> selectByCondition(Map<String, Object> condition) {
-		
-		return reportDao.selectByCondition(condition);
-		
+	public ReportDetail getFpByLSH(String fpqqlsh) {
+		return reportDao.getFpByLSH(fpqqlsh);
 	}
 
 }

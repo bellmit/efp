@@ -15,6 +15,8 @@ import java.util.Date;
 public class ReportDetail {
 	
 	private Integer number;
+	//发票请求流水号
+	private String fpqqlsh;
 	//订单号
 	private String ddh;
 	//申请人
@@ -60,7 +62,14 @@ public class ReportDetail {
 	//订单发票是否开具打印
 	private String ddzt;
 	
+	public String getFpqqlsh() {
+		
+		return fpqqlsh;
+	}
+	public void setFpqqlsh(String fpqqlsh) {
 	
+		this.fpqqlsh = fpqqlsh;
+	}
 	public String getDdzt() {
 	
 		return ddzt;

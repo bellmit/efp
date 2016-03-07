@@ -16,7 +16,7 @@
 		var chks = $('.chkbox_ex');
 		for(i=0;i<chks.length;i++){
 			if(chks[i].checked == true){
-				chks[i].name = 'ddh4ept';
+				chks[i].name = 'lsh4ept';
 			}
 		}
 		$('#expForm').submit();
@@ -38,18 +38,44 @@
 <body>
 <h4>查询条件</h4>
 <form action="<%=basePath %>/report/query" method="post">
-	订单号：<input type="text" name="ddh4q" value="${ddh4q}">
-	申请时间：<input id="beginDate" name="beginDate" class="Wdate" 
+	
+	申请起止日期：<input id="beginDate" name="beginDate" class="Wdate" 
 	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
 	value="${param.beginDate }" style="width: 100px;"/>-
 	<input id="endDate" name="endDate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
-	value="${param.endDate }" style="width: 100px;"/>
-	<select name="fplx4q">
+	value="${param.endDate }" style="width: 100px;"/>&nbsp;&nbsp;&nbsp;
+	开票地区：
+	<select name="kpdq4q">
 		<option value="">请选择</option>
 		<option value="0">北京</option>
 		<option value="1">上海</option>
 	</select>
-	<input type="submit" value="查询">  <a href="javascript:void(0)" onclick="exportData()">导出</a>
+	<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	订单号：<input type="text" name="ddh4q" value="${ddh4q}">
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	发票种类：<select name="fpzl4q">
+		<option value="">请选择</option>
+		<option value="007">增值税普通发票</option>
+		<option value="004">增值税专用发票</option>
+		<option value="026">增值税电子发票</option>
+	</select>
+	<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	发票类型：
+	<select name="fplx4q">
+		<option value="">请选择</option>
+		<option >服务费</option>
+		<option >咨询费</option>
+	</select>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	发票抬头：
+	<select name="fptt4q">
+		<option value="">请选择</option>
+		<option >个人</option>
+		<option >公司</option>
+	</select>
+	<input type="submit" value="查询">  <a href="javascript:void(0)" onclick="exportData()">导出excel</a>
 </form><br/>
 <form id="expForm" action="<%=basePath%>/report/download" method="post">
 <table border="1" cellspacing="0" >
@@ -79,7 +105,7 @@
 		<td>发票状态</td>
 	</tr>
 	<c:forEach items="${fpxxList}" var="fp">
-		<tr><td><input type="checkbox" id ="${fp.ddh}" class="chkbox_ex" value="${fp.ddh}" onclick="ccAll()"></td>
+		<tr><td><input type="checkbox" class="chkbox_ex" value="${fp.fpqqlsh}" onclick="ccAll()"></td>
 <%-- 			<td><c:out value="${fp.number}"/></td> --%>
 			<td><c:out value="${fp.ddh}"/></td>
 			<td><c:out value="${fp.sqr}"/></td>
@@ -105,10 +131,13 @@
 		</tr>
 	</c:forEach>
 </table>
-<input type="hidden" name="ddh4save" value="${ddh4save}">
-<input type="hidden" name="fplx4save" value="${fplx4save}">
 <input type="hidden" name="dateS4save" value="${dateS4save}">
 <input type="hidden" name="dateE4save" value="${dateE4save}">
+<input type="hidden" name="kpdq4save" value="${kpdq4save}">
+<input type="hidden" name="ddh4save" value="${ddh4save}">
+<input type="hidden" name="fpzl4save" value="${fpzl4save}">
+<input type="hidden" name="fplx4save" value="${fplx4save}">
+<input type="hidden" name="fptt4save" value="${fptt4save}">
 </form>
 </body>
 </html>

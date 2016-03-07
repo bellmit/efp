@@ -16,17 +16,7 @@ import com.baiwang.einvoice.qz.beans.ReportDetail;
   * @date 2016年3月3日 下午8:21:46
   */
 public interface ReportDetailService {
-	int deleteByPrimaryKey(String ddh);
-
-    int insert(ReportDetail record);
-
-    int insertSelective(ReportDetail record);
-
-    ReportDetail selectByPrimaryKey(String ddh);
-
-    int updateByPrimaryKeySelective(ReportDetail record);
-
-    int updateByPrimaryKey(ReportDetail record);
-    
-    List<ReportDetail> selectByCondition(Map<String, Object> condition);
+	ReportDetail getFpByLSH(String fpqqlsh);
+	
+    List<ReportDetail> getFpListByCondition(Map<String, Object> condition);
 }
