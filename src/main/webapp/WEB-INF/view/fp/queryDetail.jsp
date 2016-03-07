@@ -12,6 +12,12 @@
 <script type="text/javascript" src="<%=basePath %>/js/jquery/jquery.js"></script>
 <link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
 <script type="text/javascript" src="<%=basePath%>/js/jquery.pagination.js"></script>
+<style type="text/css">
+   select
+   {
+       width:120px;
+   }
+</style>
 
 <script type="text/javascript">
 	function exportData(){
@@ -39,9 +45,11 @@
 </head>
 <body>
 <h4>查询条件</h4>
+<div style="white-space: nowrap;">
 <form action="<%=basePath %>/report/query" method="post">
 	
-	申请起止日期：<input id="beginDate" name="beginDate" class="Wdate" 
+	申请起止日期：
+	<input id="beginDate" name="beginDate" class="Wdate" 
 	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
 	value="${dateS4save}" style="width: 100px;"/>-
 	<input id="endDate" name="endDate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
@@ -54,9 +62,11 @@
 	</select>
 	<br/>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	订单号：<input type="text" name="ddh4q" value="${ddh4save}">
+	订单号：
+	<input type="text" name="ddh4q" value="${ddh4save}">
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	发票种类：<select name="fpzl4q">
+	发票种类：
+	<select name="fpzl4q">
 		<option value="">请选择</option>
 		<option value="007" <c:if test="${fpzl4save=='007'}">selected="selected"</c:if>>增值税普通发票</option>
 		<option value="004" <c:if test="${fpzl4save=='004'}">selected="selected"</c:if>>增值税专用发票</option>
@@ -69,21 +79,19 @@
 		<option value="">请选择</option>
 		<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
 		<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
-	</select>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	发票抬头：
 	<select name="fptt4q">
 		<option value="">请选择</option>
 		<option value ="0" <c:if test="${fptt4save=='0'}">selected="selected"</c:if>>个人</option>
 		<option value ="1" <c:if test="${fptt4save=='1'}">selected="selected"</c:if>>公司</option>
 	</select>
-	<input type="submit" value="查询">  <a href="javascript:void(0)" onclick="exportData()">导出excel</a>
+	<input type="submit" style="width:80px" value="查询"> | <a href="javascript:void(0)" onclick="exportData()">导出excel</a>
 </form><br/>
 <form id="expForm" action="<%=basePath%>/report/download" method="post">
-<table border="1" cellspacing="0" >
+<table border="1" cellspacing="0">
 	<tr>
 		<td><input type="checkbox" id="chkAll" onclick="checkAll()"></td>
-<!-- 		<td>序号</td> -->
 		<td>订单号</td>
 		<td>申请人</td>
 		<td>会员名</td>
@@ -108,7 +116,6 @@
 	</tr>
 	<c:forEach items="${fpxxList}" var="fp">
 		<tr><td><input type="checkbox" class="chkbox_ex" value="${fp.fpqqlsh}" onclick="ccAll()"></td>
-<%-- 			<td><c:out value="${fp.number}"/></td> --%>
 			<td><c:out value="${fp.ddh}"/></td>
 			<td><c:out value="${fp.sqr}"/></td>
 			<td><c:out value="${fp.hym}"/></td>
@@ -137,7 +144,6 @@
 		</tr>
 	</c:forEach>
 </table>
-<div class="pagination" id="Pagination"></div>
 <input id="currentPage" name="currentPage" type="hidden"/>
 
 <input type="hidden" name="dateS4save" value="${dateS4save}">
@@ -148,6 +154,8 @@
 <input type="hidden" name="fplx4save" value="${fplx4save}">
 <input type="hidden" name="fptt4save" value="${fptt4save}">
 </form>
+</div>
+<div class="pagination" id="Pagination" style="width: 100%;text-align: center;margin-top: 20px"></div>
 </body>
 <!-- 分页 -->
 <script type="text/javascript">
@@ -165,16 +173,11 @@
                      gotoPage(page);
                  }
          });            
-         /* showPageInfo(); */
      });
      
      function gotoPage(page) {
          window.location = "<%=basePath%>/report/query?pageIndex=" + page;            
      }
-     
-     /* function showPageInfo(){
-         $("#page-info").html(pageSize + "条/页，共" + totalCounts + "条，第" + "${page.pageIndex+1}" + "页，共" + totalPages + "页");
-     }	 */
 
 </script> 
 </html>
