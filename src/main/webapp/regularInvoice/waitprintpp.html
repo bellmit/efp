@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>待打印普通发票(单打)</title>
-<OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
-	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
+<!-- <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT> -->
 <!-- <script type="text/javascript" src="../js/jquery/jquery-2.1.1.min.js"></script> -->
 <script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="../js/page/pageGroup.css"/>
 <script type="text/javascript" src="../js/page/pageGroup.js"></script>      
 <style type="text/css">
-th,td{width: 100px; height: 35px;text-align:center;}
+th,td{width: 120px; height: 35px;text-align:center;}
 </style>
 
 <script type="text/javascript">
@@ -32,7 +32,7 @@ function chaxun(){
         data: params,
         async: false,
         success: function (data) {
-        	alert(JSON.stringify(data))
+        	//alert(JSON.stringify(data))
         		
         		$("#printBody").children().remove();
         		if(data.length>0){
@@ -78,8 +78,8 @@ function chaxun(){
 	
 }
 
-function dayin(ele){
-	alert(ele);
+function dayin(fpqqlsh){
+	alert(fpqqlsh);
 }
 
 function PrintInvoice(){	
@@ -192,17 +192,6 @@ function PrintInvoice(){
 </tbody>
 
 </table>
-<!-- <div class="">pager
-<ul class="pagination">
-  <li><a href="#">&laquo;</a></li>
-  <li class="active"><a href="#">1</a></li>
-  <li class="disabled"><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
-</ul>
-</div> -->
 
 <div id="pageGro" class="cb">
 	<div class="pageUp">上一页</div>

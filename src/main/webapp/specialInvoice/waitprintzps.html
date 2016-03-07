@@ -3,8 +3,179 @@
 <head>
 <meta charset="UTF-8">
 <title>待打印专用发票(连打)</title>
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<!--[if lt IE 9]>
+         <script src="../js/html5shiv.js"></script>
+         <script src="../js/respond.min.js"></script>
+      <![endif]-->
+      
+<link rel="stylesheet" type="text/css" href="../js/page/pageGroup.css"/>
+<script type="text/javascript" src="../js/page/pageGroup.js"></script>      
+<style type="text/css">
+th,td{width: 120px; height: 35px;text-align:center;}
+</style>
+
+<script type="text/javascript">
+
+function chaxun(){
+	var params = $('#queryForm').serialize();
+	$.ajax({
+		type:"GET",
+        url: "../printpps/printlist",
+        data: params,
+        async: false,
+        success: function (data) {
+        	alert(JSON.stringify(data))
+        		
+        		$("#printBody").children().remove();
+        		if(data.length>0){
+    				var tbo = '';
+        			for(var i=0;i<data.length;i++){
+        				var size = data[i].endfphm - data[i].beginfphm + 1;
+        				tbo = tbo + '<tr>'
+       						+'<td class="">' + data[i].beginDate + '</td>'
+       						+'<td>' + data[i].endDate + '</td>'
+       						+'<td>' + data[i].beginfphm + '</td>'
+       						+'<td>' + data[i].endfphm + '</td>'
+       						+'<td>专用发票</td>'
+       						+'<td>' + size + '</td>'
+       						
+       						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
+       						+'<td style="width: 200px;">' + '<a href="javascript:" onclick="chakan(' + data[i].beginfphm + ',' + data[i].endfphm + ');">查看详情</a>' 
+       						+ '&nbsp;&nbsp;&nbsp;&nbsp;'
+       						+ '<a href="javascript:" onclick="dayin(' + data[i].beginfphm + ',' + data[i].endfphm + ');">连续打印</a>' 
+       						+ '</td>'
+       						
+       						+'</tr>';
+        			}
+        			//alert(tbo)
+        			$("#printBody").html(tbo);
+        			/* $('.invitetable1 tr:odd').css('background','#fffceb');
+        			parent.dyniframesize('openli');  */
+        		}else{
+        			//alert(0)
+        		}
+        	
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+	
+}
+
+function chakan(begin, end){
+	location.href='../regularInvoice/showDetails.html?begin=' + begin + '&end=' + end + '&fplx=004';
+}
+
+function dayin(ele){
+	alert(ele);
+}
+
+function PrintInvoice(){	
+	//01页边距设置
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"鍙戠エ鎵撳嵃\"><body yylxdm=\"1\"><kpzdbs>12345612346</kpzdbs><fplxdm>007</fplxdm><fpdm>1110000452</fpdm><fphm>38148009</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+	var sMarginsInfo = " <?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20003\" comment=\"页边距设置\">\r\n<body yylxdm=\"1\">\r\n<fplxdm>1</fplxdm>\r\n<top>-1</top>\r\n<left>-3</left>\r\n</body>\r\n</business>";		
+	sMargret = sk.Operate(sMarginsInfo);
+	var returncodesMarg = getTotalMidValue(sMargret, "<returncode>","</returncode>");
+	var returnmsgsMarg = getTotalMidValue(sMargret, "<returnmsg>","</returnmsg>");	
+	if(returncodesMarg==0&&returnmsgsMarg=="成功"){
+		//02、打印发票
+		var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>004</fplxdm><fpdm>1100098082</fpdm><fphm>74560017</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+		alert(sPrintInfo);
+		sPrintInret = sk.Operate(sPrintInfo);
+		var returncodesPrintIn = getTotalMidValue(sPrintInret, "<returncode>","</returncode>");
+		var returnmsgsPrintIn = getTotalMidValue(sPrintInret, "<returnmsg>","</returnmsg>");
+		if(returncodesPrintIn==0&&returnmsgsPrintIn=="成功"){
+			alert("打印成功！");
+		}else{
+			alert("打印失败，失败原因："+returnmsgsPrintIn);
+		}
+	}else{
+		    alert("页面距设置失败，失败原因："+returnmsgsMarg);
+	}		
+		
+}
+
+</script>
 </head>
 <body>
-待打印专用发票(连打)
+<h4>查询条件</h4>
+<form id="queryForm" name='queryForm' class="form-horizontal" role="form">
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-5">
+	      <label for="beginDate" class="col-sm-3 control-label">开票起止日期：</label>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="起始时间" value=""
+	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
+	      </div>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
+	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
+	      </div>
+	   </div>
+	   <div class="form-group col-sm-5">
+	      <label for="fphm" class="col-sm-3 control-label">发票起止号码：</label>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="beginfphm" name="beginfphm" placeholder="起始号码" value="">
+	      </div>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="endfphm" name="endfphm" placeholder="结束号码" value="">
+	         <input type="hidden" id='fplx' name='fplx' value='004'>
+	      </div>
+	   </div>
+	</div>
+	
+	<div class="form-inline form-group">
+		
+	   <div class="form-group col-sm-5">
+	      <div class="col-sm-offset-2 col-sm-10">
+	         <button type="button" class="btn btn-default" onclick="chaxun();">查询</button>
+	      </div>
+	   </div>
+	</div>
+</form>
+
+<hr>
+
+<table border="1" cellspacing="0" >
+<thead>
+	<th>开票日期起</th>
+	<th>开票日期止</th>
+	<th>发票号码起</th>
+	<th>发票号码止</th>
+	<th>发票种类</th>
+	<th>连续张数</th>
+	<th>操作</th>
+</thead>
+<tr>
+<tbody id="printBody">
+
+</tbody>
+
+</table>
+
+<div id="pageGro" class="cb">
+	<div class="pageUp">上一页</div>
+    <div class="pageList">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+    <div class="pageDown">下一页</div>
+</div>
+
 </body>
 </html>

@@ -16,31 +16,47 @@ codebase="NISEC_SKSCX.ocx#version=1,0,0,1">
 </OBJECT>
 <link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
 <script type="text/javascript" src="<%=basePath%>/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="<%=basePath%>/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/jquery.pagination.js"></script>
-
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<style type="text/css">
+th,td{width: 100px; height: 35px;text-align:center;}
+</style>
 </head>
 <body>
-	<h4>待开普通发票查询</h4>
-	<form action="<%=basePath%>/fpkj/plain" method="post">
-		开始时间:&nbsp;&nbsp;<input id="beginDate" name="beginDate" class="Wdate"
-			onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})"
-			value="${param.beginDate }" style="width: 100px;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		结束时间:&nbsp;&nbsp;<input id="endDate" name="endDate" class="Wdate"
-			onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})"
-			value="${param.endDate }" style="width: 100px;" /><br/>
-		主订单号码：<input type="text" id="zddh" name="zddh" value="${param.zddh }" />
-		开票地区：<select id="kpdq" name="kpdq">
-					<option value="-1" <c:if test="${param.kpdq == -1 }">selected="selected"</c:if>>-请选择-</option>
-					<option value="0" <c:if test="${param.kpdq == 0 }">selected="selected"</c:if>>北京</option>
-					<option value="1" <c:if test="${param.kpdq == 1 }">selected="selected"</c:if>>上海</option>
-					</select>
-			<br/>
-		<input id="currentPage" name="currentPage" type="hidden"/>
-		<input	type="submit" value="查询"/>
-		<input id="kp"	type="button" value="多张开票" onclick="multi_kjfp()"/> 
+	<hr>
+	<form action="<%=basePath%>/fpkj/plain" method="post" class="form-horizontal" role="form">
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-5">
+	      <label for="beginDate" class="col-sm-3 control-label">开票起止日期：</label>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="起始时间" value="${param.beginDate }"
+	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
+	      </div>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value="${param.endDate }"
+	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
+	      </div>
+	   </div>
+	 </div>
+	 <div class="form-inline form-group">
+		<div class="form-group col-sm-5">
+	      <label for="zddh" class="col-sm-3 control-label">订单号：</label>
+	      <div class="col-sm-6">
+	         <input type="text" class="form-control" id="zddh" name="zddh" placeholder="订单号" value="${param.zddh }">
+	         <input id="currentPage" name="currentPage" type="hidden"/>
+	      </div>
+	   </div>
+	   <div class="form-group col-sm-5">
+	      <div class="col-sm-12">
+			<input	type="submit" value="查询"/>
+			<input id="kp"	type="button" value="多张开票" onclick="multi_kjfp()"/>
+	      </div>
+	   </div>
+	</div>
 	</form>
-	<br/>
+	<hr>
 	<table border="1" cellspacing="0">
 		<tr>
 				<th><input type="checkbox" id="chkAll" onclick="checkAll()"></th>
@@ -87,7 +103,7 @@ codebase="NISEC_SKSCX.ocx#version=1,0,0,1">
 				</tr>
 			</c:forEach>
 		</table>
-		<div class="pagination" id="Pagination"></div>
+		<div class="text-center"><div class="text-center pagination" id="Pagination"></div></div>
 </body>
 <!-- 发票开具 -->
 <script type="text/javascript">

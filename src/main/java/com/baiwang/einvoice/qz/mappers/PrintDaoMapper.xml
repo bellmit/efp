@@ -12,7 +12,7 @@
     <result column="kpdq" property="kpdq" jdbcType="TINYINT" /><!-- 开票地区 -->
     <result column="gmfmc" property="fptt" jdbcType="VARCHAR" /><!-- 抬头(购买方名称) -->
     <result column="fplx" property="fpzl" jdbcType="VARCHAR" /><!-- 发票种类 -->
-    <result column="spzl" property="ppnr" jdbcType="VARCHAR" /> <!-- 发票内容(商品种类) -->
+    <result column="spzl" property="fpnr" jdbcType="VARCHAR" /> <!-- 发票内容(商品种类) -->
     <result column="hjje" property="hjje" jdbcType="REAL" /><!-- 合计金额 -->
     <result column="hjse" property="hjse" jdbcType="REAL" /><!-- 合计税额 -->
     <result column="jshj" property="jshj" jdbcType="REAL" /><!-- 价税合计 -->
@@ -23,7 +23,7 @@
   
   <select id="getPrintPpList" resultMap="QueryPrintPpMap" parameterType="map">
   select a.fpqqlsh fpqqlsh, a.zddh zddh, a.fddh fddh, b.hym hym, b.shr shr, b.sqsj, b.kpdq, a.fplx fpzl,
-  a.gmfmc tt, b.spzl ppnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
+  a.gmfmc fptt, b.spzl fpnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
   from kpxx a  
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
   WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
@@ -69,11 +69,11 @@
   
   <select id="showDetail" resultMap="QueryPrintPpMap" parameterType="map">
   select a.fpqqlsh fpqqlsh, a.zddh zddh, a.fddh fddh, b.hym hym, b.shr shr, b.sqsj, b.kpdq, a.fplx fpzl,
-  a.gmfmc tt, b.spzl ppnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
+  a.gmfmc fptt, b.spzl fpnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
   from kpxx a  
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
   WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
-  <![CDATA[and a.fphm <= #{end} and a.fphm <= #{begin} ]]>
+  <![CDATA[and a.fphm <= #{end} and a.fphm >= #{begin} ]]>
   </select>
   
   
