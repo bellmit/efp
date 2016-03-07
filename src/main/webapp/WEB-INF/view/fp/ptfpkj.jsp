@@ -28,12 +28,15 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	<hr>
 	<form action="<%=basePath%>/fpkj/plain" method="post" class="form-horizontal" role="form">
 	<div class="form-inline form-group">
-		<div class="form-group col-sm-5">
-	      <label for="beginDate" class="col-sm-3 control-label">开票起止日期：</label>
+		<div class="form-group col-sm-6">
+	      <label for="beginDate" class="col-sm-3 control-label">开始日期：</label>
 	      <div class="col-sm-3">
-	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="起始时间" value="${param.beginDate }"
+	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始时间" value="${param.beginDate }"
 	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
 	      </div>
+	      </div>
+	      <div class="form-group col-sm-6">
+	       <label for="beginDate" class="col-sm-3 control-label">结束日期：</label>
 	      <div class="col-sm-3">
 	         <input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value="${param.endDate }"
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
@@ -41,15 +44,15 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	   </div>
 	 </div>
 	 <div class="form-inline form-group">
-		<div class="form-group col-sm-5">
+		<div class="form-group col-sm-6">
 	      <label for="zddh" class="col-sm-3 control-label">订单号：</label>
-	      <div class="col-sm-6">
+	      <div class="col-sm-3">
 	         <input type="text" class="form-control" id="zddh" name="zddh" placeholder="订单号" value="${param.zddh }">
 	         <input id="currentPage" name="currentPage" type="hidden"/>
 	      </div>
 	   </div>
-	   <div class="form-group col-sm-5">
-	      <div class="col-sm-12">
+	   <div class="form-group col-sm-6">
+	      <div class="col-sm-offset-1 col-sm-5">
 			<input	type="submit" value="查询"/>
 			<input id="kp"	type="button" value="多张开票" onclick="multi_kjfp()"/>
 	      </div>
