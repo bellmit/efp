@@ -41,11 +41,11 @@
 	
 	申请起止日期：<input id="beginDate" name="beginDate" class="Wdate" 
 	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
-	value="${param.beginDate }" style="width: 100px;"/>-
+	value="${dateS4save}" style="width: 100px;"/>-
 	<input id="endDate" name="endDate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
-	value="${param.endDate }" style="width: 100px;"/>&nbsp;&nbsp;&nbsp;
+	value="${dateE4save}" style="width: 100px;"/>&nbsp;&nbsp;&nbsp;
 	开票地区：
-	<select name="kpdq4q">
+	<select name="kpdq4q" >
 		<option value="">请选择</option>
 		<option value="0">北京</option>
 		<option value="1">上海</option>
@@ -72,8 +72,8 @@
 	发票抬头：
 	<select name="fptt4q">
 		<option value="">请选择</option>
-		<option >个人</option>
-		<option >公司</option>
+		<option value ="0">个人</option>
+		<option value ="1">公司</option>
 	</select>
 	<input type="submit" value="查询">  <a href="javascript:void(0)" onclick="exportData()">导出excel</a>
 </form><br/>
@@ -115,7 +115,11 @@
 			<td><fmt:formatDate value="${fp.sqsj}" pattern="yyyy-MM-dd"/></td>
 			<td><c:out value="${fp.fptt}"/></td>
 			<td><c:out value="${fp.fplx}"/></td>
-			<td><c:out value="${fp.fpzl}"/></td>
+			<td>
+			<c:if test="${fp.fpzl=='007'}">增值税普通发票</c:if>
+			<c:if test="${fp.fpzl=='004'}">增值税专用发票</c:if>
+			<c:if test="${fp.fpzl=='026'}">增值税电子发票</c:if>
+			</td>
 			<td><c:out value="${fp.sqrk}"/></td>
 			<td><c:out value="${fp.je}"/></td>
 			<td><c:out value="${fp.shr}"/></td>

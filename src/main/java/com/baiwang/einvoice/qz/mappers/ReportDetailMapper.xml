@@ -58,7 +58,12 @@
 	   and o.spzl = #{fplx4q,jdbcType=VARCHAR} 
     </if>
     <if test="fptt4q != null and fptt4q !=''">
-	   and k.gmfmc = #{fptt4q,jdbcType=VARCHAR} 
+    	<if test="fptt4q == 0">
+		   and k.gmfmc = '个人' 
+    	</if>
+    	<if test="fptt4q == 1">
+		   and k.gmfmc != '个人' 
+    	</if>
     </if>
   </select>
 </mapper>
