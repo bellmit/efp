@@ -54,7 +54,7 @@ function changePassword(){
 	    closed: false,
 	    cache: false,
 	    content:s,
-	    modal: true,
+	    modal: true
 //	    onBeforeClose:beforeCloseWindow,
 	});
 }
