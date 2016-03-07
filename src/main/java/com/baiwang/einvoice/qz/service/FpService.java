@@ -36,4 +36,8 @@ public interface FpService {
 	void updateFpztByFpqqlsh(String fpqqlsh);
 	
 	String getXml(Kpxx kpxx , List<Fpmx> fpmxList);
+	
+	List<HashMap<String, Object>> listPlain(HashMap<String, String> param,int pageIndex,int pageSize);
+	
+	List<HashMap<String, Object>> listSpecial(HashMap<String, String> param,int pageIndex,int pageSize);
 }

@@ -10,9 +10,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>待开专用发票</title>
-<script type="text/javascript"
-	src="<%=basePath%>/My97DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
+<script type="text/javascript" src="<%=basePath%>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/jquery.pagination.js"></script>
 </head>
 <body>
 	<h4>待开专用发票查询</h4>
@@ -30,8 +31,10 @@
 				<c:if test="${param.kpdq == 0 }">selected="selected"</c:if>>北京</option>
 			<option value="1"
 				<c:if test="${param.kpdq == 1 }">selected="selected"</c:if>>上海</option>
-		</select> <br /> <input type="submit" value="查询" /> <input id="kp"
-			type="button" value="多张开票" onclick="multi_kjfp()" />
+		</select> <br />
+		<input id="currentPage" name="currentPage" type="hidden"/>
+		<input type="submit" value="查询" /> 
+		<input id="kp" type="button" value="多张开票" onclick="multi_kjfp()" />
 
 	</form>
 	<br />
@@ -78,6 +81,7 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="pagination" id="Pagination"></div>
 </body>
 <script type="text/javascript">
 	function kjfp(fpqqlsh){
@@ -147,4 +151,32 @@
 		$('#chkAll').attr('checked',false);
 	}
 </script>
+<!-- 分页 -->
+<script type="text/javascript">
+	 var pageIndex = ${page.pageIndex};
+     var pageSize = ${page.pageSize};
+     var totalPages = ${page.totalPages};
+     var totalCounts = ${page.totalCounts};
+     $(document).ready(function(){ 
+     $("#Pagination").pagination(totalCounts,{
+                 items_per_page: pageSize,
+                 current_page:pageIndex,
+                 prev_text:'<',    
+                 next_text:'>',            
+                 callback:function(page){
+                     gotoPage(page);
+                 }
+         });            
+         /* showPageInfo(); */
+     });
+     
+     function gotoPage(page) {
+         window.location = "<%=basePath%>/fpkj/plain?pageIndex=" + page;            
+     }
+     
+     /* function showPageInfo(){
+         $("#page-info").html(pageSize + "条/页，共" + totalCounts + "条，第" + "${page.pageIndex+1}" + "页，共" + totalPages + "页");
+     }	 */
+
+</script> 
 </html>

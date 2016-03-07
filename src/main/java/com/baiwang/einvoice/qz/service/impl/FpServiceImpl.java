@@ -26,7 +26,9 @@ import com.baiwang.einvoice.qz.dao.FpmxMapper;
 import com.baiwang.einvoice.qz.dao.KpxxMapper;
 import com.baiwang.einvoice.qz.dao.OrderDetailMapper;
 import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.PageServiceImpl;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: FpServiceImpl
@@ -47,7 +49,8 @@ public class FpServiceImpl implements FpService {
 	private CustomOrderMapper orderDao;
 	@Resource
 	private OrderDetailMapper orderDetailDao;
-	
+	@Resource
+	private PageServiceImpl pageService;
 	/**
 	  * <p>Title: saveXmlInfo</p>
 	  * <p>Description: </p>
@@ -240,6 +243,42 @@ public class FpServiceImpl implements FpService {
 		}
 		
 		return xml;
+	}
+
+	/**
+	  * <p>Title: list</p>
+	  * <p>Description: </p>
+	  * @param param
+	  * @param pageIndex
+	  * @param pageSize
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.FpService#list(java.util.HashMap, int, int)
+	  */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HashMap<String, Object>> listPlain(HashMap<String, String> param, int pageIndex, int pageSize) {
+		
+		// TODO Auto-generated method stub
+		return (PageList<HashMap<String, Object>>) pageService.getPageList(OrderDetailMapper.class, "getPlainList",param, pageIndex, pageSize);
+		
+	}
+
+	/**
+	  * <p>Title: listSpecial</p>
+	  * <p>Description: </p>
+	  * @param param
+	  * @param pageIndex
+	  * @param pageSize
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.FpService#listSpecial(java.util.HashMap, int, int)
+	  */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HashMap<String, Object>> listSpecial(HashMap<String, String> param, int pageIndex, int pageSize) {
+		
+		// TODO Auto-generated method stub
+		return (PageList<HashMap<String, Object>>) pageService.getPageList(OrderDetailMapper.class, "getSpecialList",param, pageIndex, pageSize);
+
 	}
 
 }
