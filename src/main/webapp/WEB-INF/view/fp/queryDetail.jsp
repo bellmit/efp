@@ -12,11 +12,10 @@
 <script type="text/javascript" src="<%=basePath %>/js/jquery/jquery.js"></script>
 <link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
 <script type="text/javascript" src="<%=basePath%>/js/jquery.pagination.js"></script>
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<script src="../bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
-   select
-   {
-       width:120px;
-   }
+th,td{width: 100px; height: 35px;text-align:center;}
 </style>
 
 <script type="text/javascript">
@@ -44,49 +43,81 @@
 
 </head>
 <body>
-<h4>查询条件</h4>
+<hr>
 <div style="white-space: nowrap;">
-<form id="searchForm" action="<%=basePath %>/report/queryFPlist" method="post">
+<form id="searchForm" action="<%=basePath %>/report/queryFPlist" method="post"class="form-horizontal" role="form">
 	<input id="currentPage" name="currentPage" type="hidden"/>
-	申请起止日期：
-	<input id="beginDate" name="beginDate" class="Wdate" 
-	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
-	value="${dateS4save}" style="width: 100px;"/>-
-	<input id="endDate" name="endDate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
-	value="${dateE4save}" style="width: 100px;"/>&nbsp;&nbsp;&nbsp;
-	开票地区：
-	<select name="kpdq4q" >
-		<option value="">请选择</option>
-		<option value="0" <c:if test="${kpdq4save=='0'}">selected="selected"</c:if>>北京</option>
-		<option value="1" <c:if test="${kpdq4save=='1'}">selected="selected"</c:if>>上海</option>
-	</select>
-	<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	订单号：
-	<input type="text" name="ddh4q" value="${ddh4save}">
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	发票种类：
-	<select name="fpzl4q">
-		<option value="">请选择</option>
-		<option value="007" <c:if test="${fpzl4save=='007'}">selected="selected"</c:if>>增值税普通发票</option>
-		<option value="004" <c:if test="${fpzl4save=='004'}">selected="selected"</c:if>>增值税专用发票</option>
-		<option value="026" <c:if test="${fpzl4save=='026'}">selected="selected"</c:if>>增值税电子发票</option>
-	</select>
-	<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	发票类型：
-	<select name="fplx4q"  >
-		<option value="">请选择</option>
-		<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
-		<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
-	</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	发票抬头：
-	<select name="fptt4q">
-		<option value="">请选择</option>
-		<option value ="0" <c:if test="${fptt4save=='0'}">selected="selected"</c:if>>个人</option>
-		<option value ="1" <c:if test="${fptt4save=='1'}">selected="selected"</c:if>>公司</option>
-	</select>
-	<input type="submit" style="width:80px" value="查询"> | <a href="javascript:void(0)" onclick="exportData()">导出excel</a>
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-6">
+		<label for="beginDate" class="col-sm-3 control-label">申请起止日期：</label>
+			 <div class="col-sm-3">
+				<input id="beginDate" name="beginDate" class="form-control" placeholder="开始时间"
+				onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
+				value="${dateS4save}" style="width: 100px;"/>
+				-<input id="endDate" name="endDate" class="form-control" placeholder="结束时间" 
+				onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
+				value="${dateE4save}" style="width: 100px;"/>
+			 </div>
+		</div>
+		<div class="form-group col-sm-6">
+			<label for="beginDate" class="col-sm-3 control-label">开票地区：</label>
+			 <div class="col-sm-3">
+				<select name="kpdq4q" >
+					<option value="">请选择</option>
+					<option value="0" <c:if test="${kpdq4save=='0'}">selected="selected"</c:if>>北京</option>
+					<option value="1" <c:if test="${kpdq4save=='1'}">selected="selected"</c:if>>上海</option>
+				</select>
+			 </div>
+		</div>
+	</div>
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-6">
+		<label for="beginDate" class="col-sm-3 control-label">订单号：</label>
+			<div class="col-sm-3">
+				<input type="text" class="form-control" name="ddh4q" value="${ddh4save}" placeholder="订单号">
+			</div>
+		</div>
+		<div class="form-group col-sm-6">
+		<label for="beginDate" class="col-sm-3 control-label">发票种类：</label>
+			<div class="col-sm-3">
+				<select name="fpzl4q">
+					<option value="">请选择</option>
+					<option value="007" <c:if test="${fpzl4save=='007'}">selected="selected"</c:if>>增值税普通发票</option>
+					<option value="004" <c:if test="${fpzl4save=='004'}">selected="selected"</c:if>>增值税专用发票</option>
+					<option value="026" <c:if test="${fpzl4save=='026'}">selected="selected"</c:if>>增值税电子发票</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-6">
+		<label for="beginDate" class="col-sm-3 control-label">发票类型：</label>
+			<div class="col-sm-3">
+				<select name="fplx4q"  >
+					<option value="">请选择</option>
+					<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
+					<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group col-sm-6">
+		<label for="beginDate" class="col-sm-3 control-label">发票抬头：</label>
+			<div class="col-sm-3">
+				<select name="fptt4q">
+					<option value="">请选择</option>
+					<option value ="0" <c:if test="${fptt4save=='0'}">selected="selected"</c:if>>个人</option>
+					<option value ="1" <c:if test="${fptt4save=='1'}">selected="selected"</c:if>>公司</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-6">
+			<div class="col-sm-offset-1 col-sm-5">
+				<input type="submit" style="width:80px" value="查询"> | <a href="javascript:void(0)" onclick="exportData()">导出excel</a>
+			</div>
+		</div>
+	</div>
 </form><br/>
 <form id="expForm" action="<%=basePath%>/report/download" method="post">
 <table border="1" cellspacing="0">
