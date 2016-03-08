@@ -90,10 +90,10 @@ $.ajax({
     data: params,
     async: false,
     success: function (data) {
-    	alert(JSON.stringify(data))
+    	//alert(JSON.stringify(data))
     		
     		$("#printBody").children().remove();
-    	alert(data.length)
+    	//alert(data.length)
     		if(data.length>0){
 				var tbo = '';
     			for(var i=0;i<data.length;i++){

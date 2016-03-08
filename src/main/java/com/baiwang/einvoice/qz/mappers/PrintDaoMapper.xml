@@ -80,6 +80,17 @@
   	update kpxx set fpzt = #{fpzt} where fpqqlsh = #{fpqqlsh}
   </update>
   
+  <resultMap id="QueryPrintsFphmsMap" type="hashmap">
+    <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="fpdm" property="fpdm" jdbcType="VARCHAR" />
+    <result column="fphm" property="fphm" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="getPrintsFphm" resultMap="QueryPrintsFphmsMap">
+  	select fpqqlsh,fpdm,fphm from kpxx 
+  	where fpzt = '2' <![CDATA[ and fphm <= #{endfphm} and fphm >= #{beginfphm} ]]> order by fphm
+  </select>
+  
   
   
 </mapper>

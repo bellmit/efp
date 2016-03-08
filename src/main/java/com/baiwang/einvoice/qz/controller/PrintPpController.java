@@ -95,12 +95,38 @@ public class PrintPpController {
 		
 		return map;
 	}
+	
 	@RequestMapping("print/savePrintResult")
 	@ResponseBody
 	public Integer savePrintResult(String fpqqlsh, String fpzt){
 		int su = service.savePrintResult(fpqqlsh, fpzt);
 		
 		return su;
+	}
+	
+	@RequestMapping("prints/getParameters")
+	@ResponseBody
+	public Map<String, Object> getParameters(String fplx, String beginfphm, String endfphm, HttpServletRequest request){
+		Map<String, Object> map = new HashMap<>();
+		User user = (User)request.getSession().getAttribute("user");
+		
+		if(null == user){
+			map.put("code", "-1");
+			map.put("msg", "用户未登陆");
+			return map;
+		}else{
+			String userType = Byte.toString(user.getUserType());
+			SkConfig skconf = service.getSkParameter(userType);
+			PrintConfig printconf = service.getPrintParameter(fplx);
+			List<Map<String,String>> list = service.getPrintsFphm(beginfphm, endfphm);
+			map.put("code", "0");
+			map.put("msg", "成功");
+			map.put("skconf", skconf);
+			map.put("printconf", printconf);
+			map.put("list", list);
+		}
+		
+		return map;
 	}
 	
 	
