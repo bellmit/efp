@@ -20,4 +20,6 @@ public interface IPrintPpService {
 
 	int savePrintResult(String fpqqlsh, String fpzt);
 
+	List<Map<String, String>> getPrintsFphm(String beginfphm, String endfphm);
+
 }

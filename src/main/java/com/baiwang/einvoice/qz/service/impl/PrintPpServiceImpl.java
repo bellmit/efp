@@ -116,4 +116,10 @@ public class PrintPpServiceImpl implements IPrintPpService {
 		return dao.savePrintResult( fpqqlsh,  fpzt);
 	}
 
+	@Override
+	public List<Map<String, String>> getPrintsFphm(String beginfphm, String endfphm) {
+		
+		return dao.getPrintsFphm( beginfphm,  endfphm);
+	}
+
 }

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>待打印普通发票(单打)</title>
-<!-- <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
-	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT> -->
+<OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
 <!-- <script type="text/javascript" src="../js/jquery/jquery-2.1.1.min.js"></script> -->
 <script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -80,9 +80,10 @@ function chaxun(){
 }
 
 function dayin(fpqqlsh,fpdm, fphm){
-	alert(fpqqlsh);
 	getParameter();
-	SetParameter();
+	if(!SetParameter()){
+		return;
+	}
 	PrintInvoice(fpqqlsh,fpdm, fphm);
 }
 
@@ -98,7 +99,7 @@ function getParameter(){
         	if(data.code == '-1'){
         		window.top.location.href="../login/login.html";
         	}else{
-        		skconf = skconf;
+        		skconf = data.skconf;
         		printconf = data.printconf;
         	}
         },
@@ -114,6 +115,11 @@ function getParameter(){
 
 //发票打印
 function SetParameter() {
+	if(skconf == null){
+		alert("初始化参数失败");
+		return false;
+	}
+	
 	//01设置初始化参数
 	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>00000000</keypwd>\r\n<aqm>50543ed18fc81784d9a17a18e10a9d68e7e4c4303568c14e3aa1280f87006578b59ca8d492921c725a1199f9c7fc9ba21c8f15d953fb673a5612a52e813c2ade0ebcf42c7d7e0a1fe15a8655a2919176bd3801d3be36654e4fffe8fb38ae4c02498b43de96c00e23765a204fbd16752c9514ffef10467646892f32ad3a146d3ea9928c8a622aa349bfdbd2b49eae3f7e852be50df3c0532447c99abfded4b5c07871cef1ebbf1a9986df508f4fe9f452eb44b6a220df76a90830a0e35c4483c6f85edb5590858fe9685d45895c5c1a16ea689db99ba1f4d4103902dab1972f8a6f7bb2ba1f84fa37c76d238016cc40e4ef08025b3e226c48e43adb1c0daf2d8b</aqm>\r\n</body>\r\n</business>";		
 	try {
@@ -123,13 +129,14 @@ function SetParameter() {
 		var returnmsg = getTotalMidValue(ret, "<returnmsg>","</returnmsg>");	
 		if(returncode==0&&returnmsg=="成功"){
 			alert("参数设置成功！");	
+			return true;
 		}else{
 			alert("参数设置失败，失败原因："+returnmsg);
-			return;
+			return false;
 		}
 	} catch (e) {
 		alert(e.message + ",errno:" + e.number);
-		return;
+		return false;
 	}
 }
 function PrintInvoice(fpqqlsh,fpdm, fphm){	
@@ -167,20 +174,32 @@ function savePrintResult(fpqqlsh,fpzt){
         async: false,
         success: function (data) {
         	//alert(JSON.stringify(data))
-        	if(data.code == '0'){
-        		
+        	if(data.code == '1'){
+        		alert("打印成功！");
         	}else{
-        		
+        		alert("打印成功,保存失败");
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
-        		location.reload();
+        		window.top.location.reload();
         	}else{
         		alert("Error");
         	}
         }
 	});
+}
+
+//获取指定的字符串
+function getTotalMidValue(source, priStr, suxStr) {
+	if (source == null)
+		return null;
+	var iFirst = source.indexOf(priStr);		
+	var iLast = source.lastIndexOf(suxStr);		
+	if (iFirst < 0 || iLast < 0)
+		return null;	
+	var beginIndex = iFirst + priStr.length;	
+	return source.substring(beginIndex, iLast);
 }
 
 </script>
@@ -250,23 +269,9 @@ function savePrintResult(fpqqlsh,fpzt){
 	<th>发票号码</th>
 	<th>操作</th>
 </thead>
-
 <tbody id="printBody">
-<!-- <tr>
-<td>123123</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr> -->
 
 </tbody>
-
 </table>
 
 <div id="pageGro" class="cb">
