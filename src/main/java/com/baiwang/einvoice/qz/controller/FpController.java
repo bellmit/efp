@@ -73,7 +73,6 @@ public class FpController {
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		
 		String fpqqlsh = XmlUtil.random();
-		kpxx.setFpqqlsh(fpqqlsh);
 		
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
 		System.out.println("订单号："+orderDetail.getZddh());
@@ -82,18 +81,18 @@ public class FpController {
 		Map<String, String> result = resultService.queryResult(kpxx.getZddh(), kpxx.getFddh(), kpxx.getFplx());//根据两个订单号查
 		
 		if(null == result){
-			fpService.saveInfo(orderDetail, kpxx, list,fpqqlsh);
+			fpService.saveInfo(orderDetail, kpxx, list , fpqqlsh);
 			
 			String correlationId = "";
 			if("026".equals(kpxx.getFplx())){
 				try{
 					UUID uuid = UUID.randomUUID();
 					correlationId = uuid.toString();
-					logger.info("*****订单号为:" + orderDetail.getZddh() + "的关联id为:" + correlationId);
+					logger.info("*****订单号为:" + orderDetail.getZddh()+"/"+orderDetail.getFddh() + "的关联id为:" + correlationId);
 					sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
 							correlationId);
 				}catch(Exception e){
-					logger.error("*********订单号：" + orderDetail.getZddh() + ",sendMsg网络异常");
+					logger.error("*********订单号：" + orderDetail.getZddh()+"/"+orderDetail.getFddh() + ",sendMsg网络异常");
 					e.printStackTrace();
 					
 					map.put("returnCode", "4000");
@@ -103,7 +102,7 @@ public class FpController {
 			
 				//从响应队列检索响应消息
 				ExecutorService executor = Executors.newSingleThreadExecutor();
-		        Future<String> future = executor.submit(new EnumResposeMessageTask(orderDetail.getZddh(), correlationId, jmsTemplate2, resultService));
+		        Future<String> future = executor.submit(new EnumResposeMessageTask(orderDetail.getZddh()+orderDetail.getFddh(), correlationId, jmsTemplate2, resultService));
 				String success = "4400";
 		        try{
 		        	success = future.get(4, TimeUnit.SECONDS);
@@ -117,7 +116,7 @@ public class FpController {
 		        } catch (TimeoutException e) {
 		        	e.printStackTrace();
 		        	String requestURL = request.getRequestURL().toString();
-		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + orderDetail.getZddh();
+		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + orderDetail.getZddh()+orderDetail.getFddh();
 		    		
 		    		map.put("returnCode", "2000");
 					map.put("returnMsg", "正在处理中,请稍后查询" + url);
@@ -141,7 +140,7 @@ public class FpController {
 	        	return map;
 			}
 		}else if("0000".equals(result.get("returnCode"))){
-			logger.warn("*********订单号：" + orderDetail.getZddh() + "已经开票成功，返回。");
+			logger.warn("*********订单号：" + orderDetail.getZddh()+"/"+orderDetail.getFddh() + "已经开票成功，返回。");
 			map.put("returnCode", "0000");
 			map.put("returnMsg", "发票已开具成功");
 			return map;
