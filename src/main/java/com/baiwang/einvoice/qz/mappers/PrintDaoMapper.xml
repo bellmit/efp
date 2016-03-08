@@ -76,6 +76,10 @@
   <![CDATA[and a.fphm <= #{end} and a.fphm >= #{begin} ]]>
   </select>
   
+  <update id="savePrintResult">
+  	update kpxx set fpzt = #{fpzt} where fpqqlsh = #{fpqqlsh}
+  </update>
+  
   
   
 </mapper>

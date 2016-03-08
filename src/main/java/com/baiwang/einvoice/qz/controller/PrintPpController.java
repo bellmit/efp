@@ -1,5 +1,6 @@
 package com.baiwang.einvoice.qz.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baiwang.einvoice.qz.beans.PrintConfig;
+import com.baiwang.einvoice.qz.beans.SkConfig;
 import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.service.IPrintPpService;
 
@@ -70,6 +73,35 @@ public class PrintPpController {
 		return service.showDetail(begin, end, fplx);
 	}
 	
+	@RequestMapping("print/getParameter")
+	@ResponseBody
+	public Map<String, Object> getParameter(String fplx, HttpServletRequest request){
+		Map<String, Object> map = new HashMap<>();
+		User user = (User)request.getSession().getAttribute("user");
+		
+		if(null == user){
+			map.put("code", "-1");
+			map.put("msg", "用户未登陆");
+			return map;
+		}else{
+			String userType = Byte.toString(user.getUserType());
+			SkConfig skconf = service.getSkParameter(userType);
+			PrintConfig printconf = service.getPrintParameter(fplx);
+			map.put("code", "0");
+			map.put("msg", "成功");
+			map.put("skconf", skconf);
+			map.put("printconf", printconf);
+		}
+		
+		return map;
+	}
+	@RequestMapping("print/savePrintResult")
+	@ResponseBody
+	public Integer savePrintResult(String fpqqlsh, String fpzt){
+		int su = service.savePrintResult(fpqqlsh, fpzt);
+		
+		return su;
+	}
 	
 	
 }

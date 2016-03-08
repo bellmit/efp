@@ -7,10 +7,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import com.baiwang.einvoice.qz.beans.PrintConfig;
+import com.baiwang.einvoice.qz.beans.SkConfig;
+import com.baiwang.einvoice.qz.dao.PrintConfigMapper;
 import com.baiwang.einvoice.qz.dao.PrintDaoMapper;
+import com.baiwang.einvoice.qz.dao.SkConfigMapper;
 import com.baiwang.einvoice.qz.service.IPrintPpService;
 
 @Service
@@ -18,6 +21,12 @@ public class PrintPpServiceImpl implements IPrintPpService {
 
 	@Resource
 	private PrintDaoMapper dao;
+	
+	@Resource
+	private SkConfigMapper skdao;
+	
+	@Resource
+	private PrintConfigMapper dydao;
 	
 	@Override
 	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx) {
@@ -87,6 +96,24 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	public List<Map<String, String>> showDetail(String begin, String end, String fplx) {
 		
 		return dao.showDetail(begin, end, fplx);
+	}
+
+	@Override
+	public SkConfig getSkParameter(String kpdq) {
+		
+		return skdao.querySksetting(Integer.parseInt(kpdq));
+	}
+
+	@Override
+	public PrintConfig getPrintParameter(String fplx) {
+		
+		return dydao.queryPrintsetting( fplx);
+	}
+
+	@Override
+	public int savePrintResult(String fpqqlsh, String fpzt) {
+		
+		return dao.savePrintResult( fpqqlsh,  fpzt);
 	}
 
 }
