@@ -632,7 +632,7 @@ ui-column-dnd-bottom .ui-icon {
 	margin: 0px; padding: 0px;
 }
 .ui-datatable .ui-column-resizer {
-	margin: -4px -10px -4px 0px; padding: 0px; width: 8px; height: 20px; float: right; cursor: col-resize; background-image: url("/SKServer/javax.faces.resource/spacer/dot_clear.gif.xhtml?ln=primefaces");
+	margin: -4px -10px -4px 0px; padding: 0px; width: 8px; height: 20px; float: right; cursor: col-resize; background-image: url("");
 }
 .ui-datatable .ui-filter-column .ui-column-resizer {
 	height: 45px;
@@ -1013,7 +1013,7 @@ div.ui-button {
 	padding: 4px 10px; width: 150px; margin-top: 2px;
 }
 .ui-password-panel .ui-password-meter {
-	background: url("/SKServer/javax.faces.resource/forms/password-meter.png.xhtml?ln=primefaces") no-repeat left top; margin: 0px; padding: 0px; height: 10px;
+	background: url("") no-repeat left top; margin: 0px; padding: 0px; height: 10px;
 }
 .ui-password-info {
 	margin-top: 4px;
@@ -1055,7 +1055,7 @@ div.ui-button {
 	padding: 0px 0px 7px; font-weight: bold; display: block;
 }
 .ui-growl-image {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; width: 32px; height: 32px; float: left; display: block;
+	background: url("") no-repeat; margin: 0px; padding: 0px; width: 32px; height: 32px; float: left; display: block;
 }
 .ui-growl-image-info {
 	background-position: 0px -264px;
@@ -1112,7 +1112,7 @@ div.ui-button {
 	right: 0px;
 }
 .ui-lightbox-loading {
-	background: url("/SKServer/javax.faces.resource/lightbox/images/loading.gif.xhtml?ln=primefaces") no-repeat center rgb(0, 0, 0);
+	background: url("") no-repeat center rgb(0, 0, 0);
 }
 .ui-lightbox-caption {
 	padding: 0.2em 0.4em; display: none;
@@ -1382,28 +1382,28 @@ div.ui-button {
 	margin: 0px 5px; padding: 2px 5px; border: 1px solid currentColor;
 }
 .ui-messages-info-icon {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
+	background: url("") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
 }
 .ui-messages-warn-icon {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
+	background: url("") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
 }
 .ui-messages-error-icon {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
+	background: url("") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
 }
 .ui-messages-fatal-icon {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
+	background: url("") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
 }
 .ui-message-info-icon {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
+	background: url("") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
 }
 .ui-message-warn-icon {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
+	background: url("") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
 }
 .ui-message-error-icon {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
+	background: url("") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
 }
 .ui-message-fatal-icon {
-	background: url("/SKServer/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
+	background: url("") no-repeat; margin: 0px; padding: 0px; float: left; display: block; position: relative;
 }
 .ui-messages-info-icon {
 	width: 24px; height: 24px; margin-top: -4px;
@@ -1727,10 +1727,10 @@ div.ui-button {
 	text-indent: -999em; overflow: hidden; float: left; display: block; cursor: pointer;
 }
 .ui-rating-star a {
-	background: url("/SKServer/javax.faces.resource/rating/rating.png.xhtml?ln=primefaces") no-repeat 0px 0px; width: 16px; height: 15px; display: block;
+	background: url("") no-repeat 0px 0px; width: 16px; height: 15px; display: block;
 }
 .ui-rating-cancel a {
-	background: url("/SKServer/javax.faces.resource/rating/rating.png.xhtml?ln=primefaces") no-repeat 0px 0px; width: 16px; height: 15px; display: block;
+	background: url("") no-repeat 0px 0px; width: 16px; height: 15px; display: block;
 }
 .ui-rating-star a {
 	background-position: 0px -32px;
@@ -2039,7 +2039,7 @@ div.ui-button {
 	padding: 0.4em 1em;
 }
 .ui-tree-horizontal.ui-tree .ui-treenode {
-	background: url("/SKServer/javax.faces.resource/tree/images/line.gif.xhtml?ln=primefaces") repeat-x center; padding: 5px 40px;
+	background: url("") repeat-x center; padding: 5px 40px;
 }
 .ui-tree-horizontal.ui-tree .ui-treenode-leaf.ui-treenode {
 	padding-right: 0px;
@@ -2057,7 +2057,7 @@ div.ui-button {
 	width: 1px; height: 100%;
 }
 .ui-tree-horizontal.ui-tree .ui-treenode-connector-line {
-	background: url("/SKServer/javax.faces.resource/tree/images/line.gif.xhtml?ln=primefaces") repeat-y 0px 0px; width: 1px;
+	background: url("") repeat-y 0px 0px; width: 1px;
 }
 .ui-tree-horizontal.ui-tree table {
 	height: 0px;
@@ -2141,7 +2141,7 @@ div.ui-button {
 	table-layout: fixed;
 }
 .ui-treetable .ui-column-resizer {
-	margin: -4px -10px -4px 0px; padding: 0px; width: 8px; height: 20px; float: right; cursor: col-resize; background-image: url("/SKServer/javax.faces.resource/spacer/dot_clear.gif.xhtml?ln=primefaces");
+	margin: -4px -10px -4px 0px; padding: 0px; width: 8px; height: 20px; float: right; cursor: col-resize; background-image: url("");
 }
 .ui-treetable .ui-column-resizer-helper {
 	width: 1px; display: none; position: absolute; z-index: 10;
