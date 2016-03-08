@@ -59,14 +59,14 @@ public class FpController {
 	public Map<String, String> SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
 		Map<String, String> map = new HashMap<>();
 		
-		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("utf-8")) ){
+		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes()) ){
 			logger.error("xml不符合规则");
 			map.put("returnCode", "4000");
 			map.put("returnMsg", "xml不符合规则");
 			return map;
 		}
 		
-		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
+		Business business = JAXBUtil.unmarshallObject(xml.getBytes());
 		
 		OrderDetail orderDetail = business.getOrderDetail();
 		

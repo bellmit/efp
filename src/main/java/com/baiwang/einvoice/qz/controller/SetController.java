@@ -1,7 +1,5 @@
 package com.baiwang.einvoice.qz.controller;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;

@@ -50,7 +50,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	  	 <label for="kpdq" class="col-sm-3 control-label">开票地区：</label>
 	      <div class="col-sm-3">
 			<select id="kpdq" name="kpdq">
-			<option value="">-请选择-</option>
+			<option value="-1" <c:if test="${param.kpdq == -1 }">selected="selected"</c:if>>-请选择-</option>
 			<option value="0"
 				<c:if test="${param.kpdq == 0 }">selected="selected"</c:if>>北京</option>
 			<option value="1"

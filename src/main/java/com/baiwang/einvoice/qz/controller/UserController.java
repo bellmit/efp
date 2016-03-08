@@ -14,9 +14,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.service.IUserService;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 @Controller
 @RequestMapping("")
@@ -105,5 +108,54 @@ public class UserController {
 		result.put("status", "success");
 		result.put("msg", "密码修改成功！");
 		return result;
+	}
+	
+	@RequestMapping("/user/list")
+	@ResponseBody
+	public ModelAndView list(Page page , HttpServletRequest request){
+		
+		HashMap<String, String> param = new HashMap<>();
+		
+		String currentPage = request.getParameter("currentPage");
+		if (!(null == currentPage || "".equals(currentPage))) {
+			page.setPageIndex(Integer.parseInt(currentPage));
+		}
+		//List<Map<String, String>> kpxxList = fpService.getPlainList(param);
+		PageList<HashMap<String, Object>> userList = (PageList<HashMap<String, Object>>) service.listUser(param, page.getPageIndex(), page.getPageSize());
+		page.setPageSize(userList.getPaginator().getLimit()); 
+		page.setTotalCounts(userList.getPaginator().getTotalCount());
+		page.setTotalPages(userList.getPaginator().getTotalPages());
+		request.setAttribute("page", page);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/listUser");
+		mav.addObject("param", param);
+		mav.addObject("userList", userList);
+		return mav;
+	}
+	@RequestMapping("/user/update")
+	public String updateUser(HttpServletRequest request){
+		String userId = request.getParameter("id");
+		if(StringUtils.isEmpty(userId)){
+			return null;
+		}
+		int id = 0;
+		try {
+			id = Integer.parseInt(userId);
+			User user=service.selectById(id);
+			request.setAttribute("user", user);
+		} catch (NumberFormatException e) {
+			
+			e.printStackTrace();
+			
+		}
+		return "/user/editUser";
+	}
+	
+	@RequestMapping("/user/save")
+	public String saveUser(User user){
+		service.updateById(user);
+		
+		return "redirect:/user/list";
 	}
 }

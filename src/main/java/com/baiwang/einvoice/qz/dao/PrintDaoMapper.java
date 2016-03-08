@@ -17,4 +17,6 @@ public interface PrintDaoMapper {
 
 	int savePrintResult(@Param("fpqqlsh")String fpqqlsh, @Param("fpzt")String fpzt);
 
+	List<Map<String, String>> getPrintsFphm(@Param("beginfphm")String beginfphm, @Param("endfphm")String endfphm);
+
 }
