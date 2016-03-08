@@ -10,10 +10,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>普通待开发票</title>
-<OBJECT ID=sk
-CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F" 
-codebase="NISEC_SKSCX.ocx#version=1,0,0,1">
-</OBJECT>
+<OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1" style="display: none;"> </OBJECT>
 <link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
 <script type="text/javascript" src="<%=basePath%>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/jquery/jquery-1.11.1.js"></script>
@@ -29,14 +27,14 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	<form id="searchForm" action="<%=basePath%>/fpkj/plain" method="post" class="form-horizontal" role="form">
 	<div class="form-inline form-group">
 		<div class="form-group col-sm-6">
-	      <label for="beginDate" class="col-sm-3 control-label">开始日期：</label>
+	      <label for="beginDate" class="col-sm-3 control-label">申请开票日期起：</label>
 	      <div class="col-sm-3">
-	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始时间" value="${param.beginDate }"
+	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始日期" value="${param.beginDate }"
 	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
 	      </div>
 	      </div>
 	      <div class="form-group col-sm-6">
-	       <label for="beginDate" class="col-sm-3 control-label">结束日期：</label>
+	       <label for="beginDate" class="col-sm-3 control-label">申请开票日期止：</label>
 	      <div class="col-sm-3">
 	         <input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value="${param.endDate }"
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
@@ -55,6 +53,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	      <div class="col-sm-offset-1 col-sm-5">
 			<input	type="submit" value="查询"/>
 			<input id="kp"	type="button" value="多张开票" onclick="multi_kjfp()"/>
+			<input type="button" value="参数设置" onclick="SetParameter();" />
 	      </div>
 	   </div>
 	</div>
@@ -93,8 +92,8 @@ th,td{width: 100px; height: 35px;text-align:center;}
 						<c:if test="${fp.kpdq == 1 }">上海</c:if>
 					</td>
 					<td>
-						<c:if test="${fp.fplx == '004' }">增值税普通发票</c:if>
-						<c:if test="${fp.fplx == '007' }">增值税专用发票</c:if>
+						<c:if test="${fp.fplx == '007' }">增值税普通发票</c:if>
+						<c:if test="${fp.fplx == '004' }">增值税专用发票</c:if>
 						<c:if test="${fp.fplx == '026' }">增值税电子发票</c:if>
 					</td>
 					<td><c:out value="${fp.gmfmc}" /></td>
@@ -102,7 +101,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 					<td><c:out value="${fp.hjje}" /></td>
 					<td><c:out value="${fp.hjse}" /></td>
 					<td><c:out value="${fp.jshj}" /></td>
-					<td><a href="javascript:void(0)" onclick="kjfp(${fp.fpqqlsh});">开票</a> </td>
+					<td><a href="javascript:void(0)" onclick="kjfp('${fp.fpqqlsh}');">开票</a> </td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -110,7 +109,38 @@ th,td{width: 100px; height: 35px;text-align:center;}
 </body>
 <!-- 发票开具 -->
 <script type="text/javascript">
-	function kjfp(fpqqlsh){
+	
+function SetParameter() {
+	//01设置初始化参数
+	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>192.168.6.14</servletip>\r\n<servletport>1008</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>";		
+	try {
+		ret = sk.Operate(sInputInfo);
+		/* var pos=ret.indexOf("<returncode>"); */
+		var returncode = getTotalMidValue(ret, "<returncode>","</returncode>");
+		var returnmsg = getTotalMidValue(ret, "<returnmsg>","</returnmsg>");	
+		if(returncode==0&&returnmsg=="成功"){
+			alert("参数设置成功！");	
+		}else{
+			alert("参数设置失败，失败原因："+returnmsg);
+		}
+	} catch (e) {
+		alert(e.message + ",errno:" + e.number);
+	}
+}
+
+//获取指定的字符串
+function getTotalMidValue(source, priStr, suxStr) {
+	if (source == null)
+		return null
+	var iFirst = source.indexOf(priStr);		
+	var iLast = source.lastIndexOf(suxStr);		
+	if (iFirst < 0 || iLast < 0)
+		return null;	
+	var beginIndex = iFirst + priStr.length;	
+	return source.substring(beginIndex, iLast);
+}
+
+function kjfp(fpqqlsh){
 		if(!confirm("确定要开具发票吗？")){
 			return;
 		}
@@ -118,17 +148,31 @@ th,td{width: 100px; height: 35px;text-align:center;}
  	        type:"POST",
  	        url:"<%=basePath%>/fpkj/kp",
 			data:{"ph":fpqqlsh},
-		dataType:'json', 
-		success : function(data) {
-			alert(data.status);
+		    dataType:'json', 
+		    success : function(data) {
 			alert(data.xml);
-			try{
-				ret = sk.Operate(data.xml);
-				alert(ret);
-		    }
-			catch(e){
+			try {
+				invoiceIssueRet = sk.Operate(data.xml);
+				var invoiceIssueReturncode = getTotalMidValue(invoiceIssueRet, "<returncode>","</returncode>");
+				var invoiceIssueRetReturnmsg = getTotalMidValue(invoiceIssueRet, "<returnmsg>","</returnmsg>");	
+				if(invoiceIssueReturncode==0&&invoiceIssueRetReturnmsg=="成功"){
+					alert(invoiceIssueRet);	
+					$.ajax({
+				 	    type:"POST",
+				 	    url:"<%=basePath%>/fpkj/callback",
+						data:{"fpqqlsh":fpqqlsh,"xml":invoiceIssueRet},
+						dataType:'json', 
+						success : function(data) {
+							alert(data);
+							window.location.href = "<%=basePath%>/fpkj/plain";
+						}
+					});
+				}else{
+					alert("发票领购信息核对失败，失败原因："+invoiceIssueRetReturnmsg);
+				}
+			} catch (e) {
 				alert(e.message + ",errno:" + e.number);
-		    }	
+			} 
 		}
 	});
 	}
@@ -161,13 +205,30 @@ th,td{width: 100px; height: 35px;text-align:center;}
 			var xml = data.xml;
 			for(var i=0;i<xml.length;i++){
 				alert(xml[i]);
-				try{
-					ret = sk.Operate(xml[i]);
-					alert(ret);
-			    }
-				catch(e){
+				try {
+					invoiceIssueRet = sk.Operate(xml[i]);
+					/* var pos=ret.indexOf("<returncode>"); */
+					var invoiceIssueReturncode = getTotalMidValue(invoiceIssueRet, "<returncode>","</returncode>");
+					var invoiceIssueRetReturnmsg = getTotalMidValue(invoiceIssueRet, "<returnmsg>","</returnmsg>");	
+					var fpqqlsh = getTotalMidValue(invoiceIssueRet, "<fpqqlsh>","</fpqqlsh>");
+					if(invoiceIssueReturncode==0&&invoiceIssueRetReturnmsg=="成功"){
+						alert(invoiceIssueRet);	
+						$.ajax({
+					 	    type:"POST",
+					 	    url:"<%=basePath%>/fpkj/callback",
+							data:{"fpqqlsh":fpqqlsh,"xml":invoiceIssueRet},
+							dataType:'json', 
+							success : function(data) {
+								alert(data);
+								window.location.href = "<%=basePath%>/fpkj/plain";
+							}
+						});
+					}else{
+						alert("发票领购信息核对失败，失败原因："+invoiceIssueRetReturnmsg);
+					}
+				} catch (e) {
 					alert(e.message + ",errno:" + e.number);
-			    }	
+				}
 			}
 		}
 	});

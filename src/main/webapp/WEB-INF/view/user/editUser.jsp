@@ -43,6 +43,13 @@
 									</div>
 									<div class="hr-line-dashed"></div>
 									<div class="form-group">
+										<label for="xsfnsrsbh" class="col-sm-2 control-label">纳税人识别号<span class="red-fonts">*</span></label>
+										<div class="col-sm-8">
+											<input id="xsfnsrsbh" name="xsfnsrsbh" placeholder="纳税人识别号" type="text" class="form-control" value="${user.xsfnsrsbh}">
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+									<div class="form-group">
 										<label class="col-sm-2 control-label">是否启用</label>
 										<div class="col-sm-8">
 											<div class="radio i-checks">

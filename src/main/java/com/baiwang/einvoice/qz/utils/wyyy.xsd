@@ -5,7 +5,7 @@
         <xs:element name="CUSTOMDATA">
           <xs:complexType>
             <xs:choice maxOccurs="unbounded" minOccurs="0">
-              <xs:element type="xs:short" name="ZDDH"/>
+              <xs:element type="xs:string" name="ZDDH"/>
               <xs:element type="xs:byte" name="FDDH"/>
               <xs:element type="xs:string" name="SQR"/>
               <xs:element type="xs:string" name="HYM"/>
@@ -33,7 +33,7 @@
                   <xs:sequence>
                     <xs:element type="xs:byte" name="FPLX"/>
                     <xs:element type="xs:byte" name="KPLX"/>
-                    <xs:element type="xs:long" name="XSF_NSRSBH"/>
+                    <xs:element type="xs:string" name="XSF_NSRSBH"/>
                     <xs:element type="xs:string" name="XSF_MC"/>
                     <xs:element type="xs:string" name="XSF_DZ"/>
                     <xs:element type="xs:long" name="XSF_DH"/>

@@ -1,8 +1,8 @@
 // JavaScript Document
 $(function(){
 	//根据总页数判断，如果小于5页，则显示所有页数，如果大于5页，则显示5页。根据当前点击的页数生成
-	
-	var pageCount = 15;//模拟后台总页数
+	//var pageCount = 15;//模拟后台总页数
+	pageCount = pageCount;//模拟后台总页数
 	//生成分页按钮
 	if(pageCount>5){
 		page_icon(1,5,0);
@@ -12,6 +12,9 @@ $(function(){
 	
 	//点击分页按钮触发
 	$("#pageGro").delegate("li","click",function(){
+		
+		$('#requestPage').val($(this).html());//--------页面加
+		chaxun();//--------页面加
 		if(pageCount > 5){
 			var pageNum = parseInt($(this).html());//获取当前页数
 			pageGroup(pageNum,pageCount);
@@ -23,12 +26,19 @@ $(function(){
 	
 	//点击上一页触发
 	$("#pageGro .pageUp").click(function(){
+		
 		if(pageCount > 5){
 			var pageNum = parseInt($("#pageGro li.on").html());//获取当前页
+			if(pageNum > 1){
+				$('#requestPage').val(pageNum-1);//-----------页面加
+				chaxun();//-----------页面加
+			}
 			pageUp(pageNum,pageCount);
 		}else{
 			var index = $("#pageGro ul li.on").index();//获取当前页
 			if(index > 0){
+				$('#requestPage').val(index);//-----------页面加
+				chaxun();//-----------页面加
 				$("#pageGro li").removeClass("on");//清除所有选中
 				$("#pageGro ul li").eq(index-1).addClass("on");//选中上一页
 			}
@@ -39,10 +49,16 @@ $(function(){
 	$("#pageGro .pageDown").click(function(){
 		if(pageCount > 5){
 			var pageNum = parseInt($("#pageGro li.on").html());//获取当前页
+			if(pageNum < pageCount){//-----------页面加
+				$('#requestPage').val(pageNum+1);//-----------页面加
+				chaxun();//-----------页面加
+			}//-----------页面加
 			pageDown(pageNum,pageCount);
 		}else{
 			var index = $("#pageGro ul li.on").index();//获取当前页
 			if(index+1 < pageCount){
+				$('#requestPage').val(index+2);//-----------页面加
+				chaxun();//-----------页面加
 				$("#pageGro li").removeClass("on");//清除所有选中
 				$("#pageGro ul li").eq(index+1).addClass("on");//选中上一页
 			}

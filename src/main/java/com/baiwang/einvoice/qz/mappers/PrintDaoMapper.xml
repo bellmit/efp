@@ -39,6 +39,26 @@
     <if test="kpdq != null and kpdq !=''" >
      and kpdq = #{kpdq}
     </if> 
+  	LIMIT #{requestPage},#{pageSize}
+  </select>
+  
+  <select id="queryCount" parameterType="map" resultType="int">
+  	select count(a.id) count
+   	from kpxx a  
+	  LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
+	  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
+	   <if test="beginDate != null and beginDate!=''" >
+	     <![CDATA[and b.ddsj >= #{beginDate} ]]>
+	    </if>
+	    <if test="endDate != null and endDate !=''" >
+	     <![CDATA[and b.ddsj <= #{endDate} ]]>
+	    </if>
+	    <if test="zddh != null and zddh !=''" >
+	     and b.zddh like CONCAT('%',#{zddh },'%' )
+	    </if>
+	    <if test="kpdq != null and kpdq !=''" >
+	     and kpdq = #{kpdq}
+	    </if> 
   
   </select>
   
