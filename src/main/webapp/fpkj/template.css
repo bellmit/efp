@@ -1,0 +1,144 @@
+body {
+	margin: 0px; padding: 0px; background-color: rgb(170, 181, 193);
+}
+.header {
+	background: url("../images/banner2.gif") repeat-x ; height: 226px;
+}
+.banner {
+	background: url("../images/banner1.gif") ; margin: 0px auto; width: 1000px; height: 128px;
+}
+.loginbarfront {
+	height: 16px; padding-top: 12px; float: left; display: inline-block;
+}
+.loginbarback {
+	background: url("../images/loginbar-bkg-14x28-02.png") no-repeat; width: 14px; height: 28px; display: inline-block;
+}
+.loginbarcenter {
+	padding: 12px 0px 0px; height: 16px; float: right; display: inline-block;
+}
+.loginbarcenter a {
+	color: rgb(255, 255, 255);
+}
+.loginbar {
+	margin: 99px 0px 0px 50px; width: 90%; color: rgb(255, 255, 255); font-family: "����","Times New Roman"; font-size: 12px; float: left;
+}
+.logo {
+	float: left;
+}
+.sidebar {
+	list-style: none; margin: 0px; padding: 0px 15px;
+}
+.main {
+	margin: -98px auto; width: 1000px;
+}
+.left {
+	width: 225px; padding-left: 20px; float: left;
+}
+.left_top {
+	background: url("../images/ui-left-top-225x20.png") no-repeat; width: 225px; height: 20px;
+}
+.left_bottom {
+	background: url("../images/ui-left-bkg-225x7.png") repeat-y; width: 225px; min-height: 700px;
+}
+.right {
+	width: 735px; padding-right: 20px; float: right;
+}
+.content {
+	background: url("../images/ui-content-36x36.png"); width: 734px; clear: both; min-height: 700px;
+}
+.right_top {
+	width: 735px; float: right;
+}
+.footer {
+	background: rgb(75, 130, 158); margin: 0px auto; width: 960px; height: 20px; text-align: center; color: rgb(20, 15, 8); padding-top: 5px; clear: both; font-size: 12px;
+}
+.sidebar .offclass:hover {
+	background: url("../images/ui-button-197x32-hover.png") no-repeat;
+}
+.offclass {
+	background: url("../images/ui-button-197x32-normal.png") no-repeat; padding: 10px 0px 10px 35px; width: 162px; color: rgb(144, 143, 143); font-family: "����","Times New Roman"; font-size: 12px; font-weight: bold; text-decoration: none; display: block;
+}
+.onclass {
+	background: url("../images/ui-button-197x32-focus.png") no-repeat; padding: 10px 0px 10px 35px; width: 162px; color: rgb(97, 148, 44); font-family: "����","Times New Roman"; font-size: 12px; font-weight: bold; text-decoration: none; display: block;
+}
+.right_top_left {
+	background: url("../images/ui-right-top-53x20.png") no-repeat; width: 53px; height: 20px; float: right;
+}
+.right_top_right {
+	background: url("../images/ui-top-right-20x20.png") repeat-x; width: 682px; height: 20px; float: right;
+}
+.left-menu {
+	background: url("../images/ui-left-menu-30x17-white.png") repeat-x 50% 100% rgb(234, 234, 234); border-width: 0px 0px medium; border-style: solid solid none; border-color: rgb(240, 240, 240) rgb(215, 216, 217) currentColor; padding: 0.3em 3px 1em 6px; width: 199px; margin-left: 10px; marg1in-top: -50px;
+}
+.left-menu-pk {
+	background: url("../images/ui-left-menu-30x17.png") repeat-x 50% 100% rgb(172, 203, 219); padding: 0.3em 3px 1em 6px; width: 199px; margin-left: 10px; border-bottom-color: currentColor; border-bottom-width: medium; border-bottom-style: none; marg1in-top: -50px;
+}
+.left-submenu {
+	background: url("../images/ui-sidebar-submenu-196x35.gif") no-repeat; padding: 5px 10px; border: currentColor; width: 176px !important; color: rgb(12, 103, 154); font-size: 14px; font-weight: normal;
+}
+.left-submenu .ui-state-active {
+	background: url("../images/ui-sidebar-submenu-196x35.gif") no-repeat; padding: 5px 10px; border: currentColor; width: 176px !important; height: 25px; font-size: 14px; font-weight: normal;
+}
+.left-submenu .ui-state-default {
+	background: url("../images/ui-sidebar-submenu-196x35.gif") no-repeat; padding: 5px 10px; border: currentColor; width: 176px !important; height: 25px; font-size: 14px;
+}
+.left-submenu .ui-state-default a {
+	color: rgb(12, 103, 154); font-weight: bold;
+}
+.left-submenu .ui-helper-hidden {
+	padding: 0.2em 0px; border: 0px currentColor; width: 196px;
+}
+.left-menuitem {
+	background: url("../images/ui-sidebar-menuitem-185x35-normal.gif") no-repeat; padding: 9px 10px !important; border: currentColor; width: 165px !important; height: 17px; color: rgb(255, 255, 255); margin-left: 5px;
+}
+.left-menuitem:hover {
+	background: url("../images/ui-sidebar-menuitem-185x35-active.gif") no-repeat; color: rgb(255, 255, 255);
+}
+.sidetop-left {
+	background: url("../images/ui-sidetop-10x80.gif") no-repeat 0px -2px blue; width: 10px; height: 78px; margin-bottom: -9px; margin-left: -9px; float: left;
+}
+.sidetop-contentdiv {
+	background: rgb(172, 203, 219); padding: 7px 0px 13px 15px; height: 49px; color: rgb(255, 255, 255); line-height: 16px; font-size: 12px; float: left;
+}
+.sidetop-right {
+	background: url("../images/ui-sidetop-radius-35x35.gif") no-repeat rgb(172, 203, 219); width: 35px; height: 69px; text-align: center; float: left;
+}
+.left-menu-pk .ui-helper-hidden {
+	background: rgb(234, 234, 234);
+}
+.contentdiv-white {
+	background: url("../images/ui-left-menu-30x17-blue.png") repeat-x 50% 100% rgb(234, 234, 234); padding: 0px 5px 0px 11px; width: 167px; height: 60px; color: rgb(12, 103, 154); line-height: 20px; font-size: 14px; font-weight: bold; table-layout: fixed;
+}
+.welcomeDiv {
+	background: url("../images/bmzh_734x700_01.jpg") no-repeat; width: 734px; height: 700px;
+}
+.left .ui-widget-header {
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+.content .ui-state-default {
+	box-shadow: none;
+}
+.content .ui-state-active {
+	box-shadow: none;
+}
+.ui-state-active a {
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+.ui-state-active a:link {
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+.ui-state-active a:visited {
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+.ui-state-default a {
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+.ui-state-default a:link {
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+.ui-state-default a:visited {
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+.sidetop-right .ui-state-default {
+	box-shadow: none;
+}

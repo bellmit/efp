@@ -46,8 +46,8 @@
 <body>
 <h4>查询条件</h4>
 <div style="white-space: nowrap;">
-<form action="<%=basePath %>/report/queryFPlist" method="post">
-	
+<form id="searchForm" action="<%=basePath %>/report/queryFPlist" method="post">
+	<input id="currentPage" name="currentPage" type="hidden"/>
 	申请起止日期：
 	<input id="beginDate" name="beginDate" class="Wdate" 
 	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
@@ -144,8 +144,6 @@
 		</tr>
 	</c:forEach>
 </table>
-<input id="currentPage" name="currentPage" type="hidden"/>
-
 <input type="hidden" name="dateS4save" value="${dateS4save}">
 <input type="hidden" name="dateE4save" value="${dateE4save}">
 <input type="hidden" name="kpdq4save" value="${kpdq4save}">
@@ -176,8 +174,12 @@
      });
      
      function gotoPage(page) {
-         window.location = "<%=basePath%>/report/queryFPlist?pageIndex=" + page;            
+    	 $("#currentPage").val(page);
+         $("#searchForm").submit(); 
      }
+//      function gotoPage(page) {
+<%--          window.location = "<%=basePath%>/report/queryFPlist?pageIndex=" + page;             --%>
+//      }
 
 </script> 
 </html>
