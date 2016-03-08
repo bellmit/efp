@@ -46,7 +46,7 @@ public class ReportController implements ServletConfigAware {
 		return "fp/queryDetail";
 	}
 	
-	@RequestMapping(value="query")
+	@RequestMapping(value="queryFPlist")
 	public String queryReport(HttpServletRequest request,Page page){
 		//获取查询条件
 		String ddh4q = request.getParameter("ddh4q");

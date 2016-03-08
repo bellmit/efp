@@ -46,7 +46,7 @@
 <body>
 <h4>查询条件</h4>
 <div style="white-space: nowrap;">
-<form action="<%=basePath %>/report/query" method="post">
+<form action="<%=basePath %>/report/queryFPlist" method="post">
 	
 	申请起止日期：
 	<input id="beginDate" name="beginDate" class="Wdate" 
@@ -176,7 +176,7 @@
      });
      
      function gotoPage(page) {
-         window.location = "<%=basePath%>/report/query?pageIndex=" + page;            
+         window.location = "<%=basePath%>/report/queryFPlist?pageIndex=" + page;            
      }
 
 </script> 
