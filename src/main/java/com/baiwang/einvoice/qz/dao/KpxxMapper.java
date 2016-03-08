@@ -33,4 +33,6 @@ public interface KpxxMapper {
     
     List<Map<String, String>> getSpecialList(HashMap<String, String> param);
     
+    void saveCallBackInfo(Kpxx kpxx);
+    
 }

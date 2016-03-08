@@ -240,4 +240,17 @@ public class FpServiceImpl implements FpService {
 
 	}
 
+	/**
+	  * <p>Title: updateCallBackInfo</p>
+	  * <p>Description: </p>
+	  * @param kpxx
+	  * @see com.baiwang.einvoice.qz.service.FpService#updateCallBackInfo(com.baiwang.einvoice.qz.beans.Kpxx)
+	  */
+	@Override
+	public void saveCallBackInfo(Kpxx kpxx) {
+		
+		// TODO Auto-generated method stub
+		dao.saveCallBackInfo(kpxx);
+	}
+
 }

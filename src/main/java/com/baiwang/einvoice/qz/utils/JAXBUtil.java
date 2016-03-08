@@ -59,9 +59,9 @@ public class JAXBUtil{
 		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
 				"<business id=\"FPKJ\">\n" + 
 				"	<CUSTOMDATA>\n" + 
-				"		<ZDDH>10000</ZDDH>\n" + 
+				"		<ZDDH>40001</ZDDH>\n" + 
 				"		<FDDH>001</FDDH>\n" + 
-				"		<SQR>张三</SQR>\n" + 
+				"		<SQR>张三4</SQR>\n" + 
 				"		<HYM>偶尔上会网</HYM>\n" + 
 				"		<HYID>861124106</HYID>\n" + 
 				"		<DDSJ>2016年3月5日</DDSJ>\n" + 

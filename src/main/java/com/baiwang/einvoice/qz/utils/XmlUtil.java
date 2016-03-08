@@ -36,9 +36,9 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<body yylxdm=\"1\">");
 		sb.append("\r\n");
-		sb.append("<kpzdbs>"+""+"</kpzdbs>");//
+		sb.append("<kpzdbs>0601</kpzdbs>");//
 		sb.append("\r\n");
-		sb.append("<fplxdm>"+""+"</fplxdm>");//
+		sb.append("<fplxdm>"+kpxx.getFplx()+"</fplxdm>");//
 		sb.append("\r\n");
 		sb.append("<fpqqlsh>"+kpxx.getFpqqlsh()+"</fpqqlsh>");
 		sb.append("\r\n");
@@ -74,7 +74,7 @@ public class XmlUtil {
 				Fpmx temp = fpmxList.get(i);
 				sb.append("<group xh=\""+(i+1)+"\">");
 				sb.append("\r\n");
-				sb.append("<fphxz>"+temp.getFphxz()+"</fphxz>");
+				sb.append("<fphxz>"+(temp.getFphxz()==true?1:0)+"</fphxz>");
 				sb.append("\r\n");
 				sb.append("<spmc>"+temp.getXmmc()+"</spmc>");
 				sb.append("\r\n");
@@ -94,7 +94,7 @@ public class XmlUtil {
 				sb.append("\r\n");
 				sb.append("<se>"+ temp.getSe()+"</se>");
 				sb.append("\r\n");
-				sb.append("<hsbz>"+temp.getHsbz()+"</hsbz>");
+				sb.append("<hsbz>"+(temp.getHsbz()==true?1:0)+"</hsbz>");
 				sb.append("\r\n");
 				sb.append("</group>");
 				sb.append("\r\n");
@@ -142,9 +142,9 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<body yylxdm=\"1\">");
 		sb.append("\r\n");
-		sb.append("<kpzdbs>"+""+"</kpzdbs>");//
+		sb.append("<kpzdbs>"+"0601"+"</kpzdbs>");//
 		sb.append("\r\n");
-		sb.append("<fplxdm>"+""+"</fplxdm>");//
+		sb.append("<fplxdm>"+kpxx.getFplx()+"</fplxdm>");//
 		sb.append("\r\n");
 		sb.append("<fpqqlsh>"+kpxx.getFpqqlsh()+"</fpqqlsh>");
 		sb.append("\r\n");
@@ -180,7 +180,7 @@ public class XmlUtil {
 				Fpmx temp = fpmxList.get(i);
 				sb.append("<group xh=\""+(i+1)+"\">");
 				sb.append("\r\n");
-				sb.append("<fphxz>"+temp.getFphxz()+"</fphxz>");
+				sb.append("<fphxz>"+(temp.getFphxz()==true?1:0)+"</fphxz>");
 				sb.append("\r\n");
 				sb.append("<spmc>"+temp.getXmmc()+"</spmc>");
 				sb.append("\r\n");
@@ -200,7 +200,7 @@ public class XmlUtil {
 				sb.append("\r\n");
 				sb.append("<se>"+ temp.getSe()+"</se>");
 				sb.append("\r\n");
-				sb.append("<hsbz>"+temp.getHsbz()+"</hsbz>");
+				sb.append("<hsbz>"+(temp.getHsbz()==true?1:0)+"</hsbz>");
 				sb.append("\r\n");
 				sb.append("</group>");
 				sb.append("\r\n");
@@ -302,7 +302,7 @@ public class XmlUtil {
 				Fpmx temp = fpmxList.get(i);
 				sb.append("<COMMON_FPKJ_XMXX>");
 				sb.append("\r\n");
-				sb.append("<FPHXZ>"+temp.getFphxz()+"</FPHXZ>");
+				sb.append("<FPHXZ>"+(temp.getFphxz()==true?1:0)+"</FPHXZ>");
 				sb.append("\r\n");
 				sb.append("<XMMC>"+temp.getXmmc()+"</XMMC>");
 				sb.append("\r\n");
