@@ -2,22 +2,22 @@
 	background: rgb(159, 209, 221); width: 732px; height: 4px;
 }
 .main .content .ui-widget {
-	font-family: "ËÎÌå",Arial, Helvetica, sans-serif;
+	font-family: "ï¿½ï¿½ï¿½ï¿½",Arial, Helvetica, sans-serif;
 }
 .main .left .ui-widget {
-	font-family: "ËÎÌå",Arial, Helvetica, sans-serif;
+	font-family: "ï¿½ï¿½ï¿½ï¿½",Arial, Helvetica, sans-serif;
 }
 .ui-tabmenu-nav {
-	background: url("../images/ui-content-36x36.png"); border: 0px currentColor; padding-left: 20px !important;
+	background: url(""); border: 0px currentColor; padding-left: 20px !important;
 }
 .ui-tabmenu-nav .ui-tabmenuitem {
-	background: url("../images/ui-menuitem-152x35-close.png") no-repeat; padding: 8px 0px !important; border: currentColor; width: 152px; height: 19px; text-align: center; margin-left: -6px !important;
+	background: url("") no-repeat; padding: 8px 0px !important; border: currentColor; width: 152px; height: 19px; text-align: center; margin-left: -6px !important;
 }
 .ui-tabmenu-nav .ui-state-active {
-	background: url("../images/ui-menuitem-152x35-open.png") no-repeat; border: currentColor; width: 152px; height: 19px;
+	background: url("") no-repeat; border: currentColor; width: 152px; height: 19px;
 }
 .ui-fwqxx-panel {
-	background: url("../images/ui-left-menu-30x17-white.png") repeat-x 50% 100% rgb(234, 234, 234); border: currentColor; width: 726px;
+	background: url("") repeat-x 50% 100% rgb(234, 234, 234); border: currentColor; width: 726px;
 }
 .ui-fwqxx-panel .ui-widget-content {
 	padding-left: 8px;
@@ -38,7 +38,7 @@
 	width: 300px; height: 14px;
 }
 .ui-form-border .ui-button-red {
-	background: url("../images/ui-button-red-112x26-normal.png") no-repeat 2px 0px; border: currentColor; width: 116px; height: 26px; color: rgb(12, 103, 154); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+	background: url("") no-repeat 2px 0px; border: currentColor; width: 116px; height: 26px; color: rgb(12, 103, 154); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
 }
 .disabletext {
 	background: rgb(241, 241, 241) !important; border: 1px solid rgb(211, 211, 211) !important;

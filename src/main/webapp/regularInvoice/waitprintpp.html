@@ -23,6 +23,7 @@ th,td{width: 120px; height: 35px;text-align:center;}
 </style>
 
 <script type="text/javascript">
+var pageCount = 1;
 var skconf = null;
 var printconf = null;
 function chaxun(){
@@ -34,28 +35,34 @@ function chaxun(){
         async: false,
         success: function (data) {
         	//alert(JSON.stringify(data))
-        		
+        	pageCount = data.pageCount;
+        	var cc = $('#requestPage').val()-1;
+        	if(pageCount>5){
+        		page_icon(1,5,cc);
+        	}else{
+        		page_icon(1,pageCount,cc);
+        	}
         		$("#printBody").children().remove();
-        		if(data.length>0){
+        		if(data.list.length>0){
     				var tbo = '';
-        			for(var i=0;i<data.length;i++){
+        			for(var i=0;i<data.list.length;i++){
         				tbo = tbo + '<tr>'
-       						+'<td class="">'+data[i].zddh+'</td>'
-       						+'<td>'+data[i].hym+'</td>'
-       						+'<td>'+data[i].shr+'</td>'
-       						+'<td>'+data[i].sqsj+'</td>'
-       						+'<td>'+data[i].kpdq+'</td>'
-       						+'<td>'+data[i].fpzl+'</td>'
-       						+'<td>'+data[i].fptt+'</td>'
-       						+'<td>'+data[i].fpnr+'</td>'
-       						+'<td>'+data[i].hjje+'</td>'
-       						+'<td>'+data[i].hjse+'</td>'
-       						+'<td>'+data[i].jshj+'</td>'
-       						+'<td>'+data[i].kprq+'</td>'
-       						+'<td>'+data[i].fpdm+'</td>'
-       						+'<td>'+data[i].fphm+'</td>'
+       						+'<td class="">'+data.list[i].zddh+'</td>'
+       						+'<td>'+data.list[i].hym+'</td>'
+       						+'<td>'+data.list[i].shr+'</td>'
+       						+'<td>'+data.list[i].sqsj+'</td>'
+       						+'<td>'+data.list[i].kpdq+'</td>'
+       						+'<td>'+data.list[i].fpzl+'</td>'
+       						+'<td>'+data.list[i].fptt+'</td>'
+       						+'<td>'+data.list[i].fpnr+'</td>'
+       						+'<td>'+data.list[i].hjje+'</td>'
+       						+'<td>'+data.list[i].hjse+'</td>'
+       						+'<td>'+data.list[i].jshj+'</td>'
+       						+'<td>'+data.list[i].kprq+'</td>'
+       						+'<td>'+data.list[i].fpdm+'</td>'
+       						+'<td>'+data.list[i].fphm+'</td>'
        						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
-       						+'<td>'+'<a href="javascript:" onclick="dayin(' + data[i].fpqqlsh +',' + data[i].fpdm +',' + data[i].fphm+ ');">打印</a>' + '</td>'
+       						+'<td>'+'<a href="javascript:" onclick="dayin(' + data.list[i].fpqqlsh +',' + data.list[i].fpdm +',' + data.list[i].fphm+ ');">打印</a>' + '</td>'
        						
        						+'</tr>';
         			}
@@ -238,6 +245,8 @@ function getTotalMidValue(source, priStr, suxStr) {
 	      <div class="col-sm-6">
 	         <input type="text" class="form-control" id="zddh" name="zddh" placeholder="订单号">
 	         <input type="hidden" id='fplx' name='fplx' value='007'><!-- 发票类型 普票 -->
+	         <input type="hidden" id='requestPage' name='requestPage' value='1'><!-- 请求页数 -->
+	         <input type="hidden" id='pageSize' name='pageSize' value='2'><!-- 每页行数 -->
 	      </div>
 	   </div>
 	   <div class="form-group col-sm-5">

@@ -1,25 +1,25 @@
-//Êä³ö¿Ø¼þ
+//ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½
 document.write("<object id=\"LODOP_OB\" "
 		+ "classid=\"clsid:2105C259-1E0C-4534-8141-A753534CB4CA\" "
 		+ "width=\"0\" height=\"0\">"
 		+ "<embed id=\"LODOP_EM\" type=\"application/x-print-lodop\" "
 		+ "width=0 height=0></embed></object>");
-//´òÓ¡¿Ø¼þ
+//ï¿½ï¿½Ó¡ï¿½Ø¼ï¿½
 var	LODOP;
-//¿Í»§»úÅäÖÃÎÄ¼þÂ·¾¶
+//ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½
 var cfg_dir = "C:\\Program Files\\MountTaiSoftware\\Lodop\\";
-//»ñÈ¡¿Ø¼þÊµÀý
+//ï¿½ï¿½È¡ï¿½Ø¼ï¿½Êµï¿½ï¿½
 if (navigator.appVersion.indexOf("MSIE")>=0){
 	LODOP=document.getElementById('LODOP_OB');
 }else{
 	LODOP=document.getElementById('LODOP_EM');
 }
 if (LODOP==null||typeof(LODOP.VERSION)=="undefined"||LODOP.VERSION!='6.1.9.8'){
-	location.href="../kphy/kjxz.xhtml";
+	location.href="";
 }else{
-	LODOP.SET_LICENSES("ZCSB¼¼Êõ´¦ÑÐ·¢ÖÐÐÄ","545C44BD459DBBAFB79F18A0F8160A12","","");
+	LODOP.SET_LICENSES("ZCSBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½","545C44BD459DBBAFB79F18A0F8160A12","","");
 }
-//ÏÞÖÆ½ð¶îÏîÊý×Ö
+//ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 function limit_money_input(a) {
 	var ja = $(a);
 	ja.bind("contextmenu", function() {
@@ -50,9 +50,9 @@ function addMoney(a,b){
 	LODOP.ADD_PRINT_TEXT(a-1,b,20,20,"Y");
 	LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
 	LODOP.ADD_PRINT_TEXT(a-9,b,20,20,"_");
-	LODOP.SET_PRINT_STYLEA(0,"FontName","¿¬Ìå");
+	LODOP.SET_PRINT_STYLEA(0,"FontName","ï¿½ï¿½ï¿½ï¿½");
 	LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
 	LODOP.ADD_PRINT_TEXT(a-7,b,20,20,"_");
-	LODOP.SET_PRINT_STYLEA(0,"FontName","¿¬Ìå");
+	LODOP.SET_PRINT_STYLEA(0,"FontName","ï¿½ï¿½ï¿½ï¿½");
 	LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
 }
