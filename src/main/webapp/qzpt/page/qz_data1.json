@@ -35,6 +35,13 @@
 				"url":"../../user/changePwd.jsp"
 			}
 		}
+		,{
+			"id":123,
+			"text":"用户列表",
+			"attributes":{
+				"url":"../../queryStatistics/goToUser.jsp"
+			}
+		}
 	]},{
 		"id":13,
 		"text":"增值税专项发票",
@@ -79,6 +86,17 @@
 			"text":"增值税普通发票打印(连打)",
 			"attributes":{
 				"url":"../../regularInvoice/waitprintpps.html"
+			}
+		}]
+	},{
+		"id":15,
+		"text":"发票开具",
+		"state":"closed",
+		"children":[{
+			"id":151,
+			"text":"电子发票开具",
+			"attributes":{
+				"url":"../../fpkj/fpkj.htm"
 			}
 		}]
 	}]
