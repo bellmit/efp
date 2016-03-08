@@ -29,9 +29,15 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	private PrintConfigMapper dydao;
 	
 	@Override
-	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx) {
+	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx, int requestPage, int pageSize) {
+		requestPage = (requestPage - 1) * pageSize;
+		return dao.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx, requestPage, pageSize);
+	}
+	
+	@Override
+	public int queryCount(String beginDate, String endDate, String kpdq, String zddh, String fplx) {
 		
-		return dao.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx);
+		return dao.queryCount(beginDate, endDate, kpdq, zddh, fplx);
 	}
 
 	@Override
@@ -73,7 +79,7 @@ public class PrintPpServiceImpl implements IPrintPpService {
 					}
 				}else{
 					_map.put("beginfphm", Integer.toString(_beginfphm));
-					_map.put("endfphm", Integer.toString(_endfphm));
+					_map.put("endfphm", Integer.toString(_beforefphm));
 					_map.put("beginDate", _beginDate);
 					_map.put("endDate", _endDate);
 					_list.add(_map);
@@ -82,6 +88,13 @@ public class PrintPpServiceImpl implements IPrintPpService {
 //					_endfphm = fphm;
 					_beginDate = list.get(i).get("kprq");
 //					_endDate = list.get(i).get("kprq");
+					if(i == (list.size() - 1)){//是否最后一个
+						_map.put("beginfphm", Integer.toString(_beginfphm));
+						_map.put("endfphm", Integer.toString(_beginfphm));
+						_map.put("beginDate", _beginDate);
+						_map.put("endDate", _beginDate);
+						_list.add(_map);
+					}
 				}
 				_beforefphm = fphm;
 				

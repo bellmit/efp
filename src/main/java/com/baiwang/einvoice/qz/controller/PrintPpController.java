@@ -1,5 +1,6 @@
 package com.baiwang.einvoice.qz.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,8 @@ public class PrintPpController {
 	//单打
 	@RequestMapping("printpp/printlist")
 	@ResponseBody
-	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx, HttpServletRequest request){
+	public Map<String, Object> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx,
+			int requestPage, int pageSize, HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
 		if(null != user){
 			logger.info("***用户名：" + user.getUserName() + "," + beginDate +","+endDate +"," +kpdq +","+ zddh +","+fplx);
@@ -38,17 +40,23 @@ public class PrintPpController {
 				
 			}*/
 		}
+		Map<String, Object> map = new HashMap<>();
 		
-		List<Map<String,String>> fapiaoVo = service.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx);
-		System.out.println(fapiaoVo.size());
+		List<Map<String,String>> list = service.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx, requestPage, pageSize);
+		int size = service.queryCount(beginDate, endDate, kpdq, zddh, fplx);
+		int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
 		
-		return fapiaoVo;
+		map.put("list", list);
+		map.put("pageCount", pageCount);
+		
+		return map;
 	}
 	
 	//连打
 	@RequestMapping("printpps/printlist")
 	@ResponseBody
-	public List<Map<String,String>> getPrintPpsList(String beginDate, String endDate, String beginfphm, String endfphm, String fplx, HttpServletRequest request){
+	public Map<String, Object> getPrintPpsList(String beginDate, String endDate, String beginfphm, String endfphm, String fplx,
+			int requestPage, int pageSize,HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
 		if(null != user){
 			logger.info("***用户名：" + user.getUserName() + "," + beginDate +","+endDate +"," +beginfphm +","+ endfphm );
@@ -56,11 +64,22 @@ public class PrintPpController {
 				
 			}*/
 		}
+		Map<String, Object> map = new HashMap<>();
 		
-		List<Map<String,String>> fapiaoVo = service.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx);
-		System.out.println(fapiaoVo.size());
+		List<Map<String,String>> list = service.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx);
+		int size = list.size();
 		
-		return fapiaoVo;
+		requestPage = (requestPage - 1) * pageSize;
+		List<Map<String,String>> _list = new ArrayList<>();
+		for(int i = 0; i < pageSize && requestPage + i < size; i++){
+			_list.add(list.get(requestPage + i));
+		}
+		
+		int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
+		map.put("list", _list);
+		map.put("pageCount", pageCount);
+		
+		return map;
 	}
 	@RequestMapping("printpps/showDetail")
 	@ResponseBody

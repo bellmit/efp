@@ -8,7 +8,11 @@ import org.apache.ibatis.annotations.Param;
 public interface PrintDaoMapper {
 
 	List<Map<String, String>> getPrintPpList(@Param("beginDate")String beginDate, 
-			@Param("endDate")String endDate, @Param("kpdq")String kpdq, @Param("zddh")String zddh, @Param("fplx")String fplx);
+			@Param("endDate")String endDate, @Param("kpdq")String kpdq, @Param("zddh")String zddh, 
+			@Param("fplx")String fplx, @Param("requestPage")int requestPage, @Param("pageSize")int pageSize);
+	
+	int queryCount(@Param("beginDate")String beginDate, @Param("endDate")String endDate, 
+			@Param("kpdq")String kpdq, @Param("zddh")String zddh, @Param("fplx")String fplx);
 
 	List<Map<String, String>> getPrintPpsList(@Param("beginDate")String beginDate, @Param("endDate")String endDate, 
 			@Param("beginfphm")String beginfphm, @Param("endfphm")String endfphm, @Param("fplx")String fplx);
@@ -18,5 +22,6 @@ public interface PrintDaoMapper {
 	int savePrintResult(@Param("fpqqlsh")String fpqqlsh, @Param("fpzt")String fpzt);
 
 	List<Map<String, String>> getPrintsFphm(@Param("beginfphm")String beginfphm, @Param("endfphm")String endfphm);
+
 
 }
