@@ -22,7 +22,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 </head>
 <body>
 	<hr>
-	<form action="<%=basePath%>/fpkj/special" method="post" class="form-horizontal" role="form">
+	<form id="searchForm" action="<%=basePath%>/fpkj/special" method="post" class="form-horizontal" role="form">
 		<div class="form-inline form-group">
 		<div class="form-group col-sm-6">
 	      <label for="beginDate" class="col-sm-3 control-label">开始日期：</label>
@@ -117,7 +117,9 @@ th,td{width: 100px; height: 35px;text-align:center;}
 </body>
 <script type="text/javascript">
 	function kjfp(fpqqlsh){
-		alert(fpqqlsh);
+		if(!confirm("确定要开具发票吗？")){
+			return;
+		}
 		$.ajax({
  	        type:"POST",
  	        url:"<%=basePath%>/fpkj/kp",
@@ -137,6 +139,9 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	}
 	
 	function multi_kjfp(){
+		if(!confirm("确定要开具发票吗？")){
+			return;
+		}
 		var fpList = new Array(); 
 		var chks = $('.chkbox_ex');
 	    for(i=0;i<chks.length;i++){
@@ -203,7 +208,8 @@ th,td{width: 100px; height: 35px;text-align:center;}
      });
      
      function gotoPage(page) {
-         window.location = "<%=basePath%>/fpkj/plain?pageIndex=" + page;            
+    	 $("#currentPage").val(page);
+         $("#searchForm").submit(); 
      }
      
      /* function showPageInfo(){

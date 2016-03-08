@@ -188,11 +188,10 @@ public class FpController {
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		
 		String fpqqlsh = XmlUtil.random();
-		kpxx.setFpqqlsh(fpqqlsh);
 		
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
 		
-		fpService.saveInfo(orderDetail, kpxx, list , fpqqlsh);
+		fpService.saveInfo(orderDetail, kpxx , list , fpqqlsh);
 		
 		return "success";
 	}
