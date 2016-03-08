@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>待打印普通发票(单打)</title>
-<!-- <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
-	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT> -->
+<OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
 <!-- <script type="text/javascript" src="../js/jquery/jquery-2.1.1.min.js"></script> -->
 <script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -80,7 +80,6 @@ function chaxun(){
 }
 
 function dayin(fpqqlsh,fpdm, fphm){
-	alert(fpqqlsh);
 	getParameter();
 	SetParameter();
 	PrintInvoice(fpqqlsh,fpdm, fphm);
@@ -98,7 +97,7 @@ function getParameter(){
         	if(data.code == '-1'){
         		window.top.location.href="../login/login.html";
         	}else{
-        		skconf = skconf;
+        		skconf = data.skconf;
         		printconf = data.printconf;
         	}
         },
@@ -123,13 +122,14 @@ function SetParameter() {
 		var returnmsg = getTotalMidValue(ret, "<returnmsg>","</returnmsg>");	
 		if(returncode==0&&returnmsg=="成功"){
 			alert("参数设置成功！");	
+			return true;
 		}else{
 			alert("参数设置失败，失败原因："+returnmsg);
-			return;
+			return false;
 		}
 	} catch (e) {
 		alert(e.message + ",errno:" + e.number);
-		return;
+		return false;
 	}
 }
 function PrintInvoice(fpqqlsh,fpdm, fphm){	
@@ -167,15 +167,15 @@ function savePrintResult(fpqqlsh,fpzt){
         async: false,
         success: function (data) {
         	//alert(JSON.stringify(data))
-        	if(data.code == '0'){
-        		
+        	if(data.code == '1'){
+        		alert("打印成功！");
         	}else{
-        		
+        		alert("打印成功,保存失败");
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
-        		location.reload();
+        		window.top.location.reload();
         	}else{
         		alert("Error");
         	}
@@ -250,23 +250,9 @@ function savePrintResult(fpqqlsh,fpzt){
 	<th>发票号码</th>
 	<th>操作</th>
 </thead>
-
 <tbody id="printBody">
-<!-- <tr>
-<td>123123</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr> -->
 
 </tbody>
-
 </table>
 
 <div id="pageGro" class="cb">
