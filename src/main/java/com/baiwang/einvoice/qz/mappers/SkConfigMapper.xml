@@ -6,9 +6,12 @@
     <result column="kpdq" property="kpdq" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="port" property="port" jdbcType="VARCHAR" />
+    <result column="keypwd" property="keypwd" jdbcType="VARCHAR" />
+    <result column="aqm" property="aqm" jdbcType="VARCHAR" />
+    <result column="kpzdbs" property="kpzdbs" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, kpdq, url, port
+    id, kpdq, url, port,keypwd,aqm,kpzdbs
   </sql>
   
   <select id="querySksetting" parameterType="java.lang.Integer" resultType="com.baiwang.einvoice.qz.beans.SkConfig">
@@ -19,7 +22,7 @@
   </select>
   
   <insert id="saveSksetting" parameterType="com.baiwang.einvoice.qz.beans.SkConfig">
-  	insert into skconfig ( kpdq, url, port)
+  	insert into skconfig ( kpdq, url, port,keypwd,aqm,kpzdbs)
     values ( #{kpdq,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
       #{port,jdbcType=VARCHAR})
   </insert>

@@ -116,7 +116,7 @@ public class InvoiceController {
 		if (!(null == currentPage || "".equals(currentPage))) {
 			page.setPageIndex(Integer.parseInt(currentPage));
 		}
-		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listPlain(param,
+		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listSpecial(param,
 				page.getPageIndex(), page.getPageSize());
 		
 		page.setPageSize(kpxxList.getPaginator().getLimit()); 
