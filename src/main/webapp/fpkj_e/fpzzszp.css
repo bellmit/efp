@@ -1,5 +1,5 @@
 .fp-main {
-	width: 734px; color: green; font-family: ����; font-size: 14px; word-break: break-all;
+	width: 734px; color: rgb(140, 64, 11); font-family: ����; font-size: 14px; word-break: break-all;
 }
 .fp-content {
 	height: 540px;
@@ -23,31 +23,31 @@
 	background: white; width: 714px; height: 100%; float: left;
 }
 .fp-content-center textarea {
-	border: 1px solid rgb(157, 232, 225); overflow: hidden; font-family: Verdana, Geneva, sans-serif; font-size: 13px;
+	border: 1px solid rgb(140, 64, 11); overflow: hidden; font-family: Verdana, Geneva, sans-serif; font-size: 13px;
 }
 .fp-content-center input {
-	margin: 1px; border: 1px solid rgb(157, 232, 225); width: 100%; height: 18px; line-height: 16px; font-family: Verdana, Geneva, sans-serif; font-size: 13px; vertical-align: middle;
+	margin: 1px; border: 1px solid rgb(140, 64, 11); width: 100%; height: 18px; line-height: 16px; font-family: Verdana, Geneva, sans-serif; font-size: 13px; vertical-align: middle;
 }
 .fp-content-center select {
-	margin: 1px; border: 1px solid rgb(157, 232, 225); width: 100%; height: 18px; line-height: 16px; font-family: Verdana, Geneva, sans-serif; font-size: 13px; vertical-align: middle;
+	margin: 1px; border: 1px solid rgb(140, 64, 11); width: 100%; height: 18px; line-height: 16px; font-family: Verdana, Geneva, sans-serif; font-size: 13px; vertical-align: middle;
 }
 .fp-content-center input:focus {
-	border: 1px solid rgb(0, 255, 0);
+	border: 1px solid rgb(140, 64, 11);
 }
 .fp-content-center select:focus {
-	border: 1px solid rgb(0, 255, 0);
+	border: 1px solid rgb(140, 64, 11);
 }
 .fp-content-center textarea:focus {
-	border: 1px solid rgb(0, 255, 0);
+	border: 1px solid rgb(140, 64, 11);
 }
 .fp-content-center table {
 	width: 714px; border-collapse: collapse;
 }
 .fp-content-center td {
-	border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor green green; text-align: center;
+	border-width: medium 1px 1px; border-style: none solid solid; border-color: rgb(140, 64, 11); text-align: center;
 }
 .fyxms td {
-	border-width: medium 1px medium medium; border-style: none solid none none; border-color: currentColor green currentColor currentColor;
+	border-width: medium 1px medium medium; border-style: none solid none none; border-color: rgb(140, 64, 11);
 }
 .fyxms td.dynamicinput {
 	text-align: left; padding-right: 6px; padding-left: 0px;

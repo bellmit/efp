@@ -4,10 +4,10 @@
 
 package com.baiwang.einvoice.qz.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -236,11 +238,52 @@ public class InvoiceController {
 	}
 	
 	@RequestMapping("/ekp")
-	public void ekaipiao(Kpxx kpxx, Fpmx[] fpmxList , HttpServletRequest request){
+	public void ekaipiao(Kpxx kpxx, HttpServletRequest request,HttpServletResponse response){
 		String fpqqlsh = XmlUtil.random();
 		kpxx.setFpqqlsh(fpqqlsh);
+		kpxx.setFplx("026");
+		kpxx.setKplx((byte)0);
+		kpxx.setXsfmc("百旺股份6");
+		kpxx.setXsfnsrsbh("11010800000000000006");
+		kpxx.setXsfdz("499099991291");
+		kpxx.setXsfdh("12321");
+		kpxx.setXsfyhzh("中行499099991291");
+		kpxx.setYfpdm("");
+		kpxx.setYfphm("");
 		Map<String, String> map = new HashMap<>();
-		
+		List<Fpmx> fpmxList = new ArrayList<>();
+		String [] xmmc = request.getParameterValues("xmmc");
+		String [] ggxh = request.getParameterValues("ggxh");
+		String [] dw = request.getParameterValues("dw");
+		String [] xmsl = request.getParameterValues("xmsl");
+		String [] xmdj = request.getParameterValues("xmdj");
+		String [] xmje = request.getParameterValues("xmje");
+		String [] sl = request.getParameterValues("sl");
+		String [] se = request.getParameterValues("se");
+//		String [] hsbz = request.getParameterValues("hsbz");
+		float hjje = 0f;
+		float hjse = 0f;
+		if(null != xmmc){
+			for(int i=0;i<xmmc.length;i++){
+				Fpmx fpmx = new Fpmx();
+				fpmx.setFphxz(false);
+				fpmx.setXmmc(xmmc[i]);
+				fpmx.setGgxh(ggxh[i]);
+				fpmx.setDw(dw[i]);
+				fpmx.setXmsl(Float.valueOf(formatNum(xmsl[i])));
+				fpmx.setXmdj(Float.valueOf(formatNum(xmdj[i])));
+				fpmx.setXmje( Float.valueOf(formatNum(xmje[i])));
+				hjje+=Float.valueOf(xmje[i]);
+				fpmx.setSl(Float.valueOf(formatNum(sl[i])));
+				fpmx.setSe(Float.valueOf(formatNum(se[i])));
+				hjse+=Float.valueOf(formatNum(se[i]));
+				fpmx.setHsbz(false);
+				fpmxList.add(fpmx);
+			}
+		}
+		kpxx.setHjje((float)(Math.round(hjje*100))/100);
+		kpxx.setHjse((float)(Math.round(hjse*100))/100);
+		kpxx.setJshj((float)(Math.round((hjje+hjse)*100))/100);
 		Map<String, String> result = resultService.queryResult(kpxx.getZddh(), kpxx.getFddh(), kpxx.getFplx());//根据两个订单号查
 		
 		if(null == result){
@@ -251,7 +294,8 @@ public class InvoiceController {
 					UUID uuid = UUID.randomUUID();
 					correlationId = uuid.toString();
 					logger.info("*****订单号为:" + fpqqlsh + "的关联id为:" + correlationId);
-					sender.sendMessage(XmlUtil.toEInvoice(kpxx,new ArrayList<>(Arrays.asList(fpmxList))).toString(), 
+					System.out.println("---------------"+XmlUtil.toEInvoice(kpxx,fpmxList).toString());
+					sender.sendMessage(XmlUtil.toEInvoice(kpxx,fpmxList).toString(), 
 							correlationId);
 				}catch(Exception e){
 					logger.error("*********订单号：" + fpqqlsh + ",sendMsg网络异常");
@@ -305,5 +349,15 @@ public class InvoiceController {
 			map.put("returnCode", result.get("returnCode"));
 			map.put("returnMsg", result.get("returnMsg"));
 		}
+		
+			 try {
+				response.sendRedirect(request.getContextPath() + "/fpkj_e/fpkj.htm");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+	public static String formatNum(String je){
+		DecimalFormat df = new DecimalFormat("0.00");
+		return df.format(Double.parseDouble(je));
 	}
 }
