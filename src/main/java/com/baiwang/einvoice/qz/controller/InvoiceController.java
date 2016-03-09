@@ -4,6 +4,7 @@
 
 package com.baiwang.einvoice.qz.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -235,7 +238,7 @@ public class InvoiceController {
 	}
 	
 	@RequestMapping("/ekp")
-	public void ekaipiao(Kpxx kpxx, HttpServletRequest request){
+	public void ekaipiao(Kpxx kpxx, HttpServletRequest request,HttpServletResponse response){
 		String fpqqlsh = XmlUtil.random();
 		kpxx.setFpqqlsh(fpqqlsh);
 		kpxx.setFplx("026");
@@ -346,6 +349,12 @@ public class InvoiceController {
 			map.put("returnCode", result.get("returnCode"));
 			map.put("returnMsg", result.get("returnMsg"));
 		}
+		
+			 try {
+				response.sendRedirect(request.getContextPath() + "/fpkj_e/fpkj.htm");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 	public static String formatNum(String je){
 		DecimalFormat df = new DecimalFormat("0.00");
