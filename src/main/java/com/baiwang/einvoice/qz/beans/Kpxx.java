@@ -41,7 +41,9 @@ import javax.xml.bind.annotation.XmlType;
     "jqbh",
     "skm",
     "jym",
-    "ewm"
+    "ewm",
+    "yx",
+    "sjh"
 })
 public class Kpxx {
 	@XmlElement(name = "ID", required = true)
@@ -114,6 +116,10 @@ public class Kpxx {
 	private String jym;
 	@XmlElement(name = "EWM")
 	private String ewm;
+	@XmlElement(name = "GMF_YX")
+	private String yx;
+	@XmlElement(name = "GMF_SJH")
+	private String sjh;
 	
     public Long getId() {
         return id;
@@ -407,6 +413,26 @@ public class Kpxx {
 	public void setEwm(String ewm) {
 	
 		this.ewm = ewm;
+	}
+
+	public String getYx() {
+	
+		return yx;
+	}
+
+	public void setYx(String yx) {
+	
+		this.yx = yx;
+	}
+
+	public String getSjh() {
+	
+		return sjh;
+	}
+
+	public void setSjh(String sjh) {
+	
+		this.sjh = sjh;
 	}
     
     

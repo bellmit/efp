@@ -258,9 +258,9 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<XSF_MC>"+kpxx.getXsfmc()+"</XSF_MC>");
 		sb.append("\r\n");
-		sb.append("<XSF_DZDH>"+kpxx.getXsfdz() + kpxx.getXsfdh()+"</XSF_DZDH>");
+		sb.append("<XSF_DZDH>"+kpxx.getXsfdz() +""+ kpxx.getXsfdh()+"</XSF_DZDH>");
 		sb.append("\r\n");
-		sb.append("<XSF_YHZH>"+kpxx.getGmfyhzh()+"</XSF_YHZH>");
+		sb.append("<XSF_YHZH>"+kpxx.getXsfyhzh()+"</XSF_YHZH>");
 		sb.append("\r\n");
 		sb.append("<GMF_NSRSBH>"+ kpxx.getGmfnsrsbh()+"</GMF_NSRSBH>");
 		sb.append("\r\n");
@@ -270,9 +270,9 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<GMF_YHZH>"+kpxx.getGmfyhzh()+"</GMF_YHZH>");
 		sb.append("\r\n");
-		sb.append("<GMF_YX>gaokemeng@baiwang.com</GMF_YX>");
+		sb.append("<GMF_YX>"+kpxx.getYx()+"</GMF_YX>");
 		sb.append("\r\n");
-		sb.append("<GMF_SJH>17710708213</GMF_SJH>");
+		sb.append("<GMF_SJH>"+kpxx.getSjh()+"</GMF_SJH>");
 		sb.append("\r\n");
 		sb.append("<KPR>"+ kpxx.getKpr() +"</KPR>");
 		sb.append("\r\n");
