@@ -116,7 +116,7 @@ public class InvoiceController {
 	@ResponseBody
 	public HashMap<String, Object> dzkp(HttpServletRequest request) throws UnsupportedEncodingException{
 	
-		String[] fp =request.getParameterValues("arr[]");
+		String[] fp =request.getParameter("arr").split(",");
 		HashMap<String, Object> param = new HashMap<>();
 		if(null==fp || fp.length<0){
 			param.put("status", "error");
@@ -127,6 +127,9 @@ public class InvoiceController {
 		String[] xmlList = new String[fp.length];
 		for(int i =0;i<fp.length;i++){
 			String fpqqlsh = fp[i];
+			if("".equals(fp[i])){
+				continue;
+			}
 			Kpxx kpxx = fpService.getKpxxByFpqqlsh(fpqqlsh);
 			List<Fpmx> fpmxList = fpService.getFpmxByFpqqlsh(fpqqlsh);
 			String xml = fpService.getXml(kpxx, fpmxList);

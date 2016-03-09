@@ -181,11 +181,11 @@ function kjfp(fpqqlsh){
 		if(!confirm("确定要开具发票吗？")){
 			return;
 		}
-		var fpList = new Array(); 
+		var fpList = ""; 
 		var chks = $('.chkbox_ex');
 	    for(i=0;i<chks.length;i++){
 			if(chks[i].checked == true){
-				fpList[i]=chks[i].value;
+				fpList = chks[i].value +",";
 			}
 		} 
 	    if(fpList.length<1){
@@ -199,9 +199,8 @@ function kjfp(fpqqlsh){
  	        type:"POST",
  	        url:"<%=basePath%>/fpkj/dzkp",
 			data:param,
-		dataType:'text', 
 		success : function(data) {
-			alert(data.msg);
+			alert(data.status);
 			var xml = data.xml;
 			for(var i=0;i<xml.length;i++){
 				alert(xml[i]);
@@ -210,7 +209,7 @@ function kjfp(fpqqlsh){
 					/* var pos=ret.indexOf("<returncode>"); */
 					var invoiceIssueReturncode = getTotalMidValue(invoiceIssueRet, "<returncode>","</returncode>");
 					var invoiceIssueRetReturnmsg = getTotalMidValue(invoiceIssueRet, "<returnmsg>","</returnmsg>");	
-					var fpqqlsh = getTotalMidValue(invoiceIssueRet, "<fpqqlsh>","</fpqqlsh>");
+					var fpqqlsh = getTotalMidValue(xml[i], "<fpqqlsh>","</fpqqlsh>");
 					if(invoiceIssueReturncode==0&&invoiceIssueRetReturnmsg=="成功"){
 						alert(invoiceIssueRet);	
 						$.ajax({
