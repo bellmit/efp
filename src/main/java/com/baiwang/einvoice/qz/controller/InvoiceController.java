@@ -5,6 +5,9 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +38,7 @@ import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
-import com.baiwang.einvoice.qz.service.IResultOfKpService;
+import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
 import com.baiwang.einvoice.util.InvoiceUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -57,7 +60,7 @@ public class InvoiceController {
 	@Resource
 	private EInvoiceSenders sender;
 	@Resource
-	private IResultOfKpService resultService;
+	private IResultOfSkService resultService;
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
@@ -116,7 +119,7 @@ public class InvoiceController {
 		if (!(null == currentPage || "".equals(currentPage))) {
 			page.setPageIndex(Integer.parseInt(currentPage));
 		}
-		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listPlain(param,
+		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listSpecial(param,
 				page.getPageIndex(), page.getPageSize());
 		
 		page.setPageSize(kpxxList.getPaginator().getLimit()); 
@@ -233,7 +236,7 @@ public class InvoiceController {
 	}
 	
 	@RequestMapping("/ekp")
-	public void ekaipiao(Kpxx kpxx, List<Fpmx> fpmxList , HttpServletRequest request){
+	public void ekaipiao(Kpxx kpxx, Fpmx[] fpmxList , HttpServletRequest request){
 		String fpqqlsh = XmlUtil.random();
 		kpxx.setFpqqlsh(fpqqlsh);
 		Map<String, String> map = new HashMap<>();
@@ -248,7 +251,7 @@ public class InvoiceController {
 					UUID uuid = UUID.randomUUID();
 					correlationId = uuid.toString();
 					logger.info("*****订单号为:" + fpqqlsh + "的关联id为:" + correlationId);
-					sender.sendMessage(XmlUtil.toEInvoice(kpxx,fpmxList).toString(), 
+					sender.sendMessage(XmlUtil.toEInvoice(kpxx,new ArrayList<>(Arrays.asList(fpmxList))).toString(), 
 							correlationId);
 				}catch(Exception e){
 					logger.error("*********订单号：" + fpqqlsh + ",sendMsg网络异常");
