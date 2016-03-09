@@ -9,7 +9,7 @@
 			"id":111,
 			"text":"查询",
 			"attributes":{
-				"url":"../../queryStatistics/query.html"
+				"url":"../../queryStatistics/queryDetailIndex.jsp"
 			}
 		},{
 			"id":112,
@@ -24,21 +24,22 @@
 		"state":"closed",
 		"children":[{
 			"id":121,
-			"text":"打印设置",
+			"text":"系统设置",
 			"attributes":{
-				"url":"../../settings/printSetting.html"
+				"url":"../../settings/syssetting.html"
 			}
 		},{
 			"id":122,
-			"text":"税控系统设置",
-			"attributes":{
-				"url":"../../settings/skSetting.html"
-			}
-		},{
-			"id":123,
 			"text":"修改密码",
 			"attributes":{
 				"url":"../../user/changePwd.jsp"
+			}
+		}
+		,{
+			"id":123,
+			"text":"用户列表",
+			"attributes":{
+				"url":"../../queryStatistics/goToUser.jsp"
 			}
 		}
 	]},{
@@ -49,7 +50,19 @@
 			"id":131,
 			"text":"增值税专项发票开具",
 			"attributes":{
-				"url":"../../specialInvoice/kjzyfp.html"
+				"url":"../../queryStatistics/goToSpecial.jsp"
+			}
+		},{
+			"id":132,
+			"text":"增值税专项发票打印(单打)",
+			"attributes":{
+				"url":"../../specialInvoice/waitprintzp.html"
+			}
+		},{
+			"id":133,
+			"text":"增值税专项发票打印(连打)",
+			"attributes":{
+				"url":"../../specialInvoice/waitprintzps.html"
 			}
 		}]
 	},{
@@ -60,7 +73,30 @@
 			"id":141,
 			"text":"增值税普通发票开具",
 			"attributes":{
-				"url":"../../regularInvoice/kjptfp.html"
+				"url":"../../queryStatistics/goToPlain.jsp"
+			}
+		},{
+			"id":132,
+			"text":"增值税普通发票打印(单打)",
+			"attributes":{
+				"url":"../../regularInvoice/waitprintpp.html"
+			}
+		},{
+			"id":133,
+			"text":"增值税普通发票打印(连打)",
+			"attributes":{
+				"url":"../../regularInvoice/waitprintpps.html"
+			}
+		}]
+	},{
+		"id":15,
+		"text":"发票开具",
+		"state":"closed",
+		"children":[{
+			"id":151,
+			"text":"电子发票开具",
+			"attributes":{
+				"url":"../../fpkj_e/fpkj.htm"
 			}
 		}]
 	}]

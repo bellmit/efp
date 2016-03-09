@@ -24,6 +24,12 @@
     from fpmx
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByFpqqlsh" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from fpmx
+    where fpqqlsh = #{fpqqlsh,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from fpmx
     where id = #{id,jdbcType=BIGINT}

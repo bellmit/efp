@@ -1,5 +1,11 @@
 package com.baiwang.einvoice.qz.dao;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.baiwang.einvoice.qz.beans.Kpxx;
 
 public interface KpxxMapper {
@@ -11,11 +17,22 @@ public interface KpxxMapper {
 
     Kpxx selectByPrimaryKey(String fpqqlsh);
     
-    Kpxx selectByDdhm(String fpqqlsh);
+    Kpxx selectByFpqqlsh(String fpqqlsh);
 
+    Kpxx selectByDdhm(@Param("zddh")String zddh , @Param("fddh")String fddh);
+    
     int updateByPrimaryKeySelective(Kpxx record);
 
     int updateByPrimaryKey(Kpxx record);
     
     void deleteByDdhm(String ddhm);
+    
+    void updateFpztByFpqqlsh(String fpqqlsh);
+    
+    List<Map<String, String>> getPlainList(HashMap<String, String> param);
+    
+    List<Map<String, String>> getSpecialList(HashMap<String, String> param);
+    
+    void saveCallBackInfo(Kpxx kpxx);
+    
 }

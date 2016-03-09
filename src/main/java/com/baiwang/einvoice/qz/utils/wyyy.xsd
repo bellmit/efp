@@ -4,12 +4,25 @@
       <xs:sequence>
         <xs:element name="CUSTOMDATA">
           <xs:complexType>
-            <xs:sequence>
-              <xs:element type="xs:string" name="DD_HM"/>
-              <xs:element type="xs:string" name="DD_SS_DQ"/>
-              <xs:element type="xs:string" name="DD_YW_LX"/>
-              <xs:element type="xs:string" name="DD_SJ"/>
-            </xs:sequence>
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+              <xs:element type="xs:string" name="ZDDH"/>
+              <xs:element type="xs:byte" name="FDDH"/>
+              <xs:element type="xs:string" name="SQR"/>
+              <xs:element type="xs:string" name="HYM"/>
+              <xs:element type="xs:int" name="HYID"/>
+              <xs:element type="xs:string" name="DDSJ"/>
+              <xs:element type="xs:string" name="SQSJ"/>
+              <xs:element type="xs:string" name="SPZL"/>
+              <xs:element type="xs:string" name="SQRK"/>
+              <xs:element type="xs:string" name="SHR"/>
+              <xs:element type="xs:long" name="SHRDH"/>
+              <xs:element type="xs:string" name="JSDZ"/>
+              <xs:element type="xs:string" name="YJSJ"/>
+              <xs:element type="xs:string" name="FHR"/>
+              <xs:element type="xs:string" name="WLSJ"/>
+              <xs:element type="xs:string" name="WLDH"/>
+              <xs:element type="xs:string" name="TKZT"/>
+            </xs:choice>
           </xs:complexType>
         </xs:element>
         <xs:element name="REQUEST_COMMON_FPKJ">
@@ -18,26 +31,26 @@
               <xs:element name="COMMON_FPKJ_FPT">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element type="xs:string" name="FPLX"/>
-                    <xs:element type="xs:string" name="KPLX"/>
+                    <xs:element type="xs:byte" name="FPLX"/>
+                    <xs:element type="xs:byte" name="KPLX"/>
                     <xs:element type="xs:string" name="XSF_NSRSBH"/>
                     <xs:element type="xs:string" name="XSF_MC"/>
                     <xs:element type="xs:string" name="XSF_DZ"/>
-                    <xs:element type="xs:string" name="XSF_DH"/>
-                    <xs:element type="xs:string" name="XSF_YHZH"/>
+                    <xs:element type="xs:long" name="XSF_DH"/>
+                    <xs:element type="xs:long" name="XSF_YHZH"/>
                     <xs:element type="xs:string" name="GMF_NSRSBH"/>
                     <xs:element type="xs:string" name="GMF_MC"/>
                     <xs:element type="xs:string" name="GMF_DZ"/>
                     <xs:element type="xs:string" name="GMF_DH"/>
-                    <xs:element type="xs:string" name="GMF_YHZH"/>
+                    <xs:element type="xs:long" name="GMF_YHZH"/>
                     <xs:element type="xs:string" name="KPR"/>
                     <xs:element type="xs:string" name="SKR"/>
                     <xs:element type="xs:string" name="FHR"/>
                     <xs:element type="xs:string" name="YFP_DM"/>
                     <xs:element type="xs:string" name="YFP_HM"/>
-                    <xs:element type="xs:string" name="JSHJ"/>
-                    <xs:element type="xs:string" name="HJJE"/>
-                    <xs:element type="xs:string" name="HJSE"/>
+                    <xs:element type="xs:float" name="JSHJ"/>
+                    <xs:element type="xs:float" name="HJJE"/>
+                    <xs:element type="xs:float" name="HJSE"/>
                     <xs:element type="xs:string" name="BZ"/>
                   </xs:sequence>
                 </xs:complexType>
@@ -48,16 +61,16 @@
                     <xs:element name="COMMON_FPKJ_XMXX" maxOccurs="unbounded" minOccurs="0">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element type="xs:string" name="FPHXZ"/>
+                          <xs:element type="xs:byte" name="FPHXZ"/>
                           <xs:element type="xs:string" name="XMMC"/>
                           <xs:element type="xs:string" name="GGXH"/>
                           <xs:element type="xs:string" name="DW"/>
-                          <xs:element type="xs:string" name="XMSL"/>
-                          <xs:element type="xs:string" name="XMDJ"/>
-                          <xs:element type="xs:string" name="XMJE"/>
-                          <xs:element type="xs:string" name="SL"/>
-                          <xs:element type="xs:string" name="SE"/>
-                          <xs:element type="xs:string" name="HSBZ"/>
+                          <xs:element type="xs:byte" name="XMSL"/>
+                          <xs:element type="xs:float" name="XMDJ"/>
+                          <xs:element type="xs:float" name="XMJE"/>
+                          <xs:element type="xs:float" name="SL"/>
+                          <xs:element type="xs:float" name="SE"/>
+                          <xs:element type="xs:byte" name="HSBZ"/>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>

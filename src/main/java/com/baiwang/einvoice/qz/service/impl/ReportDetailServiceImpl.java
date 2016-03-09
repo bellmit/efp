@@ -4,6 +4,7 @@
 
 package com.baiwang.einvoice.qz.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import com.baiwang.einvoice.qz.beans.ReportDetail;
 import com.baiwang.einvoice.qz.dao.ReportDetailMapper;
+import com.baiwang.einvoice.qz.service.PageServiceImpl;
 import com.baiwang.einvoice.qz.service.ReportDetailService;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: ReportDetailServiceImpl
@@ -25,115 +28,23 @@ import com.baiwang.einvoice.qz.service.ReportDetailService;
 public class ReportDetailServiceImpl implements ReportDetailService {
 	@Resource
 	private ReportDetailMapper reportDao;
+	@Resource
+	private PageServiceImpl pageService;
 
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param ddh
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
+	@SuppressWarnings("unchecked")
 	@Override
-	public int deleteByPrimaryKey(String ddh) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.deleteByPrimaryKey(ddh);
-		
+	public PageList<HashMap<String,Object>> getFpListByCondition(Map<String, Object> condition) {
+		 return (PageList<HashMap<String, Object>>)pageService.getPageList(ReportDetailMapper.class, "getFpListByCondition",condition, (int)condition.get("pageIndex"),(int)condition.get("pageSize"));
 	}
 
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param record
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
 	@Override
-	public int insert(ReportDetail record) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.insert(record);
-		
+	public ReportDetail getFpByLSH(String fpqqlsh) {
+		return reportDao.getFpByLSH(fpqqlsh);
 	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param record
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public int insertSelective(ReportDetail record) {
+	
+	public List<ReportDetail> getFpListByCondition4d(Map<String, Object> condition) {
 		
-		// TODO Auto-generated method stub
-		return reportDao.insertSelective(record);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param ddh
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public ReportDetail selectByPrimaryKey(String ddh) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.selectByPrimaryKey(ddh);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param record
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public int updateByPrimaryKeySelective(ReportDetail record) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.updateByPrimaryKeySelective(record);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param record
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public int updateByPrimaryKey(ReportDetail record) {
-		
-		// TODO Auto-generated method stub
-		return reportDao.updateByPrimaryKey(record);
-		
-	}
-
-	/**
-	  * @author Administrator
-	  * @Description: TODO
-	  * @param @param condition
-	  * @param @return  
-	  * @throws
-	  * @date 2016年3月3日 下午8:25:31
-	  */
-	@Override
-	public List<ReportDetail> selectByCondition(Map<String, Object> condition) {
-		
-		return reportDao.selectByCondition(condition);
+		return reportDao.getFpListByCondition(condition);
 		
 	}
 

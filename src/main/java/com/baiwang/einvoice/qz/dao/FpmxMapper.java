@@ -20,4 +20,6 @@ public interface FpmxMapper {
     int insertFromList(List<Fpmx> list);
     
     int deleteByFpqqlsh(String id);
+    
+    List<Fpmx> selectByFpqqlsh(String fpqqlsh);
 }

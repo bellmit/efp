@@ -1,7 +1,6 @@
 package com.baiwang.einvoice.qz.resource;
 
 import javax.annotation.Resource;
-import javax.jms.Destination;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 

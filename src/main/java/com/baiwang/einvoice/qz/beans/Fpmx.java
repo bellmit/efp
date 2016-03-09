@@ -1,7 +1,3 @@
-/**
- *Copyright (c) 1997, 2015,BEST WONDER CO.,LTD. All rights reserved.
- */
-
 package com.baiwang.einvoice.qz.beans;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,12 +5,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-/**
-  * @ClassName: fpmx
-  * @Description: TODO
-  * @author wsdoing
-  * @date 2016年3月2日 下午2:24:47
-  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
 		"id",
@@ -30,292 +20,126 @@ import javax.xml.bind.annotation.XmlType;
     "se",
     "hsbz"
 })
-public class Fpmx{
-
+public class Fpmx {
+	
 	@XmlElement(name = "ID", required = true)
-    private String id;
+    private Long id;
 	@XmlElement(name = "FPQQLSH", required = true)
     private String fpqqlsh;
-    @XmlElement(name = "FPHXZ", required = true)
-    protected String fphxz;
-    @XmlElement(name = "XMMC", required = true)
-    protected String xmmc;
-    @XmlElement(name = "GGXH", required = true)
-    protected String ggxh;
-    @XmlElement(name = "DW", required = true)
-    protected String dw;
-    @XmlElement(name = "XMSL", required = true)
-    protected String xmsl;
-    @XmlElement(name = "XMDJ", required = true)
-    protected String xmdj;
-    @XmlElement(name = "XMJE", required = true)
-    protected String xmje;
-    @XmlElement(name = "SL", required = true)
-    protected String sl;
-    @XmlElement(name = "SE", required = true)
-    protected String se;
-    @XmlElement(name = "HSBZ", required = true)
-    protected String hsbz;
+	@XmlElement(name = "FPHXZ", required = true)
+    private Boolean fphxz;
+	@XmlElement(name = "XMMC", required = true)
+    private String xmmc;
+	@XmlElement(name = "GGXH", required = true)
+    private String ggxh;
+	@XmlElement(name = "DW", required = true)
+    private String dw;
+	@XmlElement(name = "XMSL", required = true)
+    private Float xmsl;
+	@XmlElement(name = "XMDJ", required = true)
+    private Float xmdj;
+	@XmlElement(name = "XMJE", required = true)
+    private Float xmje;
+	@XmlElement(name = "SL", required = true)
+    private Float sl;
+	@XmlElement(name = "SE", required = true)
+    private Float se;
+	@XmlElement(name = "HSBZ", required = true)
+    private Boolean hsbz;
 
-    /**
-     * Gets the value of the fphxz property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFPHXZ() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFpqqlsh() {
+        return fpqqlsh;
+    }
+
+    public void setFpqqlsh(String fpqqlsh) {
+        this.fpqqlsh = fpqqlsh == null ? null : fpqqlsh.trim();
+    }
+
+    public Boolean getFphxz() {
         return fphxz;
     }
 
-    /**
-     * Sets the value of the fphxz property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFPHXZ(String value) {
-        this.fphxz = value;
+    public void setFphxz(Boolean fphxz) {
+        this.fphxz = fphxz;
     }
 
-    /**
-     * Gets the value of the xmmc property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getXMMC() {
+    public String getXmmc() {
         return xmmc;
     }
 
-    /**
-     * Sets the value of the xmmc property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setXMMC(String value) {
-        this.xmmc = value;
+    public void setXmmc(String xmmc) {
+        this.xmmc = xmmc == null ? null : xmmc.trim();
     }
 
-    /**
-     * Gets the value of the ggxh property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGGXH() {
+    public String getGgxh() {
         return ggxh;
     }
 
-    /**
-     * Sets the value of the ggxh property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGGXH(String value) {
-        this.ggxh = value;
+    public void setGgxh(String ggxh) {
+        this.ggxh = ggxh == null ? null : ggxh.trim();
     }
 
-    /**
-     * Gets the value of the dw property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDW() {
+    public String getDw() {
         return dw;
     }
 
-    /**
-     * Sets the value of the dw property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDW(String value) {
-        this.dw = value;
+    public void setDw(String dw) {
+        this.dw = dw == null ? null : dw.trim();
     }
 
-    /**
-     * Gets the value of the xmsl property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getXMSL() {
+    public Float getXmsl() {
         return xmsl;
     }
 
-    /**
-     * Sets the value of the xmsl property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setXMSL(String value) {
-        this.xmsl = value;
+    public void setXmsl(Float xmsl) {
+        this.xmsl = xmsl;
     }
 
-    /**
-     * Gets the value of the xmdj property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getXMDJ() {
+    public Float getXmdj() {
         return xmdj;
     }
 
-    /**
-     * Sets the value of the xmdj property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setXMDJ(String value) {
-        this.xmdj = value;
+    public void setXmdj(Float xmdj) {
+        this.xmdj = xmdj;
     }
 
-    /**
-     * Gets the value of the xmje property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getXMJE() {
+    public Float getXmje() {
         return xmje;
     }
 
-    /**
-     * Sets the value of the xmje property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setXMJE(String value) {
-        this.xmje = value;
+    public void setXmje(Float xmje) {
+        this.xmje = xmje;
     }
 
-    /**
-     * Gets the value of the sl property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSL() {
+    public Float getSl() {
         return sl;
     }
 
-    /**
-     * Sets the value of the sl property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSL(String value) {
-        this.sl = value;
+    public void setSl(Float sl) {
+        this.sl = sl;
     }
 
-    /**
-     * Gets the value of the se property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSE() {
+    public Float getSe() {
         return se;
     }
 
-    /**
-     * Sets the value of the se property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSE(String value) {
-        this.se = value;
+    public void setSe(Float se) {
+        this.se = se;
     }
 
-    /**
-     * Gets the value of the hsbz property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getHSBZ() {
+    public Boolean getHsbz() {
         return hsbz;
     }
 
-    /**
-     * Sets the value of the hsbz property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setHSBZ(String value) {
-        this.hsbz = value;
+    public void setHsbz(Boolean hsbz) {
+        this.hsbz = hsbz;
     }
-
-	public String getFpqqlsh() {
-	
-		return fpqqlsh;
-	}
-
-	public void setFpqqlsh(String fpqqlsh) {
-	
-		this.fpqqlsh = fpqqlsh;
-	}
-
-	public String getId() {
-	
-		return id;
-	}
-
-	public void setId(String id) {
-	
-		this.id = id;
-	}
-
-    
 }

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>待打印专用发票(单打)</title>
+
+<!-- <script type="text/javascript" src="../js/jquery/jquery-2.1.1.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
+
+<!-- <OBJECT ID=bk CLASSID="clsid:D71CA6D9-E61D-4131-91AF-B4178C1067C6"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT> -->
+<OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<!--[if lt IE 9]>
+         <script src="../js/html5shiv.js"></script>
+         <script src="../js/respond.min.js"></script>
+      <![endif]-->
+      
+<link rel="stylesheet" type="text/css" href="../js/page/pageGroup.css"/>
+<script type="text/javascript" src="../js/page/pageGroup.js"></script>      
+<style type="text/css">
+th,td{width: 120px; height: 35px;text-align:center;}
+</style>
+
+<script type="text/javascript">
+var pageCount = 1;
+	var skconf = null;
+	var printconf = null;
+function chaxun(){
+	var params = $('#queryForm').serialize();
+	$.ajax({
+		type:"POST",
+        url: "../printpp/printlist",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        		pageCount = data.pageCount;
+        		var cc = $('#requestPage').val()-1;
+	        	if(pageCount>5){
+	        		page_icon(1,5,cc);
+	        	}else{
+	        		page_icon(1,pageCount,cc);
+	        	}
+        		$("#printBody").children().remove();
+        		if(data.list.length>0){
+    				var tbo = '';
+        			for(var i=0;i<data.list.length;i++){
+        				tbo = tbo + '<tr>'
+       						+'<td class="">'+data.list[i].zddh+'</td>'
+       						+'<td>'+data.list[i].hym+'</td>'
+       						+'<td>'+data.list[i].shr+'</td>'
+       						+'<td>'+data.list[i].sqsj+'</td>'
+       						+'<td>'+data.list[i].kpdq+'</td>'
+       						+'<td>'+data.list[i].fpzl+'</td>'
+       						+'<td>'+data.list[i].fptt+'</td>'
+       						+'<td>'+data.list[i].fpnr+'</td>'
+       						+'<td>'+data.list[i].hjje+'</td>'
+       						+'<td>'+data.list[i].hjse+'</td>'
+       						+'<td>'+data.list[i].jshj+'</td>'
+       						+'<td>'+data.list[i].kprq+'</td>'
+       						+'<td>'+data.list[i].fpdm+'</td>'
+       						+'<td>'+data.list[i].fphm+'</td>'
+       						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
+       						+'<td>'+'<a href="javascript:" onclick="dayin(' + data.list[i].fpqqlsh +',' + data.list[i].fpdm +',' + data.list[i].fphm+ ');">打印</a>' + '</td>'
+       						
+       						+'</tr>';
+        			}
+        			//alert(tbo)
+        			$("#printBody").html(tbo);
+        			/* $('.invitetable1 tr:odd').css('background','#fffceb');
+        			parent.dyniframesize('openli');  */
+        		}else{
+        			//alert(0)
+        		}
+        	
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+	
+}
+
+function dayin(fpqqlsh,fpdm, fphm){
+	//getParameter();
+	alert(10)
+	/* 		SetParameter() */
+	if(!SetParameter()){
+		return;
+	}
+	PrintInvoice(fpqqlsh,fpdm, fphm);
+}
+
+function getParameter(){
+	var params = {'fplx' : '004'};
+	$.ajax({
+		type:"GET",
+        url: "../print/getParameter",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data.code == '-1'){
+        		window.top.location.href="../login/login.html";
+        	}else{
+        		alert(89)
+        		skconf = data.skconf;
+        		printconf = data.printconf;
+        		alert(printconf.topside)
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
+//发票打印
+function SetParameter() {
+	/* if(skconf == null){
+		alert("初始化参数失败");
+		return false;
+	} */
+	
+	//01设置初始化参数
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>50543ed18fc81784d9a17a18e10a9d68e7e4c4303568c14e3aa1280f87006578b59ca8d492921c725a1199f9c7fc9ba21c8f15d953fb673a5612a52e813c2ade0ebcf42c7d7e0a1fe15a8655a2919176bd3801d3be36654e4fffe8fb38ae4c02498b43de96c00e23765a204fbd16752c9514ffef10467646892f32ad3a146d3ea9928c8a622aa349bfdbd2b49eae3f7e852be50df3c0532447c99abfded4b5c07871cef1ebbf1a9986df508f4fe9f452eb44b6a220df76a90830a0e35c4483c6f85edb5590858fe9685d45895c5c1a16ea689db99ba1f4d4103902dab1972f8a6f7bb2ba1f84fa37c76d238016cc40e4ef08025b3e226c48e43adb1c0daf2d8b</aqm>\r\n</body>\r\n</business>";		
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>123.124.177.178</servletip>\r\n<servletport>10009</servletport>\r\n<keypwd>00000000</keypwd>\r\n<aqm>50543ed18fc81784d9a17a18e10a9d68e7e4c4303568c14e3aa1280f87006578b59ca8d492921c725a1199f9c7fc9ba21c8f15d953fb673a5612a52e813c2ade0ebcf42c7d7e0a1fe15a8655a2919176bd3801d3be36654e4fffe8fb38ae4c02498b43de96c00e23765a204fbd16752c9514ffef10467646892f32ad3a146d3ea9928c8a622aa349bfdbd2b49eae3f7e852be50df3c0532447c99abfded4b5c07871cef1ebbf1a9986df508f4fe9f452eb44b6a220df76a90830a0e35c4483c6f85edb5590858fe9685d45895c5c1a16ea689db99ba1f4d4103902dab1972f8a6f7bb2ba1f84fa37c76d238016cc40e4ef08025b3e226c48e43adb1c0daf2d8b</aqm>\r\n</body>\r\n</business>";
+	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>192.168.6.14</servletip>\r\n<servletport>1008</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>";		
+	try {
+		ret = sk.Operate(sInputInfo);
+		/* var pos=ret.indexOf("<returncode>"); */
+		var returncode = getTotalMidValue(ret, "<returncode>","</returncode>");
+		var returnmsg = getTotalMidValue(ret, "<returnmsg>","</returnmsg>");	
+		if(returncode==0&&returnmsg=="成功"){
+			alert("参数设置成功！");	
+			return true;
+		}else{
+			alert("参数设置失败，失败原因："+returnmsg);
+			return false;
+		}
+	} catch (e) {
+		alert(e.message + ",errno:" + e.number);
+		return false;
+	}
+}
+
+function PrintInvoice(fpqqlsh,fpdm, fphm){
+	
+	//01页边距设置
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"鍙戠エ鎵撳嵃\"><body yylxdm=\"1\"><kpzdbs>12345612346</kpzdbs><fplxdm>007</fplxdm><fpdm>1110000452</fpdm><fphm>38148009</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+	//var sMarginsInfo = " <?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20003\" comment=\"页边距设置\">\r\n<body yylxdm=\"1\">\r\n<fplxdm>007</fplxdm>\r\n<top>" + printconf.topside + "</top>\r\n<left>" + printconf.leftside + "</left>\r\n</body>\r\n</business>";		
+	var sMarginsInfo = " <?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20003\" comment=\"页边距设置\">\r\n<body yylxdm=\"1\">\r\n<fplxdm>004</fplxdm>\r\n<top>-1</top>\r\n<left>-3</left>\r\n</body>\r\n</business>";
+	sMargret = sk.Operate(sMarginsInfo);
+	var returncodesMarg = getTotalMidValue(sMargret, "<returncode>","</returncode>");
+	var returnmsgsMarg = getTotalMidValue(sMargret, "<returnmsg>","</returnmsg>");	
+	if(returncodesMarg==0&&returnmsgsMarg=="成功"){
+		//02、打印发票
+		//var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>004</fplxdm><fpdm>"+fpdm+"</fpdm><fphm>"+ fphm+"</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+		var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>004</fplxdm><fpdm>1110098077</fpdm><fphm>74560010</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+		alert(sPrintInfo);
+		sPrintInret = sk.Operate(sPrintInfo);
+		var returncodesPrintIn = getTotalMidValue(sPrintInret, "<returncode>","</returncode>");
+		var returnmsgsPrintIn = getTotalMidValue(sPrintInret, "<returnmsg>","</returnmsg>");
+		if(returncodesPrintIn==0&&returnmsgsPrintIn=="成功"){
+			alert("打印成功！");
+			//savePrintResult(fpqqlsh,3)
+		}else{
+			alert("打印失败，失败原因："+returnmsgsPrintIn);
+		}
+	}else{
+		    alert("页面距设置失败，失败原因："+returnmsgsMarg);
+	}		
+		
+}
+
+function savePrintResult(fpqqlsh,fpzt){
+	var params = {'fpqqlsh': fpqqlsh,'fpzt' : fpzt};
+	$.ajax({
+		type:"GET",
+        url: "../print/savePrintResult",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data.code == '1'){
+        		alert("打印成功！");
+        	}else{
+        		alert("打印成功,保存失败");
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
+//获取指定的字符串
+function getTotalMidValue(source, priStr, suxStr) {
+	if (source == null)
+		return null;
+	var iFirst = source.indexOf(priStr);		
+	var iLast = source.lastIndexOf(suxStr);		
+	if (iFirst < 0 || iLast < 0)
+		return null;	
+	var beginIndex = iFirst + priStr.length;	
+	return source.substring(beginIndex, iLast);
+}
+
+</script>
+
+</head>
+<body>
+<h4>查询条件</h4>
+<form id="queryForm" name='queryForm' class="form-horizontal" role="form">
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-5">
+	      <label for="beginDate" class="col-sm-3 control-label">开票起止日期：</label>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="起始时间" value=""
+	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
+	      </div>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
+	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
+	      </div>
+	   </div>
+	   <div class="form-group col-sm-5">
+	      <label for="kpdq" class="col-sm-3 control-label">开票地区：</label>
+	      <div class="col-sm-3">
+	         <select class="form-control" id="kpdq" name="kpdq">
+		         <option value="">请选择</option>
+		         <option value="0">北京</option>
+			 	 <option value="1">上海</option>
+		     </select>
+	      </div>
+	   </div>
+	</div>
+	
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-5">
+	      <label for="zddh" class="col-sm-3 control-label">订单号：</label>
+	      <div class="col-sm-6">
+	         <input type="text" class="form-control" id="zddh" name="zddh" placeholder="订单号">
+	         <input type="hidden" id='fplx' name='fplx' value='004'><!-- 发票类型 普票 -->
+	         <input type="hidden" id='requestPage' name='requestPage' value='1'><!-- 请求页数 -->
+	         <input type="hidden" id='pageSize' name='pageSize' value='2'><!-- 每页行数 -->
+	      </div>
+	   </div>
+	   <div class="form-group col-sm-5">
+	      <div class="col-sm-offset-2 col-sm-10">
+	         <button type="button" class="btn btn-default" onclick="chaxun();">查询</button>
+	      </div>
+	   </div>
+	</div>
+</form>
+
+<hr>
+
+
+<table border="1" cellspacing="0" >
+<thead>
+	<th>订单号</th>
+	<th>会员名</th>
+	<th>收货人</th>
+	<th>申请时间</th>
+	<th>开票地区</th>
+	<th>发票种类</th>
+	<th>发票抬头</th>
+	<th>发票内容</th>
+	<th>合计金额</th>
+	<th>合计税额</th>
+	<th>价税合计</th>
+	<th>开票日期</th>
+	<th>发票代码</th>
+	<th>发票号码</th>
+	<th>操作</th>
+</thead>
+	<tbody id="printBody">
+	</tbody>
+</table>
+
+
+<div id="pageGro" class="cb">
+	<div class="pageUp">上一页</div>
+    <div class="pageList">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+    <div class="pageDown">下一页</div>
+</div>
+
+
+</body>
+</html>

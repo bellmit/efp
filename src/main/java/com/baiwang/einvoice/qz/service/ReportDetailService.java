@@ -4,10 +4,12 @@
 
 package com.baiwang.einvoice.qz.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.baiwang.einvoice.qz.beans.ReportDetail;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: ReportDetailService
@@ -16,17 +18,9 @@ import com.baiwang.einvoice.qz.beans.ReportDetail;
   * @date 2016年3月3日 下午8:21:46
   */
 public interface ReportDetailService {
-	int deleteByPrimaryKey(String ddh);
-
-    int insert(ReportDetail record);
-
-    int insertSelective(ReportDetail record);
-
-    ReportDetail selectByPrimaryKey(String ddh);
-
-    int updateByPrimaryKeySelective(ReportDetail record);
-
-    int updateByPrimaryKey(ReportDetail record);
-    
-    List<ReportDetail> selectByCondition(Map<String, Object> condition);
+	ReportDetail getFpByLSH(String fpqqlsh);
+	
+	PageList<HashMap<String,Object>> getFpListByCondition(Map<String, Object> condition);
+	
+	List<ReportDetail> getFpListByCondition4d(Map<String, Object> condition);
 }
