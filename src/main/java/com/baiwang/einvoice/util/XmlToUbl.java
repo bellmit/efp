@@ -159,9 +159,9 @@ public class XmlToUbl {
  		sb.append(				"</cac:PartyIdentification>");
  		sb.append(				"<cac:PartyName>");
  		sb.append(					"<cbc:Name>");
- 		String xsfmc = InvoiceUtil.getIntervalValue(xml, "<XSF_MC>", "</XSF_MC>");
+ 		String xsfmc = "中国保险信息技术管理有限责任公司";/*InvoiceUtil.getIntervalValue(xml, "<XSF_MC>", "</XSF_MC>");
  		if (xsfmc!=null && xsfmc.indexOf("百旺")>=0)
- 			xsfmc = xsfmc.replaceFirst("百旺", "百望");
+ 			xsfmc = xsfmc.replaceFirst("百旺", "百望");*/
  		sb.append(						xsfmc);//18
  		sb.append(					"</cbc:Name>");
  		sb.append(				"</cac:PartyName>");
@@ -185,8 +185,7 @@ public class XmlToUbl {
 		sb.append(				"</cac:PartyIdentification>");
 		sb.append(				"<cac:PartyName>");
 		sb.append(					"<cbc:Name>");
-		//sb.append(						InvoiceUtil.getIntervalValue(xml, "<GMF_MC>", "</GMF_MC>"));//22
-		sb.append("中国保险信息技术管理有限公司");//22
+		sb.append(						InvoiceUtil.getIntervalValue(xml, "<GMF_MC>", "</GMF_MC>"));//22
 		sb.append(					"</cbc:Name>");
 		sb.append(				"</cac:PartyName>");
 		sb.append(				"<cac:PostalAddress>");
