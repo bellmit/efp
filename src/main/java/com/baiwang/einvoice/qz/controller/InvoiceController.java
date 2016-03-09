@@ -238,11 +238,6 @@ public class InvoiceController {
 	
 	@RequestMapping("/ekp")
 	public void ekaipiao(Kpxx kpxx, HttpServletRequest request,HttpServletResponse response){
-		try {
-			request.setCharacterEncoding("iso8859-1");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
 		String fpqqlsh = XmlUtil.random();
 		kpxx.setFpqqlsh(fpqqlsh);
 		kpxx.setFplx("026");
