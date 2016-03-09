@@ -37,7 +37,11 @@ import javax.xml.bind.annotation.XmlType;
     "kprq",
     "fpzt",
     "resultcode",
-    "resultmsg"
+    "resultmsg",
+    "jqbh",
+    "skm",
+    "jym",
+    "ewm"
 })
 public class Kpxx {
 	@XmlElement(name = "ID", required = true)
@@ -102,7 +106,15 @@ public class Kpxx {
     private String bz;
 	@XmlElement(name = "KPRQ", required = true)
     private String kprq;
-
+	@XmlElement(name = "JQBH")
+	private String jqbh;
+	@XmlElement(name = "SKM")
+	private String skm;
+	@XmlElement(name = "JYM")
+	private String jym;
+	@XmlElement(name = "EWM")
+	private String ewm;
+	
     public Long getId() {
         return id;
     }
@@ -355,6 +367,46 @@ public class Kpxx {
 	public void setFddh(String fddh) {
 	
 		this.fddh = fddh;
+	}
+
+	public String getJqbh() {
+	
+		return jqbh;
+	}
+
+	public void setJqbh(String jqbh) {
+	
+		this.jqbh = jqbh;
+	}
+
+	public String getSkm() {
+	
+		return skm;
+	}
+
+	public void setSkm(String skm) {
+	
+		this.skm = skm;
+	}
+
+	public String getJym() {
+	
+		return jym;
+	}
+
+	public void setJym(String jym) {
+	
+		this.jym = jym;
+	}
+
+	public String getEwm() {
+	
+		return ewm;
+	}
+
+	public void setEwm(String ewm) {
+	
+		this.ewm = ewm;
 	}
     
     

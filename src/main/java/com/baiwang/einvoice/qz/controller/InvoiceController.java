@@ -24,6 +24,7 @@ import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.util.InvoiceUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
@@ -171,5 +172,41 @@ public class InvoiceController {
 		}
 		fpService.updateFpztByFpqqlsh(fpqqlsh);
 		return "success";
+	}
+	
+	@RequestMapping("/callback")
+	@ResponseBody
+	public HashMap<String, Object> callback(String xml , String fpqqlsh){
+		
+		HashMap<String, Object> result = new HashMap<>();
+		String returncode = InvoiceUtil.getIntervalValue(xml, "<returncode>", "</returncode>");
+		String returnmsg = InvoiceUtil.getIntervalValue(xml, "<returnmsg>", "</returnmsg>");
+		String jqbh = InvoiceUtil.getIntervalValue(xml, "<jqbh>", "</jqbh>");
+		String fpdm = InvoiceUtil.getIntervalValue(xml, "<fpdm>", "</fpdm>");
+		String fphm = InvoiceUtil.getIntervalValue(xml, "<fphm>", "</fphm>");
+		String kprq = InvoiceUtil.getIntervalValue(xml, "<kprq>", "</kprq>");
+		String skm = InvoiceUtil.getIntervalValue(xml, "<skm>", "</skm>");
+		String jym = InvoiceUtil.getIntervalValue(xml, "<jym>", "</jym>");
+		
+		Kpxx fpxx = new Kpxx();
+		fpxx.setFpqqlsh(fpqqlsh);
+		fpxx.setResultcode(returncode);
+		fpxx.setResultmsg(returnmsg);
+		fpxx.setJqbh(jqbh);
+		fpxx.setFpdm(fpdm);
+		fpxx.setFphm(fphm);
+		fpxx.setKprq(kprq);
+		fpxx.setSkm(skm);
+		fpxx.setJym(jym);
+		
+		if("0".equals(returncode)){
+			fpxx.setFpzt("2");
+		}else{
+			fpxx.setFpzt("-1");
+		}
+		fpService.saveCallBackInfo(fpxx);
+		
+		result.put("status", "success");
+		return result;
 	}
 }

@@ -312,7 +312,7 @@
 	LEFT JOIN order_detail b
 	ON a.zddh = b.zddh
 	AND a.fddh = b.fddh
-	WHERE a.fpzt = '1' and a.fplx = '004' 
+	WHERE a.fpzt = '1' and a.fplx = '007' 
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>
@@ -334,7 +334,7 @@
 	LEFT JOIN order_detail b
 	ON a.zddh = b.zddh
 	AND a.fddh = b.fddh
-	WHERE a.fpzt = '1' and  a.fplx = '007'
+	WHERE a.fpzt = '1' and  a.fplx = '004'
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>

@@ -13,6 +13,7 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
+<hr>
 <div class="row">
  <div class="col-lg-10">
      <div class="ibox float-e-margins">
@@ -22,6 +23,7 @@
                         <th class="text-center">序号</th>
                         <th class="text-center">用户名</th>
                         <th class="text-center">用户所属地区</th>
+                        <th class="text-center">纳税人识别号</th>
                         <th class="text-center">是否有效</th>
                         <th class="text-center">注册时间</th>
                         <th class="text-center">操作</th>
@@ -37,6 +39,7 @@
                            <c:if test="${user.userType==0}">北京</c:if>
                            <c:if test="${user.userType==1}">上海</c:if>
                        </td>
+                       <td class="text-center">${user.xsfnsrsbh}</td>
                        <td class="text-center">
                            <c:if test="${user.islock==false}">是</c:if>
                            <c:if test="${user.islock==true}">否</c:if>
