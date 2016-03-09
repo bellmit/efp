@@ -26,7 +26,10 @@ var pageCount = 1;
 var skconf = null;
 var printconf = null;
 var fphmlist = null;
-function chaxun(){
+function chaxun(vvv){
+	if(vvv == 1){
+		$('#requestPage').val(1);
+	}
 	var params = $('#queryForm').serialize();
 	$.ajax({
 		type:"POST",
@@ -255,7 +258,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 		
 	   <div class="form-group col-sm-5">
 	      <div class="col-sm-offset-2 col-sm-10">
-	         <button type="button" class="btn btn-default" onclick="chaxun();">查询</button>
+	         <button type="button" class="btn btn-default" onclick="chaxun(1);">查询</button>
 	      </div>
 	   </div>
 	</div>
