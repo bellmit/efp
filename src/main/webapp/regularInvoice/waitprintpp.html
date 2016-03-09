@@ -52,12 +52,22 @@ function chaxun(vvv){
         				var fpqqlsh = "'" + data.list[i].fpqqlsh + "'";
         				var fpdm = "'" + data.list[i].fpdm + "'";
         				var fphm = "'" + data.list[i].fphm + "'";
+        				var sqsj = ''
+        				if(data.list[i].sqsj != null){
+        					sqsj = data.list[i].sqsj;
+        				}
+        				var kpdq = '';
+        				if(data.list[i].kpdq == '0'){
+        					kpdq = '北京';
+        				}else{
+        					kpdq = '上海';
+        				}
         				tbo = tbo + '<tr>'
        						+'<td class="">'+data.list[i].zddh+'</td>'
        						+'<td>'+data.list[i].hym+'</td>'
        						+'<td>'+data.list[i].shr+'</td>'
-       						+'<td>'+data.list[i].sqsj+'</td>'
-       						+'<td>'+data.list[i].kpdq+'</td>'
+       						+'<td>'+sqsj+'</td>'
+       						+'<td>'+kpdq+'</td>'
        						+'<td>'+data.list[i].fpzl+'</td>'
        						+'<td>'+data.list[i].fptt+'</td>'
        						+'<td>'+data.list[i].fpnr+'</td>'
