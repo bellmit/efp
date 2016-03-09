@@ -1,4 +1,4 @@
-﻿﻿﻿//输出控件
+﻿//输出控件
 document.write("<object id=\"LODOP_OB\" "
 		+ "classid=\"clsid:2105C259-1E0C-4534-8141-A753534CB4CA\" "
 		+ "width=\"0\" height=\"0\">"
@@ -14,11 +14,11 @@ if (navigator.appVersion.indexOf("MSIE")>=0){
 }else{
 	LODOP=document.getElementById('LODOP_EM');
 }
-/*if (LODOP==null||typeof(LODOP.VERSION)=="undefined"||LODOP.VERSION!='6.1.9.8'){
+if (LODOP==null||typeof(LODOP.VERSION)=="undefined"||LODOP.VERSION!='6.1.9.8'){
 	location.href="../kphy/kjxz.xhtml";
 }else{
 	LODOP.SET_LICENSES("ZCSB技术处研发中心","545C44BD459DBBAFB79F18A0F8160A12","","");
-}*/
+}
 //限制金额项数字
 function limit_money_input(a) {
 	var ja = $(a);
