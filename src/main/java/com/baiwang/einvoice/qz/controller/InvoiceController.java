@@ -5,6 +5,9 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -233,7 +236,7 @@ public class InvoiceController {
 	}
 	
 	@RequestMapping("/ekp")
-	public void ekaipiao(Kpxx kpxx, List<Fpmx> fpmxList , HttpServletRequest request){
+	public void ekaipiao(Kpxx kpxx, Fpmx[] fpmxList , HttpServletRequest request){
 		String fpqqlsh = XmlUtil.random();
 		kpxx.setFpqqlsh(fpqqlsh);
 		Map<String, String> map = new HashMap<>();
@@ -248,7 +251,7 @@ public class InvoiceController {
 					UUID uuid = UUID.randomUUID();
 					correlationId = uuid.toString();
 					logger.info("*****订单号为:" + fpqqlsh + "的关联id为:" + correlationId);
-					sender.sendMessage(XmlUtil.toEInvoice(kpxx,fpmxList).toString(), 
+					sender.sendMessage(XmlUtil.toEInvoice(kpxx,new ArrayList<>(Arrays.asList(fpmxList))).toString(), 
 							correlationId);
 				}catch(Exception e){
 					logger.error("*********订单号：" + fpqqlsh + ",sendMsg网络异常");
