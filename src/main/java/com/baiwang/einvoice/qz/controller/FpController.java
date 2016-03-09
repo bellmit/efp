@@ -51,7 +51,7 @@ public class FpController {
 	@Autowired
     private JmsTemplate jmsTemplate2;
 	
-	@RequestMapping(value="save",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	@RequestMapping(value="save",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
 		Map<String, String> map = new HashMap<>();
@@ -150,7 +150,7 @@ public class FpController {
 		
 	}
 	
-	@RequestMapping(value="receive",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	@RequestMapping(value="receive",method=RequestMethod.POST)
 	@ResponseBody
 	public String receive(String xml) throws UnsupportedEncodingException{
 		
