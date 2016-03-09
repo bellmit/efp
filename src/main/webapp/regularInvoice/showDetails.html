@@ -18,7 +18,9 @@
 <style type="text/css">
 th,td{width: 120px; height: 35px;text-align:center;}
 </style>
-
+<script type="text/javascript">
+var pageCount = 1;
+</script>
 
 
 </head>
@@ -60,7 +62,10 @@ th,td{width: 120px; height: 35px;text-align:center;}
     </div>
     <div class="pageDown">下一页</div>
 </div>
-
+<form action="">
+<input type="hidden" id='requestPage' name='requestPage' value='1'><!-- 请求页数 -->
+<input type="hidden" id='pageSize' name='pageSize' value='2'><!-- 每页行数 -->
+</form>
 </body>
 <script type="text/javascript">
 function request(paras) {
@@ -81,59 +86,68 @@ function request(paras) {
 var begin = decodeURI(request("begin"));
 var end = decodeURI(request("end"));
 var fplx = decodeURI(request("fplx"));
+chaxun();
+function chaxun(){
+	var params = {'begin' : begin, 'end' : end, 'fplx': fplx, 'requestPage': $('#requestPage').val(), 'pageSize':$('#pageSize').val()};
+	//alert(JSON.stringify(params))
+	$.ajax({
+		type:"POST",
+	    url: "../printpps/showDetail",
+	    data: params,
+	    async: false,
+	    success: function (data) {
+	    	//alert(JSON.stringify(data))
+	    	pageCount = data.pageCount;
+			var cc = $('#requestPage').val()-1;
+	    	if(pageCount>5){
+	    		page_icon(1,5,cc);
+	    	}else{
+	    		page_icon(1,pageCount,cc);
+	    	}	
+	    		$("#printBody").children().remove();
+	    	//alert(data.length)
+	    		if(data.list.length>0){
+					var tbo = '';
+	    			for(var i=0;i<data.list.length;i++){
+	    				tbo = tbo + '<tr>'
+	   						+'<td class="">'+data.list[i].zddh+'</td>'
+	   						+'<td>'+data.list[i].hym+'</td>'
+	   						+'<td>'+data.list[i].shr+'</td>'
+	   						+'<td>'+data.list[i].sqsj+'</td>'
+	   						+'<td>'+data.list[i].kpdq+'</td>'
+	   						+'<td>'+data.list[i].fpzl+'</td>'
+	   						+'<td>'+data.list[i].fptt+'</td>'
+	   						+'<td>'+data.list[i].fpnr+'</td>'
+	   						+'<td>'+data.list[i].hjje+'</td>'
+	   						+'<td>'+data.list[i].hjse+'</td>'
+	   						+'<td>'+data.list[i].jshj+'</td>'
+	   						+'<td>'+data.list[i].kprq+'</td>'
+	   						+'<td>'+data.list[i].fpdm+'</td>'
+	   						+'<td>'+data.list[i].fphm+'</td>'
+	   						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
+	   						//+'<td>'+'<a href="javascript:" onclick="dayin(' + data[i].fpqqlsh + ');">打印</a>' + '</td>'
+	   						
+	   						+'</tr>';
+	    			}
+	    			//alert(tbo)
+	    			$("#printBody").html(tbo);
+	    			/* $('.invitetable1 tr:odd').css('background','#fffceb');
+	    			parent.dyniframesize('openli');  */
+	    		}else{
+	    			//alert(0)
+	    		}
+	    	
+	    },
+	    error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	if(XMLHttpRequest.responseText=="timeOut"){
+	    		location.reload();
+	    	}else{
+	    		alert("Error");
+	    	}
+	    }
+	});
+}
 
-var params = {'begin' : begin, 'end' : end, 'fplx': fplx};
-
-$.ajax({
-	type:"POST",
-    url: "../printpps/showDetail",
-    data: params,
-    async: false,
-    success: function (data) {
-    	//alert(JSON.stringify(data))
-    		
-    		$("#printBody").children().remove();
-    	//alert(data.length)
-    		if(data.length>0){
-				var tbo = '';
-    			for(var i=0;i<data.length;i++){
-    				tbo = tbo + '<tr>'
-   						+'<td class="">'+data[i].zddh+'</td>'
-   						+'<td>'+data[i].hym+'</td>'
-   						+'<td>'+data[i].shr+'</td>'
-   						+'<td>'+data[i].sqsj+'</td>'
-   						+'<td>'+data[i].kpdq+'</td>'
-   						+'<td>'+data[i].fpzl+'</td>'
-   						+'<td>'+data[i].fptt+'</td>'
-   						+'<td>'+data[i].fpnr+'</td>'
-   						+'<td>'+data[i].hjje+'</td>'
-   						+'<td>'+data[i].hjse+'</td>'
-   						+'<td>'+data[i].jshj+'</td>'
-   						+'<td>'+data[i].kprq+'</td>'
-   						+'<td>'+data[i].fpdm+'</td>'
-   						+'<td>'+data[i].fphm+'</td>'
-   						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
-   						//+'<td>'+'<a href="javascript:" onclick="dayin(' + data[i].fpqqlsh + ');">打印</a>' + '</td>'
-   						
-   						+'</tr>';
-    			}
-    			//alert(tbo)
-    			$("#printBody").html(tbo);
-    			/* $('.invitetable1 tr:odd').css('background','#fffceb');
-    			parent.dyniframesize('openli');  */
-    		}else{
-    			//alert(0)
-    		}
-    	
-    },
-    error:function(XMLHttpRequest, textStatus, errorThrown) {
-    	if(XMLHttpRequest.responseText=="timeOut"){
-    		location.reload();
-    	}else{
-    		alert("Error");
-    	}
-    }
-});
 
 </script>
 </html>

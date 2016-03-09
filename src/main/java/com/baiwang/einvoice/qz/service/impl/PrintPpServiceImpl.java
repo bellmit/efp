@@ -106,11 +106,17 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	}
 
 	@Override
-	public List<Map<String, String>> showDetail(String begin, String end, String fplx) {
-		
-		return dao.showDetail(begin, end, fplx);
+	public List<Map<String, String>> showDetail(String begin, String end, String fplx, int requestPage, int pageSize) {
+		requestPage = (requestPage - 1) * pageSize;
+		return dao.showDetail(begin, end, fplx, requestPage, pageSize);
 	}
 
+	@Override
+	public int queryDetailCount(String begin, String end, String fplx) {
+		
+		return dao.queryDetailCount(begin, end, fplx);
+	}
+	
 	@Override
 	public SkConfig getSkParameter(String kpdq) {
 		

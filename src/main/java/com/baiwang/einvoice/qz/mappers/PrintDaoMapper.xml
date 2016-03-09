@@ -94,6 +94,15 @@
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
   WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
   <![CDATA[and a.fphm <= #{end} and a.fphm >= #{begin} ]]>
+  LIMIT #{requestPage},#{pageSize}
+  </select>
+  
+  <select id="queryDetailCount" parameterType="map" resultType="int">
+  	select count(a.id) count
+	  from kpxx a  
+	  LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
+	  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
+	  <![CDATA[and a.fphm <= #{end} and a.fphm >= #{begin} ]]>
   </select>
   
   <update id="savePrintResult">

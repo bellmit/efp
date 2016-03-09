@@ -12,7 +12,7 @@ public interface IPrintPpService {
 
 	List<Map<String, String>> getPrintPpsList(String beginDate, String endDate, String beginfphm, String endfphm, String fplx);
 
-	List<Map<String, String>> showDetail(String begin, String end, String fplx);
+	List<Map<String, String>> showDetail(String begin, String end, String fplx, int requestPage, int pageSize);
 
 	SkConfig getSkParameter(String userType);
 
@@ -23,5 +23,7 @@ public interface IPrintPpService {
 	List<Map<String, String>> getPrintsFphm(String beginfphm, String endfphm);
 
 	int queryCount(String beginDate, String endDate, String kpdq, String zddh, String fplx);
+
+	int queryDetailCount(String begin, String end, String fplx);
 
 }

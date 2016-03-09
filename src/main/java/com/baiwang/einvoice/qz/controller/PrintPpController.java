@@ -83,13 +83,19 @@ public class PrintPpController {
 	}
 	@RequestMapping("printpps/showDetail")
 	@ResponseBody
-	public List<Map<String,String>> showDetail(String begin, String end, String fplx){
+	public Map<String, Object> showDetail(String begin, String end, String fplx, int requestPage, int pageSize){
 		
 		System.out.println(begin);
 		System.out.println(end);
 		System.out.println(fplx);
+		List<Map<String,String>> list = service.showDetail(begin, end, fplx, requestPage, pageSize);
+		int size = service.queryDetailCount(begin, end, fplx);
+		int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
 		
-		return service.showDetail(begin, end, fplx);
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("pageCount", pageCount);
+		return  map;
 	}
 	
 	@RequestMapping("print/getParameter")
