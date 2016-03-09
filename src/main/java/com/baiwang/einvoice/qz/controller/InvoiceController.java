@@ -5,7 +5,6 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,7 +37,6 @@ import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
-import com.baiwang.einvoice.qz.service.IResultOfKpService;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
 import com.baiwang.einvoice.util.InvoiceUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -60,7 +58,7 @@ public class InvoiceController {
 	@Resource
 	private EInvoiceSenders sender;
 	@Resource
-	private IResultOfKpService resultService;
+	private IResultOfSkService resultService;
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
