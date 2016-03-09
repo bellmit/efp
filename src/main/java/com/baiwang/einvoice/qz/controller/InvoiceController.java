@@ -249,6 +249,8 @@ public class InvoiceController {
 		kpxx.setXsfyhzh("中行499099991291");
 		kpxx.setYfpdm("");
 		kpxx.setYfphm("");
+		kpxx.setSjh(request.getParameter("telphone"));
+		kpxx.setYx(request.getParameter("email"));
 		Map<String, String> map = new HashMap<>();
 		List<Fpmx> fpmxList = new ArrayList<>();
 		String [] xmmc = request.getParameterValues("xmmc");
