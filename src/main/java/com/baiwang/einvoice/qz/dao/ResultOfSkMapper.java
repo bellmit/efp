@@ -8,7 +8,7 @@ import com.baiwang.einvoice.qz.beans.Kpxx;
 
 public interface ResultOfSkMapper {
 
-	void saveResultOfSk(Map<String, String> map);
+	Integer saveResultOfSk(Map<String, String> map);
 
 	Kpxx queryResult(@Param("zddh")String zddh, @Param("fddh")String fddh, @Param("fplx")String fplx);
 

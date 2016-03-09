@@ -21,8 +21,13 @@ public class ResultOfSkServiceImpl implements IResultOfSkService {
 	private ResultOfSkMapper resultDao;
 	
 	public void saveResultOfSk(Map<String, String> map) {
-		resultDao.saveResultOfSk(map);
-		
+		try{
+			
+			int a = resultDao.saveResultOfSk(map);
+			System.out.println("+++++++++++++++++++++++" + a);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	/**

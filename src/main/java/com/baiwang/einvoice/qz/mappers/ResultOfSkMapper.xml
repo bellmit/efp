@@ -15,10 +15,10 @@
 	      	  fpzt = #{fpzt,jdbcType=VARCHAR},
 	      	</if> 
 	      	<if test="returnCode != null and returnCode != ''" >
-	      	  returnCode = #{returnCode,jdbcType=VARCHAR},
+	      	  resultCode = #{returnCode,jdbcType=VARCHAR},
 	      	</if> 
 	      	<if test="returnMsg != null and returnMsg != ''" >
-	          returnMsg = #{returnMsg,jdbcType=VARCHAR},
+	          resultCode = #{returnMsg,jdbcType=VARCHAR},
 	      	</if> 
 	      	<if test="bz != null and bz != ''" >
 	      	  bz = #{bz,jdbcType=VARCHAR},
