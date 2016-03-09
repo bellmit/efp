@@ -1,4 +1,4 @@
-﻿//输出控件
+﻿﻿//输出控件
 document.write("<object id=\"LODOP_OB\" "
 		+ "classid=\"clsid:2105C259-1E0C-4534-8141-A753534CB4CA\" "
 		+ "width=\"0\" height=\"0\">"
