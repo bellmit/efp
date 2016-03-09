@@ -37,6 +37,10 @@ import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
+<<<<<<< HEAD
+=======
+import com.baiwang.einvoice.qz.service.IResultOfSkService;
+>>>>>>> branch 'master' of ssh://git@192.168.6.18:22/home/git/repositories/einvoice.git
 import com.baiwang.einvoice.qz.utils.XmlUtil;
 import com.baiwang.einvoice.util.InvoiceUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
