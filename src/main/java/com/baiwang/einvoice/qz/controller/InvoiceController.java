@@ -247,6 +247,8 @@ public class InvoiceController {
 		kpxx.setXsfdz("499099991291");
 		kpxx.setXsfdh("12321");
 		kpxx.setXsfyhzh("中行499099991291");
+		kpxx.setGmfdh("");
+		kpxx.setGmfdz(request.getParameter("gmfdz"));
 		kpxx.setYfpdm("");
 		kpxx.setYfphm("");
 		kpxx.setSjh(request.getParameter("telphone"));
