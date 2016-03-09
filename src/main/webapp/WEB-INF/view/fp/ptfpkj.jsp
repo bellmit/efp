@@ -235,7 +235,7 @@ function kjfp(fpqqlsh){
 	function checkAll(){
 		var chks = $('.chkbox_ex');
 		for(i=0;i<chks.length;i++){
-			chks[i].checked=$('#chkAll').prop('checked',true);
+			chks[i].checked=$('#chkAll').prop('checked');
 		}
 	}
 	//取消全选的勾

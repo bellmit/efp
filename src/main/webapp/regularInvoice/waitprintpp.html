@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>待打印普通发票(单打)</title>
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
 <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
 	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
-<!-- <script type="text/javascript" src="../js/jquery/jquery-2.1.1.min.js"></script> -->
-<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 <script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -29,7 +28,7 @@ var printconf = null;
 function chaxun(){
 	var params = $('#queryForm').serialize();
 	$.ajax({
-		type:"GET",
+		type:"POST",
         url: "../printpp/printlist",
         data: params,
         async: false,
@@ -46,6 +45,9 @@ function chaxun(){
         		if(data.list.length>0){
     				var tbo = '';
         			for(var i=0;i<data.list.length;i++){
+        				var fpqqlsh = "'" + data.list[i].fpqqlsh + "'";
+        				var fpdm = "'" + data.list[i].fpdm + "'";
+        				var fphm = "'" + data.list[i].fphm + "'";
         				tbo = tbo + '<tr>'
        						+'<td class="">'+data.list[i].zddh+'</td>'
        						+'<td>'+data.list[i].hym+'</td>'
@@ -61,8 +63,9 @@ function chaxun(){
        						+'<td>'+data.list[i].kprq+'</td>'
        						+'<td>'+data.list[i].fpdm+'</td>'
        						+'<td>'+data.list[i].fphm+'</td>'
+       						+'<td>'+data.list[i].fpqqlsh+'</td>'
        						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
-       						+'<td>'+'<a href="javascript:" onclick="dayin(' + data.list[i].fpqqlsh +',' + data.list[i].fpdm +',' + data.list[i].fphm+ ');">打印</a>' + '</td>'
+       						+'<td>'+'<a href="javascript:" onclick="dayin(' + fpqqlsh +',' + fpdm +',' + fphm+ ');">打印</a>' + '</td>'
        						
        						+'</tr>';
         			}
@@ -97,7 +100,7 @@ function dayin(fpqqlsh,fpdm, fphm){
 function getParameter(){
 	var params = {'fplx' : '007'};
 	$.ajax({
-		type:"GET",
+		type:"POST",
         url: "../print/getParameter",
         data: params,
         async: false,
@@ -128,7 +131,8 @@ function SetParameter() {
 	}
 	
 	//01设置初始化参数
-	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>00000000</keypwd>\r\n<aqm>50543ed18fc81784d9a17a18e10a9d68e7e4c4303568c14e3aa1280f87006578b59ca8d492921c725a1199f9c7fc9ba21c8f15d953fb673a5612a52e813c2ade0ebcf42c7d7e0a1fe15a8655a2919176bd3801d3be36654e4fffe8fb38ae4c02498b43de96c00e23765a204fbd16752c9514ffef10467646892f32ad3a146d3ea9928c8a622aa349bfdbd2b49eae3f7e852be50df3c0532447c99abfded4b5c07871cef1ebbf1a9986df508f4fe9f452eb44b6a220df76a90830a0e35c4483c6f85edb5590858fe9685d45895c5c1a16ea689db99ba1f4d4103902dab1972f8a6f7bb2ba1f84fa37c76d238016cc40e4ef08025b3e226c48e43adb1c0daf2d8b</aqm>\r\n</body>\r\n</business>";		
+	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>";		
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>00000000</keypwd>\r\n<aqm>50543ed18fc81784d9a17a18e10a9d68e7e4c4303568c14e3aa1280f87006578b59ca8d492921c725a1199f9c7fc9ba21c8f15d953fb673a5612a52e813c2ade0ebcf42c7d7e0a1fe15a8655a2919176bd3801d3be36654e4fffe8fb38ae4c02498b43de96c00e23765a204fbd16752c9514ffef10467646892f32ad3a146d3ea9928c8a622aa349bfdbd2b49eae3f7e852be50df3c0532447c99abfded4b5c07871cef1ebbf1a9986df508f4fe9f452eb44b6a220df76a90830a0e35c4483c6f85edb5590858fe9685d45895c5c1a16ea689db99ba1f4d4103902dab1972f8a6f7bb2ba1f84fa37c76d238016cc40e4ef08025b3e226c48e43adb1c0daf2d8b</aqm>\r\n</body>\r\n</business>";		
 	try {
 		ret = sk.Operate(sInputInfo);
 		/* var pos=ret.indexOf("<returncode>"); */
@@ -155,7 +159,9 @@ function PrintInvoice(fpqqlsh,fpdm, fphm){
 	var returnmsgsMarg = getTotalMidValue(sMargret, "<returnmsg>","</returnmsg>");	
 	if(returncodesMarg==0&&returnmsgsMarg=="成功"){
 		//02、打印发票
+		//var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>007</fplxdm><fpdm>"+fpdm+"</fpdm><fphm>"+ fphm+"</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
 		var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>007</fplxdm><fpdm>"+fpdm+"</fpdm><fphm>"+ fphm+"</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+		
 		alert(sPrintInfo);
 		sPrintInret = sk.Operate(sPrintInfo);
 		var returncodesPrintIn = getTotalMidValue(sPrintInret, "<returncode>","</returncode>");
@@ -175,14 +181,14 @@ function PrintInvoice(fpqqlsh,fpdm, fphm){
 function savePrintResult(fpqqlsh,fpzt){
 	var params = {'fpqqlsh': fpqqlsh,'fpzt' : fpzt};
 	$.ajax({
-		type:"GET",
+		type:"POST",
         url: "../print/savePrintResult",
         data: params,
         async: false,
         success: function (data) {
-        	//alert(JSON.stringify(data))
-        	if(data.code == '1'){
+        	if(data == '1'){
         		alert("打印成功！");
+        		chaxun();
         	}else{
         		alert("打印成功,保存失败");
         	}
@@ -276,6 +282,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 	<th>开票日期</th>
 	<th>发票代码</th>
 	<th>发票号码</th>
+	<th>发票请求流水号</th>
 	<th>操作</th>
 </thead>
 <tbody id="printBody">

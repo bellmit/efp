@@ -15,13 +15,13 @@ $(function(){
 		
 		$('#requestPage').val($(this).html());//--------页面加
 		chaxun();//--------页面加
-		if(pageCount > 5){
+		/*if(pageCount > 5){
 			var pageNum = parseInt($(this).html());//获取当前页数
 			pageGroup(pageNum,pageCount);
 		}else{
 			$(this).addClass("on");
 			$(this).siblings("li").removeClass("on");
-		}
+		}*/
 	});
 	
 	//点击上一页触发

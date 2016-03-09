@@ -212,14 +212,13 @@ function getTotalMidValue(source, priStr, suxStr) {
 			alert(data.xml);
 			var xml = data.xml;
 			for(var i=0;i<xml.length;i++){
-				alert(xml[i]);
 				try {
 					invoiceIssueRet = sk.Operate(xml[i]);
 					var invoiceIssueReturncode = getTotalMidValue(invoiceIssueRet, "<returncode>","</returncode>");
 					var invoiceIssueRetReturnmsg = getTotalMidValue(invoiceIssueRet, "<returnmsg>","</returnmsg>");	
 					var fpqqlsh = getTotalMidValue(xml[i], "<fpqqlsh>","</fpqqlsh>");
 					if(invoiceIssueReturncode==0&&invoiceIssueRetReturnmsg=="成功"){
-						alert(invoiceIssueRet);	
+						alert(fpqqlsh);	
 						$.ajax({
 					 	    type:"POST",
 					 	    url:"<%=basePath%>/fpkj/callback",
@@ -243,7 +242,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 	function checkAll(){
 		var chks = $('.chkbox_ex');
 		for(i=0;i<chks.length;i++){
-			chks[i].checked=$('#chkAll').attr('checked');
+			chks[i].checked=$('#chkAll').prop('checked');
 		}
 	}
 	//取消全选的勾
