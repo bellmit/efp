@@ -185,7 +185,8 @@ public class XmlToUbl {
 		sb.append(				"</cac:PartyIdentification>");
 		sb.append(				"<cac:PartyName>");
 		sb.append(					"<cbc:Name>");
-		sb.append(						InvoiceUtil.getIntervalValue(xml, "<GMF_MC>", "</GMF_MC>"));//22
+		//sb.append(						InvoiceUtil.getIntervalValue(xml, "<GMF_MC>", "</GMF_MC>"));//22
+		sb.append("中国保险信息技术管理有限公司");//22
 		sb.append(					"</cbc:Name>");
 		sb.append(				"</cac:PartyName>");
 		sb.append(				"<cac:PostalAddress>");
