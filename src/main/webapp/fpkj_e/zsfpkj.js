@@ -741,7 +741,7 @@ function newLine(index){
 			+ index + "' name='sl"
 			+ "' style='height:22px;width:98%;'>"+szsmStr+"</select></td>"
 			+ "<td style='border-right: none;'><input id='se_" + index
-			+ "' style='text-align:right;' name='se' disabled='disabled'/>" +
+			+ "' style='text-align:right;' name='se' readOnly='readOnly'/>" +
 			"<input id='hsbz_"+index+"' name='hsbz"+"' " +
 			"value='"+$("#sfhs").val()+"' type='hidden'/></td></tr>";
 }
