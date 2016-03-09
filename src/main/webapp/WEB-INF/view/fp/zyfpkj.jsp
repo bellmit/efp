@@ -212,14 +212,13 @@ function getTotalMidValue(source, priStr, suxStr) {
 			alert(data.xml);
 			var xml = data.xml;
 			for(var i=0;i<xml.length;i++){
-				alert(xml[i]);
 				try {
 					invoiceIssueRet = sk.Operate(xml[i]);
 					var invoiceIssueReturncode = getTotalMidValue(invoiceIssueRet, "<returncode>","</returncode>");
 					var invoiceIssueRetReturnmsg = getTotalMidValue(invoiceIssueRet, "<returnmsg>","</returnmsg>");	
 					var fpqqlsh = getTotalMidValue(xml[i], "<fpqqlsh>","</fpqqlsh>");
 					if(invoiceIssueReturncode==0&&invoiceIssueRetReturnmsg=="成功"){
-						alert(invoiceIssueRet);	
+						alert(fpqqlsh);	
 						$.ajax({
 					 	    type:"POST",
 					 	    url:"<%=basePath%>/fpkj/callback",

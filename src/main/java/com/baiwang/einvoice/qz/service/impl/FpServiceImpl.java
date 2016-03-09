@@ -63,7 +63,7 @@ public class FpServiceImpl implements FpService {
 		String fddh = orderDetail.getFddh();
 		
 		Kpxx tempKpxx = dao.selectByDdhm(zddh, fddh);
-		if(tempKpxx != null && "-1".equals(tempKpxx.getFpzt())){
+		if(tempKpxx != null){
 			String tempFpqqlsh = tempKpxx.getFpqqlsh();
 			orderDetailDao.deleteByFpqqlsh(tempFpqqlsh);
 			logger.info("订单信息重复，删除订单号为【"+zddh+"/"+fddh+"】的开票信息！");
