@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -239,6 +238,11 @@ public class InvoiceController {
 	
 	@RequestMapping("/ekp")
 	public void ekaipiao(Kpxx kpxx, HttpServletRequest request,HttpServletResponse response){
+		try {
+			request.setCharacterEncoding("iso8859-1");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
 		String fpqqlsh = XmlUtil.random();
 		kpxx.setFpqqlsh(fpqqlsh);
 		kpxx.setFplx("026");
