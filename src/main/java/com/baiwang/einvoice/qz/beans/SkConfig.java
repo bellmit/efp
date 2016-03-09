@@ -9,6 +9,12 @@ public class SkConfig {
 
     private String port;
 
+    private String keypwd;
+    
+    private String aqm;
+    
+    private String kpzdbs;
+    
     public Long getId() {
         return id;
     }
@@ -40,4 +46,36 @@ public class SkConfig {
     public void setPort(String port) {
         this.port = port == null ? null : port.trim();
     }
+
+	public String getKeypwd() {
+	
+		return keypwd;
+	}
+
+	public void setKeypwd(String keypwd) {
+	
+		this.keypwd = keypwd;
+	}
+
+	public String getAqm() {
+	
+		return aqm;
+	}
+
+	public void setAqm(String aqm) {
+	
+		this.aqm = aqm;
+	}
+
+	public String getKpzdbs() {
+	
+		return kpzdbs;
+	}
+
+	public void setKpzdbs(String kpzdbs) {
+	
+		this.kpzdbs = kpzdbs;
+	}
+    
+    
 }
