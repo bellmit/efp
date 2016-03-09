@@ -14,11 +14,11 @@
 	      	<if test="fpzt != null and fpzt != ''" >
 	      	  fpzt = #{fpzt,jdbcType=VARCHAR},
 	      	</if> 
-	      	<if test="resultCode != null and resultCode != ''" >
-	      	  resultcode = #{resultCode,jdbcType=VARCHAR},
+	      	<if test="returnCode != null and returnCode != ''" >
+	      	  returnCode = #{returnCode,jdbcType=VARCHAR},
 	      	</if> 
-	      	<if test="resultmsg != null and resultmsg != ''" >
-	          resultMsg = #{returnMsg,jdbcType=VARCHAR},
+	      	<if test="returnMsg != null and returnMsg != ''" >
+	          returnMsg = #{returnMsg,jdbcType=VARCHAR},
 	      	</if> 
 	      	<if test="bz != null and bz != ''" >
 	      	  bz = #{bz,jdbcType=VARCHAR},
