@@ -77,7 +77,7 @@ public class FpController {
 		/*ResultOfKp result = resultService.queryResult(customOrder.getDdhm(), "");*/
 		Map<String, String> result = resultService.queryResult(kpxx.getZddh(), kpxx.getFddh(), kpxx.getFplx());//根据两个订单号查
 		
-		if(null == result){
+		if(null == result || result.get("returnCode").equals("4000")){
 			fpService.saveInfo(orderDetail, kpxx, list , fpqqlsh);
 			
 			//String correlationId = "";
