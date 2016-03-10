@@ -56,6 +56,14 @@ public class PrintPpServiceImpl implements IPrintPpService {
 			System.out.println("第一个发票号码：" + _beginfphm);
 			
 			int _beforefphm = _endfphm;
+			if(list.size() == 1){
+				Map<String, String> _map = new HashMap<String, String>();
+				_map.put("beginfphm", Integer.toString(_beginfphm));
+				_map.put("endfphm", Integer.toString(_endfphm));
+				_map.put("beginDate", _beginDate);
+				_map.put("endDate", _endDate);
+				_list.add(_map);
+			}
 			
 			for(int i = 1; i < list.size(); i++){
 				Map<String, String> _map = new HashMap<String, String>();
