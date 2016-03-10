@@ -187,8 +187,8 @@ function SetPrintLocation(){
 function PrintInvoice(fpqqlsh,fpdm, fphm){	
 	
 		//02、打印发票
-		var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>007</fplxdm><fpdm>"+fpdm+"</fpdm><fphm>"+ fphm+"</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
-		alert(sPrintInfo);
+		var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>007</fplxdm><fpdm>"+fpdm+"</fpdm><fphm>"+ fphm+"</fphm><dylx>0</dylx><dyfs>1</dyfs></body></business>";
+		//alert(sPrintInfo);
 		sPrintInret = sk.Operate(sPrintInfo);
 		var returncodesPrintIn = getTotalMidValue(sPrintInret, "<returncode>","</returncode>");
 		var returnmsgsPrintIn = getTotalMidValue(sPrintInret, "<returnmsg>","</returnmsg>");
@@ -214,7 +214,7 @@ function savePrintResult(fpqqlsh,fpzt){
         success: function (data) {
         	//alert(JSON.stringify(data))
         	if(data == '1'){
-        		alert("打印成功！");
+        		//alert("打印成功！");
         		chaxun();
         	}else{
         		alert("打印成功,保存失败");
