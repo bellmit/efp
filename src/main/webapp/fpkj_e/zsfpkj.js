@@ -1,4 +1,4 @@
-﻿var cachedInfo,sfxmCount,szsmStr="",fskj=false;
+﻿﻿var cachedInfo,sfxmCount,szsmStr="",fskj=false;
 var widthMap = {};
 $(function() {
 	//生成占位行

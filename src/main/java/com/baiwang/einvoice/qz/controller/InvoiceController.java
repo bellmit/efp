@@ -238,11 +238,6 @@ public class InvoiceController {
 	
 	@RequestMapping("/ekp")
 	public void ekaipiao(Kpxx kpxx, HttpServletRequest request,HttpServletResponse response){
-		try {
-			request.setCharacterEncoding("iso8859-1");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
 		String fpqqlsh = XmlUtil.random();
 		kpxx.setFpqqlsh(fpqqlsh);
 		kpxx.setFplx("026");
@@ -252,8 +247,12 @@ public class InvoiceController {
 		kpxx.setXsfdz("499099991291");
 		kpxx.setXsfdh("12321");
 		kpxx.setXsfyhzh("中行499099991291");
+		kpxx.setGmfdh("");
+		kpxx.setGmfdz(request.getParameter("gmfdz"));
 		kpxx.setYfpdm("");
 		kpxx.setYfphm("");
+		kpxx.setSjh(request.getParameter("telphone"));
+		kpxx.setYx(request.getParameter("email"));
 		Map<String, String> map = new HashMap<>();
 		List<Fpmx> fpmxList = new ArrayList<>();
 		String [] xmmc = request.getParameterValues("xmmc");
