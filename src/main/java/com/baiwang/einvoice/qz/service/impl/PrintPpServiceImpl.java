@@ -79,21 +79,22 @@ public class PrintPpServiceImpl implements IPrintPpService {
 					}
 				}else{
 					_map.put("beginfphm", Integer.toString(_beginfphm));
-					_map.put("endfphm", Integer.toString(_beforefphm));
+					_map.put("endfphm", Integer.toString(_endfphm));
 					_map.put("beginDate", _beginDate);
 					_map.put("endDate", _endDate);
 					_list.add(_map);
 					
 					_beginfphm = fphm;
-//					_endfphm = fphm;
+					_endfphm = fphm;
 					_beginDate = list.get(i).get("kprq");
-//					_endDate = list.get(i).get("kprq");
+					_endDate = list.get(i).get("kprq");
 					if(i == (list.size() - 1)){//是否最后一个
-						_map.put("beginfphm", Integer.toString(_beginfphm));
-						_map.put("endfphm", Integer.toString(_beginfphm));
-						_map.put("beginDate", _beginDate);
-						_map.put("endDate", _beginDate);
-						_list.add(_map);
+						Map<String, String> _map_ = new HashMap<String, String>();
+						_map_.put("beginfphm", Integer.toString(_beginfphm));
+						_map_.put("endfphm", Integer.toString(_beginfphm));
+						_map_.put("beginDate", _beginDate);
+						_map_.put("endDate", _beginDate);
+						_list.add(_map_);
 					}
 				}
 				_beforefphm = fphm;

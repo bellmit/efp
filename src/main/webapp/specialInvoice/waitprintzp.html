@@ -154,7 +154,8 @@ function SetParameter() {
 }
 
 function PrintInvoice(fpqqlsh,fpdm, fphm){
-	
+	alert("printconf.topside:"+printconf.topside)
+	alert("printconf.leftside:"+printconf.leftside)
 	//01页边距设置
 	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"鍙戠エ鎵撳嵃\"><body yylxdm=\"1\"><kpzdbs>12345612346</kpzdbs><fplxdm>007</fplxdm><fpdm>1110000452</fpdm><fphm>38148009</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
 	var sMarginsInfo = " <?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20003\" comment=\"页边距设置\">\r\n<body yylxdm=\"1\">\r\n<fplxdm>004</fplxdm>\r\n<top>" + printconf.topside + "</top>\r\n<left>" + printconf.leftside + "</left>\r\n</body>\r\n</business>";		
