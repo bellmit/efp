@@ -291,15 +291,15 @@ public class InvoiceController {
 		
 		if(null == result){
 			
-			String correlationId = "";
+//			String correlationId = "";
 			if("026".equals(kpxx.getFplx())){
 				try{
-					UUID uuid = UUID.randomUUID();
-					correlationId = uuid.toString();
-					logger.info("*****订单号为:" + fpqqlsh + "的关联id为:" + correlationId);
+//					UUID uuid = UUID.randomUUID();
+//					correlationId = uuid.toString();
+					logger.info("*****订单号为:" + fpqqlsh + "的关联id为:" + fpqqlsh);
 					System.out.println("---------------"+XmlUtil.toEInvoice(kpxx,fpmxList).toString());
 					sender.sendMessage(XmlUtil.toEInvoice(kpxx,fpmxList).toString(), 
-							correlationId);
+							fpqqlsh);
 				}catch(Exception e){
 					logger.error("*********订单号：" + fpqqlsh + ",sendMsg网络异常");
 					e.printStackTrace();
@@ -310,10 +310,10 @@ public class InvoiceController {
 			
 				//从响应队列检索响应消息
 				ExecutorService executor = Executors.newSingleThreadExecutor();
-		        Future<String> future = executor.submit(new EnumResposeMessageTask(fpqqlsh, correlationId, jmsTemplate2, resultService));
+		        Future<String> future = executor.submit(new EnumResposeMessageTask(fpqqlsh, fpqqlsh, jmsTemplate2, resultService));
 				String success = "4400";
 		        try{
-		        	success = future.get(4, TimeUnit.SECONDS);
+		        	success = future.get(20, TimeUnit.SECONDS);
 		        	logger.info("响应队列检索响应消息:"+ success);
 		        }catch (InterruptedException e) {
 		        	future.cancel(true);
@@ -323,11 +323,11 @@ public class InvoiceController {
 		        	e.printStackTrace();
 		        } catch (TimeoutException e) {
 		        	e.printStackTrace();
-		        	String requestURL = request.getRequestURL().toString();
-		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + fpqqlsh;
+//		        	String requestURL = request.getRequestURL().toString();
+//		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + fpqqlsh;
 		    		
 		    		map.put("returnCode", "2000");
-					map.put("returnMsg", "正在处理中,请稍后查询" + url);
+					map.put("returnMsg", "正在处理中,请稍后查询");
 		        } finally {
 		            executor.shutdown();
 		        }

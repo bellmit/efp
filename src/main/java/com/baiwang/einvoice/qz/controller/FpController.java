@@ -102,7 +102,7 @@ public class FpController {
 		        Future<String> future = executor.submit(new EnumResposeMessageTask(orderDetail.getZddh()+orderDetail.getFddh(), fpqqlsh, jmsTemplate2, resultService));
 				String success = "4400";
 		        try{
-		        	success = future.get(4, TimeUnit.SECONDS);
+		        	success = future.get(20, TimeUnit.SECONDS);
 		        	logger.info("响应队列检索响应消息:"+ success);
 		        }catch (InterruptedException e) {
 		        	future.cancel(true);

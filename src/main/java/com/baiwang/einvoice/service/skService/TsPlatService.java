@@ -40,7 +40,7 @@ public class TsPlatService {
 			out.write(ubl);
 			out.flush();
 			out.close();
-			logger.error("////////请求ts发票平台//////responseCode///////" + conn.getResponseCode());
+			logger.info("////////请求ts发票平台//////responseCode///////" + conn.getResponseCode());
 			if(conn.getResponseCode() >= 200 && conn.getResponseCode() < 300){
 				success = "0000";
 			}else{
