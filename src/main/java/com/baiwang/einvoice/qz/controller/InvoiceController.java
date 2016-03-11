@@ -4,7 +4,10 @@
 
 package com.baiwang.einvoice.qz.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +21,7 @@ import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -35,7 +39,7 @@ import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
-import com.baiwang.einvoice.qz.service.IResultOfKpService;
+import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
 import com.baiwang.einvoice.util.InvoiceUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -57,7 +61,7 @@ public class InvoiceController {
 	@Resource
 	private EInvoiceSenders sender;
 	@Resource
-	private IResultOfKpService resultService;
+	private IResultOfSkService resultService;
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
@@ -116,7 +120,7 @@ public class InvoiceController {
 		if (!(null == currentPage || "".equals(currentPage))) {
 			page.setPageIndex(Integer.parseInt(currentPage));
 		}
-		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listPlain(param,
+		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listSpecial(param,
 				page.getPageIndex(), page.getPageSize());
 		
 		page.setPageSize(kpxxList.getPaginator().getLimit()); 
@@ -233,23 +237,69 @@ public class InvoiceController {
 	}
 	
 	@RequestMapping("/ekp")
-	public void ekaipiao(Kpxx kpxx, List<Fpmx> fpmxList , HttpServletRequest request){
+	public void ekaipiao(Kpxx kpxx, HttpServletRequest request,HttpServletResponse response){
 		String fpqqlsh = XmlUtil.random();
 		kpxx.setFpqqlsh(fpqqlsh);
+		kpxx.setFplx("026");
+		kpxx.setKplx((byte)0);
+		kpxx.setXsfmc("百旺股份6");
+		kpxx.setXsfnsrsbh("11010800000000000006");
+		kpxx.setXsfdz("499099991291");
+		kpxx.setXsfdh("12321");
+		kpxx.setXsfyhzh("中行499099991291");
+		kpxx.setGmfdh("");
+		kpxx.setGmfdz(request.getParameter("gmfdz"));
+		kpxx.setYfpdm("");
+		kpxx.setYfphm("");
+		kpxx.setSjh(request.getParameter("telphone"));
+		kpxx.setYx(request.getParameter("email"));
 		Map<String, String> map = new HashMap<>();
-		
+		List<Fpmx> fpmxList = new ArrayList<>();
+		String [] xmmc = request.getParameterValues("xmmc");
+		String [] ggxh = request.getParameterValues("ggxh");
+		String [] dw = request.getParameterValues("dw");
+		String [] xmsl = request.getParameterValues("xmsl");
+		String [] xmdj = request.getParameterValues("xmdj");
+		String [] xmje = request.getParameterValues("xmje");
+		String [] sl = request.getParameterValues("sl");
+		String [] se = request.getParameterValues("se");
+//		String [] hsbz = request.getParameterValues("hsbz");
+		float hjje = 0f;
+		float hjse = 0f;
+		if(null != xmmc){
+			for(int i=0;i<xmmc.length;i++){
+				Fpmx fpmx = new Fpmx();
+				fpmx.setFphxz(false);
+				fpmx.setXmmc(xmmc[i]);
+				fpmx.setGgxh(ggxh[i]);
+				fpmx.setDw(dw[i]);
+				fpmx.setXmsl(Float.valueOf(formatNum(xmsl[i])));
+				fpmx.setXmdj(Float.valueOf(formatNum(xmdj[i])));
+				fpmx.setXmje( Float.valueOf(formatNum(xmje[i])));
+				hjje+=Float.valueOf(xmje[i]);
+				fpmx.setSl(Float.valueOf(formatNum(sl[i])));
+				fpmx.setSe(Float.valueOf(formatNum(se[i])));
+				hjse+=Float.valueOf(formatNum(se[i]));
+				fpmx.setHsbz(false);
+				fpmxList.add(fpmx);
+			}
+		}
+		kpxx.setHjje((float)(Math.round(hjje*100))/100);
+		kpxx.setHjse((float)(Math.round(hjse*100))/100);
+		kpxx.setJshj((float)(Math.round((hjje+hjse)*100))/100);
 		Map<String, String> result = resultService.queryResult(kpxx.getZddh(), kpxx.getFddh(), kpxx.getFplx());//根据两个订单号查
 		
 		if(null == result){
 			
-			String correlationId = "";
+//			String correlationId = "";
 			if("026".equals(kpxx.getFplx())){
 				try{
-					UUID uuid = UUID.randomUUID();
-					correlationId = uuid.toString();
-					logger.info("*****订单号为:" + fpqqlsh + "的关联id为:" + correlationId);
+//					UUID uuid = UUID.randomUUID();
+//					correlationId = uuid.toString();
+					logger.info("*****订单号为:" + fpqqlsh + "的关联id为:" + fpqqlsh);
+					System.out.println("---------------"+XmlUtil.toEInvoice(kpxx,fpmxList).toString());
 					sender.sendMessage(XmlUtil.toEInvoice(kpxx,fpmxList).toString(), 
-							correlationId);
+							fpqqlsh);
 				}catch(Exception e){
 					logger.error("*********订单号：" + fpqqlsh + ",sendMsg网络异常");
 					e.printStackTrace();
@@ -260,10 +310,10 @@ public class InvoiceController {
 			
 				//从响应队列检索响应消息
 				ExecutorService executor = Executors.newSingleThreadExecutor();
-		        Future<String> future = executor.submit(new EnumResposeMessageTask(fpqqlsh, correlationId, jmsTemplate2, resultService));
+		        Future<String> future = executor.submit(new EnumResposeMessageTask(fpqqlsh, fpqqlsh, jmsTemplate2, resultService));
 				String success = "4400";
 		        try{
-		        	success = future.get(4, TimeUnit.SECONDS);
+		        	success = future.get(20, TimeUnit.SECONDS);
 		        	logger.info("响应队列检索响应消息:"+ success);
 		        }catch (InterruptedException e) {
 		        	future.cancel(true);
@@ -273,11 +323,11 @@ public class InvoiceController {
 		        	e.printStackTrace();
 		        } catch (TimeoutException e) {
 		        	e.printStackTrace();
-		        	String requestURL = request.getRequestURL().toString();
-		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + fpqqlsh;
+//		        	String requestURL = request.getRequestURL().toString();
+//		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + fpqqlsh;
 		    		
 		    		map.put("returnCode", "2000");
-					map.put("returnMsg", "正在处理中,请稍后查询" + url);
+					map.put("returnMsg", "正在处理中,请稍后查询");
 		        } finally {
 		            executor.shutdown();
 		        }
@@ -302,5 +352,15 @@ public class InvoiceController {
 			map.put("returnCode", result.get("returnCode"));
 			map.put("returnMsg", result.get("returnMsg"));
 		}
+		
+			 try {
+				response.sendRedirect(request.getContextPath() + "/fpkj_e/fpkj.htm");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+	public static String formatNum(String je){
+		DecimalFormat df = new DecimalFormat("0.00");
+		return df.format(Double.parseDouble(je));
 	}
 }

@@ -10,8 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 
-import com.baiwang.einvoice.qz.beans.ResultOfKp;
-import com.baiwang.einvoice.qz.service.IResultOfKpService;
+import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.util.InvoiceUtil;
 
 public class EnumResposeMessageTask implements  Callable<String>{
@@ -26,9 +25,9 @@ public class EnumResposeMessageTask implements  Callable<String>{
 	private String correlationId;
 	
 	@Resource
-	private IResultOfKpService resultService;
+	private IResultOfSkService resultService;
 	
-	public EnumResposeMessageTask(String ddhm, String correlationId, JmsTemplate jmsTemplate2, IResultOfKpService resultService){
+	public EnumResposeMessageTask(String ddhm, String correlationId, JmsTemplate jmsTemplate2, IResultOfSkService resultService){
 		this.ddhm =  ddhm;
 		this.correlationId = correlationId;
 		this.jmsTemplate2 = jmsTemplate2;
@@ -45,27 +44,6 @@ public class EnumResposeMessageTask implements  Callable<String>{
 			logger.info("**eee***JMSCorrelationID为:" + ddhm + "接收到的message为：" + text);
 			System.out.println(" exception======"+e1.getMessage());
 			e1.printStackTrace();
-		}
-		
-		System.out.println("))))))))))sk  call   _____---" + text);
-		ResultOfKp result = new ResultOfKp();
-		result.setDdhm(ddhm);
-		result.setCorrelationid(correlationId);
-		result.setCode(InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>").equals("")? 
-				InvoiceUtil.getIntervalValue(text,"<returncode>","</returncode>"):
-					InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>"));
-		result.setMsg(InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>").equals("")?
-				InvoiceUtil.getIntervalValue(text,"<returnmsg>","</returnmsg>"):
-					InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>"));
-		result.setFpqqlsh(InvoiceUtil.getIntervalValue(text,"<FPQQLSH>","</FPQQLSH>"));
-		try{
-			int suc = resultService.save(result);
-			logger.info("保存数据库结果：" + suc);
-		}catch(Exception e){
-			logger.error("*****订单号码：" + ddhm + "保存结果出现异常，code:"+InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>")
-			+ ",msg:" + InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>") + ",fpqqlsh:" +
-			InvoiceUtil.getIntervalValue(text,"<FPQQLSH>","</FPQQLSH>"));
-			e.printStackTrace();
 		}
 		
 		if(InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>").equals("0000")){

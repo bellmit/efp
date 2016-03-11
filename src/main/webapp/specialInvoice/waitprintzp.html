@@ -23,9 +23,12 @@ th,td{width: 120px; height: 35px;text-align:center;}
 
 <script type="text/javascript">
 var pageCount = 1;
-	var skconf = null;
-	var printconf = null;
-function chaxun(){
+var skconf = null;
+var printconf = null;
+function chaxun(vvv){
+	if(vvv == 1){
+		$('#requestPage').val(1);
+	}
 	var params = $('#queryForm').serialize();
 	$.ajax({
 		type:"POST",
@@ -89,11 +92,13 @@ function chaxun(){
 }
 
 function dayin(fpqqlsh,fpdm, fphm){
-	getParameter();
-	if(!SetParameter()){
-		return;
+	if(confirm("确定要打印么？")){
+	 	getParameter();
+		if(!SetParameter()){
+			return;
+		}
+		PrintInvoice(fpqqlsh,fpdm, fphm);
 	}
-	PrintInvoice(fpqqlsh,fpdm, fphm);
 }
 
 function getParameter(){
@@ -130,7 +135,6 @@ function SetParameter() {
 	}
 	//01设置初始化参数
 	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>";		
-	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>123.124.177.178</servletip>\r\n<servletport>10009</servletport>\r\n<keypwd>00000000</keypwd>\r\n<aqm>50543ed18fc81784d9a17a18e10a9d68e7e4c4303568c14e3aa1280f87006578b59ca8d492921c725a1199f9c7fc9ba21c8f15d953fb673a5612a52e813c2ade0ebcf42c7d7e0a1fe15a8655a2919176bd3801d3be36654e4fffe8fb38ae4c02498b43de96c00e23765a204fbd16752c9514ffef10467646892f32ad3a146d3ea9928c8a622aa349bfdbd2b49eae3f7e852be50df3c0532447c99abfded4b5c07871cef1ebbf1a9986df508f4fe9f452eb44b6a220df76a90830a0e35c4483c6f85edb5590858fe9685d45895c5c1a16ea689db99ba1f4d4103902dab1972f8a6f7bb2ba1f84fa37c76d238016cc40e4ef08025b3e226c48e43adb1c0daf2d8b</aqm>\r\n</body>\r\n</business>";
 	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>192.168.6.14</servletip>\r\n<servletport>1008</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>";		
 	try {
 		ret = sk.Operate(sInputInfo);
@@ -138,7 +142,7 @@ function SetParameter() {
 		var returncode = getTotalMidValue(ret, "<returncode>","</returncode>");
 		var returnmsg = getTotalMidValue(ret, "<returnmsg>","</returnmsg>");	
 		if(returncode==0&&returnmsg=="成功"){
-			alert("参数设置成功！");	
+			//alert("参数设置成功！");	
 			return true;
 		}else{
 			alert("参数设置失败，失败原因："+returnmsg);
@@ -151,7 +155,6 @@ function SetParameter() {
 }
 
 function PrintInvoice(fpqqlsh,fpdm, fphm){
-	
 	//01页边距设置
 	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"鍙戠エ鎵撳嵃\"><body yylxdm=\"1\"><kpzdbs>12345612346</kpzdbs><fplxdm>007</fplxdm><fpdm>1110000452</fpdm><fphm>38148009</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
 	var sMarginsInfo = " <?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20003\" comment=\"页边距设置\">\r\n<body yylxdm=\"1\">\r\n<fplxdm>004</fplxdm>\r\n<top>" + printconf.topside + "</top>\r\n<left>" + printconf.leftside + "</left>\r\n</body>\r\n</business>";		
@@ -163,9 +166,9 @@ function PrintInvoice(fpqqlsh,fpdm, fphm){
 		//02、打印发票
 		var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>004</fplxdm><fpdm>"+fpdm+"</fpdm><fphm>"+ fphm+"</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
 		//var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>004</fplxdm><fpdm>1110098077</fpdm><fphm>74560010</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
-		alert(sPrintInfo);
+		//alert(sPrintInfo);
 		sPrintInret = sk.Operate(sPrintInfo);
-		alert(sPrintInret)
+		//alert(sPrintInret)
 		var returncodesPrintIn = getTotalMidValue(sPrintInret, "<returncode>","</returncode>");
 		var returnmsgsPrintIn = getTotalMidValue(sPrintInret, "<returnmsg>","</returnmsg>");
 		if(returncodesPrintIn==0&&returnmsgsPrintIn=="成功"){
@@ -260,7 +263,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 	   </div>
 	   <div class="form-group col-sm-5">
 	      <div class="col-sm-offset-2 col-sm-10">
-	         <button type="button" class="btn btn-default" onclick="chaxun();">查询</button>
+	         <button type="button" class="btn btn-default" onclick="chaxun(1);">查询</button>
 	      </div>
 	   </div>
 	</div>

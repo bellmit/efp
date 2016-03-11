@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiwang.einvoice.qz.dao.ResultOfSkMapper" >
+	
+	<update id="saveResultOfSk" parameterType="map">
+		update kpxx 
+		<set>
+			<if test="fpdm != null and fpdm != ''" >
+		      fpdm = #{fpdm,jdbcType=VARCHAR},
+		    </if>  
+			<if test="fphm != null and fphm != ''" >
+	      	  fphm = #{fphm,jdbcType=VARCHAR},
+	      	</if> 
+	      	<if test="fpzt != null and fpzt != ''" >
+	      	  fpzt = #{fpzt,jdbcType=VARCHAR},
+	      	</if> 
+	      	<if test="returnCode != null and returnCode != ''" >
+	      	  resultCode = #{returnCode,jdbcType=VARCHAR},
+	      	</if> 
+	      	<if test="returnMsg != null and returnMsg != ''" >
+	          resultCode = #{returnMsg,jdbcType=VARCHAR},
+	      	</if> 
+	      	<if test="bz != null and bz != ''" >
+	      	  bz = #{bz,jdbcType=VARCHAR},
+	      	</if> 
+	      	<if test="kprq != null and kprq != ''" >
+	      	  kprq = #{kprq,jdbcType=VARCHAR},
+	      	</if> 
+	      	<if test="jqbh != null and jqbh != ''" >
+	      	  jqbh = #{jqbh,jdbcType=VARCHAR},
+	      	</if> 
+	      	<if test="skm != null and skm != ''" >
+	      	  skm = #{skm,jdbcType=VARCHAR},
+	      	</if>   
+	     	<if test="jym != null and jym != ''" >
+	      	  jym = #{jym,jdbcType=VARCHAR},
+	      	</if>   
+	      	<if test="ewm != null and ewm != ''" >
+	      	  ewm = #{ewm,jdbcType=VARCHAR}
+	      	</if>   
+	    </set>  
+	    where  fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="queryResult" parameterType="map" resultType="com.baiwang.einvoice.qz.beans.Kpxx">
+		select 
+		<include refid="com.baiwang.einvoice.qz.dao.KpxxMapper.Base_Column_List" />
+		from kpxx 
+		where zddh = #{zddh} and fddh = #{fddh} and fplx = #{fplx}
+	</select>
+
+  
+</mapper>

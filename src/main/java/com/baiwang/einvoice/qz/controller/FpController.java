@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,17 +22,15 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Business;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
-import com.baiwang.einvoice.qz.beans.ResultOfKp;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
-import com.baiwang.einvoice.qz.service.IResultOfKpService;
+import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
@@ -49,12 +46,12 @@ public class FpController {
 	private FpService fpService;
 	
 	@Resource
-	private IResultOfKpService resultService;
+	private IResultOfSkService resultService;
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
 	
-	@RequestMapping(value="save",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	@RequestMapping(value="save",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
 		Map<String, String> map = new HashMap<>();
@@ -80,17 +77,17 @@ public class FpController {
 		/*ResultOfKp result = resultService.queryResult(customOrder.getDdhm(), "");*/
 		Map<String, String> result = resultService.queryResult(kpxx.getZddh(), kpxx.getFddh(), kpxx.getFplx());//根据两个订单号查
 		
-		if(null == result){
+		if(null == result || result.get("returnCode").equals("4000")){
 			fpService.saveInfo(orderDetail, kpxx, list , fpqqlsh);
 			
-			String correlationId = "";
+			//String correlationId = "";
 			if("026".equals(kpxx.getFplx())){
 				try{
-					UUID uuid = UUID.randomUUID();
-					correlationId = uuid.toString();
-					logger.info("*****订单号为:" + orderDetail.getZddh()+"/"+orderDetail.getFddh() + "的关联id为:" + correlationId);
+//					UUID uuid = UUID.randomUUID();
+//					correlationId = uuid.toString();
+					logger.info("*****订单号为:" + orderDetail.getZddh()+"/"+orderDetail.getFddh() + "的关联id为:" + fpqqlsh);
 					sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
-							correlationId);
+							fpqqlsh);
 				}catch(Exception e){
 					logger.error("*********订单号：" + orderDetail.getZddh()+"/"+orderDetail.getFddh() + ",sendMsg网络异常");
 					e.printStackTrace();
@@ -102,10 +99,10 @@ public class FpController {
 			
 				//从响应队列检索响应消息
 				ExecutorService executor = Executors.newSingleThreadExecutor();
-		        Future<String> future = executor.submit(new EnumResposeMessageTask(orderDetail.getZddh()+orderDetail.getFddh(), correlationId, jmsTemplate2, resultService));
+		        Future<String> future = executor.submit(new EnumResposeMessageTask(orderDetail.getZddh()+orderDetail.getFddh(), fpqqlsh, jmsTemplate2, resultService));
 				String success = "4400";
 		        try{
-		        	success = future.get(4, TimeUnit.SECONDS);
+		        	success = future.get(20, TimeUnit.SECONDS);
 		        	logger.info("响应队列检索响应消息:"+ success);
 		        }catch (InterruptedException e) {
 		        	future.cancel(true);
@@ -115,11 +112,11 @@ public class FpController {
 		        	e.printStackTrace();
 		        } catch (TimeoutException e) {
 		        	e.printStackTrace();
-		        	String requestURL = request.getRequestURL().toString();
-		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + orderDetail.getZddh()+orderDetail.getFddh();
+//		        	String requestURL = request.getRequestURL().toString();
+//		    		String url = requestURL.substring(0,requestURL.lastIndexOf("/")) + "/query?ddhm=" + orderDetail.getZddh()+orderDetail.getFddh();
 		    		
 		    		map.put("returnCode", "2000");
-					map.put("returnMsg", "正在处理中,请稍后查询" + url);
+					map.put("returnMsg", "正在处理中,请稍后查询");
 					return map;
 		        } finally {
 		            executor.shutdown();
@@ -153,26 +150,7 @@ public class FpController {
 		
 	}
 	
-	@RequestMapping(value="query",method=RequestMethod.GET,produces="text/html;charset=UTF-8")
-	@ResponseBody
-	public String query(@RequestParam String ddhm,@RequestParam String correlationId) {
-		if(null == ddhm || "".equals(ddhm) ||null == correlationId || "".equals(correlationId)){
-			return "查询订单失败";
-		}
-		ResultOfKp result = resultService.queryResult(ddhm,correlationId);
-		
-		if(null == result){
-			return "正在处理中,请稍等...";
-		}else if(null != result && "0000".equals(result.getCode())){
-			logger.warn("*********订单号：" + correlationId + "已经开票成功，返回。");
-			return "0000";
-		}else{
-			return result.getMsg();
-		}
-		
-	}
-	
-	@RequestMapping(value="receive",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	@RequestMapping(value="receive",method=RequestMethod.POST)
 	@ResponseBody
 	public String receive(String xml) throws UnsupportedEncodingException{
 		

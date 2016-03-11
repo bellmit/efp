@@ -6,10 +6,10 @@
           <xs:complexType>
             <xs:choice maxOccurs="unbounded" minOccurs="0">
               <xs:element type="xs:string" name="ZDDH"/>
-              <xs:element type="xs:byte" name="FDDH"/>
+              <xs:element type="xs:string" name="FDDH"/>
               <xs:element type="xs:string" name="SQR"/>
               <xs:element type="xs:string" name="HYM"/>
-              <xs:element type="xs:int" name="HYID"/>
+              <xs:element type="xs:string" name="HYID"/>
               <xs:element type="xs:string" name="DDSJ"/>
               <xs:element type="xs:string" name="SQSJ"/>
               <xs:element type="xs:string" name="SPZL"/>

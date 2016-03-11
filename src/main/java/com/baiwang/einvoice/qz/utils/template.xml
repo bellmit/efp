@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <business id="FPKJ">
 	<CUSTOMDATA>
-		<ZDDH>50006</ZDDH>
+		<ZDDH>40006</ZDDH>
 		<FDDH>001</FDDH>
 		<SQR>张三4</SQR>
 		<HYM>偶尔上会网</HYM>
@@ -15,14 +15,13 @@
 		<JSDZ>北京市海淀区亿城国际7层711</JSDZ>
 		<YJSJ>2016年3月5日</YJSJ>
 		<FHR>复核人XXX</FHR>
-		<WLSJ>申通</WLSJ>
+		<WLGS>申通</WLGS>
 		<WLDH>1234567890</WLDH>
-		<WLSJ>申通</WLSJ>
 		<TKZT>已退款</TKZT>
 	</CUSTOMDATA>
 	<REQUEST_COMMON_FPKJ>
 		<COMMON_FPKJ_FPT>
-			<FPLX>007</FPLX>
+			<FPLX>026</FPLX>
 			<KPLX>0</KPLX>
 			<XSF_NSRSBH>11010800000000000006</XSF_NSRSBH>
 			<XSF_MC>百旺股份6</XSF_MC>

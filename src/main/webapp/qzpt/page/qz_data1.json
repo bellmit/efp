@@ -44,23 +44,23 @@
 		}
 	]},{
 		"id":13,
-		"text":"增值税专项发票",
+		"text":"增值税专用发票",
 		"state":"closed",
 		"children":[{
 			"id":131,
-			"text":"增值税专项发票开具",
+			"text":"增值税专用发票开具",
 			"attributes":{
 				"url":"../../queryStatistics/goToSpecial.jsp"
 			}
 		},{
 			"id":132,
-			"text":"增值税专项发票打印(单打)",
+			"text":"增值税专用发票打印(单打)",
 			"attributes":{
 				"url":"../../specialInvoice/waitprintzp.html"
 			}
 		},{
 			"id":133,
-			"text":"增值税专项发票打印(连打)",
+			"text":"增值税专用发票打印(连打)",
 			"attributes":{
 				"url":"../../specialInvoice/waitprintzps.html"
 			}
