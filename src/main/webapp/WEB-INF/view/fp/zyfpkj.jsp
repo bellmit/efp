@@ -34,7 +34,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	      </div>
 	      </div>
 	      <div class="form-group col-sm-6">
-	       <label for="beginDate" class="col-sm-3 control-label">申请开票日期起：</label>
+	       <label for="endDate" class="col-sm-3 control-label">申请开票日期起：</label>
 	      <div class="col-sm-3">
 	         <input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value="${param.endDate }"
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">

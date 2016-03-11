@@ -338,7 +338,7 @@
     <if test="endDate != null and endDate != ''" >
      <![CDATA[and b.ddsj <= #{endDate} ]]>
     </if>
-    <if test="zddh != null" >
+    <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
     <if test="kpdq != null and kpdq != '-1'" >
@@ -360,7 +360,7 @@
     <if test="endDate != null and endDate != ''" >
      <![CDATA[and b.ddsj <= #{endDate} ]]>
     </if>
-    <if test="zddh != null" >
+    <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
     <if test="kpdq != null and kpdq != '-1'" >
