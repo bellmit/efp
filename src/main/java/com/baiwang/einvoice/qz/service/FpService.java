@@ -11,6 +11,7 @@ import java.util.Map;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: FpService
@@ -38,6 +39,10 @@ public interface FpService {
 	List<HashMap<String, Object>> listPlain(HashMap<String, String> param,int pageIndex,int pageSize);
 	
 	List<HashMap<String, Object>> listSpecial(HashMap<String, String> param,int pageIndex,int pageSize);
+	
+	PageList<HashMap<String,Object>> getPlainList4zf(Map<String, Object> param);
+    
+	PageList<HashMap<String,Object>> getSpecialList4zf(Map<String, Object> param);
 	
 	void saveCallBackInfo(Kpxx kpxx);
 }
