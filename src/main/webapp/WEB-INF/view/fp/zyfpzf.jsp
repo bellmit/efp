@@ -26,10 +26,27 @@ function concelFp(lsh){
         data: {'lsh':lsh},
         async: false,
         success: function (data) {
-        	//alert(JSON.stringify(data))
-        	if(data==0){
-        		alert('操作成功！')
+        	var kpxx = data.kpxx;
+        	var skconfig = data.skconfig;
+        	var setResult = SetParameter(skconfig.aqm,skconfig.keypwd,skconfig.url,skconfig.port);
+        	if(setResult){
+	        	var sInvoiceVoidInfo = 
+	        		"<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"10009\" comment=\"发票作废\">\r\n<body yylxdm=\"1\">\r\n<kpzdbs>0601</kpzdbs>\r\n<fplxdm>"+kpxx.fplx+"</fplxdm>\r\n<zflx>1</zflx>\r\n<fpdm>"+kpxx.fpdm+"</fpdm>\r\n<fphm>"+kpxx.fphm+"</fphm>\r\n<hjje>"+kpxx.hjje+"</hjje>\r\n<zfr>"+kpxx.kpr+"</zfr>\r\n</body>\r\n</business>";		
+	        	try {
+	        		invoiceVoidRet = sk.Operate(sInvoiceVoidInfo);
+	        		/* var pos=ret.indexOf("<returncode>"); */
+	        		var invoiceVoidRetReturncode = getTotalMidValue(invoiceVoidRet, "<returncode>","</returncode>");
+	        		var invoiceVoidRetReturnmsg = getTotalMidValue(invoiceVoidRet, "<returnmsg>","</returnmsg>");	
+	        		if(invoiceVoidRetReturncode==0&&invoiceVoidRetReturnmsg=="成功"){
+	        			alert(invoiceVoidRet);	
+	        		}else{
+	        			alert("发票领购信息核对失败，失败原因："+invoiceVoidRetReturnmsg);
+	        		}
+	        	} catch (e) {
+	        		alert(e.message + ",errno:" + e.number);
+	        	}
         	}
+        	
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
@@ -39,6 +56,40 @@ function concelFp(lsh){
         	}
         }
 	});
+}
+
+function SetParameter(aqm,keypwd,ip,port) {
+	
+	//01设置初始化参数
+	/* var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>192.168.6.14</servletip>\r\n<servletport>1008</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>"; */
+	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>"+ip+"</servletip>\r\n<servletport>"+port+"</servletport>\r\n<keypwd>"+keypwd+"</keypwd>\r\n<aqm>"+aqm+"</aqm>\r\n</body>\r\n</business>";
+	try {
+		ret = sk.Operate(sInputInfo);
+		/* var pos=ret.indexOf("<returncode>"); */
+		var returncode = getTotalMidValue(ret, "<returncode>","</returncode>");
+		var returnmsg = getTotalMidValue(ret, "<returnmsg>","</returnmsg>");	
+		if(returncode==0&&returnmsg=="成功"){
+			return true	;
+		}else{
+			alert("参数设置失败，失败原因："+returnmsg);
+			return false ;
+		}
+	} catch (e) {
+		alert(e.message + ",errno:" + e.number);
+		return false;
+	}
+}
+
+//获取指定的字符串
+function getTotalMidValue(source, priStr, suxStr) {
+	if (source == null)
+		return null;
+	var iFirst = source.indexOf(priStr);		
+	var iLast = source.lastIndexOf(suxStr);		
+	if (iFirst < 0 || iLast < 0)
+		return null;	
+	var beginIndex = iFirst + priStr.length;	
+	return source.substring(beginIndex, iLast);
 }	
 </script>
 
