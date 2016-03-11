@@ -25,8 +25,54 @@
     <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
        <property name="connectionFactory" ref="connectionFactory"></property>
 	</bean>
-
-
+	
+	
+	<!-- 电子发票处理请求队列 -->
+	<bean id="dzfpHandleQuene" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="baiwang.einvoice.dzfpHandleQuene" />
+	</bean>
+    <bean id="jmsTemplateDzfpHandle" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false--> 
+        <property name="explicitQosEnabled" value="true" /> 
+        <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久 默认-->  
+        <property name="deliveryMode" value="2" /> 
+        <property name="pubSubDomain" value="false" />  
+        <property name="defaultDestination" ref="dzfpHandleQuene" />
+	</bean>
+	<bean id="dzfpHandleQueneListener" class="com.baiwang.einvoice.qz.mq.dzfp.DzfpHandleQueneListener" />
+	<bean id="dzfpHandleQueneContainer"  
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="concurrentConsumers" value="5" />
+        <property name="connectionFactory" ref="connectionFactory" />  
+        <property name="destination" ref="dzfpHandleQuene" />  
+        <property name="messageListener" ref="dzfpHandleQueneListener" />  
+        <property name="pubSubNoLocal" value="false"/>     
+    </bean>
+    
+    <!-- 纸质发票处理请求队列 -->
+	<bean id="zzfpHandleQuene" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="baiwang.einvoice.zzfpHandleQuene" />
+	</bean>
+    <bean id="jmsTemplateZzfpHandle" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false--> 
+        <property name="explicitQosEnabled" value="true" /> 
+        <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久 默认-->  
+        <property name="deliveryMode" value="2" /> 
+        <property name="pubSubDomain" value="false" />  
+        <property name="defaultDestination" ref="zzfpHandleQuene" />
+	</bean>
+	<bean id="zzfpHandleQueneListener" class="com.baiwang.einvoice.qz.mq.zzfp.ZzfpHandleQueneListener" />
+	<bean id="zzfpHandleQueneContainer"  
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="concurrentConsumers" value="5" />
+        <property name="connectionFactory" ref="connectionFactory" />  
+        <property name="destination" ref="zzfpHandleQuene" />  
+        <property name="messageListener" ref="zzfpHandleQueneListener" />  
+        <property name="pubSubNoLocal" value="false"/>     
+    </bean>
+	
     <!-- mq队列模式 -->
 	<bean id="einvoiceMQ" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg index="0" value="baiwang.einvoice.kjfp" />
