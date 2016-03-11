@@ -1,29 +1,93 @@
 package com.baiwang.einvoice.qz.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Properties;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.dao.UserMapper;
 import com.baiwang.einvoice.qz.service.IUserService;
 import com.baiwang.einvoice.qz.service.PageServiceImpl;
+import com.baiwang.einvoice.service.skService.SkService;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 @Service
 public class UserServiceImpl implements IUserService {
 	
+	private static final Log logger = LogFactory.getLog(UserServiceImpl.class);
+
 	@Resource
 	private UserMapper dao;
 	
 	@Resource
 	private PageServiceImpl pageService;
 
+	
+	private static String loginDburl ;
+	private static String loginDbName ;
+	private static String loginDbPassword ;
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public User getUserByName(String name) {
+		User user = new User();
+		if(loginDburl==null){
+			InputStream in;
+			in=getClass().getClassLoader().getResourceAsStream("jdbc.properties"); 
+			Properties   props   =  new  Properties();
+			try {
+				props.load(in);
+				loginDburl = props.get("jdbc.loginDburl").toString();
+				loginDbName = "user="+props.get("jdbc.loginDbName").toString();
+				loginDbPassword = "&password="+props.get("jdbc.loginDbPassword").toString();
+			} catch (IOException e1) {
+				logger.error("///////获取数据库连接error///////////");
+				e1.printStackTrace();
+				return user;
+			}
+		}
 		
-		return dao.getUserByName(name);
+		String url = loginDburl+loginDbName+loginDbPassword;
+		try (Connection conn = DriverManager.getConnection(url);){
+            Class.forName("com.mysql.jdbc.Driver");// 动态加载mysql驱动
+            Statement stmt = conn.createStatement();
+            String sql = "select yhkl,qybz,yhlx,kpddm,nsrsbh from dj_czyxx where czydm = '"+name+"'"; 
+            ResultSet result = stmt.executeQuery(sql);
+            if(result.first()){
+            	String yhkl =  result.getString(1);
+            	String qybz =  result.getString(2);
+            	String yhlx =  result.getString(3);
+            	String kpddm =  result.getString(4);
+            	String nsrsbh =  result.getString(5);
+            	user.setUserPass(yhkl);
+            	user.setQybz(qybz);
+            	user.setYhlx(yhlx);
+            	user.setKpddm(kpddm);
+            	user.setNsrsbh(nsrsbh);
+            }
+        } catch (SQLException e) {
+        	logger.error("///////JDBC连接数据库error///////////");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+        	logger.error("///////数据库驱动加载error///////////");
+            e.printStackTrace();
+		} 
+		return user;
 	}
 
 	/**

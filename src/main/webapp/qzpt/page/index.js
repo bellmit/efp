@@ -9,6 +9,24 @@ var exceptionInfo;
 $(function(){
 	//获得菜单项
 //	getMenuDemo();
+	$.getJSON("qz_data1.json",function(data){
+		$.each(data[0].children, function(i, n) 
+			{
+		        var menulist = ""; 
+		        $.each(n.children, function(j, o) 
+					{
+						var text = "'"+o.text+"'";
+						var url = "'"+o.attributes.url+"'";
+						menulist += '&nbsp;&nbsp;<li><div onclick="addTabs('+text+','+url+')"><a target="mainFrame" class="ahover" onclick="addTabs('+text+',' + url + ')" >' + o.text + '</a></div></li>\n';
+					})
+			
+				$('#menu_div').accordion('add',
+					{
+						title:n.text,
+						content:'<div>'+menulist+'</div>'
+					});
+			});
+	});
 	
 	$('.cs-navigate-tab').live('click', function() {
 		var $this = $(this);

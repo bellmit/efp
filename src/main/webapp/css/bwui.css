@@ -1,0 +1,39 @@
+/* easyui-accordion 样式重置*/
+.easyui-accordion{list-style-type:none;margin:0px; }
+.easyui-accordion li{ padding:0px;margin-top: -12px;}
+.easyui-accordion li a{line-height:24px;padding-left: 20px;}
+.easyui-accordion li div{padding:5px; color: #fff;}
+.easyui-accordion li div:hover{border:#99BBE8; background:#448eee;cursor:pointer;color: #fff;}
+.easyui-accordion li div.selected{border:1px solid #99BBE8; background:#448eee;cursor:default;}
+.easyui-accordion li div.selected a{color:#fff; font-weight:bold;}
+.accordion{overflow: hidden; border-width: 0; border-style: solid;}
+.accordion .accordion-header{border-width: 0 0 1px; cursor: pointer;}
+.accordion .accordion-body{border-width: 0 0 1px; background-color: #154485;}
+.accordion-noborder{border-width: 0;}
+.accordion-noborder .accordion-header{border-width: 0 0 1px;}
+.accordion-noborder .accordion-body{border-width: 0 0 1px;}
+.accordion-collapse{background: url('images/accordion_arrows.png') no-repeat 0 0;}
+.accordion-expand{background: url('images/accordion_arrows.png') no-repeat -35px 0;}
+.accordion{background: #ffffff; border-color: #95B8E7;}
+.accordion .accordion-header{background: #cae3ff; filter: none; border-bottom: 1px solid #fff;}
+.accordion .accordion-header .panel-title{color: #616161;}
+.accordion .accordion-header-selected{background: #cae3ff;}
+.accordion .accordion-header-selected .panel-title{color: #05234a;}
+
+/*index.css 头部样式*/ 
+.north_div{height:88px;line-height:88px;background:#3573DA url(images/header_bg.png) no-repeat;border:0px;overflow:hidden;}
+.west_div{width:185px;padding:0px; border-right: 1px solid #959595;}
+.west_index_div{padding:0px;}
+.south_div{height:25px;text-align:center;}
+.center_div{text-align:center;}
+.center_frame{width:100%;/**width:800px;*/height:500px;}
+.tab-menu-div{width:120px;}
+.selectTheme{float:right;width:100px;margin:33px 20px 10px 0;}
+.password_div{float:right;color:#fff;}
+.password_div a{color:#fff; margin:0 5px; text-decoration:none; padding:5px;}
+.password_div a:hover{background-color:#14488f;}
+.cs-tab-menu{width:120px;}
+.datagrid-wrap{border:0;}
+.west-div{width:185px;padding:0px; border-right: 1px solid #959595;}
+.west_div .panel-title{font-size: 14px;color: #fff; height: 29px;line-height: 29px;padding-left: 16px;}
+

@@ -41,6 +41,25 @@
     <result column="gmfmc" property="gmfmc" jdbcType="VARCHAR" />
     <result column="fplx" property="fplx" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="QueryMap4zf" type="map">
+    <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="zddh" property="zddh" jdbcType="VARCHAR" />
+    <result column="fddh" property="fddh" jdbcType="VARCHAR" />
+    <result column="hym" property="hym" jdbcType="VARCHAR" />
+    <result column="hyid" property="hyid" jdbcType="VARCHAR" />
+    <result column="shr" property="shr" jdbcType="VARCHAR" />
+    <result column="shrdh" property="shrdh" jdbcType="VARCHAR" />
+    <result column="sqsj" property="sqsj" jdbcType="DATE" />
+    <result column="gmfmc" property="gmfmc" jdbcType="VARCHAR" />
+    <result column="spzl" property="spzl" jdbcType="VARCHAR" />
+    <result column="hjje" property="hjje" jdbcType="REAL" />
+    <result column="hjse" property="hjse" jdbcType="REAL" />
+    <result column="jshj" property="jshj" jdbcType="REAL" />
+    <result column="kplx" property="kplx" jdbcType="REAL" />
+    <result column="kprq" property="kprq" jdbcType="VARCHAR" />
+    <result column="fpdm" property="fpdm" jdbcType="VARCHAR" />
+    <result column="fphm" property="fphm" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
     id, fpqqlsh,zddh,fddh, kpdq,sqr, hym, hyid, ddsj, sqsj, spzl, sqrk, shr, shrdh, jsdz, yjsj, fhr, wlgs, 
     wldh, tkzt, fpzt
@@ -319,7 +338,7 @@
     <if test="endDate != null and endDate != ''" >
      <![CDATA[and b.ddsj <= #{endDate} ]]>
     </if>
-    <if test="zddh != null" >
+    <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
     <if test="kpdq != null and kpdq != '-1'" >
@@ -341,11 +360,59 @@
     <if test="endDate != null and endDate != ''" >
      <![CDATA[and b.ddsj <= #{endDate} ]]>
     </if>
-    <if test="zddh != null" >
+    <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
     <if test="kpdq != null and kpdq != '-1'" >
      and b.kpdq = #{kpdq}
+    </if>
+  </select>
+  
+  <select id="getPlainList4zf" resultMap="QueryMap4zf" parameterType="map" >
+	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
+	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
+	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007'
+    <if test="beginDate != null and beginDate != ''" >
+     <![CDATA[and k.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''" >
+     <![CDATA[and k.kprq <= #{endDate} ]]>
+    </if>
+    <if test="hyid4q != null and hyid4q != '' " >
+     and o.hyid like CONCAT('%',#{hyid4q },'%' )
+    </if>
+    <if test="fphm4q != null and fphm4q != '' " >
+     and k.fphm like CONCAT('%',#{fphm4q },'%' )
+    </if>
+    <if test="ddh4q != null and ddh4q != '' " >
+     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+    </if>
+    <if test="sjh4q != null and sjh4q != '' " >
+     and o.shrdh like CONCAT('%',#{sjh4q },'%' )
+    </if>
+  </select>
+  
+  <select id="getSpecialList4zf" resultMap="QueryMap4zf" parameterType="map" >
+	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
+	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
+	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004'
+    <if test="beginDate != null and beginDate != ''" >
+     <![CDATA[and k.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''" >
+     <![CDATA[and k.kprq <= #{endDate} ]]>
+    </if>
+    <if test="hyid4q != null and hyid4q != '' " >
+     and o.hyid like CONCAT('%',#{hyid4q },'%' )
+    </if>
+    <if test="fphm4q != null and fphm4q != '' " >
+     and k.fphm like CONCAT('%',#{fphm4q },'%' )
+    </if>
+    <if test="ddh4q != null and ddh4q != '' " >
+     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+    </if>
+    <if test="sjh4q != null and sjh4q != '' " >
+     and o.shrdh like CONCAT('%',#{sjh4q },'%' )
     </if>
   </select>
 </mapper>
