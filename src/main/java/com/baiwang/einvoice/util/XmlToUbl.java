@@ -232,7 +232,13 @@ public class XmlToUbl {
 		
 		//项目明细，可多条(最大100条)
 		int index_size = xml.indexOf("<COMMON_FPKJ_XMXXS class=\"COMMON_FPKJ_XMXX\" size=\"");
-		int size = Integer.parseInt(InvoiceUtil.getIntervalValue(xml, "size=\"", index_size, "\">"));
+		int size = 1;
+		try{
+			size = Integer.parseInt(InvoiceUtil.getIntervalValue(xml, "size=\"", index_size, "\">"));
+		}catch(Exception e){
+			logger.info("xml 转换ubl 报文  size 异常");
+			e.printStackTrace();
+		}
 		
 		
 		for(int i = 1 ; i <= size &&  index_size >= 0 ; i++ ){

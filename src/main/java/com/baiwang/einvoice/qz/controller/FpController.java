@@ -29,8 +29,10 @@ import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
 import com.baiwang.einvoice.qz.beans.Page;
+import com.baiwang.einvoice.qz.beans.SkConfig;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.IPrintPpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
@@ -49,6 +51,8 @@ public class FpController {
 	
 	@Resource
 	private IResultOfSkService resultService;
+	@Resource
+	private IPrintPpService printSerive;
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
@@ -246,17 +250,27 @@ public class FpController {
 	//普通发票作废
 	@RequestMapping(value="ptfpzf")
 	@ResponseBody
-	public String cancel_pt(String lsh){
-		System.out.println("流水号为"+lsh+"的普通发票作废！");
-		
-		return "0";
+	public Map<String, Object> cancel_pt(String lsh){
+		Map<String, Object> result = new HashMap<>();
+		//查询发票信息
+		Kpxx kpxx = fpService.getKpxxByFpqqlsh(lsh);
+		result.put("kpxx", kpxx);
+		//查询SK配置信息
+		SkConfig skconfig = printSerive.getSkParameter("0");
+		result.put("skconfig", skconfig);
+		return result;
 	}
 	//专用发票作废
 	@RequestMapping(value="zyfpzf")
 	@ResponseBody
-	public String cancel_zy(String lsh){
-		System.out.println("流水号为"+lsh+"的专用发票作废！");
-		
-		return "0";
+	public Map<String, Object> cancel_zy(String lsh){
+		Map<String, Object> result = new HashMap<>();
+		//查询发票信息
+		Kpxx kpxx = fpService.getKpxxByFpqqlsh(lsh);
+		result.put("kpxx", kpxx);
+		//查询SK配置信息
+		SkConfig skconfig = printSerive.getSkParameter("0");
+		result.put("skconfig", skconfig);
+		return result;
 	}
 }
