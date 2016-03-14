@@ -83,8 +83,6 @@ public class FpController {
 			//String correlationId = "";
 			if("026".equals(kpxx.getFplx())){
 				try{
-//					UUID uuid = UUID.randomUUID();
-//					correlationId = uuid.toString();
 					logger.info("*****订单号为:" + orderDetail.getZddh()+"/"+orderDetail.getFddh() + "的关联id为:" + fpqqlsh);
 					sender.sendMessage(XmlUtil.toEInvoice(kpxx,list).toString(), 
 							fpqqlsh);
