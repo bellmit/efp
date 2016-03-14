@@ -27,5 +27,9 @@ public interface OrderDetailMapper {
     
     List<Map<String, String>> getSpecialList(HashMap<String, String> param);
     
+    List<Map<String, Object>> getPlainList4zf(Map<String, Object> param);
+    
+    List<Map<String, Object>> getSpecialList4zf(Map<String, Object> param);
+    
     OrderDetail selectByDdh(@Param("zddh")String zddh , @Param("fddh")String fddh);
 }

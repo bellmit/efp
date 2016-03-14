@@ -16,6 +16,37 @@
 -->
 <script type="text/javascript">
 
+function getSizeConfig(){
+	var fplx = $('#fplx').val();
+	if(fplx==''){
+		$('#topside').val('');
+		$('#leftside').val('');
+		return;
+	}
+	$.ajax({
+		type:"GET",
+        url: "../print/getParameter",
+        data: {'fplx':fplx},
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data.code==0){
+        		$('#topside').val(data.printconf.topside);
+        		$('#leftside').val(data.printconf.leftside);
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
+
+
 function baocunsk(){
 	var params = $('#skForm').serialize();
 	
@@ -122,7 +153,7 @@ function baocundy(){
 		<div class="form-group form-inline col-sm-7">
 	      <label for="fplx" class="col-sm-3 control-label">发票类型：</label>
 	      <div class="col-sm-6">
-	         <select class="form-control" id="fplx" name="fplx">
+	         <select class="form-control" id="fplx" name="fplx" onchange="getSizeConfig();">
 		         <option value="">请选择</option>
 		         <option value='004'>增值税纸质专用发票</option>
 			 	 <option value='007'>增值税纸质普通发票</option>

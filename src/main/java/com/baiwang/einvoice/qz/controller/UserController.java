@@ -33,17 +33,24 @@ public class UserController {
 	@RequestMapping(value="user/login",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String login(User user, HttpServletRequest request,HttpSession session){
-		
 		User _user = service.getUserByName(user.getUserName());
 		if(_user != null && user.getUserPass().equals(_user.getUserPass())){
-             
-            session.setAttribute("user", _user);
-            logger.info("*********" + user.getUserName() + "登录成功");
-            return "8888";
-        }
-		logger.info("*********" + user.getUserName() + "登录失败");
-		
-        return "4001";
+			if(!"Y".equals(_user.getQybz())){
+				logger.info("*********" + user.getUserName() + "登录失败");
+		        return "4002";
+			}else if(!"1".equals(_user.getYhlx())){
+				logger.info("*********" + user.getUserName() + "登录失败");
+		        return "4003";
+			}else{
+				_user.setUserName(user.getUserName());
+	            session.setAttribute("user", _user);
+	            logger.info("*********" + user.getUserName() + "登录成功");
+	            return "8888";
+			}
+		}else{
+			logger.info("*********" + user.getUserName() + "登录失败");
+	        return "4001";
+		}
 	}
 	
 	@RequestMapping("user/getCurrentUser")

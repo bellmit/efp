@@ -253,4 +253,37 @@ public class FpServiceImpl implements FpService {
 		dao.saveCallBackInfo(kpxx);
 	}
 
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param param
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月11日 上午11:51:48
+	  */
+	@SuppressWarnings("unchecked")
+	@Override
+	public PageList<HashMap<String,Object>> getPlainList4zf(Map<String, Object> param) {
+//		return orderDetailDao.getPlainList4zf(param);
+		return (PageList<HashMap<String, Object>>)pageService.getPageList(OrderDetailMapper.class, "getPlainList4zf",param, (int)param.get("pageIndex"),(int)param.get("pageSize"));
+	}
+
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param param
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月11日 上午11:51:48
+	  */
+	@SuppressWarnings("unchecked")
+	@Override
+	public PageList<HashMap<String,Object>> getSpecialList4zf(Map<String, Object> param) {
+		
+//		return orderDetailDao.getSpecialList4zf(param);
+		
+		return (PageList<HashMap<String, Object>>)pageService.getPageList(OrderDetailMapper.class, "getSpecialList4zf",param, (int)param.get("pageIndex"),(int)param.get("pageSize"));
+		
+	}
+
 }

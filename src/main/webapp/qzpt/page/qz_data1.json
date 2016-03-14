@@ -64,6 +64,12 @@
 			"attributes":{
 				"url":"../../specialInvoice/waitprintzps.html"
 			}
+		},{
+			"id":134,
+			"text":"增值税专用发票作废",
+			"attributes":{
+				"url":"../../queryStatistics/zyfpzfIndex.jsp"
+			}
 		}]
 	},{
 		"id":14,
@@ -87,7 +93,15 @@
 			"attributes":{
 				"url":"../../regularInvoice/waitprintpps.html"
 			}
-		}]
+		},{
+			"id":144,
+			"text":"增值税普通发票作废",
+			"attributes":{
+				"url":"../../queryStatistics/ptfpzfIndex.jsp"
+				
+			}
+		}
+		]
 	},{
 		"id":15,
 		"text":"发票开具",

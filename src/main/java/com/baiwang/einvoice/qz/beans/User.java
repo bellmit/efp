@@ -34,6 +34,14 @@ public class User {
     private String updateIp;
 
     private String remark;
+    
+    private String qybz ;
+    
+    private String yhlx ;
+    
+    private String kpddm ;
+    
+    private String nsrsbh ;
 
     public Integer getId() {
         return id;
@@ -162,4 +170,38 @@ public class User {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+	public String getQybz() {
+		return qybz;
+	}
+
+	public void setQybz(String qybz) {
+		this.qybz = qybz;
+	}
+
+	public String getYhlx() {
+		return yhlx;
+	}
+
+	public void setYhlx(String yhlx) {
+		this.yhlx = yhlx;
+	}
+
+	public String getKpddm() {
+		return kpddm;
+	}
+
+	public void setKpddm(String kpddm) {
+		this.kpddm = kpddm;
+	}
+
+	public String getNsrsbh() {
+		return nsrsbh;
+	}
+
+	public void setNsrsbh(String nsrsbh) {
+		this.nsrsbh = nsrsbh;
+	}
+    
+    
 }
