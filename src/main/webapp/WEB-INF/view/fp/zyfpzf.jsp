@@ -52,7 +52,7 @@ function concelFp(lsh){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		location.reload();
         	}else{
-        		alert("Error");
+        		alert("ajax Error");
         	}
         }
 	});
