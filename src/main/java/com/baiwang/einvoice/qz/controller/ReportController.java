@@ -24,7 +24,7 @@ import org.springframework.web.context.ServletConfigAware;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.beans.ReportDetail;
 import com.baiwang.einvoice.qz.service.ReportDetailService;
-import com.baiwang.einvoice.util.ReportUtil;
+import com.baiwang.einvoice.qz.utils.ReportUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**

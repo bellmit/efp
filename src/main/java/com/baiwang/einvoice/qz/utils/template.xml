@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="gbk"?>
 <business id="FPKJ">
 	<CUSTOMDATA>
-		<ZDDH>40006</ZDDH>
+		<ZDDH>100008</ZDDH>
 		<FDDH>001</FDDH>
-		<SQR>å¼ ä¸‰4</SQR>
-		<HYM>å¶å°”ä¸Šä¼šç½‘</HYM>
+		<SQR>ÕÅÈý4</SQR>
+		<HYM>Å¼¶ûÉÏ»áÍø</HYM>
 		<HYID>861124106</HYID>
-		<DDSJ>2016å¹´3æœˆ5æ—¥</DDSJ>
-		<SQSJ>2016å¹´3æœˆ5æ—¥</SQSJ>
-		<SPZL>æœåŠ¡è´¹</SPZL>
+		<DDSJ>2016-03-05</DDSJ>
+		<SQSJ>2016-03-05</SQSJ>
+		<SPZL>·þÎñ·Ñ</SPZL>
 		<SQRK>ERP</SQRK>
-		<SHR>æŽå››</SHR>
+		<SHR>ÀîËÄ</SHR>
 		<SHRDH>13718099648</SHRDH>
-		<JSDZ>åŒ—äº¬å¸‚æµ·æ·€åŒºäº¿åŸŽå›½é™…7å±‚711</JSDZ>
-		<YJSJ>2016å¹´3æœˆ5æ—¥</YJSJ>
-		<FHR>å¤æ ¸äººXXX</FHR>
-		<WLGS>ç”³é€š</WLGS>
+		<JSDZ>±±¾©ÊÐº£µíÇøÒÚ³Ç¹ú¼Ê7²ã711</JSDZ>
+		<YJSJ>2016Äê3ÔÂ5ÈÕ</YJSJ>
+		<FHR>¸´ºËÈËXXX</FHR>
+		<WLGS>ÉêÍ¨</WLGS>
 		<WLDH>1234567890</WLDH>
-		<TKZT>å·²é€€æ¬¾</TKZT>
+		<TKZT>ÒÑÍË¿î</TKZT>
 	</CUSTOMDATA>
 	<REQUEST_COMMON_FPKJ>
 		<COMMON_FPKJ_FPT>
 			<FPLX>026</FPLX>
 			<KPLX>0</KPLX>
 			<XSF_NSRSBH>11010800000000000006</XSF_NSRSBH>
-			<XSF_MC>ç™¾æ—ºè‚¡ä»½6</XSF_MC>
-			<XSF_DZ>é”€å”®æ–¹åœ°å€</XSF_DZ>
+			<XSF_MC>°ÙÍú¹É·Ý6</XSF_MC>
+			<XSF_DZ>ÏúÊÛ·½µØÖ·</XSF_DZ>
 			<XSF_DH>11012345678</XSF_DH>
 			<XSF_YHZH>622848265825566332</XSF_YHZH>
 			<GMF_NSRSBH></GMF_NSRSBH>
-			<GMF_MC>æˆ‘æ˜¯è°</GMF_MC>
+			<GMF_MC>ÎÒÊÇË­</GMF_MC>
 			<GMF_DZ></GMF_DZ>
 			<GMF_DH></GMF_DH>
 			<GMF_YHZH>888888888888888</GMF_YHZH>
@@ -41,12 +41,12 @@
 			<JSHJ>58.50</JSHJ>
 			<HJJE>50.00</HJJE>
 			<HJSE>8.50</HJSE>
-			<BZ>å¤‡æ³¨</BZ>
+			<BZ>±¸×¢</BZ>
 		</COMMON_FPKJ_FPT>
 		<COMMON_FPKJ_XMXXS>
 			<COMMON_FPKJ_XMXX>
 				<FPHXZ>0</FPHXZ>
-				<XMMC>å…¬ç‰›ï¼ˆBULLï¼‰GN-H111</XMMC>
+				<XMMC>¹«Å££¨BULL£©GN-H111</XMMC>
 				<GGXH></GGXH>
 				<DW></DW>
 				<XMSL>1</XMSL>
@@ -58,7 +58,7 @@
 			</COMMON_FPKJ_XMXX>
 			<COMMON_FPKJ_XMXX>
 				<FPHXZ>0</FPHXZ>
-				<XMMC>åŽæ½® E386</XMMC>
+				<XMMC>»ª³± E386</XMMC>
 				<GGXH></GGXH>
 				<DW></DW>
 				<XMSL>2</XMSL>

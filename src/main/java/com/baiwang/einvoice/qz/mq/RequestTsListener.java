@@ -15,8 +15,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jms.listener.SessionAwareMessageListener;
 
-import com.baiwang.einvoice.service.skService.TsPlatService;
-import com.baiwang.einvoice.util.InvoiceUtil;
+import com.baiwang.einvoice.qz.service.skService.TsPlatService;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 
 @SuppressWarnings("rawtypes")
 public class RequestTsListener  implements SessionAwareMessageListener{
@@ -83,7 +83,7 @@ public class RequestTsListener  implements SessionAwareMessageListener{
 			xml = xml.replaceFirst(encode, "utf-8");
 			
 			long l1 = System.currentTimeMillis();
-			String ubl = com.baiwang.einvoice.util.XmlToUbl.xmlToUbl(xml);
+			String ubl = com.baiwang.einvoice.qz.utils.XmlToUbl.xmlToUbl(xml);
 			long l2 = System.currentTimeMillis();
 			long l3 = l2 - l1;
 			logger.info("//////---------//////xml==>ubl---转换时间：/////////" + l3 + "//////------://////"+ubl);

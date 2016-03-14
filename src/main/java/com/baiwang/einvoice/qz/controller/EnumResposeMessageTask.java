@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
-import com.baiwang.einvoice.util.InvoiceUtil;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 
 public class EnumResposeMessageTask implements  Callable<String>{
 	

@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baiwang.einvoice.qz.beans.Returnmsg;
 import com.baiwang.einvoice.qz.mq.handleRequest.HandleResponse;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
-import com.baiwang.einvoice.qz.vo.Returnmsg;
-import com.baiwang.einvoice.util.InvoiceUtil;
 
 @RequestMapping("handle")
 //@Scope("prototype")

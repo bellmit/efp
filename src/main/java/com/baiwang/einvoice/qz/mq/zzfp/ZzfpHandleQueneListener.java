@@ -20,11 +20,11 @@ import com.baiwang.einvoice.qz.beans.Business;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
-import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
-import com.baiwang.einvoice.util.InvoiceUtil;
 
 @SuppressWarnings("rawtypes")
 public class ZzfpHandleQueneListener implements SessionAwareMessageListener{
@@ -38,7 +38,7 @@ public class ZzfpHandleQueneListener implements SessionAwareMessageListener{
 	private IResultOfSkService resultService;
 	
 	@Resource
-	private FpService fpService;
+	private IFpService fpService;
 	
 	@Override
 	public void onMessage(Message message, Session session) throws JMSException {

@@ -38,10 +38,10 @@ import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
-import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
-import com.baiwang.einvoice.util.InvoiceUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
@@ -57,7 +57,7 @@ public class InvoiceController {
 
 	private static final Log logger = LogFactory.getLog(InvoiceController.class);
 	@Resource
-	private FpService fpService;
+	private IFpService fpService;
 	@Resource
 	private EInvoiceSenders sender;
 	@Resource

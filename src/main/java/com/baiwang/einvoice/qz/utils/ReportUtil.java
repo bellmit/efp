@@ -2,7 +2,7 @@
  *Copyright (c) 1997, 2015,BEST WONDER CO.,LTD. All rights reserved.
  */
 
-package com.baiwang.einvoice.util;
+package com.baiwang.einvoice.qz.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

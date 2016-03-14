@@ -19,7 +19,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
   * @author zhaowei
   * @date 2016年3月3日 上午9:18:31
   */
-public interface FpService {
+public interface IFpService {
 
 	
 	void saveInfo(OrderDetail orderDetail, Kpxx kpxx, List<Fpmx> fpmxList , String fpqqlsh);

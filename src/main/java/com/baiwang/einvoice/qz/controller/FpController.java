@@ -31,7 +31,7 @@ import com.baiwang.einvoice.qz.beans.OrderDetail;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.beans.SkConfig;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
-import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.IPrintPpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
@@ -47,7 +47,7 @@ public class FpController {
 	@Resource
 	private EInvoiceSenders sender;
 	@Resource
-	private FpService fpService;
+	private IFpService fpService;
 	
 	@Resource
 	private IResultOfSkService resultService;
