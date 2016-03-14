@@ -7,6 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+/***
+  * @ClassName: OrderDetail
+  * @Description: 订单信息实体类
+  * @author zhaowei
+  * @date 2016年3月14日 下午4:23:41
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
 		"id",

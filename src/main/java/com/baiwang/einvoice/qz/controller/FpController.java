@@ -80,7 +80,6 @@ public class FpController {
 		List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
 		System.out.println("订单号："+orderDetail.getZddh());
 		
-		/*ResultOfKp result = resultService.queryResult(customOrder.getDdhm(), "");*/
 		Map<String, String> result = resultService.queryResult(kpxx.getZddh(), kpxx.getFddh(), kpxx.getFplx());//根据两个订单号查
 		
 		if(null == result || result.get("returnCode").equals("4000")){

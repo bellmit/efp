@@ -15,7 +15,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
+/**
+  * @ClassName: Business
+  * @Description: 封装无忧报文的实体对象
+  * @author zhaowei
+  * @date 2016年3月14日 下午4:17:49
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "orderDetail",
