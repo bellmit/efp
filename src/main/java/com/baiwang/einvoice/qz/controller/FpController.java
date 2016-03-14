@@ -62,14 +62,14 @@ public class FpController {
 	public Map<String, String> SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
 		Map<String, String> map = new HashMap<>();
 		
-		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes()) ){
+		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("gbk")) ){
 			logger.error("xml不符合规则");
 			map.put("returnCode", "4000");
 			map.put("returnMsg", "xml不符合规则");
 			return map;
 		}
 		
-		Business business = JAXBUtil.unmarshallObject(xml.getBytes());
+		Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
 		
 		OrderDetail orderDetail = business.getOrderDetail();
 		
@@ -160,12 +160,12 @@ public class FpController {
 	@ResponseBody
 	public String receive(String xml) throws UnsupportedEncodingException{
 		
-		if(null == xml || !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("utf-8")) ){
+		if(null == xml || !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("gbk")) ){
 			logger.error("xml不符合规则");
 			return "xml不符合规则";
 		}
 		
-		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
+		Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
 		
 		OrderDetail orderDetail = business.getOrderDetail();
 		
