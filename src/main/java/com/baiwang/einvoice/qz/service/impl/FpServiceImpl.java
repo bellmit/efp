@@ -286,4 +286,17 @@ public class FpServiceImpl implements FpService {
 		
 	}
 
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param fpqqlsh
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月14日 上午10:32:53
+	  */
+	@Override
+	public int zfByFpqqlsh(String fpqqlsh) {
+		return dao.zfByFpqqlsh(fpqqlsh);
+	}
+
 }

@@ -271,4 +271,17 @@ public class FpController {
 		result.put("skconfig", skconfig);
 		return result;
 	}
+	
+	
+	//更新发票状态->作废
+	@RequestMapping(value="updateFpzt2zf")
+	@ResponseBody
+	public String updateFpzt2zf(String lsh){
+		int result = fpService.zfByFpqqlsh(lsh);
+		if(result==1){
+			return "0";
+		}else{
+			return "1";
+		}
+	}
 }

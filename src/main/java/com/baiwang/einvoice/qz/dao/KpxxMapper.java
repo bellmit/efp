@@ -29,6 +29,8 @@ public interface KpxxMapper {
     
     void updateFpztByFpqqlsh(String fpqqlsh);
     
+    int zfByFpqqlsh(String fpqqlsh);
+    
     List<Map<String, String>> getPlainList(HashMap<String, String> param);
     
     List<Map<String, String>> getSpecialList(HashMap<String, String> param);

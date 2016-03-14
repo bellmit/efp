@@ -481,6 +481,11 @@
     set fpzt = '2'
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </update>
+  <update id="zfByFpqqlsh" parameterType="java.lang.String">
+    update kpxx
+    set fpzt = '-2'
+    where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
+  </update>
   
   <update id="saveCallBackInfo" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
     update kpxx

@@ -112,6 +112,16 @@ public class XmlToUbl {
 			int index_end = xml.indexOf("</expand>", expand_index);
 			expand_index = xml.indexOf("<expand>", index_end);
 		}
+		if(expand_index == -1){
+			sb.append(							"<bw:KeyPair>");
+			sb.append(								"<bw:key>");
+			sb.append(									"");
+			sb.append(								"</bw:key>");
+			sb.append(								"<bw:value>");
+			sb.append(									"");
+			sb.append(								"</bw:value>");
+			sb.append(							"</bw:KeyPair>");
+		}
 		
 		
 		sb.append(						"</bw:KeyPairList>");
