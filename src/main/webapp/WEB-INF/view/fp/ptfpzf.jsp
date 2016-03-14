@@ -42,7 +42,17 @@ function concelFp(lsh){
 	        		var invoiceVoidRetReturncode = getTotalMidValue(invoiceVoidRet, "<returncode>","</returncode>");
 	        		var invoiceVoidRetReturnmsg = getTotalMidValue(invoiceVoidRet, "<returnmsg>","</returnmsg>");	
 	        		if(invoiceVoidRetReturncode==0&&invoiceVoidRetReturnmsg=="成功"){
-	        			alert(invoiceVoidRet);	
+// 	        			alert(invoiceVoidRet);	
+// 	        			alert('发票流水号为：'+kpxx.fpqqlsh);
+	        			$.post('<%=basePath %>/einvoice/updateFpzt2zf',{'lsh':lsh},function(text,status){
+	        				if(text == 0){
+	        					alert('操作成功！');
+	        					$("#searchForm").submit();
+	        				}else{
+	        					alert('操作失败！');
+	        				}
+	        				
+	        			})
 	        		}else{
 	        			alert("发票领购信息核对失败，失败原因："+invoiceVoidRetReturnmsg);
 	        		}
