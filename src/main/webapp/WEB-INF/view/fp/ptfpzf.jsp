@@ -42,14 +42,12 @@ function concelFp(lsh){
 	        		var invoiceVoidRetReturncode = getTotalMidValue(invoiceVoidRet, "<returncode>","</returncode>");
 	        		var invoiceVoidRetReturnmsg = getTotalMidValue(invoiceVoidRet, "<returnmsg>","</returnmsg>");	
 	        		if(invoiceVoidRetReturncode==0&&invoiceVoidRetReturnmsg=="成功"){
-// 	        			alert(invoiceVoidRet);	
-// 	        			alert('发票流水号为：'+kpxx.fpqqlsh);
 	        			$.post('<%=basePath %>/einvoice/updateFpzt2zf',{'lsh':lsh},function(text,status){
 	        				if(text == 0){
 	        					alert('操作成功！');
 	        					$("#searchForm").submit();
 	        				}else{
-	        					alert('操作失败！');
+	        					alert('发票作废操作成功，但更新发票状态时发生异常！');
 	        				}
 	        				
 	        			})
@@ -75,7 +73,6 @@ function concelFp(lsh){
 function SetParameter(aqm,keypwd,ip,port) {
 	
 	//01设置初始化参数
-	/* var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>192.168.6.14</servletip>\r\n<servletport>1008</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>"; */
 	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>"+ip+"</servletip>\r\n<servletport>"+port+"</servletport>\r\n<keypwd>"+keypwd+"</keypwd>\r\n<aqm>"+aqm+"</aqm>\r\n</body>\r\n</business>";
 	try {
 		ret = sk.Operate(sInputInfo);
@@ -191,7 +188,10 @@ function getTotalMidValue(source, priStr, suxStr) {
 			<td><c:out value="${fp.hjje}"/></td>
 			<td><c:out value="${fp.hjse}"/></td>
 			<td><c:out value="${fp.jshj}"/></td>
-			<td><c:out value="${fp.kplx}"/></td>
+			<td>
+			<c:if test="${fp.kplx=='0'}">红票</c:if>
+			<c:if test="${fp.kplx=='1'}">蓝票</c:if>
+			</td>
 			<td><c:out value="${fp.kprq}"/></td>
 			<td><c:out value="${fp.fpdm}"/></td>
 			<td><c:out value="${fp.fphm}"/></td>
@@ -221,6 +221,7 @@ function getTotalMidValue(source, priStr, suxStr) {
      });
      
      function gotoPage(page) {
+    	 alert(page);
     	 $("#currentPage").val(page);
          $("#searchForm").submit(); 
      }
