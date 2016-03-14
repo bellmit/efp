@@ -29,8 +29,10 @@ import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
 import com.baiwang.einvoice.qz.beans.Page;
+import com.baiwang.einvoice.qz.beans.SkConfig;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.IPrintPpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
@@ -49,6 +51,8 @@ public class FpController {
 	
 	@Resource
 	private IResultOfSkService resultService;
+	@Resource
+	private IPrintPpService printSerive;
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
@@ -58,14 +62,14 @@ public class FpController {
 	public Map<String, String> SaveKpInfo(String xml, HttpServletRequest request) throws UnsupportedEncodingException, JMSException{
 		Map<String, String> map = new HashMap<>();
 		
-		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes()) ){
+		if( !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("gbk")) ){
 			logger.error("xml不符合规则");
 			map.put("returnCode", "4000");
 			map.put("returnMsg", "xml不符合规则");
 			return map;
 		}
 		
-		Business business = JAXBUtil.unmarshallObject(xml.getBytes());
+		Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
 		
 		OrderDetail orderDetail = business.getOrderDetail();
 		
@@ -156,12 +160,12 @@ public class FpController {
 	@ResponseBody
 	public String receive(String xml) throws UnsupportedEncodingException{
 		
-		if(null == xml || !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("utf-8")) ){
+		if(null == xml || !ValidateXML.validateXml("wyyy.xsd", xml.getBytes("gbk")) ){
 			logger.error("xml不符合规则");
 			return "xml不符合规则";
 		}
 		
-		Business business = JAXBUtil.unmarshallObject(xml.getBytes("utf-8"));
+		Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
 		
 		OrderDetail orderDetail = business.getOrderDetail();
 		
@@ -246,18 +250,28 @@ public class FpController {
 	//普通发票作废
 	@RequestMapping(value="ptfpzf")
 	@ResponseBody
-	public String cancel_pt(String lsh){
-		System.out.println("流水号为"+lsh+"的普通发票作废！");
-		
-		return "0";
+	public Map<String, Object> cancel_pt(String lsh){
+		Map<String, Object> result = new HashMap<>();
+		//查询发票信息
+		Kpxx kpxx = fpService.getKpxxByFpqqlsh(lsh);
+		result.put("kpxx", kpxx);
+		//查询SK配置信息
+		SkConfig skconfig = printSerive.getSkParameter("0");
+		result.put("skconfig", skconfig);
+		return result;
 	}
 	//专用发票作废
 	@RequestMapping(value="zyfpzf")
 	@ResponseBody
-	public String cancel_zy(String lsh){
-		System.out.println("流水号为"+lsh+"的专用发票作废！");
-		
-		return "0";
+	public Map<String, Object> cancel_zy(String lsh){
+		Map<String, Object> result = new HashMap<>();
+		//查询发票信息
+		Kpxx kpxx = fpService.getKpxxByFpqqlsh(lsh);
+		result.put("kpxx", kpxx);
+		//查询SK配置信息
+		SkConfig skconfig = printSerive.getSkParameter("0");
+		result.put("skconfig", skconfig);
+		return result;
 	}
 	
 	
