@@ -48,7 +48,7 @@ public class EInvoiceSenders {
 	}
 	
 	public void sendMessage(Destination destination, final String message, final String correlationId) {
-		logger.info("******关联id为" + correlationId + ",xml为" + message);
+		logger.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX关联id为" + correlationId + ",xml为" + message);
 		System.out.println("发送mq的xml：" + message);
         
 		jmsTemplate1.send(destination, new MessageCreator() {
