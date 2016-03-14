@@ -111,7 +111,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 				<td><c:out value="${fp.hjje}" /></td>
 				<td><c:out value="${fp.hjse}" /></td>
 				<td><c:out value="${fp.jshj}" /></td>
-				<td><a href="javascript:void(0)" onclick="kjfp(${fp.fpqqlsh});">开票</a>
+				<td><a href="javascript:void(0)" onclick="kjfp('${fp.fpqqlsh}');">开票</a>
 				</td>
 			</tr>
 		</c:forEach>
