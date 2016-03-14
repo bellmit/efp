@@ -19,7 +19,7 @@
               <xs:element type="xs:string" name="JSDZ"/>
               <xs:element type="xs:string" name="YJSJ"/>
               <xs:element type="xs:string" name="FHR"/>
-              <xs:element type="xs:string" name="WLSJ"/>
+              <xs:element type="xs:string" name="WLGS"/>
               <xs:element type="xs:string" name="WLDH"/>
               <xs:element type="xs:string" name="TKZT"/>
             </xs:choice>
