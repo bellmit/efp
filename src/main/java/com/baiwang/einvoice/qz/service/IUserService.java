@@ -9,13 +9,11 @@ public interface IUserService {
 
 	public User getUserByName(String name);
 	
-	int selectUserByPass(int userid,String pass);
+	int selectUserByPass(String userid,String pass);
 	
-	User selectById(int id);
+	User selectById(String id);
 	
 	void updateById(User user);
-	
-	void changePass(int id, String user_pass);
 	
 	PageList<HashMap<String, Object>> listUser(HashMap<String, String> param, int pageIndex, int pageSize);
 }

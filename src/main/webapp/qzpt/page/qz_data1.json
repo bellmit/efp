@@ -28,19 +28,6 @@
 			"attributes":{
 				"url":"../../settings/syssetting.html"
 			}
-		},{
-			"id":122,
-			"text":"修改密码",
-			"attributes":{
-				"url":"../../user/changePwd.jsp"
-			}
-		}
-		,{
-			"id":123,
-			"text":"用户列表",
-			"attributes":{
-				"url":"../../queryStatistics/goToUser.jsp"
-			}
 		}
 	]},{
 		"id":13,

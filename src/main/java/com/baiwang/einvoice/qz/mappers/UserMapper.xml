@@ -2,252 +2,179 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baiwang.einvoice.qz.dao.UserMapper" >
   <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.User" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="user_type" property="userType" jdbcType="TINYINT" />
-    <result column="user_pass" property="userPass" jdbcType="VARCHAR" />
-    <result column="xsfnsrsbh" property="xsfnsrsbh" jdbcType="VARCHAR" />
-    <result column="ap_name" property="apName" jdbcType="VARCHAR" />
-    <result column="mail" property="mail" jdbcType="VARCHAR" />
-    <result column="islock" property="islock" jdbcType="BIT" />
-    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
-    <result column="last_log_time" property="lastLogTime" jdbcType="TIMESTAMP" />
-    <result column="last_log_ip" property="lastLogIp" jdbcType="VARCHAR" />
-    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
-    <result column="reg_ip" property="regIp" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="update_ip" property="updateIp" jdbcType="VARCHAR" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CZYDM" property="czydm" jdbcType="VARCHAR" />
+    <result column="CZYMC" property="czymc" jdbcType="VARCHAR" />
+    <result column="YHLX" property="yhlx" jdbcType="CHAR" />
+    <result column="YHKL" property="yhkl" jdbcType="VARCHAR" />
+    <result column="QYBZ" property="qybz" jdbcType="CHAR" />
+    <result column="CJRDM" property="cjrdm" jdbcType="VARCHAR" />
+    <result column="CJSJ" property="cjsj" jdbcType="DATE" />
+    <result column="KPDDM" property="kpddm" jdbcType="VARCHAR" />
+    <result column="FWQBH" property="fwqbh" jdbcType="VARCHAR" />
+    <result column="NSRSBH" property="nsrsbh" jdbcType="VARCHAR" />
+    <result column="ZZJGDM" property="zzjgdm" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, user_type, user_pass, xsfnsrsbh, ap_name, mail, islock, telephone, 
-    last_log_time, last_log_ip, reg_time, reg_ip, update_time, update_ip, remark
+    ID, CZYDM, CZYMC, YHLX, YHKL, QYBZ, CJRDM, CJSJ, KPDDM, FWQBH, NSRSBH, ZZJGDM
   </sql>
-  
-  <!-- 登陆查询 -->
-  <select id="getUserByName" resultType="string" resultMap="BaseResultMap">
-  	select 
-  	<include refid="Base_Column_List" />
-    from user
-    where user_name = #{userName,jdbcType=VARCHAR} 
-  </select>
-  
-  <!-- 修改密码查询 -->
-  <select id="selectUserByPass" resultType="java.lang.Integer">
-  		select count(*)  from user
-    	where id = #{id,jdbcType=INTEGER} and user_pass = #{user_pass,jdbcType=VARCHAR}
-  </select>
-  
-  <!-- 修改密码 -->
-  <update id="changePass">
-  	update user
-    set 
-      user_pass = #{user_pass,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from user
-    where id = #{id,jdbcType=INTEGER}
+    from dj_czyxx
+    where ID = #{id,jdbcType=VARCHAR}
   </select>
-  
-  <select id="listUser" resultMap="BaseResultMap">
+  <select id="selectUserByPass" resultType="java.lang.Integer" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />
-    from user
+    count(1)
+    from dj_czyxx
+    where ID = #{id,jdbcType=VARCHAR} and YHKL = #{yhkl,jdbcType=VARCHAR}
   </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from user
-    where id = #{id,jdbcType=INTEGER}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dj_czyxx
+    where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.User" >
-    insert into user (id, user_name, user_type, 
-      user_pass, xsfnsrsbh, ap_name, 
-      mail, islock, telephone, 
-      last_log_time, last_log_ip, reg_time, 
-      reg_ip, update_time, update_ip, 
-      remark)
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userType,jdbcType=TINYINT}, 
-      #{userPass,jdbcType=VARCHAR}, #{xsfnsrsbh,jdbcType=VARCHAR}, #{apName,jdbcType=VARCHAR}, 
-      #{mail,jdbcType=VARCHAR}, #{islock,jdbcType=BIT}, #{telephone,jdbcType=VARCHAR}, 
-      #{lastLogTime,jdbcType=TIMESTAMP}, #{lastLogIp,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, 
-      #{regIp,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateIp,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
+    insert into dj_czyxx (ID, CZYDM, CZYMC, 
+      YHLX, YHKL, QYBZ, CJRDM, 
+      CJSJ, KPDDM, FWQBH, NSRSBH, 
+      ZZJGDM)
+    values (#{id,jdbcType=VARCHAR}, #{czydm,jdbcType=VARCHAR}, #{czymc,jdbcType=VARCHAR}, 
+      #{yhlx,jdbcType=CHAR}, #{yhkl,jdbcType=VARCHAR}, #{qybz,jdbcType=CHAR}, #{cjrdm,jdbcType=VARCHAR}, 
+      #{cjsj,jdbcType=DATE}, #{kpddm,jdbcType=VARCHAR}, #{fwqbh,jdbcType=VARCHAR}, #{nsrsbh,jdbcType=VARCHAR}, 
+      #{zzjgdm,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.User" >
-    insert into user
+    insert into dj_czyxx
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        id,
+        ID,
       </if>
-      <if test="userName != null" >
-        user_name,
+      <if test="czydm != null" >
+        CZYDM,
       </if>
-      <if test="userType != null" >
-        user_type,
+      <if test="czymc != null" >
+        CZYMC,
       </if>
-      <if test="userPass != null" >
-        user_pass,
+      <if test="yhlx != null" >
+        YHLX,
       </if>
-      <if test="xsfnsrsbh != null" >
-        xsfnsrsbh,
+      <if test="yhkl != null" >
+        YHKL,
       </if>
-      <if test="apName != null" >
-        ap_name,
+      <if test="qybz != null" >
+        QYBZ,
       </if>
-      <if test="mail != null" >
-        mail,
+      <if test="cjrdm != null" >
+        CJRDM,
       </if>
-      <if test="islock != null" >
-        islock,
+      <if test="cjsj != null" >
+        CJSJ,
       </if>
-      <if test="telephone != null" >
-        telephone,
+      <if test="kpddm != null" >
+        KPDDM,
       </if>
-      <if test="lastLogTime != null" >
-        last_log_time,
+      <if test="fwqbh != null" >
+        FWQBH,
       </if>
-      <if test="lastLogIp != null" >
-        last_log_ip,
+      <if test="nsrsbh != null" >
+        NSRSBH,
       </if>
-      <if test="regTime != null" >
-        reg_time,
-      </if>
-      <if test="regIp != null" >
-        reg_ip,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="updateIp != null" >
-        update_ip,
-      </if>
-      <if test="remark != null" >
-        remark,
+      <if test="zzjgdm != null" >
+        ZZJGDM,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
+      <if test="czydm != null" >
+        #{czydm,jdbcType=VARCHAR},
       </if>
-      <if test="userType != null" >
-        #{userType,jdbcType=TINYINT},
+      <if test="czymc != null" >
+        #{czymc,jdbcType=VARCHAR},
       </if>
-      <if test="userPass != null" >
-        #{userPass,jdbcType=VARCHAR},
+      <if test="yhlx != null" >
+        #{yhlx,jdbcType=CHAR},
       </if>
-      <if test="xsfnsrsbh != null" >
-        #{xsfnsrsbh,jdbcType=VARCHAR},
+      <if test="yhkl != null" >
+        #{yhkl,jdbcType=VARCHAR},
       </if>
-      <if test="apName != null" >
-        #{apName,jdbcType=VARCHAR},
+      <if test="qybz != null" >
+        #{qybz,jdbcType=CHAR},
       </if>
-      <if test="mail != null" >
-        #{mail,jdbcType=VARCHAR},
+      <if test="cjrdm != null" >
+        #{cjrdm,jdbcType=VARCHAR},
       </if>
-      <if test="islock != null" >
-        #{islock,jdbcType=BIT},
+      <if test="cjsj != null" >
+        #{cjsj,jdbcType=DATE},
       </if>
-      <if test="telephone != null" >
-        #{telephone,jdbcType=VARCHAR},
+      <if test="kpddm != null" >
+        #{kpddm,jdbcType=VARCHAR},
       </if>
-      <if test="lastLogTime != null" >
-        #{lastLogTime,jdbcType=TIMESTAMP},
+      <if test="fwqbh != null" >
+        #{fwqbh,jdbcType=VARCHAR},
       </if>
-      <if test="lastLogIp != null" >
-        #{lastLogIp,jdbcType=VARCHAR},
+      <if test="nsrsbh != null" >
+        #{nsrsbh,jdbcType=VARCHAR},
       </if>
-      <if test="regTime != null" >
-        #{regTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="regIp != null" >
-        #{regIp,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateIp != null" >
-        #{updateIp,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
+      <if test="zzjgdm != null" >
+        #{zzjgdm,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.baiwang.einvoice.qz.beans.User" >
-    update user
+    update dj_czyxx
     <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
+      <if test="czydm != null" >
+        CZYDM = #{czydm,jdbcType=VARCHAR},
       </if>
-      <if test="userType != null" >
-        user_type = #{userType,jdbcType=TINYINT},
+      <if test="czymc != null" >
+        CZYMC = #{czymc,jdbcType=VARCHAR},
       </if>
-      <if test="userPass != null" >
-        user_pass = #{userPass,jdbcType=VARCHAR},
+      <if test="yhlx != null" >
+        YHLX = #{yhlx,jdbcType=CHAR},
       </if>
-      <if test="xsfnsrsbh != null" >
-        xsfnsrsbh = #{xsfnsrsbh,jdbcType=VARCHAR},
+      <if test="yhkl != null" >
+        YHKL = #{yhkl,jdbcType=VARCHAR},
       </if>
-      <if test="apName != null" >
-        ap_name = #{apName,jdbcType=VARCHAR},
+      <if test="qybz != null" >
+        QYBZ = #{qybz,jdbcType=CHAR},
       </if>
-      <if test="mail != null" >
-        mail = #{mail,jdbcType=VARCHAR},
+      <if test="cjrdm != null" >
+        CJRDM = #{cjrdm,jdbcType=VARCHAR},
       </if>
-      <if test="islock != null" >
-        islock = #{islock,jdbcType=BIT},
+      <if test="cjsj != null" >
+        CJSJ = #{cjsj,jdbcType=DATE},
       </if>
-      <if test="telephone != null" >
-        telephone = #{telephone,jdbcType=VARCHAR},
+      <if test="kpddm != null" >
+        KPDDM = #{kpddm,jdbcType=VARCHAR},
       </if>
-      <if test="lastLogTime != null" >
-        last_log_time = #{lastLogTime,jdbcType=TIMESTAMP},
+      <if test="fwqbh != null" >
+        FWQBH = #{fwqbh,jdbcType=VARCHAR},
       </if>
-      <if test="lastLogIp != null" >
-        last_log_ip = #{lastLogIp,jdbcType=VARCHAR},
+      <if test="nsrsbh != null" >
+        NSRSBH = #{nsrsbh,jdbcType=VARCHAR},
       </if>
-      <if test="regTime != null" >
-        reg_time = #{regTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="regIp != null" >
-        reg_ip = #{regIp,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateIp != null" >
-        update_ip = #{updateIp,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
+      <if test="zzjgdm != null" >
+        ZZJGDM = #{zzjgdm,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.User" >
-    update user
-    set user_name = #{userName,jdbcType=VARCHAR},
-      user_type = #{userType,jdbcType=TINYINT},
-      user_pass = #{userPass,jdbcType=VARCHAR},
-      xsfnsrsbh = #{xsfnsrsbh,jdbcType=VARCHAR},
-      ap_name = #{apName,jdbcType=VARCHAR},
-      mail = #{mail,jdbcType=VARCHAR},
-      islock = #{islock,jdbcType=BIT},
-      telephone = #{telephone,jdbcType=VARCHAR},
-      last_log_time = #{lastLogTime,jdbcType=TIMESTAMP},
-      last_log_ip = #{lastLogIp,jdbcType=VARCHAR},
-      reg_time = #{regTime,jdbcType=TIMESTAMP},
-      reg_ip = #{regIp,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_ip = #{updateIp,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    update dj_czyxx
+    set CZYDM = #{czydm,jdbcType=VARCHAR},
+      CZYMC = #{czymc,jdbcType=VARCHAR},
+      YHLX = #{yhlx,jdbcType=CHAR},
+      YHKL = #{yhkl,jdbcType=VARCHAR},
+      QYBZ = #{qybz,jdbcType=CHAR},
+      CJRDM = #{cjrdm,jdbcType=VARCHAR},
+      CJSJ = #{cjsj,jdbcType=DATE},
+      KPDDM = #{kpddm,jdbcType=VARCHAR},
+      FWQBH = #{fwqbh,jdbcType=VARCHAR},
+      NSRSBH = #{nsrsbh,jdbcType=VARCHAR},
+      ZZJGDM = #{zzjgdm,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
