@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,8 +45,8 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: InvoiceController
-  * @Description: TODO
-  * @author wsdoing
+  * @Description: 发票开具Controller
+  * @author zhaowei
   * @date 2016年3月5日 下午1:59:38
   */
 
@@ -65,6 +64,18 @@ public class InvoiceController {
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
+	
+	/**
+	  * @author zhaowei
+	  * @Description: 普通纸质发票开具列表
+	  * @param @param request
+	  * @param @param session
+	  * @param @param page
+	  * @param @return  
+	  * @return ModelAndView  
+	  * @throws
+	  * @date 2016年3月14日 下午4:37:48
+	 */
 	@RequestMapping("/plain")
 	@ResponseBody
 	public ModelAndView plainInvoiceList(HttpServletRequest request , HttpSession session , Page page){
@@ -100,6 +111,17 @@ public class InvoiceController {
 		return mav;
 	}
 	
+	/***
+	  * @author zhaowei
+	  * @Description: 纸质专用发票开具列表
+	  * @param @param request
+	  * @param @param session
+	  * @param @param page
+	  * @param @return  
+	  * @return ModelAndView  
+	  * @throws
+	  * @date 2016年3月14日 下午4:38:26
+	 */
 	@RequestMapping("/special")
 	@ResponseBody
 	public ModelAndView specialInvoiceList(HttpServletRequest request , HttpSession session ,Page page){
@@ -135,6 +157,16 @@ public class InvoiceController {
 		return mav;
 	}
 	
+	/**
+	  * @author zhaowei
+	  * @Description: 多张发票开具
+	  * @param @param request
+	  * @param @return
+	  * @param @throws UnsupportedEncodingException  
+	  * @return HashMap<String,Object>  
+	  * @throws
+	  * @date 2016年3月14日 下午4:39:27
+	 */
 	@RequestMapping("/dzkp")
 	@ResponseBody
 	public HashMap<String, Object> dzkp(HttpServletRequest request) throws UnsupportedEncodingException{
@@ -167,6 +199,15 @@ public class InvoiceController {
 		return param;
 	}
 	
+	/***
+	  * @author zhaowei
+	  * @Description: 单张发票开具
+	  * @param @param request
+	  * @param @return  
+	  * @return HashMap<String,String>  
+	  * @throws
+	  * @date 2016年3月14日 下午4:40:04
+	 */
 	@RequestMapping("/kp")
 	@ResponseBody
 	public HashMap<String, String> kp(HttpServletRequest request){
@@ -190,6 +231,15 @@ public class InvoiceController {
 		return param;
 	}
 	
+	/**
+	  * @author zhaowei 
+	  * @Description: 开具完成后更新发票状态为待打印
+	  * @param @param fpqqlsh
+	  * @param @return  
+	  * @return String  
+	  * @throws
+	  * @date 2016年3月14日 下午4:41:00
+	 */
 	@RequestMapping("/updateStatus")
 	@ResponseBody
 	public String updateStatusByFpqqlsh(String fpqqlsh){
@@ -200,6 +250,16 @@ public class InvoiceController {
 		return "success";
 	}
 	
+	/***
+	  * @author zhaowei
+	  * @Description: 保持开票返回信息
+	  * @param @param xml
+	  * @param @param fpqqlsh
+	  * @param @return  
+	  * @return HashMap<String,Object>  
+	  * @throws
+	  * @date 2016年3月14日 下午4:41:34
+	 */
 	@RequestMapping("/callback")
 	@ResponseBody
 	public HashMap<String, Object> callback(String xml , String fpqqlsh){
