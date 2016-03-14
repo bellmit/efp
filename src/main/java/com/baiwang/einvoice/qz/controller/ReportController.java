@@ -23,7 +23,9 @@ import org.springframework.web.context.ServletConfigAware;
 
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.beans.ReportDetail;
-import com.baiwang.einvoice.qz.service.ReportDetailService;
+import com.baiwang.einvoice.qz.beans.ReportTotal;
+import com.baiwang.einvoice.qz.beans.User;
+import com.baiwang.einvoice.qz.service.ReportService;
 import com.baiwang.einvoice.qz.utils.ReportUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
@@ -39,7 +41,7 @@ public class ReportController implements ServletConfigAware {
 	@Resource
 	private ServletContext servletContext;
 	@Resource
-	private ReportDetailService reportDetailService;
+	private ReportService reportService;
 	
 	@RequestMapping(value="init")
 	public String initQuery(){
@@ -79,7 +81,7 @@ public class ReportController implements ServletConfigAware {
 		condition.put("pageIndex", page.getPageIndex());
 		condition.put("pageSize", page.getPageSize());
 //		List<ReportDetail> list = reportDetailService.getFpListByCondition(condition);//查询结果
-		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) reportDetailService.getFpListByCondition(condition);
+		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) reportService.getFpListByCondition(condition);
 		page.setPageSize(fpxxList.getPaginator().getLimit()); 
 		page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
 		page.setTotalPages(fpxxList.getPaginator().getTotalPages());
@@ -109,10 +111,10 @@ public class ReportController implements ServletConfigAware {
 			condition.put("kpdq4q", kpdq4q);
 			condition.put("fpzl4q", fpzl4q);
 			condition.put("fptt4q", fptt4q);
-			list = reportDetailService.getFpListByCondition4d(condition);//查询结果
+			list = reportService.getFpListByCondition4d(condition);//查询结果
 		}else{
 			for(String tmp:lsh4ept){
-				list.add(reportDetailService.getFpByLSH(tmp));
+				list.add(reportService.getFpByLSH(tmp));
 			}
 		}
 		//生成excel
@@ -130,6 +132,105 @@ public class ReportController implements ServletConfigAware {
 			}
 		}
 	}
+	
+	/**
+	  * @author ldm
+	  * @Description: 查询发票统计列表
+	  * @param @param request
+	  * @param @param page
+	  * @param @return  
+	  * @return String  
+	  * @throws
+	  * @date 2016年3月14日 下午4:36:10
+	  */
+	@RequestMapping(value="queryFPstat")
+	public String queryStatReport(HttpServletRequest request,Page page){
+		//获取查询条件
+		String fplx4q = request.getParameter("fplx4q");
+		String kpdq4q = request.getParameter("kpdq4q");
+//		if(null == kpdq4q){
+//			User user = (User) request.getSession().getAttribute("user");
+//			if(null != user){
+//				kpdq4q = user.getYhlx();
+//			}
+//		}
+		String fpzl4q = request.getParameter("fpzl4q");
+		String fptt4q = request.getParameter("fptt4q");
+		String dateS = request.getParameter("beginDate");
+		String dateE = request.getParameter("endDate");
+		request.setAttribute("fplx4save", fplx4q);
+		request.setAttribute("kpdq4save", kpdq4q);
+		request.setAttribute("fpzl4save", fpzl4q);
+		request.setAttribute("fptt4save", fptt4q);
+		request.setAttribute("dateS4save", dateS);
+		request.setAttribute("dateE4save", dateE);
+		Map<String, Object> condition = new HashMap<>();
+		condition.put("dateS", dateS);
+		condition.put("dateE", dateE);
+		condition.put("fplx4q", fplx4q);
+		condition.put("kpdq4q", kpdq4q);
+		condition.put("fpzl4q", fpzl4q);
+		condition.put("fptt4q", fptt4q);
+		
+		String currentPage = request.getParameter("currentPage");
+		if (!(null == currentPage || "".equals(currentPage))) {
+			page.setPageIndex(Integer.parseInt(currentPage));
+		}
+		condition.put("pageIndex", page.getPageIndex());
+		condition.put("pageSize", page.getPageSize());
+//		List<ReportDetail> list = reportDetailService.getFpListByCondition(condition);//查询结果
+		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) reportService.getFpStatListByCondition(condition);
+		page.setPageSize(fpxxList.getPaginator().getLimit()); 
+		page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
+		page.setTotalPages(fpxxList.getPaginator().getTotalPages());
+		request.setAttribute("page", page);
+		
+		request.setAttribute("fpxxList", fpxxList);
+		return "fp/querystat";
+	}
+	@RequestMapping(value="exportExcel")
+	public void exportExcel(HttpServletRequest request,HttpServletResponse response){
+		String[] lsh4ept = request.getParameterValues("lsh4ept"); 
+		List<ReportTotal> list = new ArrayList<>();
+		if(null == lsh4ept || lsh4ept.length==0){
+			//获取查询条件
+			String dateS = request.getParameter("dateS4save");
+			String dateE = request.getParameter("dateE4save");
+			String ddh4q = request.getParameter("ddh4save");
+			String fplx4q = request.getParameter("fplx4save");
+			String kpdq4q = request.getParameter("kpdq4save");
+			String fpzl4q = request.getParameter("fpzl4save");
+			String fptt4q = request.getParameter("fptt4save");
+			Map<String, Object> condition = new HashMap<>();
+			condition.put("dateS", dateS);
+			condition.put("dateE", dateE);
+			condition.put("ddh4q", ddh4q);
+			condition.put("fplx4q", fplx4q);
+			condition.put("kpdq4q", kpdq4q);
+			condition.put("fpzl4q", fpzl4q);
+			condition.put("fptt4q", fptt4q);
+			list = reportService.getFpListByCondition4e(condition);//查询结果
+		}else{
+			for(String tmp:lsh4ept){
+				list.add(reportService.getFpStatByLSH(tmp));
+			}
+		}
+		//生成excel
+		if(list.size()>0){
+			try {
+				HSSFWorkbook wb = ReportUtil.exportExcel_stat(list);
+				response.setContentType("application/ms-excel");
+				response.setHeader("Content-Disposition", "attachment;Filename=new.xls");
+				OutputStream os = response.getOutputStream();
+				wb.write(os);
+				os.flush();
+				os.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	/**
 	  * @author Administrator
 	  * @Description: TODO

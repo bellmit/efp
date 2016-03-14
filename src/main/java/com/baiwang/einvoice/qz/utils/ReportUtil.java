@@ -13,6 +13,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.baiwang.einvoice.qz.beans.ReportDetail;
+import com.baiwang.einvoice.qz.beans.ReportTotal;
 
 
 
@@ -214,6 +215,97 @@ public class ReportUtil {
 //		FileOutputStream fos = new FileOutputStream(excelpath);
 //		wb.write(fos);
 //		fos.close();
+		return wb;
+}
+	
+	/**
+	  * @author ldm
+	  * @Description: 导出统计信息excel
+	  * @param @param ehdiList
+	  * @param @return
+	  * @param @throws Exception  
+	  * @return HSSFWorkbook  
+	  * @throws
+	  * @date 2016年3月4日 下午1:20:01
+	  */
+	public static HSSFWorkbook  exportExcel_stat(List<ReportTotal> reportList) throws Exception{
+		HSSFWorkbook wb = new HSSFWorkbook();//excel文档
+		HSSFSheet sheet = wb.createSheet("发票统计");//工作薄
+		HSSFRow  row = sheet.createRow(0);
+		HSSFCell cell = row.createCell(0);
+		cell.setCellValue("发票地区");
+		cell = row.createCell(1);
+		cell.setCellValue("发票客户");
+		cell = row.createCell(2);
+		cell.setCellValue("开票日期");
+		cell = row.createCell(3);
+		cell.setCellValue("发票种类");
+		cell = row.createCell(4);
+		cell.setCellValue("发票代码");
+		cell = row.createCell(5);
+		cell.setCellValue("发票号码");
+		cell = row.createCell(6);
+		cell.setCellValue("抬头类型");
+		cell = row.createCell(7);
+		cell.setCellValue("购方名称");
+		cell = row.createCell(8);
+		cell.setCellValue("发票内容");
+		cell = row.createCell(9);
+		cell.setCellValue("备注");
+		cell = row.createCell(10);
+		cell.setCellValue("报送状态");
+		cell = row.createCell(11);
+		cell.setCellValue("发票状态");
+		cell = row.createCell(12);
+		cell.setCellValue("合计金额");
+		cell = row.createCell(13);
+		cell.setCellValue("合计税额");
+		cell = row.createCell(14);
+		cell.setCellValue("价税合计");
+		
+		for(int i=0 ; i<reportList.size() ; i++){
+			ReportTotal  report = reportList.get(i) ;
+			row = sheet.createRow(i+1);
+//			cell = row.createCell(0);
+//			cell.setCellValue(i+1);  //序号
+			cell = row.createCell(0);
+			cell.setCellValue(report.getFpdq());  //发票地区
+			cell = row.createCell(1);
+			cell.setCellValue(report.getFpkh());  //发票客户
+			cell = row.createCell(2);
+			cell.setCellValue(report.getKprq()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getKprq()):"");  //开票日期
+			cell = row.createCell(3);
+			if("004".equals(report.getFpzl())){
+				cell.setCellValue("增值税专用发票");  //发票种类
+			}else if ("007".equals(report.getFpzl())){
+				cell.setCellValue("增值税普通发票");  //发票种类
+			}else if ("026".equals(report.getFpzl())){
+				cell.setCellValue("增值税电子发票");  //发票种类
+			}
+			cell = row.createCell(4);
+			cell.setCellValue(report.getFpdm()); //发票代码
+			cell = row.createCell(5);
+			cell.setCellValue(report.getFphm());   //发票号码
+			cell = row.createCell(6);
+			cell.setCellValue(report.getTtlx());  //抬头类型
+			cell = row.createCell(7);
+			cell.setCellValue(report.getGfmc());  //购方名称
+			cell = row.createCell(8);
+			cell.setCellValue(report.getFpnr());  //发票内容
+			cell = row.createCell(9);
+			cell.setCellValue(report.getBz());  //备注
+			cell = row.createCell(10);
+			cell.setCellValue(report.getBszt());//报送状态
+			cell = row.createCell(11);
+			cell.setCellValue(report.getFpzt());//发票状态
+			cell = row.createCell(12);
+			cell.setCellValue(report.getHjje());//合计金额
+			cell = row.createCell(13);
+			cell.setCellValue(report.getHjse());//合计税额
+			cell = row.createCell(14);
+			cell.setCellValue(report.getJshj());//价税合计
+			
+		}
 		return wb;
 }
 }

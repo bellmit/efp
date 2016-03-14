@@ -15,7 +15,7 @@
 			"id":112,
 			"text":"统计",
 			"attributes":{
-				"url":"../../queryStatistics/statistics.html"
+				"url":"../../queryStatistics/queryStatIndex.jsp"
 			}
 		}
 	]},{

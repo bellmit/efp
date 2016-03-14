@@ -38,7 +38,7 @@ public class ReportDetail {
 	//申请入口
 	private String sqrk;
 	//金额
-	private Integer je;
+	private Float je;
 	//收货人
 	private String shr;
 	//收货人电话
@@ -166,11 +166,11 @@ public class ReportDetail {
 	
 		this.sqrk = sqrk;
 	}
-	public Integer getJe() {
+	public Float getJe() {
 	
 		return je;
 	}
-	public void setJe(Integer je) {
+	public void setJe(Float je) {
 	
 		this.je = je;
 	}
