@@ -50,6 +50,8 @@ public class HandleResponse implements  Callable<Returnmsg> {
 			returndata.setFphm(InvoiceUtil.getIntervalValue(text,"<FP_HM>","</FP_HM>"));
 			returndata.setKprq(InvoiceUtil.getIntervalValue(text,"<KPRQ>","</KPRQ>"));
 			return returnmsg.setReturncode("0").setReturnmsg("开票成功").setReturndata(returndata);
+		}else if(InvoiceUtil.getIntervalValue(text,"<RETURNCODE>","</RETURNCODE>").equals("8000")){
+			return returnmsg.setReturncode("0").setReturnmsg("订单保存成功");
 		}else{
 			 String msg = InvoiceUtil.getIntervalValue(text,"<RETURNMSG>","</RETURNMSG>").equals("")?
 					InvoiceUtil.getIntervalValue(text,"<returnmsg>","</returnmsg>"):
