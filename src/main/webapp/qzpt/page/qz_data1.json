@@ -37,7 +37,7 @@
 			"id":131,
 			"text":"增值税专用发票开具",
 			"attributes":{
-				"url":"../../queryStatistics/goToSpecial.jsp"
+				"url":"../../fpkj/zyfpkj.html"
 			}
 		},{
 			"id":132,
@@ -66,7 +66,7 @@
 			"id":141,
 			"text":"增值税普通发票开具",
 			"attributes":{
-				"url":"../../queryStatistics/goToPlain.jsp"
+				"url":"../../fpkj/ptfpkj.html"
 			}
 		},{
 			"id":132,
