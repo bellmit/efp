@@ -27,7 +27,7 @@
   from kpxx a  
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
   WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
-   <!-- <if test="beginDate != null and beginDate!=''" >
+   <if test="beginDate != null and beginDate!=''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
@@ -38,7 +38,7 @@
     </if>
     <if test="kpdq != null and kpdq !=''" >
      and b.kpdq = #{kpdq}
-    </if> --> 
+    </if>
     ORDER BY a.fphm 
   	LIMIT #{requestPage},#{pageSize}
   </select>
