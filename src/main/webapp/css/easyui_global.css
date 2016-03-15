@@ -3,7 +3,7 @@
 }
 body {
     font-family:helvetica,tahoma,verdana,sans-serif;
-    padding:20px;
+    padding:10px;
     font-size:13px;
     margin:0;
 }
@@ -91,5 +91,6 @@ h2 {
 }
 
 .div_search{
-	display:none;
+	display:block;
+	padding: 4px 4px 4px 4px;
 }

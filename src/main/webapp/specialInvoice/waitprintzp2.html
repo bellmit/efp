@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>待打印专用发票(单打)</title>
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.easyui.min.js"></script>
+<OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/easyui.css"/>
+<script type="text/javascript" src="../js/jquery/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/easyui_global.css"/>
+<script type="text/javascript">
+var pageCount = 1;
+var skconf = null;
+var printconf = null;
+function chaxun(vvv){
+	if(vvv == 1){
+		$('#requestPage').val(1);
+	}
+	var params = $('#queryForm').serialize();
+	$.ajax({
+		type:"POST",
+        url: "../printpp/printlist",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        		pageCount = data.pageCount;
+        		var cc = $('#requestPage').val()-1;
+	        	if(pageCount>5){
+	        		page_icon(1,5,cc);
+	        	}else{
+	        		page_icon(1,pageCount,cc);
+	        	}
+        		$("#printBody").children().remove();
+        		if(data.list.length>0){
+    				var tbo = '';
+        			for(var i=0;i<data.list.length;i++){
+        				var fpqqlsh = "'" + data.list[i].fpqqlsh + "'";
+        				var fpdm = "'" + data.list[i].fpdm + "'";
+        				var fphm = "'" + data.list[i].fphm + "'";
+        				tbo = tbo + '<tr>'
+       						+'<td class="">'+data.list[i].zddh+'</td>'
+       						+'<td>'+data.list[i].hym+'</td>'
+       						+'<td>'+data.list[i].shr+'</td>'
+       						+'<td>'+data.list[i].sqsj+'</td>'
+       						+'<td>'+data.list[i].kpdq+'</td>'
+       						+'<td>'+data.list[i].fpzl+'</td>'
+       						+'<td>'+data.list[i].fptt+'</td>'
+       						+'<td>'+data.list[i].fpnr+'</td>'
+       						+'<td>'+data.list[i].hjje+'</td>'
+       						+'<td>'+data.list[i].hjse+'</td>'
+       						+'<td>'+data.list[i].jshj+'</td>'
+       						+'<td>'+data.list[i].kprq+'</td>'
+       						+'<td>'+data.list[i].fpdm+'</td>'
+       						+'<td>'+data.list[i].fphm+'</td>'
+       						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
+       						+'<td>'+'<a href="javascript:" onclick="dayin(' + fpqqlsh +',' + fpdm +',' + fphm+ ');">打印</a>' + '</td>'
+       						
+       						+'</tr>';
+        			}
+        			//alert(tbo)
+        			$("#printBody").html(tbo);
+        			/* $('.invitetable1 tr:odd').css('background','#fffceb');
+        			parent.dyniframesize('openli');  */
+        		}else{
+        			//alert(0)
+        		}
+        	
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+	
+}
+
+function dayin(fpqqlsh,fpdm, fphm){
+	if(confirm("确定要打印么？")){
+	 	getParameter();
+		if(!SetParameter()){
+			return;
+		}
+		PrintInvoice(fpqqlsh,fpdm, fphm);
+	}
+}
+
+function getParameter(){
+	var params = {'fplx' : '004'};
+	$.ajax({
+		type:"POST",
+        url: "../print/getParameter",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data.code == '-1'){
+        		window.top.location.href="../login/login.html";
+        	}else{
+        		skconf = data.skconf;
+        		printconf = data.printconf;
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
+//发票打印
+function SetParameter() {
+	if(skconf == null){
+		alert("初始化参数失败");
+		return false;
+	}
+	//01设置初始化参数
+	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>";		
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>192.168.6.14</servletip>\r\n<servletport>1008</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>";		
+	try {
+		ret = sk.Operate(sInputInfo);
+		/* var pos=ret.indexOf("<returncode>"); */
+		var returncode = getTotalMidValue(ret, "<returncode>","</returncode>");
+		var returnmsg = getTotalMidValue(ret, "<returnmsg>","</returnmsg>");	
+		if(returncode==0&&returnmsg=="成功"){
+			//alert("参数设置成功！");	
+			return true;
+		}else{
+			alert("参数设置失败，失败原因："+returnmsg);
+			return false;
+		}
+	} catch (e) {
+		alert(e.message + ",errno:" + e.number);
+		return false;
+	}
+}
+
+function PrintInvoice(fpqqlsh,fpdm, fphm){
+	//01页边距设置
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"鍙戠エ鎵撳嵃\"><body yylxdm=\"1\"><kpzdbs>12345612346</kpzdbs><fplxdm>007</fplxdm><fpdm>1110000452</fpdm><fphm>38148009</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+	var sMarginsInfo = " <?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20003\" comment=\"页边距设置\">\r\n<body yylxdm=\"1\">\r\n<fplxdm>004</fplxdm>\r\n<top>" + printconf.topside + "</top>\r\n<left>" + printconf.leftside + "</left>\r\n</body>\r\n</business>";		
+	//var sMarginsInfo = " <?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20003\" comment=\"页边距设置\">\r\n<body yylxdm=\"1\">\r\n<fplxdm>004</fplxdm>\r\n<top>-1</top>\r\n<left>-3</left>\r\n</body>\r\n</business>";
+	sMargret = sk.Operate(sMarginsInfo);
+	var returncodesMarg = getTotalMidValue(sMargret, "<returncode>","</returncode>");
+	var returnmsgsMarg = getTotalMidValue(sMargret, "<returnmsg>","</returnmsg>");	
+	if(returncodesMarg==0&&returnmsgsMarg=="成功"){
+		//02、打印发票
+		var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>004</fplxdm><fpdm>"+fpdm+"</fpdm><fphm>"+ fphm+"</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+		//var sPrintInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?><business id=\"20004\"comment=\"发票打印\"><body yylxdm=\"1\"><kpzdbs>0601</kpzdbs><fplxdm>004</fplxdm><fpdm>1110098077</fpdm><fphm>74560010</fphm><dylx>0</dylx><dyfs>0</dyfs></body></business>";
+		//alert(sPrintInfo);
+		sPrintInret = sk.Operate(sPrintInfo);
+		//alert(sPrintInret)
+		var returncodesPrintIn = getTotalMidValue(sPrintInret, "<returncode>","</returncode>");
+		var returnmsgsPrintIn = getTotalMidValue(sPrintInret, "<returnmsg>","</returnmsg>");
+		if(returncodesPrintIn==0&&returnmsgsPrintIn=="成功"){
+			//alert("打印成功！...");
+			savePrintResult(fpqqlsh,3)
+		}else{
+			alert("打印失败，失败原因："+returnmsgsPrintIn);
+		}
+	}else{
+		    alert("页面距设置失败，失败原因："+returnmsgsMarg);
+	}		
+		
+}
+
+function savePrintResult(fpqqlsh,fpzt){
+	var params = {'fpqqlsh': fpqqlsh,'fpzt' : fpzt};
+	$.ajax({
+		type:"POST",
+        url: "../print/savePrintResult",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data == '1'){
+        		alert("打印成功！");
+        		chaxun();
+        	}else{
+        		alert("打印成功,保存失败");
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
+//获取指定的字符串
+function getTotalMidValue(source, priStr, suxStr) {
+	if (source == null)
+		return null;
+	var iFirst = source.indexOf(priStr);		
+	var iLast = source.lastIndexOf(suxStr);		
+	if (iFirst < 0 || iLast < 0)
+		return null;	
+	var beginIndex = iFirst + priStr.length;	
+	return source.substring(beginIndex, iLast);
+}
+
+</script>
+
+</head>
+<body>
+<!-- <h4>查询条件</h4>
+<form id="queryForm" name='queryForm' class="form-horizontal" role="form">
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-5">
+	      <label for="beginDate" class="col-sm-3 control-label">开票起止日期：</label>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="起始时间" value=""
+	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
+	      </div>
+	      <div class="col-sm-3">
+	         <input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
+	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
+	      </div>
+	   </div>
+	   <div class="form-group col-sm-5">
+	      <label for="kpdq" class="col-sm-3 control-label">开票地区：</label>
+	      <div class="col-sm-3">
+	         <select class="form-control" id="kpdq" name="kpdq">
+		         <option value="">请选择</option>
+		         <option value="0">北京</option>
+			 	 <option value="1">上海</option>
+		     </select>
+	      </div>
+	   </div>
+	</div>
+	
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-5">
+	      <label for="zddh" class="col-sm-3 control-label">订单号：</label>
+	      <div class="col-sm-6">
+	         <input type="text" class="form-control" id="zddh" name="zddh" placeholder="订单号">
+	         <input type="hidden" id='fplx' name='fplx' value='004'>发票类型 普票
+	         <input type="hidden" id='requestPage' name='requestPage' value='1'>请求页数
+	         <input type="hidden" id='pageSize' name='pageSize' value='2'>每页行数
+	      </div>
+	   </div>
+	   <div class="form-group col-sm-5">
+	      <div class="col-sm-offset-2 col-sm-10">
+	         <button type="button" class="btn btn-default" onclick="chaxun(1);">查询</button>
+	      </div>
+	   </div>
+	</div>
+</form>
+
+<hr>
+
+
+<table border="1" cellspacing="0" >
+<thead>
+	<th>订单号</th>
+	<th>会员名</th>
+	<th>收货人</th>
+	<th>申请时间</th>
+	<th>开票地区</th>
+	<th>发票种类</th>
+	<th>发票抬头</th>
+	<th>发票内容</th>
+	<th>合计金额</th>
+	<th>合计税额</th>
+	<th>价税合计</th>
+	<th>开票日期</th>
+	<th>发票代码</th>
+	<th>发票号码</th>
+	<th>操作</th>
+</thead>
+	<tbody id="printBody">
+	</tbody>
+</table>
+
+
+<div id="pageGro" class="cb">
+	<div class="pageUp">上一页</div>
+    <div class="pageList">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+    <div class="pageDown">下一页</div>
+</div>
+<br> -->
+<div id="toolbar_div" class="toolbar_div" >
+   <!-- <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" onclick="edit();" plain="true">编辑</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton operate_btn" iconCls="icon-add" onclick="add();" plain="true">增行</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton operate_btn" iconCls="icon-remove" onclick="deleteTenants();" plain="true">删行</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton operate_btn" iconCls="icon-save" onclick="save();" plain="true">保存</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton operate_btn" iconCls="icon-undo" onclick="undo();" plain="true">撤销</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询条件</a> -->
+   <div id="div_search" class="div_search">
+		<form action="">
+			<div class="" style="line-height: 30px;">
+				<label>开票起止日期:</label>
+				<input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始时间" value=""
+	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
+	         	<label>-</label>
+	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
+	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
+				<!-- <label>开票地区:</label>
+				<select class="form-control" id="kpdq" name="kpdq">
+		        	<option value="">请选择</option>
+		         	<option value="0">北京</option>
+			 		<option value="1">上海</option>
+		     	</select> -->
+				<label>会员ID:</label>
+				<input type="text" id="hyid" name="hyid" placeholder="会员ID"/>
+		     	<br/>
+				<label>主订单号:</label>
+				<input type="text" id="zddh" name="zddh" placeholder="主订单号"/>
+				<label>副订单号:</label>
+				<input type="text" id="fddh" name="fddh" placeholder="副订单号"/>
+				<label>手机号:</label>
+				<input type="text" id="gmfsjh" name="gmfsjh" placeholder="手机号"/>
+				<!--<label>%-</label>
+				<input type="text" id="sl" name="sl"/>
+				<label>%</label>-->
+				
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchSpxxs();" plain="true">查找</a>
+				
+			</div>
+		</form>
+   </div>
+</div>
+
+<table id="datagrid_zp"></table>
+
+
+<br><br><br><br><br>
+<script type="text/javascript">
+initDataGridComponent();
+function initDataGridComponent(){
+	var qParams = { mode: 'Query', fplx: '004' };
+	$("#datagrid_zp").datagrid({
+				title : "待打印专用发票",
+				//width: "100%",
+				width: '2000',
+				checkOnSelect:true,
+				selectOnCheck:false,
+				singleSelect:true,
+				rownumbers:true,
+				idField:'id',
+				url:"../printpp/printlist",
+				pagination : true,
+				pageSize : 10,
+				pageNumber:1,
+				height:390,
+				pageList: [10,20,50,100],
+				queryParams: qParams,
+				columns:[[
+				     {field:'id',title:'id',width:100,checkbox:true},
+				     {field:'zddh',title:'主订单号',width:150,editor: {
+				    	 type: 'text'
+	                 }},
+	                 {field:'fddh',title:'副订单号',width:100,editor: 'text'},
+		             {field:'hym',title:'会员名',width:100,editor:'text'},
+		             {field:'hyid',title:'会员ID',width:100,editor:'text'},
+		             {field:'shr',title:'收货人',width:100,editor:'text'},
+			         {field:'shrdh',title:'收货人电话',width:100,editor:'text'}, 
+		             {field:'sqsj',title:'申请时间',width:100,editor: {type: 'text'}/* ,formatter: formatUniversal */},
+		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
+			         {field:'fpnr',title:'发票内容',width:100,editor:'text'},
+		             {field:'hjje',title:'合计金额',width:100,editor:'text'},
+			         {field:'hjse',title:'合计税额',width:100,editor:'text'},
+		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
+			         {field:'kplx',title:'开票类型',width:100,editor:'text',formatter: formatUniversal},
+			         {field:'kprq',title:'开票日期',width:100,editor:'text'},
+		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
+		             {field:'fphm',title:'发票号码',width:100,editor:'text'},
+			         {field:'cz',title:'操作',width:200,editor:'text'}
+				]],
+				onClickRow:function(index){	
+					if(endEditing()&&isedit){
+						 editRow = getRowByIndex(index);
+						 spxxObj = spxxList[index];
+						 $("#tenant_manage_dg").datagrid('selectRow', index).datagrid('beginEdit', index);
+						
+						 //设置编码为只读
+						 var edSpsm = $('#tenant_manage_dg').datagrid('getEditor', {index:index,field:'spsm'});
+						 $(edSpsm.target).prop('readonly',true);
+						 var edSl = $('#tenant_manage_dg').datagrid('getEditor', {index:index,field:'sl'});
+						 $(edSl.target).prop('readonly',true);
+						 initialSpsmid(index,"m"); 
+						 }
+				}
+				
+	});
+	
+}
+
+/* function onChangePageSize(){
+	alert(0)
+} */
+
+/**
+ * 格式化商品税目
+ * @param value
+ * @param row
+ * @param index
+ */
+function getSpbmFormatter(value,row,index){
+	var spsmStr = "";
+	for(var index in serverArray){
+		var accessObj = serverArray[index];
+		var spsmvalue = accessObj.value;
+		var spsmtext = accessObj.text;
+		if(value==spsmvalue){
+			spsmStr = spsmtext;
+			break;
+		}
+	}
+	return spsmStr;
+}
+
+/**
+ * 格式化商品税率
+ * @param value
+ * @param row
+ * @param index
+ */
+function getSlFormatter(value,row,index){	
+	//商品税目
+	var spsmId = row.spsm;
+	var sl = 0;
+	for(var index in serverArray){
+		var spsmObj = serverArray[index];
+    	var sm = spsmObj.value;
+		if(spsmId==sm){
+			sl = spsmObj.sl;
+			break;
+		}
+	}
+	return sl;
+}
+
+/**
+ * 是否含税价标志（通用类型）
+ */
+function formatUniversal(value,row,index){
+	if (value=="1"){
+		return "红字发票";
+	} else {
+		return "蓝字发票";
+	}
+}
+
+/**
+ * 显示或隐藏
+ */
+function hideOrShow(){
+	$("#div_search").toggle();
+}
+
+
+$(function(){
+	
+	var p = $('#datagrid_zp').datagrid('getPager');
+	p.total = 102;
+	if (p){
+        $(p).pagination({ //设置分页功能栏
+           //分页功能可以通过Pagination的事件调用后台分页功能来实现
+           onBeforeRefresh:function(){
+               alert('before refresh');
+           },
+           onSelectPage: function(pageNumber, pageSize){//选择pageSize
+        	   alert("select page ");
+           },
+           onChangePageSize: function(ageSize){
+        	   alert("onChangePageSize");
+           },
+           onRefresh : function (pageNumber, pageSize){
+        	   
+           }
+           
+        });
+    }
+	
+	/* $('#datagrid_zp').datagrid({   
+	    url:"../printpp/printlist",   
+	    pagination:true,   
+	    pageSize:20,   
+	    pageNumber:1,   
+	    rownumbers:true  
+	}); */
+	
+	
+})
+</script>
+
+</body>
+</html>
