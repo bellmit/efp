@@ -89,6 +89,7 @@ th,td{width: 100px; height: 35px;text-align:center;}
 					<option value="">请选择</option>
 					<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
 					<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
+					<option <c:if test="${fplx4save=='培训费'}">selected="selected"</c:if>>培训费</option>
 				</select>
 			</div>
 		</div>
@@ -100,8 +101,8 @@ th,td{width: 100px; height: 35px;text-align:center;}
 				 <div class="col-sm-3">
 					<select name="kpdq4q" id="kpdq4q">
 						<option value="">请选择</option>
-						<option value="0" <c:if test="${kpdq4save=='0'}">selected="selected"</c:if>>北京</option>
-						<option value="1" <c:if test="${kpdq4save=='1'}">selected="selected"</c:if>>上海</option>
+						<option value="北京" <c:if test="${kpdq4save=='北京'}">selected="selected"</c:if>>北京</option>
+						<option value="上海" <c:if test="${kpdq4save=='上海'}">selected="selected"</c:if>>上海</option>
 					</select>
 				 </div>
 			</div>
@@ -141,9 +142,9 @@ th,td{width: 100px; height: 35px;text-align:center;}
 			<td><c:out value="${fp.fpkh}"/></td>
 			<td><fmt:formatDate value="${fp.kprq}" pattern="yyyy-MM-dd"/></td>
 			<td>
-			<c:if test="${fp.fpzl=='007'}">增值税普通发票</c:if>
-			<c:if test="${fp.fpzl=='004'}">增值税专用发票</c:if>
-			<c:if test="${fp.fpzl=='026'}">增值税电子发票</c:if>
+			<c:if test="${fp.fpzl=='007'}">普票</c:if>
+			<c:if test="${fp.fpzl=='004'}">专票</c:if>
+			<c:if test="${fp.fpzl=='026'}">电子发票</c:if>
 			</td>
 			<td><c:out value="${fp.fpdm}"/></td>
 			<td><c:out value="${fp.fphm}"/></td>

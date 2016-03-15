@@ -24,7 +24,6 @@ import org.springframework.web.context.ServletConfigAware;
 import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.beans.ReportDetail;
 import com.baiwang.einvoice.qz.beans.ReportTotal;
-import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.service.ReportService;
 import com.baiwang.einvoice.qz.utils.ReportUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -180,9 +179,11 @@ public class ReportController implements ServletConfigAware {
 		condition.put("pageSize", page.getPageSize());
 //		List<ReportDetail> list = reportDetailService.getFpListByCondition(condition);//查询结果
 		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) reportService.getFpStatListByCondition(condition);
-		page.setPageSize(fpxxList.getPaginator().getLimit()); 
-		page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
-		page.setTotalPages(fpxxList.getPaginator().getTotalPages());
+		if(null != fpxxList && null != fpxxList.getPaginator()){
+			page.setPageSize(fpxxList.getPaginator().getLimit()); 
+			page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
+			page.setTotalPages(fpxxList.getPaginator().getTotalPages());
+		}
 		request.setAttribute("page", page);
 		
 		request.setAttribute("fpxxList", fpxxList);
