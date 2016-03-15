@@ -50,7 +50,7 @@ public class OrderDetail {
 	@XmlElement(name = "FDDH", required = true)
     private String fddh;
 	@XmlElement(name = "KPDQ", required = true)
-	private Byte kpdq;
+	private String kpdq;
 	@XmlElement(name = "SQR", required = true)
 	private Byte fpkh;
 	@XmlElement(name = "FPKH", required = true)
@@ -263,12 +263,13 @@ public class OrderDetail {
 		this.fpqqlsh = fpqqlsh;
 	}
 
-	public Byte getKpdq() {
+
+	public String getKpdq() {
 	
 		return kpdq;
 	}
 
-	public void setKpdq(Byte kpdq) {
+	public void setKpdq(String kpdq) {
 	
 		this.kpdq = kpdq;
 	}

@@ -150,8 +150,9 @@ function getTotalMidValue(source, priStr, suxStr) {
 			</div>
 		</div>
 		<div class="form-group col-sm-4">
-			<div class=" col-sm-4">
-				<input type="submit" style="width:80px" value="查询">
+			<label for="fphm4q" class="col-sm-3 control-label"><input type="submit" style="width:80px" value="查询"></label>
+			<div class=" col-sm-3">
+				
 			</div>
 		</div>
 	</div>

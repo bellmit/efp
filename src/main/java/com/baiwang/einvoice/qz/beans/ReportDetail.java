@@ -35,6 +35,8 @@ public class ReportDetail {
 	private String fplx;
 	//发票种类
 	private String fpzl;
+	//备注发票
+	private String bzfp;
 	//申请入口
 	private String sqrk;
 	//金额
@@ -62,6 +64,14 @@ public class ReportDetail {
 	//订单发票是否开具打印
 	private String ddzt;
 	
+	public String getBzfp() {
+	
+		return bzfp;
+	}
+	public void setBzfp(String bzfp) {
+	
+		this.bzfp = bzfp;
+	}
 	public String getFpqqlsh() {
 		
 		return fpqqlsh;
