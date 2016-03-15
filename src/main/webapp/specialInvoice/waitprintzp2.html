@@ -472,7 +472,7 @@ function hideOrShow(){
 
 $(function(){
 	
-	var p = $('#datagrid_zp').datagrid('getPager');
+	/* var p = $('#datagrid_zp').datagrid('getPager');
 	p.total = 102;
 	if (p){
         $(p).pagination({ //设置分页功能栏
@@ -481,7 +481,8 @@ $(function(){
                alert('before refresh');
            },
            onSelectPage: function(pageNumber, pageSize){//选择pageSize
-        	   alert("select page ");
+        	   alert("select page " + pageNumber +',pageSize:'+ pageSize);
+           p.reload();
            },
            onChangePageSize: function(ageSize){
         	   alert("onChangePageSize");
@@ -491,7 +492,7 @@ $(function(){
            }
            
         });
-    }
+    } */
 	
 	/* $('#datagrid_zp').datagrid({   
 	    url:"../printpp/printlist",   
