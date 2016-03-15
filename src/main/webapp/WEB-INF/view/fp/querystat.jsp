@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>查询发票</title>
+<title>发票统计</title>
 <script type="text/javascript" src="<%=basePath %>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=basePath %>/js/jquery/jquery-1.11.1.js"></script>
 <link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
@@ -45,11 +45,11 @@ th,td{width: 100px; height: 35px;text-align:center;}
 <body>
 <hr>
 <div style="white-space: nowrap;">
-<form id="searchForm" action="<%=basePath %>/report/queryFPlist" method="post"class="form-horizontal" role="form">
+<form id="searchForm" action="<%=basePath %>/report/queryFPstat" method="post"class="form-horizontal" role="form">
 	<input id="currentPage" name="currentPage" type="hidden"/>
 	<div class="form-inline form-group">
 		<div class="form-group col-sm-6">
-		<label for="beginDate" class="col-sm-3 control-label">申请起止日期：</label>
+		<label for="beginDate" class="col-sm-3 control-label">开票起止日期：</label>
 			 <div class="col-sm-3">
 				<input id="beginDate" name="beginDate" class="form-control" placeholder="开始时间"
 				onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
@@ -59,6 +59,41 @@ th,td{width: 100px; height: 35px;text-align:center;}
 				value="${dateE4save}" style="width: 100px;"/>
 			 </div>
 		</div>
+		<div class="form-group col-sm-6">
+		<label for="fptt4q" class="col-sm-3 control-label">发票抬头：</label>
+			<div class="col-sm-3">
+				<select name="fptt4q" id="fptt4q">
+					<option value="">请选择</option>
+					<option value ="0" <c:if test="${fptt4save=='0'}">selected="selected"</c:if>>个人</option>
+					<option value ="1" <c:if test="${fptt4save=='1'}">selected="selected"</c:if>>公司</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-inline form-group">
+		<div class="form-group col-sm-6">
+		<label for="fpzl4q" class="col-sm-3 control-label">发票种类：</label>
+			<div class="col-sm-3">
+				<select name="fpzl4q" id="fpzl4q">
+					<option value="">请选择</option>
+					<option value="007" <c:if test="${fpzl4save=='007'}">selected="selected"</c:if>>增值税普通发票</option>
+					<option value="004" <c:if test="${fpzl4save=='004'}">selected="selected"</c:if>>增值税专用发票</option>
+					<option value="026" <c:if test="${fpzl4save=='026'}">selected="selected"</c:if>>增值税电子发票</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group col-sm-6">
+		<label for="fplx4q" class="col-sm-3 control-label">发票内容：</label>
+			<div class="col-sm-3">
+				<select name="fplx4q" id="fplx4q" >
+					<option value="">请选择</option>
+					<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
+					<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-inline form-group">
 		<c:if test="${user.yhlx=='0'}">
 			<div class="form-group col-sm-6">
 				<label for="kpdq4q" class="col-sm-3 control-label">开票地区：</label>
@@ -74,106 +109,53 @@ th,td{width: 100px; height: 35px;text-align:center;}
 	</div>
 	<div class="form-inline form-group">
 		<div class="form-group col-sm-6">
-		<label for="ddh4q" class="col-sm-3 control-label">订单号：</label>
-			<div class="col-sm-3">
-				<input type="text" class="form-control" id="ddh4q" name="ddh4q" value="${ddh4save}" placeholder="订单号">
-			</div>
-		</div>
-		<div class="form-group col-sm-6">
-		<label for="fpzl4q" class="col-sm-3 control-label">发票种类：</label>
-			<div class="col-sm-3">
-				<select name="fpzl4q" id="fpzl4q">
-					<option value="">请选择</option>
-					<option value="007" <c:if test="${fpzl4save=='007'}">selected="selected"</c:if>>增值税普通发票</option>
-					<option value="004" <c:if test="${fpzl4save=='004'}">selected="selected"</c:if>>增值税专用发票</option>
-					<option value="026" <c:if test="${fpzl4save=='026'}">selected="selected"</c:if>>增值税电子发票</option>
-				</select>
-			</div>
-		</div>
-	</div>
-	<div class="form-inline form-group">
-		<div class="form-group col-sm-6">
-		<label for="fplx4q" class="col-sm-3 control-label">发票内容：</label>
-			<div class="col-sm-3">
-				<select name="fplx4q" id="fplx4q" >
-					<option value="">请选择</option>
-					<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
-					<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
-				</select>
-			</div>
-		</div>
-		<div class="form-group col-sm-6">
-		<label for="fptt4q" class="col-sm-3 control-label">发票抬头：</label>
-			<div class="col-sm-3">
-				<select name="fptt4q" id="fptt4q">
-					<option value="">请选择</option>
-					<option value ="0" <c:if test="${fptt4save=='0'}">selected="selected"</c:if>>个人</option>
-					<option value ="1" <c:if test="${fptt4save=='1'}">selected="selected"</c:if>>公司</option>
-				</select>
-			</div>
-		</div>
-	</div>
-	<div class="form-inline form-group">
-		<div class="form-group col-sm-6">
 			<div class="col-sm-offset-1 col-sm-5">
 				<input type="submit" style="width:80px" value="查询"> | <input type="button" style="width:80px" onclick="exportData();" value="导出excel">
 			</div>
 		</div>
 	</div>
 </form><br/>
-<form id="expForm" action="<%=basePath%>/report/download" method="post">
+<form id="expForm" action="<%=basePath%>/report/exportExcel" method="post">
 <table border="1" cellspacing="0">
 	<tr>
 		<td><input type="checkbox" id="chkAll" onclick="checkAll()"></td>
-		<td>订单号</td>
-		<td>申请人</td>
-		<td>会员名</td>
-		<td>会员ID</td>
-		<td>订单时间</td>
-		<td>申请时间</td>
-		<td>发票抬头</td>
-		<td>发票内容</td>
+		<td>发票地区</td>
+		<td>发票客户</td>
+		<td>开票日期</td>
 		<td>发票种类</td>
-		<td>申请入口</td>
-		<td>金额</td>
-		<td>收货人</td>
-		<td>收货人电话</td>
-		<td>寄送地址</td>
-		<td>邮寄时间</td>
+		<td>发票代码</td>
 		<td>发票号码</td>
-		<td>发货人</td>
-		<td>物流公司 </td>
-		<td>物流单号</td>
-		<td>退款状态</td>
+		<td>抬头类型</td>
+		<td>购方名称</td>
+		<td>发票内容</td>
+		<td>备注</td>
+		<td>报送状态</td>
 		<td>发票状态</td>
+		<td>合计金额</td>
+		<td>合计税额</td>
+		<td>价税合计</td>
 	</tr>
 	<c:forEach items="${fpxxList}" var="fp">
 		<tr><td><input type="checkbox" class="chkbox_ex" value="${fp.fpqqlsh}" onclick="ccAll()"></td>
-			<td><c:out value="${fp.ddh}"/></td>
-			<td><c:out value="${fp.sqr}"/></td>
-			<td><c:out value="${fp.hym}"/></td>
-			<td><c:out value="${fp.hyid}"/></td>
-			<td><fmt:formatDate value="${fp.ddsj}" pattern="yyyy-MM-dd"/></td>
-			<td><fmt:formatDate value="${fp.sqsj}" pattern="yyyy-MM-dd"/></td>
-			<td><c:out value="${fp.fptt}"/></td>
-			<td><c:out value="${fp.fplx}"/></td>
+			<td><c:out value="${fp.fpdq}"/></td>
+			<td><c:out value="${fp.fpkh}"/></td>
+			<td><fmt:formatDate value="${fp.kprq}" pattern="yyyy-MM-dd"/></td>
 			<td>
 			<c:if test="${fp.fpzl=='007'}">增值税普通发票</c:if>
 			<c:if test="${fp.fpzl=='004'}">增值税专用发票</c:if>
 			<c:if test="${fp.fpzl=='026'}">增值税电子发票</c:if>
 			</td>
-			<td><c:out value="${fp.sqrk}"/></td>
-			<td><c:out value="${fp.je}"/></td>
-			<td><c:out value="${fp.shr}"/></td>
-			<td><c:out value="${fp.shrdh}"/></td>
-			<td><c:out value="${fp.jsdz}"/></td>
-			<td><fmt:formatDate value="${fp.yjsj}" pattern="yyyy-MM-dd"/></td>
+			<td><c:out value="${fp.fpdm}"/></td>
 			<td><c:out value="${fp.fphm}"/></td>
-			<td><c:out value="${fp.fhr}"/></td>
-			<td><c:out value="${fp.wlgs}"/></td>
-			<td><c:out value="${fp.wldh}"/></td>
-			<td><c:out value="${fp.tkzt}"/></td>
+			<td><c:out value="${fp.ttlx}"/></td>
+			<td><c:out value="${fp.gfmc}"/></td>
+			<td><c:out value="${fp.fpnr}"/></td>
+			<td><c:out value="${fp.bz}"/></td>
+			<td><c:out value="${fp.bszt}"/></td>
 			<td><c:out value="${fp.fpzt}"/></td>
+			<td><c:out value="${fp.hjje}"/></td>
+			<td><c:out value="${fp.hjse}"/></td>
+			<td><c:out value="${fp.jshj}"/></td>
 		</tr>
 	</c:forEach>
 </table>

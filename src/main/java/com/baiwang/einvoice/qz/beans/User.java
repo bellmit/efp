@@ -3,205 +3,123 @@ package com.baiwang.einvoice.qz.beans;
 import java.util.Date;
 
 public class User {
-    private Integer id;
+    private String id;
 
-    private String userName;
+    private String czydm;
 
-    private Byte userType;
+    private String czymc;
 
-    private String userPass;
+    private String yhlx;
 
-    private String xsfnsrsbh;
+    private String yhkl;
 
-    private String apName;
+    private String qybz;
 
-    private String mail;
+    private String cjrdm;
 
-    private Boolean islock;
+    private Date cjsj;
 
-    private String telephone;
+    private String kpddm;
 
-    private Date lastLogTime;
+    private String fwqbh;
 
-    private String lastLogIp;
+    private String nsrsbh;
 
-    private Date regTime;
+    private String zzjgdm;
 
-    private String regIp;
-
-    private Date updateTime;
-
-    private String updateIp;
-
-    private String remark;
-    
-    private String qybz ;
-    
-    private String yhlx ;
-    
-    private String kpddm ;
-    
-    private String nsrsbh ;
-
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
-    public String getUserName() {
-        return userName;
+    public String getCzydm() {
+        return czydm;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setCzydm(String czydm) {
+        this.czydm = czydm == null ? null : czydm.trim();
     }
 
-    public Byte getUserType() {
-        return userType;
+    public String getCzymc() {
+        return czymc;
     }
 
-    public void setUserType(Byte userType) {
-        this.userType = userType;
+    public void setCzymc(String czymc) {
+        this.czymc = czymc == null ? null : czymc.trim();
     }
 
-    public String getUserPass() {
-        return userPass;
+    public String getYhlx() {
+        return yhlx;
     }
 
-    public void setUserPass(String userPass) {
-        this.userPass = userPass == null ? null : userPass.trim();
+    public void setYhlx(String yhlx) {
+        this.yhlx = yhlx == null ? null : yhlx.trim();
     }
 
-    public String getXsfnsrsbh() {
-        return xsfnsrsbh;
+    public String getYhkl() {
+        return yhkl;
     }
 
-    public void setXsfnsrsbh(String xsfnsrsbh) {
-        this.xsfnsrsbh = xsfnsrsbh == null ? null : xsfnsrsbh.trim();
+    public void setYhkl(String yhkl) {
+        this.yhkl = yhkl == null ? null : yhkl.trim();
     }
 
-    public String getApName() {
-        return apName;
+    public String getQybz() {
+        return qybz;
     }
 
-    public void setApName(String apName) {
-        this.apName = apName == null ? null : apName.trim();
+    public void setQybz(String qybz) {
+        this.qybz = qybz == null ? null : qybz.trim();
     }
 
-    public String getMail() {
-        return mail;
+    public String getCjrdm() {
+        return cjrdm;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail == null ? null : mail.trim();
+    public void setCjrdm(String cjrdm) {
+        this.cjrdm = cjrdm == null ? null : cjrdm.trim();
     }
 
-    public Boolean getIslock() {
-        return islock;
+    public Date getCjsj() {
+        return cjsj;
     }
 
-    public void setIslock(Boolean islock) {
-        this.islock = islock;
+    public void setCjsj(Date cjsj) {
+        this.cjsj = cjsj;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getKpddm() {
+        return kpddm;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone == null ? null : telephone.trim();
+    public void setKpddm(String kpddm) {
+        this.kpddm = kpddm == null ? null : kpddm.trim();
     }
 
-    public Date getLastLogTime() {
-        return lastLogTime;
+    public String getFwqbh() {
+        return fwqbh;
     }
 
-    public void setLastLogTime(Date lastLogTime) {
-        this.lastLogTime = lastLogTime;
+    public void setFwqbh(String fwqbh) {
+        this.fwqbh = fwqbh == null ? null : fwqbh.trim();
     }
 
-    public String getLastLogIp() {
-        return lastLogIp;
+    public String getNsrsbh() {
+        return nsrsbh;
     }
 
-    public void setLastLogIp(String lastLogIp) {
-        this.lastLogIp = lastLogIp == null ? null : lastLogIp.trim();
+    public void setNsrsbh(String nsrsbh) {
+        this.nsrsbh = nsrsbh == null ? null : nsrsbh.trim();
     }
 
-    public Date getRegTime() {
-        return regTime;
+    public String getZzjgdm() {
+        return zzjgdm;
     }
 
-    public void setRegTime(Date regTime) {
-        this.regTime = regTime;
+    public void setZzjgdm(String zzjgdm) {
+        this.zzjgdm = zzjgdm == null ? null : zzjgdm.trim();
     }
-
-    public String getRegIp() {
-        return regIp;
-    }
-
-    public void setRegIp(String regIp) {
-        this.regIp = regIp == null ? null : regIp.trim();
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getUpdateIp() {
-        return updateIp;
-    }
-
-    public void setUpdateIp(String updateIp) {
-        this.updateIp = updateIp == null ? null : updateIp.trim();
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-	public String getQybz() {
-		return qybz;
-	}
-
-	public void setQybz(String qybz) {
-		this.qybz = qybz;
-	}
-
-	public String getYhlx() {
-		return yhlx;
-	}
-
-	public void setYhlx(String yhlx) {
-		this.yhlx = yhlx;
-	}
-
-	public String getKpddm() {
-		return kpddm;
-	}
-
-	public void setKpddm(String kpddm) {
-		this.kpddm = kpddm;
-	}
-
-	public String getNsrsbh() {
-		return nsrsbh;
-	}
-
-	public void setNsrsbh(String nsrsbh) {
-		this.nsrsbh = nsrsbh;
-	}
-    
-    
 }

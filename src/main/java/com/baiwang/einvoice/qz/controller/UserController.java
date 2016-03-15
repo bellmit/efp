@@ -32,23 +32,25 @@ public class UserController {
 	
 	@RequestMapping(value="user/login",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String login(User user, HttpServletRequest request,HttpSession session){
-		User _user = service.getUserByName(user.getUserName());
-		if(_user != null && user.getUserPass().equals(_user.getUserPass())){
+	public String login( HttpServletRequest request,HttpSession session){
+		String yhkl = request.getParameter("userPass");
+		String czydm = request.getParameter("userName");
+		User _user = service.getUserByName(czydm);
+		if(_user != null && yhkl.equals(_user.getYhkl())){
 			if(!"Y".equals(_user.getQybz())){
-				logger.info("*********" + user.getUserName() + "登录失败");
+				logger.info("*********" + czydm + "登录失败");
 		        return "4002";
 			}else if(!"1".equals(_user.getYhlx())){
-				logger.info("*********" + user.getUserName() + "登录失败");
+				logger.info("*********" + czydm + "登录失败");
 		        return "4003";
 			}else{
-				_user.setUserName(user.getUserName());
+				_user.setCzydm(czydm);
 	            session.setAttribute("user", _user);
-	            logger.info("*********" + user.getUserName() + "登录成功");
+	            logger.info("*********" + czydm + "登录成功");
 	            return "8888";
 			}
 		}else{
-			logger.info("*********" + user.getUserName() + "登录失败");
+			logger.info("*********" + czydm + "登录失败");
 	        return "4001";
 		}
 	}
@@ -65,7 +67,7 @@ public class UserController {
 		if(null == user){
 			map.put("currentUser", "");
 		}else{
-			map.put("currentUser", user.getUserName());
+			map.put("currentUser", user.getCzydm());
 		}
 		
 		return map;
@@ -79,7 +81,7 @@ public class UserController {
 		return "0";
 	}
 
-	@RequestMapping("user/changePwd")
+	/*@RequestMapping("user/changePwd")
 	@ResponseBody
 	public HashMap<String, String> changePwd(HttpServletRequest request, HttpSession session){
 		HashMap<String, String> result = new HashMap<>();
@@ -115,7 +117,7 @@ public class UserController {
 		result.put("status", "success");
 		result.put("msg", "密码修改成功！");
 		return result;
-	}
+	}*/
 	
 	@RequestMapping("/user/list")
 	@ResponseBody
@@ -148,8 +150,7 @@ public class UserController {
 		}
 		int id = 0;
 		try {
-			id = Integer.parseInt(userId);
-			User user=service.selectById(id);
+			User user=service.selectById(userId);
 			request.setAttribute("user", user);
 		} catch (NumberFormatException e) {
 			

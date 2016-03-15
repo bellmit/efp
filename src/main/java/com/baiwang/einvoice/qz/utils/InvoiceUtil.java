@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.baiwang.einvoice.util;
+package com.baiwang.einvoice.qz.utils;
 
 /**
  *

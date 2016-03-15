@@ -6,8 +6,6 @@ package com.baiwang.einvoice.qz.utils;
 
 import java.util.regex.Pattern;
 
-import com.baiwang.einvoice.util.InvoiceUtil;
-
 /**
   * @ClassName: XmlCheck
   * @Description: xml校验

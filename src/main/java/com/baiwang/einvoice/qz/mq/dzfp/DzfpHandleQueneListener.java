@@ -22,13 +22,13 @@ import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
 import com.baiwang.einvoice.qz.mq.RequestTsSender;
-import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
+import com.baiwang.einvoice.qz.service.skService.SkService;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
-import com.baiwang.einvoice.service.skService.SkService;
-import com.baiwang.einvoice.util.InvoiceUtil;
 
 @SuppressWarnings("rawtypes")
 public class DzfpHandleQueneListener implements SessionAwareMessageListener {
@@ -42,7 +42,7 @@ public class DzfpHandleQueneListener implements SessionAwareMessageListener {
 	private IResultOfSkService resultService;
 	
 	@Resource
-	private FpService fpService;
+	private IFpService fpService;
 	
 	@Resource
 	private SkService skService;

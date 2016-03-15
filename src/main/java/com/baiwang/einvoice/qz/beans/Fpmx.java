@@ -5,6 +5,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+  * @ClassName: Fpmx
+  * @Description: 封装发票明细的实体类
+  * @author zhaowei
+  * @date 2016年3月14日 下午4:19:29
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
 		"id",

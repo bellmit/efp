@@ -5,6 +5,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+/***
+  * @ClassName: Kpxx
+  * @Description: 开票信息实体类
+  * @author zhaowei
+  * @date 2016年3月14日 下午4:19:58
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
 		"id",

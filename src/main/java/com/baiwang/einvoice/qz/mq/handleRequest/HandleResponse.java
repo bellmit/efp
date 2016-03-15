@@ -9,9 +9,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 
-import com.baiwang.einvoice.qz.vo.Returndata;
-import com.baiwang.einvoice.qz.vo.Returnmsg;
-import com.baiwang.einvoice.util.InvoiceUtil;
+import com.baiwang.einvoice.qz.beans.Returndata;
+import com.baiwang.einvoice.qz.beans.Returnmsg;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 
 public class HandleResponse implements  Callable<Returnmsg> {
 	
