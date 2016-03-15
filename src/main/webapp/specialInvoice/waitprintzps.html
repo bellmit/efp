@@ -13,7 +13,6 @@
 <link rel="stylesheet" type="text/css" href="../css/easyui_global.css"/>
 
 <script type="text/javascript">
-var pageCount = 1;
 var skconf = null;
 var printconf = null;
 var fphmlist = null;
@@ -121,7 +120,7 @@ function savePrintResult(fpqqlsh,fpzt){
         	//alert(JSON.stringify(data))
         	if(data == '1'){
         		//alert("打印成功！");
-        		chaxun();
+        		searchZpList();
         	}else{
         		alert("打印成功,保存失败");
         	}
@@ -155,7 +154,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 <div id="toolbar_div" class="toolbar_div" >
    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-print" onclick="print();" plain="true">打印</a>
    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-redo" onclick="showDetail();" plain="true">查看详情</a>
-   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询条件</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询</a>
    
    <div id="div_search" class="div_search">
 		<form id='queryForm' action="">
