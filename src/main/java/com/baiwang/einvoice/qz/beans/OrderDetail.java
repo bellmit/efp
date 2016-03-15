@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlType;
     "wlgs",
     "wldh",
     "tkzt",
-    "fpzt"
+    "fpzt",
+    "bzfp"
     
 })
 public class OrderDetail {
@@ -94,7 +95,8 @@ public class OrderDetail {
     private String tkzt;
 	@XmlElement(name = "FPZT", required = true)
     private String fpzt;
-
+	@XmlElement(name = "BZFP", required = true)
+	private String bzfp;
     public Long getId() {
         return id;
     }
@@ -269,6 +271,16 @@ public class OrderDetail {
 	public void setKpdq(Byte kpdq) {
 	
 		this.kpdq = kpdq;
+	}
+
+	public String getBzfp() {
+	
+		return bzfp;
+	}
+
+	public void setBzfp(String bzfp) {
+	
+		this.bzfp = bzfp;
 	}
 
     
