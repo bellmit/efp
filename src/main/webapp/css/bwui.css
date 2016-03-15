@@ -1,4 +1,4 @@
-/* easyui-accordion 样式重置*/
+/* easyui-accordion 锟斤拷式锟斤拷锟斤拷*/
 .easyui-accordion{list-style-type:none;margin:0px; }
 .easyui-accordion li{ padding:0px;margin-top: -12px;}
 .easyui-accordion li a{line-height:24px;padding-left: 20px;}
@@ -20,8 +20,8 @@
 .accordion .accordion-header-selected{background: #cae3ff;}
 .accordion .accordion-header-selected .panel-title{color: #05234a;}
 
-/*index.css 头部样式*/ 
-.north_div{height:88px;line-height:88px;background:#3573DA url(images/header_bg.png) no-repeat;border:0px;overflow:hidden;}
+/*index.css 头锟斤拷锟斤拷式*/ 
+.north_div{height:88px;line-height:88px;background:#3573DA url(images/body_bg.png) no-repeat;border:0px;overflow:hidden;}
 .west_div{width:185px;padding:0px; border-right: 1px solid #959595;}
 .west_index_div{padding:0px;}
 .south_div{height:25px;text-align:center;}
