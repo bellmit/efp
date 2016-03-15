@@ -12,6 +12,7 @@
     <result column="fptt" property="fptt" jdbcType="VARCHAR" />
     <result column="fplx" property="fplx" jdbcType="VARCHAR" />
     <result column="fpzl" property="fpzl" jdbcType="VARCHAR" />
+    <result column="bzfp" property="bzfp" jdbcType="VARCHAR" />
     <result column="sqrk" property="sqrk" jdbcType="VARCHAR" />
     <result column="je" property="je" jdbcType="REAL" />
     <result column="shr" property="shr" jdbcType="VARCHAR" />
@@ -41,10 +42,11 @@
     <result column="hjje" property="hjje" jdbcType="REAL" />
     <result column="hjse" property="hjse" jdbcType="REAL" />
     <result column="jshj" property="jshj" jdbcType="REAL" />
+    <result column="fpjd" property="fpjd" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="report_Column_List" >
     o.fpqqlsh,o.zddh as ddh, o.sqr, o.hym, o.hyid, o.ddsj, o.sqsj, k.gmfmc as fptt, o.spzl as fplx,k.fplx as fpzl, o.sqrk, k.hjje as je, o.shr, o.shrdh, o.jsdz, o.yjsj, 
-    k.fphm, o.fhr, o.wlgs, o.wldh, o.tkzt, o.fpzt
+    k.fphm, o.fhr, o.wlgs, o.wldh, o.tkzt, o.fpzt,o.bzfp
   </sql>
   <select id="getFpByLSH" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select 
@@ -53,7 +55,7 @@
   </select>
   <select id="getFpStatByLSH" parameterType="java.lang.String" resultMap="statMap">
   	select 
-  	o.kpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj
+  	o.fpqqlsh,o.kpdq as fpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd,o.fptt as ttlx
     from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and o.fpqqlsh=#{fpqqlsh}
   </select>
   <select id="getFpListByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
@@ -89,13 +91,13 @@
   </select>
   <select id="getFpStatListByCondition" parameterType="java.util.Map" resultMap="statMap">
   	select 
-  	o.fpqqlsh,o.kpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj
-    from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3'
+  	o.fpqqlsh,o.kpdq as fpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd,o.fptt as ttlx
+    from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt in('3','-2')
     <if test="dateS != null and dateS !=''">
-	   <![CDATA[and o.kpsj >= #{dateS} ]]>
+	   <![CDATA[and k.kprq >= #{dateS} ]]>
     </if>
     <if test="dateE != null and dateE !=''">
-	   <![CDATA[and o.kpsj <= #{dateE} ]]>
+	   <![CDATA[and k.kprq <= #{dateE} ]]>
     </if>
     <if test="kpdq4q != null and kpdq4q !=''">
 	   and o.kpdq = #{kpdq4q,jdbcType=VARCHAR} 

@@ -30,6 +30,17 @@ public class ReportTotal {
 	private Float hjje;//合计金额
 	private Float hjse;//合计税额
 	private Float jshj;//价税合计
+	private String fpjd;//发票进度（开票、打印、作废）
+	
+	
+	public String getFpjd() {
+	
+		return fpjd;
+	}
+	public void setFpjd(String fpjd) {
+	
+		this.fpjd = fpjd;
+	}
 	public String getFpqqlsh() {
 		
 		return fpqqlsh;
@@ -128,7 +139,15 @@ public class ReportTotal {
 	}
 	public String getFpzt() {
 	
-		return fpzt;
+		if(null != this.hjje && this.hjje>0){
+			this.fpzt = "正数";
+		}else if(null != this.hjje && this.hjje<0){
+			this.fpzt = "负数";
+		}
+		if(null != this.fpzt && "-2".equals(this.fpjd)){
+			this.fpzt+="作废";
+		}
+		return this.fpzt;
 	}
 	public void setFpzt(String fpzt) {
 	
