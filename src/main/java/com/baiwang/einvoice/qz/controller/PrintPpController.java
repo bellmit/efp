@@ -32,7 +32,7 @@ public class PrintPpController {
 	@RequestMapping("printpp/printlist")
 	@ResponseBody
 	public Map<String, Object> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx,
-			int requestPage, int pageSize, HttpServletRequest request){
+			int page, int rows, HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
 		if(null != user){
 			logger.info("***用户名：" + user.getCzymc() + "," + beginDate +","+endDate +"," +kpdq +","+ zddh +","+fplx);
@@ -42,12 +42,12 @@ public class PrintPpController {
 		}
 		Map<String, Object> map = new HashMap<>();
 		
-		List<Map<String,String>> list = service.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx, requestPage, pageSize);
+		List<Map<String,String>> list = service.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx, page, rows);
 		int size = service.queryCount(beginDate, endDate, kpdq, zddh, fplx);
-		int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
+		//int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
 		
-		map.put("list", list);
-		map.put("pageCount", pageCount);
+		map.put("rows", list);
+		map.put("total", size);
 		
 		return map;
 	}
