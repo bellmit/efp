@@ -46,7 +46,7 @@ public class PageServiceImpl implements Serializable {
 	            if (pageSize <= 0) {
 	                pageSize = 10;
 	            }
-	            PageBounds pageBounds = new PageBounds(pageIndex+1, pageSize);
+	            PageBounds pageBounds = new PageBounds(pageIndex, pageSize);
 	            return session.selectList(mapperClass.getName() + "." + sqlId,
 	                    sqlParameter, pageBounds);
 	        }catch(Exception e){

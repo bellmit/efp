@@ -20,7 +20,6 @@ import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.dao.UserMapper;
 import com.baiwang.einvoice.qz.service.IUserService;
 import com.baiwang.einvoice.qz.service.PageServiceImpl;
-import com.baiwang.einvoice.qz.service.skService.SkService;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 @Service
