@@ -7,6 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+/***
+  * @ClassName: OrderDetail
+  * @Description: 订单信息实体类
+  * @author zhaowei
+  * @date 2016年3月14日 下午4:23:41
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
 		"id",
@@ -14,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
 	"zddh",
 	"fddh",
 	"kpdq",
+	"fpkh",
     "sqr",
     "hym",
     "hyid",
@@ -44,6 +51,8 @@ public class OrderDetail {
 	@XmlElement(name = "KPDQ", required = true)
 	private Byte kpdq;
 	@XmlElement(name = "SQR", required = true)
+	private Byte fpkh;
+	@XmlElement(name = "FPKH", required = true)
     private String sqr;
 	@XmlElement(name = "HYM", required = true)
     private String hym;
@@ -65,6 +74,16 @@ public class OrderDetail {
     private String jsdz;
 	@XmlElement(name = "YJSJ", required = true)
     private Date yjsj;
+	public Byte getFpkh() {
+	
+		return fpkh;
+	}
+
+	public void setFpkh(Byte fpkh) {
+	
+		this.fpkh = fpkh;
+	}
+
 	@XmlElement(name = "FHR", required = true)
     private String fhr;
 	@XmlElement(name = "WLGS", required = true)

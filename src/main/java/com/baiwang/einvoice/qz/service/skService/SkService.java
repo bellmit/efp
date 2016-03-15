@@ -1,4 +1,4 @@
-package com.baiwang.einvoice.service.skService;
+package com.baiwang.einvoice.qz.service.skService;
 
 import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
@@ -10,8 +10,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import com.baiwang.einvoice.util.ConfigUtil;
-import com.baiwang.einvoice.util.InvoiceUtil;
+import com.baiwang.einvoice.qz.utils.ConfigUtil;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 
 @Service
 public class SkService {

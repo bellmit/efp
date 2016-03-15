@@ -56,10 +56,10 @@ public class JAXBUtil{
 	
 	public static void main(String[] args) throws UnsupportedEncodingException {
 		
-		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
+		String xml = "<?xml version=\"1.0\" encoding=\"gbk\"?>\n" + 
 				"<business id=\"FPKJ\">\n" + 
 				"	<CUSTOMDATA>\n" + 
-				"		<ZDDH>40001</ZDDH>\n" + 
+				"		<ZDDH>40006</ZDDH>\n" + 
 				"		<FDDH>001</FDDH>\n" + 
 				"		<SQR>张三4</SQR>\n" + 
 				"		<HYM>偶尔上会网</HYM>\n" + 
@@ -73,22 +73,21 @@ public class JAXBUtil{
 				"		<JSDZ>北京市海淀区亿城国际7层711</JSDZ>\n" + 
 				"		<YJSJ>2016年3月5日</YJSJ>\n" + 
 				"		<FHR>复核人XXX</FHR>\n" + 
-				"		<WLSJ>申通</WLSJ>\n" + 
+				"		<WLGS>申通</WLGS>\n" + 
 				"		<WLDH>1234567890</WLDH>\n" + 
-				"		<WLSJ>申通</WLSJ>\n" + 
 				"		<TKZT>已退款</TKZT>\n" + 
 				"	</CUSTOMDATA>\n" + 
 				"	<REQUEST_COMMON_FPKJ>\n" + 
 				"		<COMMON_FPKJ_FPT>\n" + 
-				"			<FPLX>001</FPLX>\n" + 
+				"			<FPLX>026</FPLX>\n" + 
 				"			<KPLX>0</KPLX>\n" + 
-				"			<XSF_NSRSBH>110109004357777777</XSF_NSRSBH>\n" + 
-				"			<XSF_MC>百旺亿城测试1</XSF_MC>\n" + 
+				"			<XSF_NSRSBH>11010800000000000006</XSF_NSRSBH>\n" + 
+				"			<XSF_MC>百旺股份6</XSF_MC>\n" + 
 				"			<XSF_DZ>销售方地址</XSF_DZ>\n" + 
 				"			<XSF_DH>11012345678</XSF_DH>\n" + 
-				"			<XSF_YHZH>6666666666666666666</XSF_YHZH>\n" + 
+				"			<XSF_YHZH>622848265825566332</XSF_YHZH>\n" + 
 				"			<GMF_NSRSBH></GMF_NSRSBH>\n" + 
-				"			<GMF_MC>个人</GMF_MC>\n" + 
+				"			<GMF_MC>我是谁</GMF_MC>\n" + 
 				"			<GMF_DZ></GMF_DZ>\n" + 
 				"			<GMF_DH></GMF_DH>\n" + 
 				"			<GMF_YHZH>888888888888888</GMF_YHZH>\n" + 
@@ -113,7 +112,7 @@ public class JAXBUtil{
 				"				<XMJE>10.00</XMJE>\n" + 
 				"				<SL>0.17</SL>\n" + 
 				"				<SE>1.7</SE>\n" + 
-				"				<HSBZ>1</HSBZ>\n" + 
+				"				<HSBZ>0</HSBZ>\n" + 
 				"			</COMMON_FPKJ_XMXX>\n" + 
 				"			<COMMON_FPKJ_XMXX>\n" + 
 				"				<FPHXZ>0</FPHXZ>\n" + 
@@ -125,14 +124,15 @@ public class JAXBUtil{
 				"				<XMJE>40.00</XMJE>\n" + 
 				"				<SL>0.17</SL>\n" + 
 				"				<SE>6.80</SE>\n" + 
-				"				<HSBZ>1</HSBZ>\n" + 
+				"				<HSBZ>0</HSBZ>\n" + 
 				"			</COMMON_FPKJ_XMXX>\n" + 
 				"		</COMMON_FPKJ_XMXXS>\n" + 
 				"	</REQUEST_COMMON_FPKJ>\n" + 
 				"</business>";
 		/*String xml = readFile("E:\\kjfp\\kjfp.xml");*/
-		Business business = unmarshallObject(xml.getBytes());
-		
-		System.out.println(XmlUtil.toPlainInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()));
+		Business business = unmarshallObject(xml.getBytes("gbk"));
+		System.out.println(business.getOrderDetail().getZddh());
+		System.out.println(business.getOrderDetail().getFddh());
+		//System.out.println(XmlUtil.toPlainInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()));
 	}
 }

@@ -15,7 +15,7 @@
 			"id":112,
 			"text":"统计",
 			"attributes":{
-				"url":"../../queryStatistics/statistics.html"
+				"url":"../../queryStatistics/queryStatIndex.jsp"
 			}
 		}
 	]},{
@@ -27,19 +27,6 @@
 			"text":"系统设置",
 			"attributes":{
 				"url":"../../settings/syssetting.html"
-			}
-		},{
-			"id":122,
-			"text":"修改密码",
-			"attributes":{
-				"url":"../../user/changePwd.jsp"
-			}
-		}
-		,{
-			"id":123,
-			"text":"用户列表",
-			"attributes":{
-				"url":"../../queryStatistics/goToUser.jsp"
 			}
 		}
 	]},{

@@ -35,7 +35,7 @@ public class PrintPpController {
 			int requestPage, int pageSize, HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
 		if(null != user){
-			logger.info("***用户名：" + user.getUserName() + "," + beginDate +","+endDate +"," +kpdq +","+ zddh +","+fplx);
+			logger.info("***用户名：" + user.getCzymc() + "," + beginDate +","+endDate +"," +kpdq +","+ zddh +","+fplx);
 			/*if(null != kpdq && kpdq.equals(user.getUserType())){
 				
 			}*/
@@ -59,7 +59,7 @@ public class PrintPpController {
 			int requestPage, int pageSize,HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
 		if(null != user){
-			logger.info("***用户名：" + user.getUserName() + "," + beginDate +","+endDate +"," +beginfphm +","+ endfphm );
+			logger.info("***用户名：" + user.getCzymc() + "," + beginDate +","+endDate +"," +beginfphm +","+ endfphm );
 			/*if(null != kpdq && kpdq.equals(user.getUserType())){
 				
 			}*/
@@ -109,8 +109,8 @@ public class PrintPpController {
 			map.put("msg", "用户未登陆");
 			return map;
 		}else{
-			String userType = Byte.toString(user.getUserType());
-			SkConfig skconf = service.getSkParameter(userType);
+			//String userType = Byte.toString(user.getUserType());
+			SkConfig skconf = service.getSkParameter("0");
 			PrintConfig printconf = service.getPrintParameter(fplx);
 			map.put("code", "0");
 			map.put("msg", "成功");
@@ -140,8 +140,8 @@ public class PrintPpController {
 			map.put("msg", "用户未登陆");
 			return map;
 		}else{
-			String userType = Byte.toString(user.getUserType());
-			SkConfig skconf = service.getSkParameter(userType);
+			//String userType = Byte.toString(user.getUserType());
+			SkConfig skconf = service.getSkParameter("0");
 			PrintConfig printconf = service.getPrintParameter(fplx);
 			List<Map<String,String>> list = service.getPrintsFphm(beginfphm, endfphm);
 			map.put("code", "0");

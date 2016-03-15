@@ -1,4 +1,4 @@
-package com.baiwang.einvoice.qz.vo;
+package com.baiwang.einvoice.qz.beans;
 
 import java.io.Serializable;
 

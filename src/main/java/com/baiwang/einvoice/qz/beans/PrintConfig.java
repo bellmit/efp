@@ -1,5 +1,11 @@
 package com.baiwang.einvoice.qz.beans;
 
+/**
+  * @ClassName: PrintConfig
+  * @Description: 打印参数配置实体类
+  * @author gaokemeng
+  * @date 2016年3月14日 下午4:24:08
+ */
 public class PrintConfig {
     private Integer id;
 

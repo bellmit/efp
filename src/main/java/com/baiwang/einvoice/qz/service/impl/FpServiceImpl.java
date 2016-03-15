@@ -23,7 +23,7 @@ import com.baiwang.einvoice.qz.beans.OrderDetail;
 import com.baiwang.einvoice.qz.dao.FpmxMapper;
 import com.baiwang.einvoice.qz.dao.KpxxMapper;
 import com.baiwang.einvoice.qz.dao.OrderDetailMapper;
-import com.baiwang.einvoice.qz.service.FpService;
+import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.PageServiceImpl;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -35,7 +35,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
   * @date 2016年3月3日 上午9:25:47
   */
 @Service("fpService")
-public class FpServiceImpl implements FpService {
+public class FpServiceImpl implements IFpService {
 
 	private static final Log logger = LogFactory.getLog(FpServiceImpl.class);
 	
@@ -54,7 +54,7 @@ public class FpServiceImpl implements FpService {
 	  * <p>Description: </p>
 	  * @param kpxx
 	  * @param fpmxList
-	  * @see com.baiwang.einvoice.qz.service.FpService#saveInfo(com.baiwang.einvoice.qz.beans.Kpxx, java.util.List)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#saveInfo(com.baiwang.einvoice.qz.beans.Kpxx, java.util.List)
 	  */
 	@Override
 	public void saveInfo(OrderDetail orderDetail, Kpxx kpxx, List<Fpmx> fpmxList , String fpqqlsh) {
@@ -101,7 +101,7 @@ public class FpServiceImpl implements FpService {
 	  * <p>Title: getPlainList</p>
 	  * <p>Description: </p>
 	  * @return
-	  * @see com.baiwang.einvoice.qz.service.FpService#getPlainList()
+	  * @see com.baiwang.einvoice.qz.service.IFpService#getPlainList()
 	  */
 	@Override
 	public List<Map<String, String>> getPlainList(HashMap<String, String> param) {
@@ -116,7 +116,7 @@ public class FpServiceImpl implements FpService {
 	  * <p>Description: </p>
 	  * @param fpqqlsh
 	  * @return
-	  * @see com.baiwang.einvoice.qz.service.FpService#getKpxxByFpqqlsh(java.lang.String)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#getKpxxByFpqqlsh(java.lang.String)
 	  */
 	@Override
 	public Kpxx getKpxxByFpqqlsh(String fpqqlsh) {
@@ -131,7 +131,7 @@ public class FpServiceImpl implements FpService {
 	  * <p>Description: </p>
 	  * @param fpqqlsh
 	  * @return
-	  * @see com.baiwang.einvoice.qz.service.FpService#getFpmxByFpqqlsh(java.lang.String)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#getFpmxByFpqqlsh(java.lang.String)
 	  */
 	@Override
 	public List<Fpmx> getFpmxByFpqqlsh(String fpqqlsh) {
@@ -145,7 +145,7 @@ public class FpServiceImpl implements FpService {
 	  * <p>Title: updateFpztByFpqqlsh</p>
 	  * <p>Description: </p>
 	  * @param fpqqlsh
-	  * @see com.baiwang.einvoice.qz.service.FpService#updateFpztByFpqqlsh(java.lang.String)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#updateFpztByFpqqlsh(java.lang.String)
 	  */
 	@Override
 	public void updateFpztByFpqqlsh(String fpqqlsh) {
@@ -159,7 +159,7 @@ public class FpServiceImpl implements FpService {
 	  * <p>Description: </p>
 	  * @param param
 	  * @return
-	  * @see com.baiwang.einvoice.qz.service.FpService#getSpecialList(java.util.HashMap)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#getSpecialList(java.util.HashMap)
 	  */
 	@Override
 	public List<Map<String, String>> getSpecialList(HashMap<String, String> param) {
@@ -175,7 +175,7 @@ public class FpServiceImpl implements FpService {
 	  * @param kpxx
 	  * @param fpmxList
 	  * @return
-	  * @see com.baiwang.einvoice.qz.service.FpService#getXml(com.baiwang.einvoice.qz.beans.Kpxx, java.util.List)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#getXml(com.baiwang.einvoice.qz.beans.Kpxx, java.util.List)
 	  */
 	@Override
 	public String getXml(Kpxx kpxx, List<Fpmx> fpmxList) {
@@ -211,7 +211,7 @@ public class FpServiceImpl implements FpService {
 	  * @param pageIndex
 	  * @param pageSize
 	  * @return
-	  * @see com.baiwang.einvoice.qz.service.FpService#list(java.util.HashMap, int, int)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#list(java.util.HashMap, int, int)
 	  */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -229,7 +229,7 @@ public class FpServiceImpl implements FpService {
 	  * @param pageIndex
 	  * @param pageSize
 	  * @return
-	  * @see com.baiwang.einvoice.qz.service.FpService#listSpecial(java.util.HashMap, int, int)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#listSpecial(java.util.HashMap, int, int)
 	  */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -244,7 +244,7 @@ public class FpServiceImpl implements FpService {
 	  * <p>Title: updateCallBackInfo</p>
 	  * <p>Description: </p>
 	  * @param kpxx
-	  * @see com.baiwang.einvoice.qz.service.FpService#updateCallBackInfo(com.baiwang.einvoice.qz.beans.Kpxx)
+	  * @see com.baiwang.einvoice.qz.service.IFpService#updateCallBackInfo(com.baiwang.einvoice.qz.beans.Kpxx)
 	  */
 	@Override
 	public void saveCallBackInfo(Kpxx kpxx) {

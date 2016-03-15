@@ -1,5 +1,11 @@
 package com.baiwang.einvoice.qz.beans;
 
+/***
+  * @ClassName: SkConfig
+  * @Description: 税控参数配置实体类
+  * @author zhaowei
+  * @date 2016年3月14日 下午4:26:48
+ */
 public class SkConfig {
     private Long id;
 

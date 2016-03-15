@@ -1,4 +1,4 @@
-package com.baiwang.einvoice.service.skService;
+package com.baiwang.einvoice.qz.service.skService;
 
 import java.io.BufferedReader;
 import java.io.OutputStreamWriter;
@@ -9,7 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import com.baiwang.einvoice.util.ConfigUtil;
+import com.baiwang.einvoice.qz.utils.ConfigUtil;
 
 @Service
 public class TsPlatService {

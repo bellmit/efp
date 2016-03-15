@@ -18,8 +18,8 @@ import org.springframework.jms.listener.SessionAwareMessageListener;
 import org.springframework.stereotype.Service;
 
 import com.baiwang.einvoice.qz.service.impl.ResultOfSkServiceImpl;
-import com.baiwang.einvoice.service.skService.SkService;
-import com.baiwang.einvoice.util.InvoiceUtil;
+import com.baiwang.einvoice.qz.service.skService.SkService;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 
 @Service
 @SuppressWarnings("rawtypes")

@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
   * @ClassName: RequestCommonFpkj
-  * @Description: TODO
-  * @author wsdoing
+  * @Description: RequestCommonFpkj节点实体类
+  * @author zhaowei
   * @date 2016年3月2日 下午2:32:30
   */
 @XmlAccessorType(XmlAccessType.FIELD)
