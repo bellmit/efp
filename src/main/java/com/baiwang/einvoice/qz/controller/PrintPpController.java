@@ -129,7 +129,7 @@ public class PrintPpController {
 		return su;
 	}
 	
-	@RequestMapping("prints/getParameters")
+	@RequestMapping("prints/getPrintsList")
 	@ResponseBody
 	public Map<String, Object> getParameters(String fplx, String beginfphm, String endfphm, HttpServletRequest request){
 		Map<String, Object> map = new HashMap<>();
@@ -141,13 +141,13 @@ public class PrintPpController {
 			return map;
 		}else{
 			//String userType = Byte.toString(user.getUserType());
-			SkConfig skconf = service.getSkParameter("0");
-			PrintConfig printconf = service.getPrintParameter(fplx);
+			/*SkConfig skconf = service.getSkParameter("0");
+			PrintConfig printconf = service.getPrintParameter(fplx);*/
 			List<Map<String,String>> list = service.getPrintsFphm(beginfphm, endfphm);
 			map.put("code", "0");
 			map.put("msg", "成功");
-			map.put("skconf", skconf);
-			map.put("printconf", printconf);
+			/*map.put("skconf", skconf);
+			map.put("printconf", printconf);*/
 			map.put("list", list);
 		}
 		

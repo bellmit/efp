@@ -16,37 +16,6 @@
 -->
 <script type="text/javascript">
 
-function getSizeConfig(){
-	var fplx = $('#fplx').val();
-	if(fplx==''){
-		$('#topside').val('');
-		$('#leftside').val('');
-		return;
-	}
-	$.ajax({
-		type:"GET",
-        url: "../print/getParameter",
-        data: {'fplx':fplx},
-        async: false,
-        success: function (data) {
-        	//alert(JSON.stringify(data))
-        	if(data.code==0){
-        		$('#topside').val(data.printconf.topside);
-        		$('#leftside').val(data.printconf.leftside);
-        	}
-        },
-        error:function(XMLHttpRequest, textStatus, errorThrown) {
-        	if(XMLHttpRequest.responseText=="timeOut"){
-        		location.reload();
-        	}else{
-        		alert("Error");
-        	}
-        }
-	});
-}
-
-
-
 function baocunsk(){
 	var params = $('#skForm').serialize();
 	
@@ -74,32 +43,7 @@ function baocunsk(){
 	});
 }
 
-function baocundy(){
-	var params = $('#dyForm').serialize();
-	$.ajax({
-		type:"GET",
-        url: "../set/dysetting",
-        data: params,
-        async: false,
-        success: function (data) {
-        	//alert(JSON.stringify(data))
-        	if(data == 1){
-        		alert("保存成功");
-        	}else{
-        		alert("保存失败")
-        	}
-        	
-        },
-        error:function(XMLHttpRequest, textStatus, errorThrown) {
-        	if(XMLHttpRequest.responseText=="timeOut"){
-        		location.reload();
-        	}else{
-        		alert("Error");
-        	}
-        }
-	});	
-		
-}
+
 
 </script>
       
@@ -147,48 +91,7 @@ function baocundy(){
 	</div>
 </form>
 <br/>
-<legend>发票打印设置</legend>
-<form id="dyForm" name='skForm' class="form-horizontal" role="dyForm">
-	<!-- <div class="form-inline form-group"> -->
-		<div class="form-group form-inline col-sm-7">
-	      <label for="fplx" class="col-sm-3 control-label">发票类型：</label>
-	      <div class="col-sm-6">
-	         <select class="form-control" id="fplx" name="fplx" onchange="getSizeConfig();">
-		         <option value="">请选择</option>
-		         <option value='004'>增值税纸质专用发票</option>
-			 	 <option value='007'>增值税纸质普通发票</option>
-		     </select>
-	      </div>
-	   </div>
-	<!-- </div> -->
-	
-	<!-- <div class="form-inline form-group"> -->
-		<div class="form-group form-inline col-sm-7">
-	      <label for="topside" class="col-sm-3 control-label">上边距：</label>
-	      <div class="col-sm-6">
-	         <input type="text" class="form-control" id="topside" name="topside" placeholder="">
-	      	 <label for="topside" class="">毫米</label>
-	      </div>
-	   </div>
-	<!-- </div> -->
-	
-	<!-- <div class="form-inline form-group"> -->
-		<div class="form-group form-inline col-sm-7">
-	      <label for="leftside" class="col-sm-3 control-label">左边距：</label>
-	      <div class="col-sm-6">
-	         <input type="text" class="form-control" id="leftside" name="leftside" placeholder="">
-	         <label for="leftside" class="">毫米</label>
-	      </div>
-	   </div>
-	<!-- </div> -->
-	<div class="form-inline form-group">
-	   <div class="form-group col-sm-7">
-	      <div class="col-sm-offset-3 col-sm-10">
-	         <button type="button" class="btn btn-default" onclick="baocundy();">保存</button>
-	      </div>
-	   </div>
-	</div>
-</form>
+
 
 </body>
 </html>
