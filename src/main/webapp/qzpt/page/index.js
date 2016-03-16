@@ -9,14 +9,15 @@ var exceptionInfo;
 $(function(){
 	//获得菜单项
 //	getMenuDemo();
-	$.getJSON("qz_data1.json",function(data){
-		$.each(data[0].children, function(i, n) 
+	$.getJSON("../../menu",function(data){
+		var json = convert(data);
+		$.each(json[0].children, function(i, n) 
 			{
 		        var menulist = ""; 
 		        $.each(n.children, function(j, o) 
 					{
 						var text = "'"+o.text+"'";
-						var url = "'"+o.attributes.url+"'";
+						var url = "'"+o.url+"'";
 						menulist += '&nbsp;&nbsp;<li><div onclick="addTabs('+text+','+url+')"><a target="mainFrame" class="ahover" onclick="addTabs('+text+',' + url + ')" >' + o.text + '</a></div></li>\n';
 					})
 			
@@ -637,4 +638,48 @@ function enterPress(){
 	if(e.keyCode == 13){ 
 		searchTree();
 	} 
+}
+
+function convert(rows){
+	function exists(rows, parentId){
+		for(var i=0; i<rows.length; i++){
+			if (rows[i].id == parentId) return true;
+		}
+		return false;
+	}
+	
+	var nodes = [];
+	// get the top level nodes
+	for(var i=0; i<rows.length; i++){
+		var row = rows[i];
+		if (!exists(rows, row.parentId)){
+			nodes.push({
+				id:row.id,
+				text:row.functionName,
+				url:row.functionUrl
+			});
+		}
+	}
+	
+	var toDo = [];
+	for(var i=0; i<nodes.length; i++){
+		toDo.push(nodes[i]);
+	}
+	while(toDo.length){
+		var node = toDo.shift();	// the parent node
+		// get the children nodes
+		for(var i=0; i<rows.length; i++){
+			var row = rows[i];
+			if (row.parentId == node.id){
+				var child = {id:row.id,text:row.functionName,url:row.functionUrl};
+				if (node.children){
+					node.children.push(child);
+				} else {
+					node.children = [child];
+				}
+				toDo.push(child);
+			}
+		}
+	}
+	return nodes;
 }

@@ -12,7 +12,7 @@
 <title>普通待开发票</title>
 <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
 	codebase="NISEC_SKSCX.ocx#version=1,0,0,1" style="display: none;"> </OBJECT>
-<link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
+
 <script type="text/javascript" src="<%=basePath%>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/jquery.pagination.js"></script>
