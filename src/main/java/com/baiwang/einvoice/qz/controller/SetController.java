@@ -32,6 +32,7 @@ public class SetController {
 	@RequestMapping("sksetting")
 	@ResponseBody
 	public Integer saveSksetting(SkConfig skconfig){
+		skconfig.setKpdq(0);
 		logger.info("*******" + skconfig.getKpdq() + "," + skconfig.getUrl() + "," + skconfig.getPort());
 		System.out.println("*******" + skconfig.getKpdq() + "," + skconfig.getUrl() + "," + skconfig.getPort());
 		
