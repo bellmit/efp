@@ -10,24 +10,23 @@
 <title>普通发票作废</title>
 <script type="text/javascript" src="<%=basePath %>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=basePath %>/js/jquery/jquery-1.11.1.js"></script>
-<link rel="stylesheet" href="<%=basePath %>/css/pagination.css"  type="text/css">
-<script type="text/javascript" src="<%=basePath%>/js/jquery.pagination.js"></script>
-<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-<script src="../bootstrap/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="<%=basePath %>/js/jquery/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui.css"/>
+<script type="text/javascript" src="<%=basePath %>/js/jquery/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui_global.css"/>
 <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
 	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
-	
-<style type="text/css">
-th,td{width: 100px; height: 35px;text-align:center;}
-</style>
-
 <script type="text/javascript">
-function concelFp(lsh){
+function concelFp(){
+	var row = datagrid.datagrid('getSelected');
+	if(row ==null || row == ''){
+		alert('请选择一条记录进行操作!');
+		return;
+	}
 	$.ajax({
 		type:"GET",
         url: "<%=basePath %>/einvoice/ptfpzf",
-        data: {'lsh':lsh},
+        data: {'lsh':row.fpqqlsh},
         async: false,
         success: function (data) {
         	var kpxx = data.kpxx;
@@ -107,128 +106,139 @@ function getTotalMidValue(source, priStr, suxStr) {
 
 </head>
 <body>
-<hr>
-<div style="white-space: nowrap;">
-<form id="searchForm" action="<%=basePath%>/einvoice/ptfpzf_q" method="post" class="form-horizontal" role="form">
-	<input id="currentPage" name="currentPage" type="hidden"/>
-	<div class="form-inline form-group">
-		<div class="form-group col-sm-4">
-		<label for="beginDate" class="col-sm-3 control-label">开票起止日期：</label>
-			 <div class="col-sm-3">
-				<input id="beginDate" name="beginDate" class="form-control" placeholder="开始时间"
-				onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})" 
-				value="${param.beginDate}" style="width: 100px;"/>
-				-<input id="endDate" name="endDate" class="form-control" placeholder="结束时间" 
-				onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})" 
-				value="${param.endDate}" style="width: 100px;"/>
-			 </div>
-		</div>
-		<div class="form-group col-sm-4">
-			<label for="hyid4q" class="col-sm-3 control-label">会员ID：</label>
-			<div class="col-sm-3">
-				<input type="text" class="form-control" id="hyid4q" name="hyid4q" value="${param.hyid4q}" placeholder="会员ID">
+<div id="toolbar_div" class="toolbar_div" >
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-filesave" onclick="concelFp();" plain="true">作废</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询条件</a>
+   
+   <div id="div_search" class="div_search">
+		<form id='searchForm' action="">
+			<div class="" style="line-height: 30px;">
+				<label>开票起止日期:</label>
+				<input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始时间" value=""
+	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
+	         	<label>-</label>
+	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
+	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
+				<label>会员ID：</label>
+				<input type="text" id="hyid4q" name="hyid4q" placeholder="会员ID">
+				<label>发票号码：</label>
+				<input type="text" id="fphm4q" name="fphm4q" placeholder="发票号码">
+				<label>订单号：</label>
+				<input type="text" id="ddh4q" name="ddh4q" placeholder="订单号">
+				<label>手机号：</label>
+				<input type="text" id="sjh4q" name="sjh4q" placeholder="手机号">
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchfpList();" plain="true">查找</a>
 			</div>
-		</div>
-		<div class="form-group col-sm-4">
-			<label for="fphm4q" class="col-sm-3 control-label">发票号码：</label>
-			<div class="col-sm-3">
-				<input type="text" class="form-control" id="fphm4q" name="fphm4q" value="${param.fphm4q}" placeholder="发票号码">
-			</div>
-		</div>
-	</div>
-	<div class="form-inline form-group">
-		<div class="form-group col-sm-4">
-		<label for="ddh4q" class="col-sm-3 control-label">订单号：</label>
-			<div class="col-sm-3">
-				<input type="text" class="form-control" name="ddh4q" id="ddh4q" value="${param.ddh4q}" placeholder="订单号">
-			</div>
-		</div>
-		<div class="form-group col-sm-4">
-		<label for="sjh4q" class="col-sm-3 control-label">手机号：</label>
-			<div class="col-sm-3">
-				<input type="text" class="form-control" name="sjh4q" id="sjh4q" value="${param.sjh4q}" placeholder="订单号">
-			</div>
-		</div>
-		<div class="form-group col-sm-4">
-			<label for="fphm4q" class="col-sm-3 control-label"><input type="submit" style="width:80px" value="查询"></label>
-			<div class=" col-sm-3">
-				
-			</div>
-		</div>
-	</div>
-</form><br/>
-<table border="1" cellspacing="0">
-	<tr>
-		<td>订单号</td>
-		<td>会员名</td>
-		<td>会员ID</td>
-		<td>收货人</td>
-		<td>收货人电话</td>
-		<td>申请时间</td>
-		<td>发票抬头</td>
-		<td>发票内容</td>
-		<td>合计金额</td>
-		<td>合计税额</td>
-		<td>价税合计</td>
-		<td>发票状态</td>
-		<td>开票日期</td>
-		<td>发票代码</td>
-		<td>发票号码</td>
-		<td>操作</td>
-	</tr>
-	<c:forEach items="${fpxxList}" var="fp">
-		<tr>
-			<td><c:out value="${fp.zddh}"/></td>
-			<td><c:out value="${fp.hym}"/></td>
-			<td><c:out value="${fp.hyid}"/></td>
-			<td><c:out value="${fp.shr}"/></td>
-			<td><c:out value="${fp.shrdh}"/></td>
-			<td><c:out value="${fp.sqsj}"/></td>
-			<td><c:out value="${fp.gmfmc}"/></td>
-			<td><c:out value="${fp.spzl}"/></td>
-			<td><c:out value="${fp.hjje}"/></td>
-			<td><c:out value="${fp.hjse}"/></td>
-			<td><c:out value="${fp.jshj}"/></td>
-			<td>
-			<c:if test="${fp.kplx=='0'}">红票</c:if>
-			<c:if test="${fp.kplx=='1'}">蓝票</c:if>
-			</td>
-			<td><c:out value="${fp.kprq}"/></td>
-			<td><c:out value="${fp.fpdm}"/></td>
-			<td><c:out value="${fp.fphm}"/></td>
-			<td><a href="javascript:void(0)" onclick="concelFp('${fp.fpqqlsh}');">作废</a></td>
-		</tr>
-	</c:forEach>
-</table>
+		</form>
+   </div>
 </div>
-<div class="pagination" id="Pagination" style="width: 100%;text-align: center;margin-top: 20px"></div>
+<table id="datagrid"></table>
 </body>
-<!-- 分页 -->
 <script type="text/javascript">
-	 var pageIndex = '${page.pageIndex}';
-     var pageSize = '${page.pageSize}';
-     var totalPages = '${page.totalPages}';
-     var totalCounts = '${page.totalCounts}';
-     $(document).ready(function(){ 
-     $("#Pagination").pagination(totalCounts,{
-                 items_per_page: pageSize,
-                 current_page:pageIndex,
-                 prev_text:'<',    
-                 next_text:'>',            
-                 callback:function(page){
-                     gotoPage(page);
-                 }
-         });            
-     });
-     
-     function gotoPage(page) {
-    	 alert(page);
-    	 $("#currentPage").val(page);
-         $("#searchForm").submit(); 
-     }
-//      function gotoPage(page) {
-<%--          window.location = "<%=basePath%>/report/queryFPlist?pageIndex=" + page;             --%>
-//      }
+initDataGridComponent();
+var datagrid;
+function initDataGridComponent(){
+	var qParams = form2Json('searchForm');
+	datagrid = $("#datagrid").datagrid({
+				title : "普通发票作废",
+				singleSelect:true,
+				rownumbers:true,
+				idField:'id',
+				url:"<%=basePath%>/einvoice/ptfpzf_q",
+				pagination : true,
+				pageSize : 50,
+				pageNumber:1,
+				pageList: [10,20,50,100],
+				queryParams: qParams,
+				columns:[[
+				     {field:'fpqqlsh',title:'fpqqlsh',width:150,editor:'text',hidden:true},
+				     {field:'zddh',title:'订单号',width:150,editor:'text'},
+		             {field:'hym',title:'会员名',width:100,editor:'text'},
+		             {field:'hyid',title:'会员ID',width:100,editor:'text'},
+			         {field:'shr',title:'收货人',width:100,editor:'text'}, 
+		             {field:'shrdh',title:'收货人电话',width:100,editor:'text'},
+		             {field:'sqsj',title:'申请时间',width:100,editor:'text'},
+			         {field:'gmfmc',title:'发票抬头',width:100,editor:'text'},
+		             {field:'spzl',title:'发票内容',width:100,editor:'text'},
+			         {field:'hjje',title:'合计金额',width:100,editor:'text'},
+		             {field:'hjse',title:'合计税额',width:100,editor:'text'},
+			         {field:'jshj',title:'价税合计',width:100,editor:'text'},
+			         {field:'kplx',title:'发票状态',width:100,editor:'text'},
+		             {field:'kprq',title:'开票日期',width:100,editor:'text'},
+		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
+		             {field:'fphm',title:'发票号码',width:100,editor:'text'}
+				]],
+				onClickRow:function(index){	
+					
+				}
+	});
+	
+}
 
-</script> 
+
+
+/**
+ * 开票类型
+ */
+function formatKplx(value,row,index){
+	if (value=="1"){
+		return "红字发票";
+	} else {
+		return "蓝字发票";
+	}
+}
+
+/**
+ * 显示或隐藏
+ */
+function hideOrShow(){
+	$("#div_search").toggle();
+}
+
+/**
+ * 打印
+ */
+function print(){
+	var row = datagrid_zp.datagrid('getSelected');
+	
+	if(row ==null || row == ''){
+		alert('请选择一项进行打印!');
+		return;
+	}
+	alert(row.zddh)
+	
+	if(confirm("确定要打印么？")){
+	 	getParameter();
+		if(!SetParameter()){
+			return;
+		}
+		PrintInvoice(fpqqlsh,fpdm, fphm);
+	}
+}
+/**
+ * 查询
+ */
+function searchfpList(){
+	var qParams = form2Json('searchForm');
+	$("#datagrid").datagrid("load", qParams);
+}
+
+//将表单数据转为json
+function form2Json(id) {
+
+    var arr = $("#" + id).serializeArray()
+    var jsonStr = "";
+
+    jsonStr += '{';
+    for (var i = 0; i < arr.length; i++) {
+        jsonStr += '"' + arr[i].name + '":"' + arr[i].value + '",'
+    }
+    jsonStr = jsonStr.substring(0, (jsonStr.length - 1));
+    jsonStr += '}'
+
+    var json = JSON.parse(jsonStr)
+    return json
+}
+
+</script>
 </html>

@@ -388,11 +388,65 @@
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
     </if>
+    ORDER BY k.fphm
+    <if test="startRow != null and rows !=null">
+    LIMIT #{startRow},#{rows}
+    </if>
   </select>
   
   <select id="getSpecialList4zf" resultMap="QueryMap4zf" parameterType="map" >
 	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
 	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
+	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004'
+    <if test="beginDate != null and beginDate != ''" >
+     <![CDATA[and k.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''" >
+     <![CDATA[and k.kprq <= #{endDate} ]]>
+    </if>
+    <if test="hyid4q != null and hyid4q != '' " >
+     and o.hyid like CONCAT('%',#{hyid4q },'%' )
+    </if>
+    <if test="fphm4q != null and fphm4q != '' " >
+     and k.fphm like CONCAT('%',#{fphm4q },'%' )
+    </if>
+    <if test="ddh4q != null and ddh4q != '' " >
+     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+    </if>
+    <if test="sjh4q != null and sjh4q != '' " >
+     and o.shrdh like CONCAT('%',#{sjh4q },'%' )
+    </if>
+    ORDER BY k.fphm
+    <if test="startRow != null and rows !=null">
+    LIMIT #{startRow},#{rows}
+    </if>
+  </select>
+  
+  <select id="getPlainList4zfCount" resultType="java.lang.Integer" parameterType="map" >
+	select count(*)
+	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007'
+    <if test="beginDate != null and beginDate != ''" >
+     <![CDATA[and k.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''" >
+     <![CDATA[and k.kprq <= #{endDate} ]]>
+    </if>
+    <if test="hyid4q != null and hyid4q != '' " >
+     and o.hyid like CONCAT('%',#{hyid4q },'%' )
+    </if>
+    <if test="fphm4q != null and fphm4q != '' " >
+     and k.fphm like CONCAT('%',#{fphm4q },'%' )
+    </if>
+    <if test="ddh4q != null and ddh4q != '' " >
+     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+    </if>
+    <if test="sjh4q != null and sjh4q != '' " >
+     and o.shrdh like CONCAT('%',#{sjh4q },'%' )
+    </if>
+  </select>
+  
+  <select id="getSpecialList4zfCount" resultType="java.lang.Integer" parameterType="map" >
+	select count(*)
 	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004'
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and k.kprq >= #{beginDate} ]]>

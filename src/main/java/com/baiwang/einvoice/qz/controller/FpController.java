@@ -19,7 +19,6 @@ import com.baiwang.einvoice.qz.beans.Business;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
-import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.beans.SkConfig;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.IFpService;
@@ -28,7 +27,6 @@ import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 @RequestMapping("einvoice")
 @Controller
@@ -80,7 +78,8 @@ public class FpController {
 	}
 	//查询已经开具并打印过的普通发票
 	@RequestMapping(value="ptfpzf_q")
-	public String queryPtfp(HttpServletRequest request,Page page){
+	@ResponseBody
+	public Map<String, Object> queryPtfp(HttpServletRequest request,int page, int rows){
 		String beginDate = request.getParameter("beginDate");
 		String endDate = request.getParameter("endDate");
 		String hyid4q = request.getParameter("hyid4q");
@@ -94,27 +93,19 @@ public class FpController {
 		param.put("fphm4q", fphm4q);
 		param.put("ddh4q",ddh4q );
 		param.put("sjh4q",sjh4q );
-//		List<Map<String, Object>> fpxxList = fpService.getPlainList4zf(param);
-		
-		String currentPage = request.getParameter("currentPage");
-		if (!(null == currentPage || "".equals(currentPage))) {
-			page.setPageIndex(Integer.parseInt(currentPage));
-		}
-		param.put("pageIndex", page.getPageIndex());
-		param.put("pageSize", page.getPageSize());
-		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) fpService.getPlainList4zf(param);
-		page.setPageSize(fpxxList.getPaginator().getLimit()); 
-		page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
-		page.setTotalPages(fpxxList.getPaginator().getTotalPages());
-		request.setAttribute("page", page);
-		
-		request.setAttribute("param", param);
-		request.setAttribute("fpxxList", fpxxList);
-		return "fp/ptfpzf";
+		param.put("startRow", (page-1)*rows);
+		param.put("rows", rows);
+		List<Map<String, Object>> fpxxList = fpService.getPlainList4zf(param);
+		int size = fpService.getPlainList4zfCount(param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("rows", fpxxList);
+		result.put("total", size);
+		return result;
 	}
 	//查询已经开具并打印过的专用发票
 	@RequestMapping(value="zyfpzf_q")
-	public String queryZyfp(HttpServletRequest request,Page page){
+	@ResponseBody
+	public Map<String, Object> queryZyfp(HttpServletRequest request,int page, int rows){
 		String beginDate = request.getParameter("beginDate");
 		String endDate = request.getParameter("endDate");
 		String hyid4q = request.getParameter("hyid4q");
@@ -128,23 +119,14 @@ public class FpController {
 		param.put("fphm4q", fphm4q);
 		param.put("ddh4q",ddh4q );
 		param.put("sjh4q",sjh4q );
-//		List<Map<String, Object>> fpxxList = fpService.getSpecialList4zf(param);
-		
-		String currentPage = request.getParameter("currentPage");
-		if (!(null == currentPage || "".equals(currentPage))) {
-			page.setPageIndex(Integer.parseInt(currentPage));
-		}
-		param.put("pageIndex", page.getPageIndex());
-		param.put("pageSize", page.getPageSize());
-		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) fpService.getSpecialList4zf(param);
-		page.setPageSize(fpxxList.getPaginator().getLimit()); 
-		page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
-		page.setTotalPages(fpxxList.getPaginator().getTotalPages());
-		request.setAttribute("page", page);
-		
-		request.setAttribute("param", param);
-		request.setAttribute("fpxxList", fpxxList);
-		return "fp/zyfpzf";
+		param.put("startRow", (page-1)*rows);
+		param.put("rows", rows);
+		List<Map<String, Object>> fpxxList = fpService.getSpecialList4zf(param);
+		int size = fpService.getSpecialList4zfCount(param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("rows", fpxxList);
+		result.put("total", size);
+		return result;
 	}
 	//普通发票作废
 	@RequestMapping(value="ptfpzf")

@@ -17,23 +17,16 @@
 
 <script type="text/javascript">
 	function exportData(){
-		var chks = $('.chkbox_ex');
-		for(i=0;i<chks.length;i++){
-			if(chks[i].checked == true){
-				chks[i].name = 'lsh4ept';
-			}
+		var row = datagrid.datagrid('getChecked');
+		if(row ==null || row == ''){
+			alert('请至少选择一条记录!');
+			return;
 		}
-		$('#expForm').submit();
-	}
-	function checkAll(){
-		var chks = $('.chkbox_ex');
-		for(i=0;i<chks.length;i++){
-			chks[i].checked=$('#chkAll').attr('checked');
+		var fplshs=""; 
+	    for(i=0;i<row.length;i++){
+	    	fplshs += row[i].fpqqlsh+",";
 		}
-	}
-	//取消全选的勾
-	function ccAll(){
-		$('#chkAll').attr('checked',false);
+		$.post('<%=basePath %>/report/download',{'fplshs':fplshs});
 	}
 </script>
 
@@ -109,9 +102,11 @@ function initDataGridComponent(){
 	var qParams = form2Json('searchForm');
 	datagrid = $("#datagrid").datagrid({
 				title : "查询发票",
-				singleSelect:true,
+				checkOnSelect:true,
+				selectOnCheck:false,
+				singleSelect:false,
 				rownumbers:true,
-				idField:'id',
+				idField:'fpqqlsh',
 				url:"<%=basePath %>/report/queryFPlist",
 				pagination : true,
 				pageSize : 50,

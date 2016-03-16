@@ -42,9 +42,13 @@ public interface IFpService {
 	
 	List<HashMap<String, Object>> listSpecial(HashMap<String, String> param,int pageIndex,int pageSize);
 	
-	PageList<HashMap<String,Object>> getPlainList4zf(Map<String, Object> param);
+	List<Map<String, Object>> getPlainList4zf(Map<String, Object> param);
     
-	PageList<HashMap<String,Object>> getSpecialList4zf(Map<String, Object> param);
+	List<Map<String, Object>> getSpecialList4zf(Map<String, Object> param);
+	
+	int getPlainList4zfCount(Map<String, Object> param);
+    
+    int getSpecialList4zfCount(Map<String, Object> param);
 	
 	void saveCallBackInfo(Kpxx kpxx);
 }

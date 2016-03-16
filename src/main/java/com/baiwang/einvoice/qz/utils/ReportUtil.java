@@ -133,28 +133,30 @@ public class ReportUtil {
 		cell = row.createCell(9);
 		cell.setCellValue("发票种类");
 		cell = row.createCell(10);
-		cell.setCellValue("申请入口");
+		cell.setCellValue("发票备注");
 		cell = row.createCell(11);
-		cell.setCellValue("金额");
+		cell.setCellValue("申请入口");
 		cell = row.createCell(12);
-		cell.setCellValue("收货人");
+		cell.setCellValue("金额");
 		cell = row.createCell(13);
-		cell.setCellValue("收货人电话");
+		cell.setCellValue("收货人");
 		cell = row.createCell(14);
-		cell.setCellValue("寄送地址");
+		cell.setCellValue("收货人电话");
 		cell = row.createCell(15);
-		cell.setCellValue("邮寄时间");
+		cell.setCellValue("寄送地址");
 		cell = row.createCell(16);
-		cell.setCellValue("发票号码");
+		cell.setCellValue("邮寄时间");
 		cell = row.createCell(17);
-		cell.setCellValue("发货人");
+		cell.setCellValue("发票号码");
 		cell = row.createCell(18);
-		cell.setCellValue("物流公司");
+		cell.setCellValue("发货人");
 		cell = row.createCell(19);
-		cell.setCellValue("物流单号");
+		cell.setCellValue("物流公司");
 		cell = row.createCell(20);
-		cell.setCellValue("退款状态");
+		cell.setCellValue("物流单号");
 		cell = row.createCell(21);
+		cell.setCellValue("退款状态");
+		cell = row.createCell(22);
 		cell.setCellValue("发票状态");
 		
 		for(int i=0 ; i<reportList.size() ; i++){
@@ -187,28 +189,30 @@ public class ReportUtil {
 				cell.setCellValue("增值税电子发票");  //发票种类
 			}
 			cell = row.createCell(10);
-			cell.setCellValue(report.getSqrk());  //申请入口
+			cell.setCellValue(report.getBzfp());  //发票备注
 			cell = row.createCell(11);
-			cell.setCellValue(report.getJe()!=null?report.getJe().toString():"");//金额
+			cell.setCellValue(report.getSqrk());  //申请入口
 			cell = row.createCell(12);
-			cell.setCellValue(report.getShr());//收货人
+			cell.setCellValue(report.getJe()!=null?report.getJe().toString():"");//金额
 			cell = row.createCell(13);
-			cell.setCellValue(report.getShrdh());//收货人电话
+			cell.setCellValue(report.getShr());//收货人
 			cell = row.createCell(14);
-			cell.setCellValue(report.getJsdz());//寄送地址
+			cell.setCellValue(report.getShrdh());//收货人电话
 			cell = row.createCell(15);
-			cell.setCellValue(report.getYjsj()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getYjsj()):"");//邮寄时间
+			cell.setCellValue(report.getJsdz());//寄送地址
 			cell = row.createCell(16);
-			cell.setCellValue(report.getFphm());//发票号码
+			cell.setCellValue(report.getYjsj()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getYjsj()):"");//邮寄时间
 			cell = row.createCell(17);
-			cell.setCellValue(report.getFhr());//发货人
+			cell.setCellValue(report.getFphm());//发票号码
 			cell = row.createCell(18);
-			cell.setCellValue(report.getWlgs());//物流公司 
+			cell.setCellValue(report.getFhr());//发货人
 			cell = row.createCell(19);
-			cell.setCellValue(report.getWldh());//物流单号
+			cell.setCellValue(report.getWlgs());//物流公司 
 			cell = row.createCell(20);
-			cell.setCellValue(report.getTkzt());//退款状态
+			cell.setCellValue(report.getWldh());//物流单号
 			cell = row.createCell(21);
+			cell.setCellValue(report.getTkzt());//退款状态
+			cell = row.createCell(22);
 			cell.setCellValue(report.getFpzt());//发票状态
 			
 		}
