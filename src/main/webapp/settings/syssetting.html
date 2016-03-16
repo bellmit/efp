@@ -12,39 +12,11 @@
 <link rel="stylesheet" type="text/css" href="../qzpt/page/index.css"/>
 <script type="text/javascript">
 
-function init(){
-	//var params = $('#skForm').serialize();
-	
-	$.ajax({
-		type:"POST",
-        url: "../set/initsetting",
-        //data: params,
-        async: false,
-        success: function (data) {
-        	//alert(JSON.stringify(data))
-        	if(data == 1){
-        		alert("保存成功");
-        	}else{
-        		alert("保存失败")
-        	}
-        	
-        },
-        error:function(XMLHttpRequest, textStatus, errorThrown) {
-        	if(XMLHttpRequest.responseText=="timeOut"){
-        		location.reload();
-        	}else{
-        		alert("Error");
-        	}
-        }
-	});
-}
-
 function baocunsk(){
 	var params = $('#skForm').serialize();
-	
 	$.ajax({
 		type:"POST",
-        url: "../set/sksetting",
+        url: "../set/saveSksetting",
         data: params,
         async: false,
         success: function (data) {
@@ -73,61 +45,71 @@ function baocunsk(){
 </head>
 <body>
 <form id='skForm' action="">
-<div id="toolbar_div" class="toolbar_div" style="line-height: 25px;">
+<div id="toolbar_div" class="toolbar_div" style="line-height: 25px; margin-bottom: 3px;">
+	<div class="ftitle">服务器设置</div>
 	<label>服务器IP地址:</label>
 	<input type="text" id="url" name="url" placeholder="服务器IP地址"/>
 	<br>
 	<label>服务器端口号:</label>
 	<input type="text" id="port" name="port" placeholder="服务器端口号"/>
-	<br>
-	<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;安全码:</label>
-	<textarea id='aqm' name='aqm' rows="4" cols="100" style="vertical-align: text-top;" placeholder="安全码"></textarea>
+	<!-- <br>
+	<label style="margin-left: 35px;">安全码:</label>
+	<textarea id='aqm' name='aqm' rows="4" cols="100" style="vertical-align: text-top;" placeholder="安全码"></textarea> -->
 	<br>
 	<button type="button" onclick="baocunsk();" style="margin-left: 77px; margin-top: 10px;">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
 </div>
 </form>
-<!-- <legend>税控服务设置</legend>
-<form id="skForm" name='skForm' class="form-horizontal" role="skForm">
-	<div class="form-inline form-group">
-		<div class="form-group form-inline col-sm-7">
-	      <label for="kpdq" class="col-sm-3 control-label">开票地区：</label>
-	      <div class="col-sm-6">
-	         <select class="form-control" id="kpdq" name="kpdq">
-		         <option value="">请选择</option>
-		         <option value="0">北京</option>
-			 	 <option value="1">上海</option>
-		     </select>
-	      </div>
-	   </div>
-	</div>
-	
-	<div class="form-inline form-group">
-		<div class="form-group col-sm-7">
-	      <label for="ipdz" class="col-sm-3 control-label">主机地址：</label>
-	      <div class="col-sm-6">
-	         <input type="text" class="form-control" id="url" name="url" placeholder="服务器IP地址">
-	      </div>
-	   </div>
-	</div>
-	
-	<div class="form-inline form-group">
-		<div class="form-group col-sm-7">
-	      <label for="ipdk" class="col-sm-3 control-label">端口：</label>
-	      <div class="col-sm-6">
-	         <input type="text" class="form-control" id="port" name="port" placeholder="服务器IP端口号">
-	      </div>
-	   </div>
-	</div>
-	<div class="form-inline form-group">
-	   <div class="form-group col-sm-7">
-	      <div class="col-sm-offset-3 col-sm-10">
-	         <button type="button" class="btn btn-default" onclick="baocunsk();">保存</button>
-	      </div>
-	   </div>
-	</div>
-</form>
-<br/> -->
 
 
+<!-- <form id='aqmForm' action="">
+<div id="toolbar_div" class="toolbar_div" style="line-height: 25px;">
+	<div class="ftitle">安全码设置</div>
+	<label style="margin-left: 35px;">操作员:</label>
+	<input type="text" id="userid" name="userid" placeholder="操作员"/>
+	<select class="form-control" id="kpdq" name="kpdq">
+      	<option value="">请选择</option>
+       	<option value="0">北京</option>
+		<option value="1">上海</option>
+   	</select>
+	<br>
+	<label style="margin-left: 35px;">安全码:</label>
+	<textarea id='aqm' name='aqm' rows="4" cols="100" style="vertical-align: text-top;" placeholder="安全码"></textarea>
+	<br>
+	<button type="button" onclick="saveaqm();" style="margin-left: 77px; margin-top: 10px;">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
+</div>
+</form> -->
+
+<script type="text/javascript">
+init();
+function init(){
+	//var params = $('#skForm').serialize();
+	
+	$.ajax({
+		type:"POST",
+        url: "../set/initsetting",
+        //data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data.code == '-1'){
+        		window.top.location.href = '../login/login.html'
+        	}else{
+        		$('#url').val(data.skConfig.url);
+            	$('#port').val(data.skConfig.port);
+        	}
+        	
+        	
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
+</script>
 </body>
 </html>

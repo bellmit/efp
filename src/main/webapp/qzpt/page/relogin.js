@@ -29,7 +29,7 @@ function reLogin(){
 
 function login(){
 	if(currentUser == ""){
-		window.top.location.href = "../login/login.html";
+		window.top.location.href = "../../login/login.html";
 	}else{
 		$("#currentUser",window.top.document).html(currentUser);
 	}

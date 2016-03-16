@@ -18,6 +18,9 @@ public class SetServiceImpl implements ISetService {
 	
 	@Resource
 	private PrintConfigMapper dydao;
+	
+	/*@Resource
+	private SysconfigMapper dao;*/
 
 	@Override
 	public int saveSksetting(SkConfig skconfig) {
@@ -40,6 +43,12 @@ public class SetServiceImpl implements ISetService {
 		}else{
 			return dydao.savePrintsetting(printconfig);
 		}
+	}
+
+	@Override
+	public SkConfig initsetting(String czydm) {
+		
+		return skdao.initsetting(czydm);
 	}
 	
 	

@@ -11,6 +11,8 @@ public class SkConfig {
 
     private Integer kpdq;
 
+    private String userId;
+    
     private String url;
 
     private String port;
@@ -29,7 +31,15 @@ public class SkConfig {
         this.id = id;
     }
 
-    public Integer getKpdq() {
+    public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public Integer getKpdq() {
         return kpdq;
     }
 

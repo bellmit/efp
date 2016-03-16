@@ -18,4 +18,6 @@ public interface SkConfigMapper {
 	int saveSksetting(SkConfig skconfig);
 
 	SkConfig querySksetting(Integer kpdq);
+
+	SkConfig initsetting(String czydm);
 }
