@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>专用发票开具</title>
+<OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1" style="display: none;"> </OBJECT>
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/easyui.css"/>
+<script type="text/javascript" src="../js/jquery/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/easyui_global.css"/>
+
+</head>
+<body>
+<div id="toolbar_div" class="toolbar_div" >
+	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-print" onclick="multi_kjfp();" plain="true">发票开具</a>
+    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询条件</a>
+	<div id="div_search" class="div_search">
+		<form id="queryForm" action="">
+			<div class="" style="line-height: 30px;">
+				<label>申请开票日期起：</label>
+				<input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始时间" value=""
+	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
+	         	<label>申请开票日期止：</label>
+	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
+	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
+	         	
+		     	<br/>
+				<label>主订单号:</label>
+				<input type="text" id="zddh" name="zddh" placeholder="主订单号"/>
+				 <input id="currentPage" name="currentPage" type="hidden"/>
+				
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchZpList();" plain="true">查找</a>
+				<input id="setParameter" type="button" value="设置环境变量" onclick="SetParameter()">
+			</div>
+		</form>
+	</div>
+</div>
+<table id="datagrid_zp"></table>
+
+
+<script type="text/javascript">
+//将表单数据转为json
+function form2Json(id) {
+
+    var arr = $("#" + id).serializeArray()
+    var jsonStr = "";
+
+    jsonStr += '{';
+    for (var i = 0; i < arr.length; i++) {
+        jsonStr += '"' + arr[i].name + '":"' + arr[i].value + '",'
+    }
+    jsonStr = jsonStr.substring(0, (jsonStr.length - 1));
+    jsonStr += '}'
+
+    var json = JSON.parse(jsonStr)
+    return json
+}
+
+initDataGridComponent();
+var datagrid_zp;
+function initDataGridComponent(){
+	var qParams = form2Json('queryForm');
+	datagrid_zp = $("#datagrid_zp").datagrid({
+				title : "待开增值税专业发票",
+				height: "450",
+				//width: '1500',
+				checkOnSelect:true,
+				selectOnCheck:false,
+				singleSelect:false,
+				rownumbers:true,
+				idField:'fpqqlsh',
+				url:"../fpkj/special",
+				pagination : true,
+				pageSize : 10,
+				pageNumber:1,
+				//height:390,
+				pageList: [10,20,50,100],
+				queryParams: qParams,
+				columns:[[
+				     {field:'fpqqlsh',title:'fpqqlsh',width:100,checkbox:true},
+				     {field:'zddh',title:'主订单号',width:150,editor: {
+				    	 type: 'text'
+	                 }},
+	                 {field:'fddh',title:'副订单号',width:100,editor: 'text'},
+		             {field:'hym',title:'会员名',width:100,editor:'text'},
+		             {field:'shr',title:'收货人',width:100,editor:'text'},
+		             {field:'sqsj',title:'申请时间',width:100,editor: {type: 'text'}/* ,formatter: formatUniversal */},
+		             {field:'gmfmc',title:'发票抬头',width:100,editor:'text'},
+			         {field:'spzl',title:'发票内容',width:100,editor:'text'},
+		             {field:'hjje',title:'合计金额',width:100,editor:'text'},
+			         {field:'hjse',title:'合计税额',width:100,editor:'text'},
+		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
+			         {field:'fplx',title:'发票种类',width:100,editor:'text',formatter: formatUniversal}
+				]],
+				onClickRow:function(index){	
+				}
+	});
+	
+}
+
+/**
+ * 是否含税价标志（通用类型）
+ */
+function formatUniversal(value,row,index){
+	if (value=="004"){
+		return "增值税纸质专用发票";
+	}else if (value=="007"){
+		return "增值税纸质普通发票";
+	}
+}
+
+function GetParameter(){
+	var params = {'fplx' : '004'};
+	
+	$.ajax({
+		type:"GET",
+        url: "../print/getParameter",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data.code == '-1'){
+        		window.top.location.href="../login/login.html";
+        	}else{
+        		skconf = data.skconf;
+        		printconf = data.printconf;
+        		SetParameter(skconf.aqm,skconf.keypwd,skconf.url,skconf.port);
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+function SetParameter(aqm,keypwd,ip,port) {
+	
+	//01设置初始化参数
+	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>192.168.6.14</servletip>\r\n<servletport>1008</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>8a3e00af8a8197e4b81dc694d607ca22c587d4edf9caf387b17a49ed1ff9077607e2c6b3860422db744cf1ff1c4844957dc10cb9a5951d45d773ac564cc9f51bc1f767dd26b9ef5f8723d921ed1db14bb5c3ff90c9a801485718bd3a1032dd54c60d1137d4e3bf144ed69d990307f623f6894a7c51a60fbbe1ea8e60d2216a5b03dcef0de6ef11bdb905e9e315eb0b8edfb0d0e37b72f8619ae9171f8091d2cd802bf504d1fcf6bf1a652b559bfc505368b7160de2854508d821fa3450e5dc1e846511e163c057fd003645388eddd7be077bcb39a8bc744816b52581862a641bb0e699cde6a803c494695f0d20b7b9593978ae9b649dd0b10b87d7bbb2a04891</aqm>\r\n</body>\r\n</business>"; 
+	//var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>"+ip+"</servletip>\r\n<servletport>"+port+"</servletport>\r\n<keypwd>"+keypwd+"</keypwd>\r\n<aqm>"+aqm+"</aqm>\r\n</body>\r\n</business>";
+	try {
+		ret = sk.Operate(sInputInfo);
+		/* var pos=ret.indexOf("<returncode>"); */
+		var returncode = getTotalMidValue(ret, "<returncode>","</returncode>");
+		var returnmsg = getTotalMidValue(ret, "<returnmsg>","</returnmsg>");	
+		if(returncode==0&&returnmsg=="成功"){
+			alert("参数设置成功！");	
+		}else{
+			alert("参数设置失败，失败原因："+returnmsg);
+		}
+	} catch (e) {
+		alert(e.message + ",errno:" + e.number);
+	}
+}
+ 
+//获取指定的字符串
+function getTotalMidValue(source, priStr, suxStr) {
+	if (source == null)
+		return null
+	var iFirst = source.indexOf(priStr);		
+	var iLast = source.lastIndexOf(suxStr);		
+	if (iFirst < 0 || iLast < 0)
+		return null;	
+	var beginIndex = iFirst + priStr.length;	
+	return source.substring(beginIndex, iLast);
+}
+
+	function multi_kjfp(){
+		
+		var row = datagrid_zp.datagrid('getChecked');
+		
+		if(row ==null || row == ''){
+			alert('请选择一项进行开具!');
+			return;
+		}
+		if(!confirm("确定要开具发票吗？")){
+			return;
+		}
+		var fpList = ""; 
+	    for(i=0;i<row.length;i++){
+				fpList = fpList + row[i].fpqqlsh  + ",";
+		} 
+		var param = {"arr":fpList};
+		$.ajax({
+ 	        type:"POST",
+ 	        url:"../fpkj/dzkp",
+			data:param,
+		success : function(data) {
+			var xml = data.xml;
+			for(var i=0;i<xml.length;i++){
+				try {
+					invoiceIssueRet = sk.Operate(xml[i]);
+					var invoiceIssueReturncode = getTotalMidValue(invoiceIssueRet, "<returncode>","</returncode>");
+					var invoiceIssueRetReturnmsg = getTotalMidValue(invoiceIssueRet, "<returnmsg>","</returnmsg>");	
+					var fpqqlsh = getTotalMidValue(xml[i], "<fpqqlsh>","</fpqqlsh>");
+					if(invoiceIssueReturncode==0&&invoiceIssueRetReturnmsg=="成功"){
+						$.ajax({
+					 	    type:"POST",
+					 	    url:"../fpkj/callback",
+							data:{"fpqqlsh":fpqqlsh,"xml":invoiceIssueRet},
+							dataType:'json', 
+							success : function(data) {
+								window.location.href = "../fpkj/plain";
+							}
+						});
+					}else{
+						alert("发票领购信息核对失败，失败原因："+invoiceIssueRetReturnmsg);
+					}
+				} catch (e) {
+					alert(e.message + ",errno:" + e.number);
+				}
+			}
+		}
+	});
+	}
+	
+	function hideOrShow(){
+		$("#div_search").toggle();
+	}
+	
+	function searchZpList(){
+		var qParams = form2Json('queryForm');
+		$("#datagrid_zp").datagrid("load", qParams);
+	}
+	
+	
+</script>
+
+</body>
+</html>

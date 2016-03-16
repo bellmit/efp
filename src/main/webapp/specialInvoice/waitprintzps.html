@@ -3,116 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>待打印专用发票(连打)</title>
-<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
 <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
-	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-<script src="../bootstrap/js/bootstrap.min.js"></script>
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1" style="display: none;"> </OBJECT>
 <script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
-<!--[if lt IE 9]>
-         <script src="../js/html5shiv.js"></script>
-         <script src="../js/respond.min.js"></script>
-      <![endif]-->
-      
-<link rel="stylesheet" type="text/css" href="../js/page/pageGroup.css"/>
-<script type="text/javascript" src="../js/page/pageGroup.js"></script>      
-<style type="text/css">
-th,td{width: 120px; height: 35px;text-align:center;}
-</style>
+<script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/easyui.css"/>
+<script type="text/javascript" src="../js/jquery/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/easyui_global.css"/>
 
 <script type="text/javascript">
-var pageCount = 1;
 var skconf = null;
 var printconf = null;
 var fphmlist = null;
-function chaxun(vvv){
-	if(vvv == 1){
-		$('#requestPage').val(1);
-	}
-	var params = $('#queryForm').serialize();
-	$.ajax({
-		type:"POST",
-        url: "../printpps/printlist",
-        data: params,
-        async: false,
-        success: function (data) {
-        	//alert(JSON.stringify(data))
-        	pageCount = data.pageCount;
-    		var cc = $('#requestPage').val()-1;
-        	if(pageCount>5){
-        		page_icon(1,5,cc);
-        	}else{
-        		page_icon(1,pageCount,cc);
-        	}	
-        		$("#printBody").children().remove();
-        		if(data.list.length>0){
-    				var tbo = '';
-        			for(var i=0;i<data.list.length;i++){
-        				var beginfphm = "'" + data.list[i].beginfphm + "'";
-        				var endfphm = "'" + data.list[i].endfphm + "'";
-        				var size = data.list[i].endfphm - data.list[i].beginfphm + 1;
-        				tbo = tbo + '<tr>'
-       						+'<td class="">' + data.list[i].beginDate + '</td>'
-       						+'<td>' + data.list[i].endDate + '</td>'
-       						+'<td>' + data.list[i].beginfphm + '</td>'
-       						+'<td>' + data.list[i].endfphm + '</td>'
-       						+'<td>专用发票</td>'
-       						+'<td>' + size + '</td>'
-       						
-       						//+'<td>'+'<input type="button" id="dayin" value="打印" onclick="dayin(' + data[i].fpqqlsh + ')">' + '</td>'
-       						+'<td style="width: 200px;">' + '<a href="javascript:" onclick="chakan(' + data.list[i].beginfphm + ',' + data.list[i].endfphm + ');">查看详情</a>' 
-       						+ '&nbsp;&nbsp;&nbsp;&nbsp;'
-       						+ '<a href="javascript:" onclick="dayin(' + beginfphm + ',' + endfphm + ');">连续打印</a>' 
-       						+ '</td>'
-       						
-       						+'</tr>';
-        			}
-        			//alert(tbo)
-        			$("#printBody").html(tbo);
-        			/* $('.invitetable1 tr:odd').css('background','#fffceb');
-        			parent.dyniframesize('openli');  */
-        		}else{
-        			//alert(0)
-        		}
-        	
-        },
-        error:function(XMLHttpRequest, textStatus, errorThrown) {
-        	if(XMLHttpRequest.responseText=="timeOut"){
-        		window.top.location.reload();
-        	}else{
-        		alert("Error");
-        	}
-        }
-	});
-	
-}
 
-function chakan(begin, end){
-	location.href='../regularInvoice/showDetails.html?begin=' + begin + '&end=' + end + '&fplx=004';
-}
-
-function dayin(beginfphm, endfphm){
-	if(confirm("确定要打印么？")){
-		fphmlist = null;
-		getParameter(beginfphm, endfphm);
-		if(!SetParameter()){
-			return;
-		}
-		if(!SetPrintLocation()){
-			return;
-		}
-		for(var i=0;i<fphmlist.length;i++){
-			var fpqqlsh = fphmlist[i].fpqqlsh;
-			var fpdm = fphmlist[i].fpdm;
-			var fphm = fphmlist[i].fphm;
-			var isfalse = PrintInvoice(fpqqlsh,fpdm, fphm);
-			if(!isfalse){
-				return;
-			}
-		}
-	}
-}
 
 function getParameter(beginfphm, endfphm){
 	var params = {'fplx' : '004',"beginfphm": beginfphm, "endfphm": endfphm};
@@ -216,7 +120,7 @@ function savePrintResult(fpqqlsh,fpzt){
         	//alert(JSON.stringify(data))
         	if(data == '1'){
         		//alert("打印成功！");
-        		chaxun();
+        		searchZpList();
         	}else{
         		alert("打印成功,保存失败");
         	}
@@ -246,76 +150,153 @@ function getTotalMidValue(source, priStr, suxStr) {
 </script>
 </head>
 <body>
-<h4>查询条件</h4>
-<form id="queryForm" name='queryForm' class="form-horizontal" role="form">
-	<div class="form-inline form-group">
-		<div class="form-group col-sm-5">
-	      <label for="beginDate" class="col-sm-3 control-label">开票起止日期：</label>
-	      <div class="col-sm-3">
-	         <input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="起始时间" value=""
+
+<div id="toolbar_div" class="toolbar_div" >
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-print" onclick="print();" plain="true">打印</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-redo" onclick="showDetail();" plain="true">查看详情</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询</a>
+   
+   <div id="div_search" class="div_search">
+		<form id='queryForm' action="">
+			<div class="" style="line-height: 30px;">
+				<label>开票起止日期:</label>
+				<input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始时间" value=""
 	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
-	      </div>
-	      <div class="col-sm-3">
-	         <input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
+	         	<label>-</label>
+	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
-	      </div>
-	   </div>
-	   <div class="form-group col-sm-5">
-	      <label for="fphm" class="col-sm-3 control-label">发票起止号码：</label>
-	      <div class="col-sm-3">
-	         <input type="text" class="form-control" id="beginfphm" name="beginfphm" placeholder="起始号码" value="">
-	      </div>
-	      <div class="col-sm-3">
-	         <input type="text" class="form-control" id="endfphm" name="endfphm" placeholder="结束号码" value="">
-	         <input type="hidden" id='fplx' name='fplx' value='004'>
-	         <input type="hidden" id='requestPage' name='requestPage' value='1'><!-- 请求页数 -->
-	         <input type="hidden" id='pageSize' name='pageSize' value='2'><!-- 每页行数 -->
-	      </div>
-	   </div>
-	</div>
-	
-	<div class="form-inline form-group">
-		
-	   <div class="form-group col-sm-5">
-	      <div class="col-sm-offset-2 col-sm-10">
-	         <button type="button" class="btn btn-default" onclick="chaxun(1);">查询</button>
-	      </div>
-	   </div>
-	</div>
-</form>
-
-<hr>
-
-<table border="1" cellspacing="0" >
-<thead>
-	<th>开票日期起</th>
-	<th>开票日期止</th>
-	<th>发票号码起</th>
-	<th>发票号码止</th>
-	<th>发票种类</th>
-	<th>连续张数</th>
-	<th>操作</th>
-</thead>
-<tr>
-<tbody id="printBody">
-
-</tbody>
-
-</table>
-
-<div id="pageGro" class="cb">
-	<div class="pageUp">上一页</div>
-    <div class="pageList">
-        <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-        </ul>
-    </div>
-    <div class="pageDown">下一页</div>
+				
+				<label>发票起止号码:</label>
+				<input type="text" class="form-control" id="beginfphm" name="beginfphm" placeholder="开始号码" value="">
+				<label>-</label>
+		     	<input type="text" class="form-control" id="endfphm" name="endfphm" placeholder="结束号码" value="">
+				<input type="hidden" id='fplx' name='fplx' value='004'>
+				
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchZpList();" plain="true">查找</a>
+				
+			</div>
+		</form>
+   </div>
 </div>
+
+<table id="datagrid_zp"></table>
+
+<script type="text/javascript">
+initDataGridComponent();
+var datagrid_zp;
+function initDataGridComponent(){
+	var qParams = form2Json('queryForm');
+	
+	datagrid_zp = $("#datagrid_zp").datagrid({
+				title : "待打印专用发票列表(连打)",
+				singleSelect:true,
+				rownumbers:true,
+				width:'100%',
+				height:'500',
+				idField:'id',
+				url:"../printpps/printlist",
+				pagination : true,
+				pageSize : 50,
+				pageNumber:1,
+				pageList: [10,20,50,100],
+				queryParams: qParams,
+				columns:[[
+				     /* {field:'id',title:'id',width:100,checkbox:true}, */
+		             {field:'beginDate',title:'开票日期起',width:100,editor:'text'},
+		             {field:'endDate',title:'开票日期止',width:100,editor:'text'},
+		             {field:'beginfphm',title:'发票号码起',width:100,editor:'text'},
+		             {field:'endfphm',title:'发票号码止',width:100,editor:'text'},
+			         {field:'lxzs',title:'连续张数',width:100,editor:'text'}
+				]],
+				onClickRow:function(index){	
+					
+				}
+	});
+	
+}
+
+
+/**
+ * 显示或隐藏
+ */
+function hideOrShow(){
+	$("#div_search").toggle();
+}
+
+/**
+ * 打印
+ */
+function print(){
+	var row = datagrid_zp.datagrid('getSelected');
+	
+	if(row ==null || row == ''){
+		alert('请选择一项进行打印!');
+		return;
+	}
+	/* alert(row.beginfphm + ',' + row.endfphm) */
+	if(confirm("确定要打印么？")){
+		fphmlist = null;
+		getParameter(row.beginfphm, row.endfphm);
+		if(!SetParameter()){
+			return;
+		}
+		if(!SetPrintLocation()){
+			return;
+		}
+		for(var i=0;i<fphmlist.length;i++){
+			var fpqqlsh = fphmlist[i].fpqqlsh;
+			var fpdm = fphmlist[i].fpdm;
+			var fphm = fphmlist[i].fphm;
+			var isfalse = PrintInvoice(fpqqlsh,fpdm, fphm);
+			if(!isfalse){
+				return;
+			}
+		}
+	}
+}
+
+function showDetail(){
+	var row = datagrid_zp.datagrid('getSelected');
+	
+	if(row ==null || row == ''){
+		alert('请选择一项!');
+		return;
+	}
+	/* alert(row.beginfphm + ',' + row.endfphm) */
+	
+	location.href='../regularInvoice/showDetails.html?begin=' + row.beginfphm + '&end=' + row.endfphm + '&fplx=004';
+}
+/**
+ * 查询
+ */
+function searchZpList(){
+	var qParams = form2Json('queryForm');
+	$("#datagrid_zp").datagrid("load", qParams);
+}
+
+//将表单数据转为json
+function form2Json(id) {
+
+    var arr = $("#" + id).serializeArray()
+    var jsonStr = "";
+
+    jsonStr += '{';
+    for (var i = 0; i < arr.length; i++) {
+        jsonStr += '"' + arr[i].name + '":"' + arr[i].value + '",'
+    }
+    jsonStr = jsonStr.substring(0, (jsonStr.length - 1));
+    jsonStr += '}'
+
+    var json = JSON.parse(jsonStr)
+    return json
+}
+
+
+$(function(){
+	
+})
+</script>
+
 
 </body>
 </html>

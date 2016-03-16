@@ -31,11 +31,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
-import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
@@ -78,7 +76,8 @@ public class InvoiceController {
 	 */
 	@RequestMapping("/plain")
 	@ResponseBody
-	public ModelAndView plainInvoiceList(HttpServletRequest request , HttpSession session , Page page){
+	public Map<String, Object> plainInvoiceList(HttpServletRequest request , HttpSession session , int page, int rows){
+		Map<String, Object> map = new HashMap<>();
 		
 		String beginDate = request.getParameter("beginDate");
 		String endDate = request.getParameter("endDate");
@@ -91,24 +90,14 @@ public class InvoiceController {
 		param.put("zddh", zddh);
 		param.put("kpdq", kpdq);
 		
-		String currentPage = request.getParameter("currentPage");
-		if (!(null == currentPage || "".equals(currentPage))) {
-			page.setPageIndex(Integer.parseInt(currentPage));
-		}
 		//List<Map<String, String>> kpxxList = fpService.getPlainList(param);
 		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listPlain(param,
-				page.getPageIndex(), page.getPageSize());
+				page, rows );
 		
-		page.setPageSize(kpxxList.getPaginator().getLimit()); 
-		page.setTotalCounts(kpxxList.getPaginator().getTotalCount());
-		page.setTotalPages(kpxxList.getPaginator().getTotalPages());
-		request.setAttribute("page", page);
+		map.put("rows", kpxxList);
+		map.put("total", kpxxList.getPaginator().getTotalCount());
 		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("fp/ptfpkj");
-		mav.addObject("param", param);
-		mav.addObject("kpxxList", kpxxList);
-		return mav;
+		return map;
 	}
 	
 	/***
@@ -124,8 +113,9 @@ public class InvoiceController {
 	 */
 	@RequestMapping("/special")
 	@ResponseBody
-	public ModelAndView specialInvoiceList(HttpServletRequest request , HttpSession session ,Page page){
+	public Map<String, Object> specialInvoiceList(HttpServletRequest request , HttpSession session , int page, int rows){
 		
+		Map<String, Object> map = new HashMap<>();
 		String beginDate = request.getParameter("beginDate");
 		String endDate = request.getParameter("endDate");
 		String zddh = request.getParameter("zddh");
@@ -137,24 +127,12 @@ public class InvoiceController {
 		param.put("zddh", zddh);
 		param.put("kpdq", kpdq);
 		
-		//List<Map<String, String>> kpxxList = fpService.getSpecialList(param);
-		String currentPage = request.getParameter("currentPage");
-		if (!(null == currentPage || "".equals(currentPage))) {
-			page.setPageIndex(Integer.parseInt(currentPage));
-		}
 		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listSpecial(param,
-				page.getPageIndex(), page.getPageSize());
+				page, rows);
 		
-		page.setPageSize(kpxxList.getPaginator().getLimit()); 
-		page.setTotalCounts(kpxxList.getPaginator().getTotalCount());
-		page.setTotalPages(kpxxList.getPaginator().getTotalPages());
-		request.setAttribute("page", page);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("fp/zyfpkj");
-		mav.addObject("param", param);
-		mav.addObject("kpxxList", kpxxList);
-		return mav;
+		map.put("rows", kpxxList);
+		map.put("total", kpxxList.getPaginator().getTotalCount());
+		return map;
 	}
 	
 	/**

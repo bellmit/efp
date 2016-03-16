@@ -20,7 +20,6 @@ import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.dao.UserMapper;
 import com.baiwang.einvoice.qz.service.IUserService;
 import com.baiwang.einvoice.qz.service.PageServiceImpl;
-import com.baiwang.einvoice.qz.service.skService.SkService;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 @Service
@@ -66,7 +65,7 @@ public class UserServiceImpl implements IUserService {
 		try (Connection conn = DriverManager.getConnection(url);){
             Class.forName("com.mysql.jdbc.Driver");// 动态加载mysql驱动
             Statement stmt = conn.createStatement();
-            String sql = "select yhkl,qybz,yhlx,kpddm,nsrsbh from dj_czyxx where czydm = '"+name+"'"; 
+            String sql = "select yhkl,qybz,yhlx,kpddm,nsrsbh,cjrdm from dj_czyxx where czydm = '"+name+"'"; 
             ResultSet result = stmt.executeQuery(sql);
             if(result.first()){
             	String yhkl =  result.getString(1);
@@ -74,11 +73,13 @@ public class UserServiceImpl implements IUserService {
             	String yhlx =  result.getString(3);
             	String kpddm =  result.getString(4);
             	String nsrsbh =  result.getString(5);
+            	String cjrdm = result.getString(6);
             	user.setYhkl(yhkl);
             	user.setQybz(qybz);
             	user.setYhlx(yhlx);
             	user.setKpddm(kpddm);
             	user.setNsrsbh(nsrsbh);
+            	user.setCjrdm(cjrdm);
             }
         } catch (SQLException e) {
         	logger.error("///////JDBC连接数据库error///////////");

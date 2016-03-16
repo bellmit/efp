@@ -56,7 +56,7 @@ public class PrintPpController {
 	@RequestMapping("printpps/printlist")
 	@ResponseBody
 	public Map<String, Object> getPrintPpsList(String beginDate, String endDate, String beginfphm, String endfphm, String fplx,
-			int requestPage, int pageSize,HttpServletRequest request){
+			int page, int rows,HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
 		if(null != user){
 			logger.info("***用户名：" + user.getCzymc() + "," + beginDate +","+endDate +"," +beginfphm +","+ endfphm );
@@ -69,32 +69,32 @@ public class PrintPpController {
 		List<Map<String,String>> list = service.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx);
 		int size = list.size();
 		
-		requestPage = (requestPage - 1) * pageSize;
+		page = (page - 1) * rows;
 		List<Map<String,String>> _list = new ArrayList<>();
-		for(int i = 0; i < pageSize && requestPage + i < size; i++){
-			_list.add(list.get(requestPage + i));
+		for(int i = 0; i < rows && page + i < size; i++){
+			_list.add(list.get(page + i));
 		}
 		
-		int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
-		map.put("list", _list);
-		map.put("pageCount", pageCount);
+		//int pageCount = size%rows > 0 ? (size/rows +1) : size/rows;
+		map.put("rows", _list);
+		map.put("total", size);
 		
 		return map;
 	}
 	@RequestMapping("printpps/showDetail")
 	@ResponseBody
-	public Map<String, Object> showDetail(String begin, String end, String fplx, int requestPage, int pageSize){
+	public Map<String, Object> showDetail(String begin, String end, String fplx, int page, int rows){
 		
 		System.out.println(begin);
 		System.out.println(end);
 		System.out.println(fplx);
-		List<Map<String,String>> list = service.showDetail(begin, end, fplx, requestPage, pageSize);
+		List<Map<String,String>> list = service.showDetail(begin, end, fplx, page, rows);
 		int size = service.queryDetailCount(begin, end, fplx);
-		int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
+		//int pageCount = size%rows > 0 ? (size/rows +1) : size/rows;
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("list", list);
-		map.put("pageCount", pageCount);
+		map.put("rows", list);
+		map.put("total", size);
 		return  map;
 	}
 	
