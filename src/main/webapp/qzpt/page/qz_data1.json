@@ -9,13 +9,13 @@
 			"id":111,
 			"text":"查询",
 			"attributes":{
-				"url":"../../queryStatistics/queryDetailIndex.jsp"
+				"url":"../../queryStatistics/queryDetail.jsp"
 			}
 		},{
 			"id":112,
 			"text":"统计",
 			"attributes":{
-				"url":"../../queryStatistics/queryStatIndex.jsp"
+				"url":"../../queryStatistics/querystat.jsp"
 			}
 		}
 	]},{

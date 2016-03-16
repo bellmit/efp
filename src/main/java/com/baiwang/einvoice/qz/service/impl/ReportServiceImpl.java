@@ -4,7 +4,6 @@
 
 package com.baiwang.einvoice.qz.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.baiwang.einvoice.qz.beans.ReportDetail;
 import com.baiwang.einvoice.qz.beans.ReportTotal;
-import com.baiwang.einvoice.qz.dao.ReportDetailMapper;
-import com.baiwang.einvoice.qz.service.PageServiceImpl;
+import com.baiwang.einvoice.qz.dao.ReportMapper;
 import com.baiwang.einvoice.qz.service.ReportService;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: ReportDetailServiceImpl
@@ -28,14 +25,11 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 @Service
 public class ReportServiceImpl implements ReportService {
 	@Resource
-	private ReportDetailMapper reportDao;
-	@Resource
-	private PageServiceImpl pageService;
+	private ReportMapper reportDao;
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public PageList<HashMap<String,Object>> getFpListByCondition(Map<String, Object> condition) {
-		 return (PageList<HashMap<String, Object>>)pageService.getPageList(ReportDetailMapper.class, "getFpListByCondition",condition, (int)condition.get("pageIndex"),(int)condition.get("pageSize"));
+	public List<ReportDetail> getFpListByCondition(Map<String, Object> condition) {
+		 return reportDao.getFpListByCondition(condition);
 	}
 
 	@Override
@@ -58,9 +52,9 @@ public class ReportServiceImpl implements ReportService {
 	  * @date 2016年3月14日 下午6:01:09
 	  */
 	@Override
-	public PageList<HashMap<String, Object>> getFpStatListByCondition(Map<String, Object> condition) {
+	public List<ReportTotal> getFpStatListByCondition(Map<String, Object> condition) {
 		
-		return (PageList<HashMap<String, Object>>)pageService.getPageList(ReportDetailMapper.class, "getFpStatListByCondition",condition, (int)condition.get("pageIndex"),(int)condition.get("pageSize"));
+		return reportDao.getFpStatListByCondition(condition);
 		
 	}
 
@@ -91,6 +85,37 @@ public class ReportServiceImpl implements ReportService {
 	public ReportTotal getFpStatByLSH(String fpqqlsh) {
 		
 		return reportDao.getFpStatByLSH(fpqqlsh);
+		
+	}
+
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param condition
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月15日 下午7:53:35
+	  */
+	@Override
+	public int getFpCount(Map<String, Object> condition) {
+		
+		return reportDao.getFpCount(condition);
+		
+	}
+
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param condition
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月15日 下午7:53:35
+	  */
+	@Override
+	public int getFpStatCount(Map<String, Object> condition) {
+		
+		// TODO Auto-generated method stub
+		return reportDao.getFpStatCount(condition);
 		
 	}
 

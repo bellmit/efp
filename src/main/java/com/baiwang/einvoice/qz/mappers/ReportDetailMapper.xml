@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.baiwang.einvoice.qz.dao.ReportDetailMapper" >
+<mapper namespace="com.baiwang.einvoice.qz.dao.ReportMapper" >
   <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.ReportDetail" >
     <id column="zddh" property="ddh" jdbcType="VARCHAR" />
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
@@ -81,12 +81,11 @@
 	   and o.spzl = #{fplx4q,jdbcType=VARCHAR} 
     </if>
     <if test="fptt4q != null and fptt4q !=''">
-    	<if test="fptt4q == 0">
-		   and k.gmfmc = '个人' 
-    	</if>
-    	<if test="fptt4q == 1">
-		   and k.gmfmc != '个人' 
-    	</if>
+    	and o.fptt = #{fptt4q,jdbcType=VARCHAR} 
+    </if>
+    ORDER BY k.fphm
+    <if test="startRow != null and rows !=null">
+    LIMIT #{startRow},#{rows}
     </if>
   </select>
   <select id="getFpStatListByCondition" parameterType="java.util.Map" resultMap="statMap">
@@ -109,12 +108,57 @@
 	   and o.spzl = #{fplx4q,jdbcType=VARCHAR} 
     </if>
     <if test="fptt4q != null and fptt4q !=''">
-    	<if test="fptt4q == 0">
-		   and k.gmfmc = '个人' 
-    	</if>
-    	<if test="fptt4q == 1">
-		   and k.gmfmc != '个人' 
-    	</if>
+    	and o.fptt = #{fptt4q,jdbcType=VARCHAR} 
+    </if>
+    ORDER BY k.fphm
+    <if test="startRow != null and rows !=null">
+    LIMIT #{startRow},#{rows}
     </if>
   </select>
+  <select id="getFpCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select count(*) from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3'
+    <if test="ddh4q != null and ddh4q !=''">
+	   and o.zddh = #{ddh4q,jdbcType=VARCHAR} 
+    </if>
+    <if test="dateS != null and dateS !=''">
+	   <![CDATA[and o.sqsj >= #{dateS} ]]>
+    </if>
+    <if test="dateE != null and dateE !=''">
+	   <![CDATA[and o.sqsj <= #{dateE} ]]>
+    </if>
+    <if test="kpdq4q != null and kpdq4q !=''">
+	   and o.kpdq = #{kpdq4q,jdbcType=VARCHAR} 
+    </if>
+    <if test="fpzl4q != null and fpzl4q !=''">
+	   and k.fplx = #{fpzl4q,jdbcType=VARCHAR} 
+    </if>
+    <if test="fplx4q != null and fplx4q !=''">
+	   and o.spzl = #{fplx4q,jdbcType=VARCHAR} 
+    </if>
+    <if test="fptt4q != null and fptt4q !=''">
+    	and o.fptt = #{fptt4q,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  <select id="getFpStatCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select count(*) from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt in('3','-2')
+    <if test="dateS != null and dateS !=''">
+	   <![CDATA[and k.kprq >= #{dateS} ]]>
+    </if>
+    <if test="dateE != null and dateE !=''">
+	   <![CDATA[and k.kprq <= #{dateE} ]]>
+    </if>
+    <if test="kpdq4q != null and kpdq4q !=''">
+	   and o.kpdq = #{kpdq4q,jdbcType=VARCHAR} 
+    </if>
+    <if test="fpzl4q != null and fpzl4q !=''">
+	   and k.fplx = #{fpzl4q,jdbcType=VARCHAR} 
+    </if>
+    <if test="fplx4q != null and fplx4q !=''">
+	   and o.spzl = #{fplx4q,jdbcType=VARCHAR} 
+    </if>
+    <if test="fptt4q != null and fptt4q !=''">
+    	and o.fptt = #{fptt4q,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  
 </mapper>
