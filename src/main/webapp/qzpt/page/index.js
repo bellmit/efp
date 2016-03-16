@@ -9,7 +9,7 @@ var exceptionInfo;
 $(function(){
 	//获得菜单项
 //	getMenuDemo();
-	$.getJSON("../../menu",function(data){
+	$.post("../../menu",function(data){
 		var json = convert(data);
 		$.each(json[0].children, function(i, n) 
 			{
@@ -81,7 +81,7 @@ function changePassword(){
 //退出系统
 function exitSystem(){
 	
-	$.messager.confirm("","确定退出?",function(r){
+	$.messager.confirm("操作提示","您确定要退出此系统吗?",function(r){
 		if(r){
 			$.ajax({
 				type:"POST",
