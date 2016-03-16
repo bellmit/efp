@@ -16,16 +16,6 @@ var skconf = null;
 var printconf = null;
 getParameter();
 
-function dayin(fpqqlsh,fpdm, fphm){
-	if(confirm("确定要打印么？")){
-	 	getParameter();
-		if(!SetParameter()){
-			return;
-		}
-		PrintInvoice(fpqqlsh,fpdm, fphm);
-	}
-}
-
 function getParameter(){
 	var params = {'fplx' : '004'};
 	$.ajax({
@@ -46,7 +36,7 @@ function getParameter(){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error—初始化信息失败");
         	}
         }
 	});
@@ -55,7 +45,7 @@ function getParameter(){
 //发票打印
 function SetParameter() {
 	if(skconf == null){
-		alert("初始化参数失败");
+		window.parent.$.messager.alert('消息',"初始化参数失败");
 		return false;
 	}
 	//01设置初始化参数
@@ -67,11 +57,11 @@ function SetParameter() {
 		if(returncode==0&&returnmsg=="成功"){
 			return true;
 		}else{
-			alert("参数设置失败，失败原因："+returnmsg);
+			window.parent.$.messager.alert('消息',"参数设置失败，失败原因："+returnmsg);
 			return false;
 		}
 	} catch (e) {
-		alert(e.message + ",errno:" + e.number);
+		window.parent.$.messager.alert('消息',e.message + ",errno:" + e.number);
 		return false;
 	}
 }
@@ -92,10 +82,10 @@ function PrintInvoice(fpqqlsh,fpdm, fphm){
 			//alert("打印成功！...");
 			savePrintResult(fpqqlsh,3)
 		}else{
-			alert("打印失败，失败原因："+returnmsgsPrintIn);
+			window.parent.$.messager.alert('消息',"打印失败，失败原因："+returnmsgsPrintIn);
 		}
 	}else{
-		    alert("页面距设置失败，失败原因："+returnmsgsMarg);
+		window.parent.$.messager.alert('消息',"页面距设置失败，失败原因："+returnmsgsMarg);
 	}		
 		
 }
@@ -110,17 +100,17 @@ function savePrintResult(fpqqlsh,fpzt){
         success: function (data) {
         	//alert(JSON.stringify(data))
         	if(data == '1'){
-        		alert("打印成功！");
+        		window.parent.$.messager.alert('消息',"打印成功！");
         		searchZpList();
         	}else{
-        		alert("打印成功,保存失败");
+        		window.parent.$.messager.alert('消息',"打印成功,保存失败");
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error-保存打印结果失败");
         	}
         }
 	});
@@ -304,9 +294,9 @@ function setSave(){
         	if(data == 1){
         		printconf.topside = $('#topside').val();
         		printconf.leftside = $('#leftside').val();
-        		alert("保存成功");
+        		window.parent.$.messager.alert('消息',"保存成功");
         	}else{
-        		alert("保存失败")
+        		window.parent.$.messager.alert('消息',"保存失败")
         	}
         	
         },
@@ -314,7 +304,7 @@ function setSave(){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error-保存打印设置失败");
         	}
         }
 	});	
@@ -325,20 +315,31 @@ function setSave(){
  * 打印
  */
 function print(){
+	
 	var row = datagrid_zp.datagrid('getSelected');
 	
 	if(row ==null || row == ''){
-		alert('请选择一项进行打印!');
+		window.parent.$.messager.alert('消息','请选择一项进行打印!');
 		return;
 	}
 	
-	if(confirm("确定要打印么？")){
-	 	//getParameter();
-		if(!SetParameter()){
-			return;
+	window.parent.$.messager.confirm("消息","您确定要打印么?",function(r){
+		if(r){
+			if(!SetParameter()){
+				return;
+			}
+			PrintInvoice(row.fpqqlsh,row.fpdm, row.fphm);
 		}
-		PrintInvoice(row.fpqqlsh,row.fpdm, row.fphm);
-	}
+	});
+	
+	
+	
+	
+	
+	/* if(confirm("确定要打印么？")){
+	 	//getParameter();
+		
+	} */
 }
 /**
  * 查询
