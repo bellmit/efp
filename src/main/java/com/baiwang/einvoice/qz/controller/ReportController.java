@@ -19,14 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletConfigAware;
 
-import com.baiwang.einvoice.qz.beans.Page;
 import com.baiwang.einvoice.qz.beans.ReportDetail;
 import com.baiwang.einvoice.qz.beans.ReportTotal;
 import com.baiwang.einvoice.qz.service.ReportService;
 import com.baiwang.einvoice.qz.utils.ReportUtil;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
   * @ClassName: ReportController
@@ -48,7 +47,8 @@ public class ReportController implements ServletConfigAware {
 	}
 	
 	@RequestMapping(value="queryFPlist")
-	public String queryReport(HttpServletRequest request,Page page){
+	@ResponseBody
+	public Map<String, Object> queryReport(HttpServletRequest request,int page, int rows){
 		//获取查询条件
 		String ddh4q = request.getParameter("ddh4q");
 		String fplx4q = request.getParameter("fplx4q");
@@ -72,22 +72,14 @@ public class ReportController implements ServletConfigAware {
 		condition.put("kpdq4q", kpdq4q);
 		condition.put("fpzl4q", fpzl4q);
 		condition.put("fptt4q", fptt4q);
-		
-		String currentPage = request.getParameter("currentPage");
-		if (!(null == currentPage || "".equals(currentPage))) {
-			page.setPageIndex(Integer.parseInt(currentPage));
-		}
-		condition.put("pageIndex", page.getPageIndex());
-		condition.put("pageSize", page.getPageSize());
-//		List<ReportDetail> list = reportDetailService.getFpListByCondition(condition);//查询结果
-		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) reportService.getFpListByCondition(condition);
-		page.setPageSize(fpxxList.getPaginator().getLimit()); 
-		page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
-		page.setTotalPages(fpxxList.getPaginator().getTotalPages());
-		request.setAttribute("page", page);
-		
-		request.setAttribute("fpxxList", fpxxList);
-		return "fp/queryDetail";
+		condition.put("startRow", (page-1)*rows);
+		condition.put("rows", rows);
+		List<ReportDetail> list = reportService.getFpListByCondition(condition);//查询结果
+		int size = reportService.getFpCount(condition);
+		Map<String, Object> result = new HashMap<>();
+		result.put("rows", list);
+		result.put("total", size);
+		return result;
 	}
 	@RequestMapping(value="download")
 	public void exportReport(HttpServletRequest request,HttpServletResponse response){
@@ -143,26 +135,15 @@ public class ReportController implements ServletConfigAware {
 	  * @date 2016年3月14日 下午4:36:10
 	  */
 	@RequestMapping(value="queryFPstat")
-	public String queryStatReport(HttpServletRequest request,Page page){
+	@ResponseBody
+	public Map<String, Object> queryStatReport(HttpServletRequest request,int page, int rows){
 		//获取查询条件
 		String fplx4q = request.getParameter("fplx4q");
 		String kpdq4q = request.getParameter("kpdq4q");
-//		if(null == kpdq4q){
-//			User user = (User) request.getSession().getAttribute("user");
-//			if(null != user){
-//				kpdq4q = user.getYhlx();
-//			}
-//		}
 		String fpzl4q = request.getParameter("fpzl4q");
 		String fptt4q = request.getParameter("fptt4q");
 		String dateS = request.getParameter("beginDate");
 		String dateE = request.getParameter("endDate");
-		request.setAttribute("fplx4save", fplx4q);
-		request.setAttribute("kpdq4save", kpdq4q);
-		request.setAttribute("fpzl4save", fpzl4q);
-		request.setAttribute("fptt4save", fptt4q);
-		request.setAttribute("dateS4save", dateS);
-		request.setAttribute("dateE4save", dateE);
 		Map<String, Object> condition = new HashMap<>();
 		condition.put("dateS", dateS);
 		condition.put("dateE", dateE);
@@ -170,24 +151,15 @@ public class ReportController implements ServletConfigAware {
 		condition.put("kpdq4q", kpdq4q);
 		condition.put("fpzl4q", fpzl4q);
 		condition.put("fptt4q", fptt4q);
+		condition.put("startRow",  (page-1)*rows);
+		condition.put("rows", rows);
 		
-		String currentPage = request.getParameter("currentPage");
-		if (!(null == currentPage || "".equals(currentPage))) {
-			page.setPageIndex(Integer.parseInt(currentPage));
-		}
-		condition.put("pageIndex", page.getPageIndex());
-		condition.put("pageSize", page.getPageSize());
-//		List<ReportDetail> list = reportDetailService.getFpListByCondition(condition);//查询结果
-		PageList<HashMap<String, Object>> fpxxList = (PageList<HashMap<String, Object>>) reportService.getFpStatListByCondition(condition);
-		if(null != fpxxList && null != fpxxList.getPaginator()){
-			page.setPageSize(fpxxList.getPaginator().getLimit()); 
-			page.setTotalCounts(fpxxList.getPaginator().getTotalCount());
-			page.setTotalPages(fpxxList.getPaginator().getTotalPages());
-		}
-		request.setAttribute("page", page);
-		
-		request.setAttribute("fpxxList", fpxxList);
-		return "fp/querystat";
+		List<ReportTotal> fpxxList = reportService.getFpStatListByCondition(condition);
+		int size = reportService.getFpStatCount(condition);
+		Map<String, Object> result = new HashMap<>();
+		result.put("rows", fpxxList);
+		result.put("total", size);
+		return result;
 	}
 	@RequestMapping(value="exportExcel")
 	public void exportExcel(HttpServletRequest request,HttpServletResponse response){
