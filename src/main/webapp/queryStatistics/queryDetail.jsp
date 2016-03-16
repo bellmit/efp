@@ -18,15 +18,14 @@
 <script type="text/javascript">
 	function exportData(){
 		var row = datagrid.datagrid('getChecked');
-		if(row ==null || row == ''){
-			alert('请至少选择一条记录!');
-			return;
+		if(row !=null && row != ''){
+			var fplshs=""; 
+		    for(i=0;i<row.length;i++){
+		    	fplshs += row[i].fpqqlsh+",";
+			}
+		    $('#fplshs').val(fplshs);
 		}
-		var fplshs=""; 
-	    for(i=0;i<row.length;i++){
-	    	fplshs += row[i].fpqqlsh+",";
-		}
-		$.post('<%=basePath %>/report/download',{'fplshs':fplshs});
+	    $('#expForm').submit();
 	}
 </script>
 
@@ -85,13 +84,14 @@
    </div>
 </div>
 <form id="expForm" action="<%=basePath%>/report/download" method="post">
-<input type="hidden" name="dateS4save" value="${dateS4save}">
-<input type="hidden" name="dateE4save" value="${dateE4save}">
-<input type="hidden" name="kpdq4save" value="${kpdq4save}">
-<input type="hidden" name="ddh4save" value="${ddh4save}">
-<input type="hidden" name="fpzl4save" value="${fpzl4save}">
-<input type="hidden" name="fplx4save" value="${fplx4save}">
-<input type="hidden" name="fptt4save" value="${fptt4save}">
+<input type="hidden" id ="fplshs" name="fplshs" value="">
+<input type="hidden" id = "dateS4save" name="dateS4save" value="">
+<input type="hidden" id = "dateE4save" name="dateE4save" value="">
+<input type="hidden" id = "kpdq4save" name="kpdq4save" value="">
+<input type="hidden" id = "ddh4save" name="ddh4save" value="">
+<input type="hidden" id = "fpzl4save" name="fpzl4save" value="">
+<input type="hidden" id = "fplx4save" name="fplx4save" value="">
+<input type="hidden" id = "fptt4save" name="fptt4save" value="">
 <table id="datagrid"></table>
 </form>
 
@@ -119,18 +119,18 @@ function initDataGridComponent(){
 		             {field:'sqr',title:'申请人',width:100,editor:'text'},
 		             {field:'hym',title:'会员名',width:100,editor:'text'},
 		             {field:'hyid',title:'会员ID',width:100,editor:'text'},
-			         {field:'ddsj',title:'订单时间',width:100,editor:'text'}, 
-		             {field:'sqsj',title:'申请时间',width:100,editor:'text'},
+			         {field:'ddsj',title:'订单时间',width:100,editor:'text',formatter:dateFormatter}, 
+		             {field:'sqsj',title:'申请时间',width:100,editor:'text',formatter:dateFormatter},
 		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
 			         {field:'fplx',title:'发票类型',width:100,editor:'text'},
-		             {field:'fpzl',title:'发票种类',width:100,editor:'text'},
+		             {field:'fpzl',title:'发票种类',width:100,editor:'text',formatter:formatFpzl},
 			         {field:'bzfp',title:'发票备注',width:100,editor:'text'},
 		             {field:'sqrk',title:'申请入口',width:100,editor:'text'},
 			         {field:'je',title:'金额',width:100,editor:'text'},
 			         {field:'shr',title:'收货人',width:100,editor:'text'},
 		             {field:'shrdh',title:'收货人电话',width:100,editor:'text'},
 		             {field:'jsdz',title:'寄送地址',width:100,editor:'text'},
-		             {field:'yjsj',title:'邮寄时间',width:100,editor:'text'},
+		             {field:'yjsj',title:'邮寄时间',width:100,editor:'text',formatter:dateFormatter},
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'},
 		             {field:'fhr',title:'发货人',width:100,editor:'text'},
 		             {field:'wlgs',title:'物流公司 ',width:100,editor:'text'},
@@ -148,16 +148,24 @@ function initDataGridComponent(){
 
 
 /**
- * 开票类型
+ * 发票种类
  */
-function formatKplx(value,row,index){
-	if (value=="1"){
-		return "红字发票";
-	} else {
-		return "蓝字发票";
-	}
+function formatFpzl(value,row,index){
+	if (value=="004"){
+		return "专票";
+	} else if(value=="007") {
+		return "普票";
+	} else if(value=="026") {
+		return "电子发票";
+	} 
 }
-
+function dateFormatter(value) {
+	if(value==null || value =='undefined'){
+		return '';
+	}
+	var dateValue = new Date(value);
+	return dateValue.format("yyyy-mm-dd");
+}
 /**
  * 显示或隐藏
  */
@@ -189,6 +197,13 @@ function print(){
  * 查询
  */
 function searchfpList(){
+	$('#dateS4save').val($('#dateS4q').val());
+	$('#dateE4save').val($('#dateE4q').val());
+	$('#kpdq4save').val($('#kpdq4q').val());
+	$('#ddh4save').val($('#ddh4q').val());
+	$('#fpzl4save').val($('#fpzl4q').val());
+	$('#fplx4save').val($('#fplx4q').val());
+	$('#fptt4save').val($('#fptt4q').val());
 	var qParams = form2Json('searchForm');
 	$("#datagrid").datagrid("load", qParams);
 }
@@ -208,6 +223,22 @@ function form2Json(id) {
 
     var json = JSON.parse(jsonStr)
     return json
+}
+
+Date.prototype.format = function (fmt) { //author: meizz
+    var o = {
+        "m+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "M+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
 }
 
 </script>
