@@ -1,19 +1,16 @@
 package com.baiwang.einvoice.qz.service.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
-import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import com.baiwang.einvoice.qz.beans.User;
@@ -28,66 +25,46 @@ public class UserServiceImpl implements IUserService {
 	private static final Log logger = LogFactory.getLog(UserServiceImpl.class);
 
 	@Resource
+	private DataSource loginDataSource;
+	
+	@Resource
 	private UserMapper dao;
 	
 	@Resource
 	private PageServiceImpl pageService;
 
 	
-	private static String loginDburl ;
-	private static String loginDbName ;
-	private static String loginDbPassword ;
-	
 	/**
 	 * 
 	 * @param name
 	 * @return
+	 * @modify 2016年3月16日15:04:48 zhaowei
 	 */
 	public User getUserByName(String name) {
 		User user = new User();
-		if(loginDburl==null){
-			InputStream in;
-			in=getClass().getClassLoader().getResourceAsStream("jdbc.properties"); 
-			Properties   props   =  new  Properties();
-			try {
-				props.load(in);
-				loginDburl = props.get("jdbc.loginDburl").toString();
-				loginDbName = "user="+props.get("jdbc.loginDbName").toString();
-				loginDbPassword = "&password="+props.get("jdbc.loginDbPassword").toString();
-			} catch (IOException e1) {
-				logger.error("///////获取数据库连接error///////////");
-				e1.printStackTrace();
-				return user;
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(loginDataSource);
+		String sql = "select yhkl,qybz,yhlx,kpddm,nsrsbh,cjrdm from dj_czyxx where czydm = ?";
+		logger.info("用户名【" + name + "】正在登录...");
+		user = (User) jdbcTemplate.queryForObject(sql, new Object[] { name }, new RowMapper<Object>() {
+			@Override
+			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String yhkl = rs.getString(1);
+				String qybz = rs.getString(2);
+				String yhlx = rs.getString(3);
+				String kpddm = rs.getString(4);
+				String nsrsbh = rs.getString(5);
+				String cjrdm = rs.getString(6);
+				User user1 = new User();
+				user1.setYhkl(yhkl);
+				user1.setQybz(qybz);
+				user1.setYhlx(yhlx);
+				user1.setKpddm(kpddm);
+				user1.setNsrsbh(nsrsbh);
+				user1.setCjrdm(cjrdm);
+				return user1;
 			}
-		}
-		
-		String url = loginDburl+loginDbName+loginDbPassword;
-		try (Connection conn = DriverManager.getConnection(url);){
-            Class.forName("com.mysql.jdbc.Driver");// 动态加载mysql驱动
-            Statement stmt = conn.createStatement();
-            String sql = "select yhkl,qybz,yhlx,kpddm,nsrsbh,cjrdm from dj_czyxx where czydm = '"+name+"'"; 
-            ResultSet result = stmt.executeQuery(sql);
-            if(result.first()){
-            	String yhkl =  result.getString(1);
-            	String qybz =  result.getString(2);
-            	String yhlx =  result.getString(3);
-            	String kpddm =  result.getString(4);
-            	String nsrsbh =  result.getString(5);
-            	String cjrdm = result.getString(6);
-            	user.setYhkl(yhkl);
-            	user.setQybz(qybz);
-            	user.setYhlx(yhlx);
-            	user.setKpddm(kpddm);
-            	user.setNsrsbh(nsrsbh);
-            	user.setCjrdm(cjrdm);
-            }
-        } catch (SQLException e) {
-        	logger.error("///////JDBC连接数据库error///////////");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-        	logger.error("///////数据库驱动加载error///////////");
-            e.printStackTrace();
-		} 
+
+		});
 		return user;
 	}
 

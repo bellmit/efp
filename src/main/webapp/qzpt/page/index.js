@@ -9,7 +9,7 @@ var exceptionInfo;
 $(function(){
 	//获得菜单项
 //	getMenuDemo();
-	$.getJSON("../../menu",function(data){
+	$.post("../../menu",function(data){
 		var json = convert(data);
 		$.each(json[0].children, function(i, n) 
 			{
