@@ -40,10 +40,10 @@ public class UserController {
 			if(!"Y".equals(_user.getQybz())){
 				logger.info("*********" + czydm + "登录失败");
 		        return "4002";
-			}else if(!"1".equals(_user.getYhlx())){
+			}/*else if(!"1".equals(_user.getYhlx())){
 				logger.info("*********" + czydm + "登录失败");
 		        return "4003";
-			}else{
+			}*/else{
 				_user.setCzydm(czydm);
 	            session.setAttribute("user", _user);
 	            logger.info("*********" + czydm + "登录成功");
@@ -148,7 +148,6 @@ public class UserController {
 		if(StringUtils.isEmpty(userId)){
 			return null;
 		}
-		int id = 0;
 		try {
 			User user=service.selectById(userId);
 			request.setAttribute("user", user);

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiwang.einvoice.qz.dao.PortalFunctionMapper" >
+  <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.PortalFunction" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="function_code" property="functionCode" jdbcType="VARCHAR" />
+    <result column="function_name" property="functionName" jdbcType="VARCHAR" />
+    <result column="function_url" property="functionUrl" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="system_id" property="systemId" jdbcType="VARCHAR" />
+    <result column="function_type" property="functionType" jdbcType="INTEGER" />
+    <result column="operate_user" property="operateUser" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="delete_tag" property="deleteTag" jdbcType="VARCHAR" />
+    <result column="enabled" property="enabled" jdbcType="VARCHAR" />
+    <result column="is_directory" property="isDirectory" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="list" resultMap="BaseResultMap">
+  		select * from portal_function
+  </select>
+  <select id="getMenuByUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select
+	c.id,c.function_code,c.function_name,c.function_url,c.parent_id,c.system_id,
+	c.function_type,c.operate_user,c.operate_time,c.delete_tag,c.enabled,c.is_directory
+	from role a
+	LEFT JOIN role2menu b on a.id = b.role_id
+	LEFT JOIN portal_function c
+	on c.id=b.function_id
+	where a.role_name = #{role_name,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.PortalFunction" >
+    insert into portal_function (id, function_code, function_name, 
+      function_url, parent_id, system_id, 
+      function_type, operate_user, operate_time, 
+      delete_tag, enabled, is_directory
+      )
+    values (#{id,jdbcType=VARCHAR}, #{functionCode,jdbcType=VARCHAR}, #{functionName,jdbcType=VARCHAR}, 
+      #{functionUrl,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{systemId,jdbcType=VARCHAR}, 
+      #{functionType,jdbcType=INTEGER}, #{operateUser,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
+      #{deleteTag,jdbcType=VARCHAR}, #{enabled,jdbcType=VARCHAR}, #{isDirectory,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.PortalFunction" >
+    insert into portal_function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="functionCode != null" >
+        function_code,
+      </if>
+      <if test="functionName != null" >
+        function_name,
+      </if>
+      <if test="functionUrl != null" >
+        function_url,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="systemId != null" >
+        system_id,
+      </if>
+      <if test="functionType != null" >
+        function_type,
+      </if>
+      <if test="operateUser != null" >
+        operate_user,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="deleteTag != null" >
+        delete_tag,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+      <if test="isDirectory != null" >
+        is_directory,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="functionCode != null" >
+        #{functionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="functionName != null" >
+        #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="functionUrl != null" >
+        #{functionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemId != null" >
+        #{systemId,jdbcType=VARCHAR},
+      </if>
+      <if test="functionType != null" >
+        #{functionType,jdbcType=INTEGER},
+      </if>
+      <if test="operateUser != null" >
+        #{operateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTag != null" >
+        #{deleteTag,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=VARCHAR},
+      </if>
+      <if test="isDirectory != null" >
+        #{isDirectory,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
