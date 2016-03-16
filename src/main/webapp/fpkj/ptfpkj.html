@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>普通发票开具</title>
 <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
-	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1" style="display: none;"> </OBJECT>
 <script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.easyui.min.js"></script>
@@ -184,35 +184,28 @@ function getTotalMidValue(source, priStr, suxStr) {
 		}
 		var fpList = ""; 
 	    for(i=0;i<row.length;i++){
-	    		alert(row[i].fpqqlsh);
 				fpList = fpList + row[i].fpqqlsh  + ",";
 		} 
-	    alert(fpList);
 		var param = {"arr":fpList};
-		alert(param);
 		$.ajax({
  	        type:"POST",
  	        url:"../fpkj/dzkp",
 			data:param,
 		success : function(data) {
-			alert(data.status);
 			var xml = data.xml;
 			for(var i=0;i<xml.length;i++){
-				alert(xml[i]);
 				try {
 					invoiceIssueRet = sk.Operate(xml[i]);
 					var invoiceIssueReturncode = getTotalMidValue(invoiceIssueRet, "<returncode>","</returncode>");
 					var invoiceIssueRetReturnmsg = getTotalMidValue(invoiceIssueRet, "<returnmsg>","</returnmsg>");	
 					var fpqqlsh = getTotalMidValue(xml[i], "<fpqqlsh>","</fpqqlsh>");
 					if(invoiceIssueReturncode==0&&invoiceIssueRetReturnmsg=="成功"){
-						alert(invoiceIssueRet);	
 						$.ajax({
 					 	    type:"POST",
 					 	    url:"../fpkj/callback",
 							data:{"fpqqlsh":fpqqlsh,"xml":invoiceIssueRet},
 							dataType:'json', 
 							success : function(data) {
-								alert(data);
 								window.location.href = "../fpkj/plain";
 							}
 						});
