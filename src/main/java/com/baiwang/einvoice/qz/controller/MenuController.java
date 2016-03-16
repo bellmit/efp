@@ -34,7 +34,9 @@ public class MenuController {
 	@ResponseBody
 	public Object getMenu(HttpSession session){
 		User user = (User)session.getAttribute("user");
-		
+		if(user == null){
+			return null;
+		}
 		List<PortalFunction> listMenu = menuService.getMenuByUser(user);
 		
 		return listMenu;
