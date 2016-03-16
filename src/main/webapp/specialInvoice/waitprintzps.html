@@ -18,11 +18,13 @@ var printconf = null;
 var fphmlist = null;
 
 
-function getParameter(beginfphm, endfphm){
-	var params = {'fplx' : '004',"beginfphm": beginfphm, "endfphm": endfphm};
+getParameter();
+
+function getParameter(){
+	var params = {'fplx' : '004'};
 	$.ajax({
 		type:"POST",
-        url: "../prints/getParameters",
+        url: "../print/getParameter",
         data: params,
         async: false,
         success: function (data) {
@@ -32,6 +34,30 @@ function getParameter(beginfphm, endfphm){
         	}else{
         		skconf = data.skconf;
         		printconf = data.printconf;
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
+function getPrintsList(beginfphm, endfphm){
+	var params = {"beginfphm": beginfphm, "endfphm": endfphm};
+	$.ajax({
+		type:"POST",
+        url: "../prints/getPrintsList",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data.code == '-1'){
+        		window.top.location.href="../login/login.html";
+        	}else{
         		fphmlist = data.list;
         	}
         },
@@ -155,6 +181,7 @@ function getTotalMidValue(source, priStr, suxStr) {
    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-print" onclick="print();" plain="true">打印</a>
    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-redo" onclick="showDetail();" plain="true">查看详情</a>
    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" onclick="printSet();" plain="true">打印设置</a>
    
    <div id="div_search" class="div_search">
 		<form id='queryForm' action="">
@@ -177,6 +204,26 @@ function getTotalMidValue(source, priStr, suxStr) {
 			</div>
 		</form>
    </div>
+   
+   <div id="div_printset" class="div_search">
+       <form id='setForm' action="">
+       	   <div class="" style="line-height: 30px;">
+       	   	   <input type="hidden" id='_fplx' name='fplx' value='004'>
+       	   	   <!-- <label>发票类型:</label>
+       	   	   <select class="form-control" id="_fplx" name="fplx" onchange="getSizeConfig();">
+		        	<option value="">请选择</option>
+		         	<option value="004">增值税专用发票</option>
+			 		<option value="007">增值税普通发票</option>
+		     	</select> -->
+		     	<label>上边距:</label>
+				<input type="text" id="topside" name="topside" placeholder="上边距"/>
+				<label>左边距:</label>
+				<input type="text" id="leftside" name="leftside" placeholder="左边距"/>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" onclick="setSave();" plain="true">保存</a>
+       	   </div>
+       </form>
+   </div>
+</div>
 </div>
 
 <table id="datagrid_zp"></table>
@@ -184,6 +231,8 @@ function getTotalMidValue(source, priStr, suxStr) {
 <script type="text/javascript">
 initDataGridComponent();
 var datagrid_zp;
+var searchCount = 0;
+var setCount = 0;
 function initDataGridComponent(){
 	var qParams = form2Json('queryForm');
 	
@@ -220,7 +269,57 @@ function initDataGridComponent(){
  * 显示或隐藏
  */
 function hideOrShow(){
-	$("#div_search").toggle();
+	if(searchCount%2 == 0){
+		$(".div_search").hide();
+		$("#div_search").show();
+		setCount = 0;
+	}else{
+		$("#div_search").hide();
+	}
+	searchCount += 1;
+	//$("#div_search").toggle();
+}
+function printSet(){
+	if(setCount%2 == 0){
+		$(".div_search").hide();
+		$("#div_printset").show();
+		searchCount = 0;
+		$('#topside').val(printconf.topside);
+		$('#leftside').val(printconf.leftside);
+	}else{
+		$("#div_printset").hide();
+	}
+	setCount += 1;
+	//$("#div_printset").toggle();
+}
+
+function setSave(){
+	var params = $('#setForm').serialize();
+	$.ajax({
+		type:"POST",
+        url: "../set/dysetting",
+        data: params,
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data == 1){
+        		printconf.topside = $('#topside').val();
+        		printconf.leftside = $('#leftside').val();
+        		alert("保存成功");
+        	}else{
+        		alert("保存失败")
+        	}
+        	
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});	
+		
 }
 
 /**
@@ -236,7 +335,7 @@ function print(){
 	/* alert(row.beginfphm + ',' + row.endfphm) */
 	if(confirm("确定要打印么？")){
 		fphmlist = null;
-		getParameter(row.beginfphm, row.endfphm);
+		getPrintsList(row.beginfphm, row.endfphm);
 		if(!SetParameter()){
 			return;
 		}
