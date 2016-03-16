@@ -9,13 +9,13 @@
 			"id":111,
 			"text":"查询",
 			"attributes":{
-				"url":"../../queryStatistics/queryDetailIndex.jsp"
+				"url":"../../queryStatistics/queryDetail.jsp"
 			}
 		},{
 			"id":112,
 			"text":"统计",
 			"attributes":{
-				"url":"../../queryStatistics/queryStatIndex.jsp"
+				"url":"../../queryStatistics/querystat.jsp"
 			}
 		}
 	]},{
@@ -37,13 +37,13 @@
 			"id":131,
 			"text":"增值税专用发票开具",
 			"attributes":{
-				"url":"../../queryStatistics/goToSpecial.jsp"
+				"url":"../../fpkj/zyfpkj.html"
 			}
 		},{
 			"id":132,
 			"text":"增值税专用发票打印(单打)",
 			"attributes":{
-				"url":"../../specialInvoice/waitprintzp2.html"
+				"url":"../../specialInvoice/waitprintzp.html"
 			}
 		},{
 			"id":133,
@@ -66,7 +66,7 @@
 			"id":141,
 			"text":"增值税普通发票开具",
 			"attributes":{
-				"url":"../../queryStatistics/goToPlain.jsp"
+				"url":"../../fpkj/ptfpkj.html"
 			}
 		},{
 			"id":132,
