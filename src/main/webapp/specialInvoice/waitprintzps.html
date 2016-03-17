@@ -228,6 +228,26 @@ function getTotalMidValue(source, priStr, suxStr) {
 
 <table id="datagrid_zp"></table>
 
+<div id="div_window" class="easyui-window" title="提示" closable='false' collapsible='false' minimizable='false' maximizable='false' 
+	 style=" width:300px;height:200px;padding:5px; top:100px; left:400px;" closed='true'>
+	<div class="easyui-layout" data-options="fit:true">
+		<!-- <div data-options="region:'east',split:true" style="width:100px"></div> -->
+		<div data-options="region:'center'" style="padding:0px; border: 0px;text-align: center;">
+			<span style="font-size: medium; font-weight: 600;">请正确放置发票纸</span><br>
+			<div style="padding: 10px 10px 10px 10px; text-align: center;">
+			<span>发票号码：</span><br>
+			<span id='div_beginfphm' name='div_beginfphm' style="color: red;"></span> &nbsp;&nbsp;~&nbsp;&nbsp;
+			<span id='div_endfphm' name='div_endfphm' style="color: red;"></span><br>
+			<span>共</span><span id='div_lxzs'></span><span>张</span>
+			</div>
+		</div>
+		<div data-options="region:'south',border:false" style="text-align: center;">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:printDivWindow();" >确定</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:closeDivWindow();" >取消</a>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
 initDataGridComponent();
 var datagrid_zp;
@@ -325,35 +345,45 @@ function setSave(){
 /**
  * 打印
  */
-function print(){
+ function print(){
 	var row = datagrid_zp.datagrid('getSelected');
 	
 	if(row ==null || row == ''){
 		window.parent.$.messager.alert('消息','请选择一项进行打印!');
 		return;
 	}
+	$('#div_beginfphm').html(row.beginfphm);
+	$('#div_endfphm').html(row.endfphm);
+	$('#div_lxzs').html(row.lxzs);
+	$('#div_window').window('open');
 	
-	window.parent.$.messager.confirm("消息","您确定要打印么?",function(r){
-		if(r){
-			fphmlist = null;
-			getPrintsList(row.beginfphm, row.endfphm);
-			if(!SetParameter()){
-				return;
-			}
-			if(!SetPrintLocation()){
-				return;
-			}
-			for(var i=0;i<fphmlist.length;i++){
-				var fpqqlsh = fphmlist[i].fpqqlsh;
-				var fpdm = fphmlist[i].fpdm;
-				var fphm = fphmlist[i].fphm;
-				var isfalse = PrintInvoice(fpqqlsh,fpdm, fphm);
-				if(!isfalse){
-					return;
-				}
-			}
+}
+
+function closeDivWindow(){
+	$('#div_window').window('close');
+}
+
+function printDivWindow(){
+	var row = datagrid_zp.datagrid('getSelected');
+	$('#div_window').window('close');
+	
+	fphmlist = null;
+	getPrintsList(row.beginfphm, row.endfphm);
+	if(!SetParameter()){
+		return;
+	}
+	if(!SetPrintLocation()){
+		return;
+	}
+	for(var i=0;i<fphmlist.length;i++){
+		var fpqqlsh = fphmlist[i].fpqqlsh;
+		var fpdm = fphmlist[i].fpdm;
+		var fphm = fphmlist[i].fphm;
+		var isfalse = PrintInvoice(fpqqlsh,fpdm, fphm);
+		if(!isfalse){
+			return;
 		}
-	});
+	}
 	
 }
 

@@ -37,7 +37,7 @@ function getParameter(){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error");
         	}
         }
 	});
@@ -46,7 +46,7 @@ function getParameter(){
 //发票打印
 function SetParameter() {
 	if(skconf == null){
-		alert("初始化参数失败");
+		window.parent.$.messager.alert('消息',"初始化参数失败");
 		return false;
 	}
 	//01设置初始化参数
@@ -58,11 +58,11 @@ function SetParameter() {
 		if(returncode==0&&returnmsg=="成功"){
 			return true;
 		}else{
-			alert("参数设置失败，失败原因："+returnmsg);
+			window.parent.$.messager.alert('消息',"参数设置失败，失败原因："+returnmsg);
 			return false;
 		}
 	} catch (e) {
-		alert(e.message + ",errno:" + e.number);
+		window.parent.$.messager.alert('消息',e.message + ",errno:" + e.number);
 		return false;
 	}
 }
@@ -83,10 +83,10 @@ function PrintInvoice(fpqqlsh,fpdm, fphm){
 			//alert("打印成功！...");
 			savePrintResult(fpqqlsh,3)
 		}else{
-			alert("打印失败，失败原因："+returnmsgsPrintIn);
+			window.parent.$.messager.alert('消息',"打印失败，失败原因："+returnmsgsPrintIn);
 		}
 	}else{
-		    alert("页面距设置失败，失败原因："+returnmsgsMarg);
+		window.parent.$.messager.alert('消息',"页面距设置失败，失败原因："+returnmsgsMarg);
 	}		
 		
 }
@@ -101,17 +101,17 @@ function savePrintResult(fpqqlsh,fpzt){
         success: function (data) {
         	//alert(JSON.stringify(data))
         	if(data == '1'){
-        		alert("打印成功！");
+        		window.parent.$.messager.alert('消息',"打印成功！");
         		searchZpList();
         	}else{
-        		alert("打印成功,保存失败");
+        		window.parent.$.messager.alert('消息',"打印成功,保存失败");
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error");
         	}
         }
 	});
@@ -186,6 +186,24 @@ function getTotalMidValue(source, priStr, suxStr) {
 </div>
 
 <table id="datagrid_zp"></table>
+
+<div id="div_window" class="easyui-window" title="提示" closable='false' collapsible='false' minimizable='false' maximizable='false' 
+	 style=" width:300px;height:200px;padding:5px; top:100px; left:400px;" closed='true'>
+	<div class="easyui-layout" data-options="fit:true">
+		<!-- <div data-options="region:'east',split:true" style="width:100px"></div> -->
+		<div data-options="region:'center'" style="padding:0px; border: 0px;text-align: center;">
+			<span style="font-size: medium; font-weight: 600;">请正确放置发票纸</span> <br>
+			<div style="padding: 20px 20px 20px 60px; text-align: left;">
+			<span>发票代码：</span><span id='div_fpdm' name='div_fpdm' style="color: red;"></span><br>
+			<span>发票号码：</span><span id='div_fphm' name='div_fphm' style="color: red;"></span>
+			</div>
+		</div>
+		<div data-options="region:'south',border:false" style="text-align: center;">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:printDivWindow();" >确定</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:closeDivWindow();" >取消</a>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 initDataGridComponent();
@@ -288,9 +306,9 @@ function setSave(){
         	if(data == 1){
         		printconf.topside = $('#topside').val();
         		printconf.leftside = $('#leftside').val();
-        		alert("保存成功");
+        		window.parent.$.messager.alert('消息',"保存成功");
         	}else{
-        		alert("保存失败")
+        		window.parent.$.messager.alert('消息',"保存失败")
         	}
         	
         },
@@ -298,7 +316,7 @@ function setSave(){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error");
         	}
         }
 	});	
@@ -309,19 +327,17 @@ function setSave(){
  * 打印
  */
 function print(){
+	
 	var row = datagrid_zp.datagrid('getSelected');
 	
 	if(row ==null || row == ''){
-		alert('请选择一项进行打印!');
+		window.parent.$.messager.alert('消息','请选择一项进行打印!');
 		return;
 	}
-	if(confirm("确定要打印么？")){
-	 	//getParameter();
-		if(!SetParameter()){
-			return;
-		}
-		PrintInvoice(row.fpqqlsh,row.fpdm, row.fphm);
-	}
+	$('#div_fpdm').html(row.fpdm);
+	$('#div_fphm').html(row.fphm);
+	$('#div_window').window('open');
+	
 }
 /**
  * 查询
@@ -348,9 +364,22 @@ function form2Json(id) {
     return json
 }
 
+function closeDivWindow(){
+	$('#div_window').window('close');
+}
+
+function printDivWindow(){
+	$('#div_window').window('close');
+	var row = datagrid_zp.datagrid('getSelected');
+	if(!SetParameter()){
+		return;
+	}
+	PrintInvoice(row.fpqqlsh,row.fpdm, row.fphm);
+	
+}
+
 
 $(function(){
-	
 })
 </script>
 
