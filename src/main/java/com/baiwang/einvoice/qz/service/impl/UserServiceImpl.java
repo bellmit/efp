@@ -60,12 +60,15 @@ public class UserServiceImpl implements IUserService {
 		user = (User) jdbcTemplate.queryForObject(sql, new Object[] { name }, new RowMapper<Object>() {
 			@Override
 			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-				String yhkl = rs.getString(1);
-				String qybz = rs.getString(2);
-				String yhlx = rs.getString(3);
-				String kpddm = rs.getString(4);
-				String nsrsbh = rs.getString(5);
-				String cjrdm = rs.getString(6);
+				String czydm = rs.getString(1);
+				String czymc = rs.getString(2);
+				String yhkl = rs.getString(3);
+				String qybz = rs.getString(4);
+				String yhlx = rs.getString(5);
+				String kpddm = rs.getString(6);
+				String nsrsbh = rs.getString(7);
+				String cjrdm = rs.getString(8);
+				String fplxdm = rs.getString(9);
 				User user1 = new User();
 				user1.setYhkl(yhkl);
 				user1.setQybz(qybz);
@@ -73,6 +76,9 @@ public class UserServiceImpl implements IUserService {
 				user1.setKpddm(kpddm);
 				user1.setNsrsbh(nsrsbh);
 				user1.setCjrdm(cjrdm);
+				user1.setFplxdm(fplxdm);
+				user1.setCzydm(czydm);
+				user1.setCzymc(czymc);
 				return user1;
 			}
 
