@@ -143,7 +143,7 @@ function initDataGridComponent(){
 				title : "专用发票作废",
 				singleSelect:true,
 				rownumbers:true,
-				idField:'id',
+				idField:'fpqqlsh',
 				url:"<%=basePath%>/einvoice/zyfpzf_q",
 				pagination : true,
 				pageSize : 50,
@@ -158,14 +158,14 @@ function initDataGridComponent(){
 		             {field:'hyid',title:'会员ID',width:100,editor:'text'},
 			         {field:'shr',title:'收货人',width:100,editor:'text'}, 
 		             {field:'shrdh',title:'收货人电话',width:100,editor:'text'},
-		             {field:'sqsj',title:'申请时间',width:100,editor:'text'},
+		             {field:'sqsj',title:'申请时间',width:100,editor:'text',formatter:dateFormatter},
 			         {field:'gmfmc',title:'发票抬头',width:100,editor:'text'},
 		             {field:'spzl',title:'发票内容',width:100,editor:'text'},
 			         {field:'hjje',title:'合计金额',width:100,editor:'text'},
 		             {field:'hjse',title:'合计税额',width:100,editor:'text'},
 			         {field:'jshj',title:'价税合计',width:100,editor:'text'},
 			         {field:'kplx',title:'发票状态',width:100,editor:'text'},
-		             {field:'kprq',title:'开票日期',width:100,editor:'text'},
+		             {field:'kprq',title:'开票日期',width:100,editor:'text',formatter:dateFormatter},
 		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'}
 				]],
@@ -195,7 +195,13 @@ function formatKplx(value,row,index){
 function hideOrShow(){
 	$("#div_search").toggle();
 }
-
+function dateFormatter(value) {
+	if(value==null || value =='undefined'){
+		return '';
+	}
+	var dateValue = new Date(value);
+	return dateValue.format("yyyy-mm-dd");
+}
 /**
  * 打印
  */
@@ -240,6 +246,20 @@ function form2Json(id) {
     var json = JSON.parse(jsonStr)
     return json
 }
-
+Date.prototype.format = function (fmt) { //author: meizz
+    var o = {
+        "m+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "M+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 </script>
 </html>

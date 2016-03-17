@@ -40,7 +40,7 @@ function getParameter(){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error-初始化参数失败");
         	}
         }
 	});
@@ -65,7 +65,7 @@ function getPrintsList(beginfphm, endfphm){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error-获取发票列表失败");
         	}
         }
 	});
@@ -74,7 +74,7 @@ function getPrintsList(beginfphm, endfphm){
 //发票打印
 function SetParameter() {
 	if(skconf == null){
-		alert("初始化参数失败");
+		window.parent.$.messager.alert('消息',"初始化参数失败");
 		return false;
 	}
 	//01设置初始化参数
@@ -90,11 +90,11 @@ function SetParameter() {
 			//alert("参数设置成功！");	
 			return true;
 		}else{
-			alert("参数设置失败，失败原因："+returnmsg);
+			window.parent.$.messager.alert('消息',"参数设置失败，失败原因："+returnmsg);
 			return false;
 		}
 	} catch (e) {
-		alert(e.message + ",errno:" + e.number);
+		window.parent.$.messager.alert('消息',e.message + ",errno:" + e.number);
 		return false;
 	}
 }
@@ -109,7 +109,7 @@ function SetPrintLocation(){
 	if(returncodesMarg==0&&returnmsgsMarg=="成功"){
 		return true;
 	}else{
-	    alert("页面距设置失败，失败原因："+returnmsgsMarg);
+		window.parent.$.messager.alert('消息',"页面距设置失败，失败原因："+returnmsgsMarg);
 	    return false;
 	}	
 		
@@ -128,7 +128,7 @@ function PrintInvoice(fpqqlsh,fpdm, fphm){
 			savePrintResult(fpqqlsh,3);
 			return true;
 		}else{
-			alert("打印失败，失败原因："+returnmsgsPrintIn);
+			window.parent.$.messager.alert('消息',"打印失败，失败原因："+returnmsgsPrintIn);
 			return false;
 		}
 			
@@ -148,14 +148,14 @@ function savePrintResult(fpqqlsh,fpzt){
         		//alert("打印成功！");
         		searchZpList();
         	}else{
-        		alert("打印成功,保存失败");
+        		window.parent.$.messager.alert('消息',"打印成功,保存失败");
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error-保存打印结果失败");
         	}
         }
 	});
@@ -305,9 +305,9 @@ function setSave(){
         	if(data == 1){
         		printconf.topside = $('#topside').val();
         		printconf.leftside = $('#leftside').val();
-        		alert("保存成功");
+        		window.parent.$.messager.alert('消息',"保存成功");
         	}else{
-        		alert("保存失败")
+        		window.parent.$.messager.alert('消息',"保存失败")
         	}
         	
         },
@@ -315,7 +315,7 @@ function setSave(){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error-保存打印设置失败");
         	}
         }
 	});	
@@ -329,36 +329,39 @@ function print(){
 	var row = datagrid_zp.datagrid('getSelected');
 	
 	if(row ==null || row == ''){
-		alert('请选择一项进行打印!');
+		window.parent.$.messager.alert('消息','请选择一项进行打印!');
 		return;
 	}
-	/* alert(row.beginfphm + ',' + row.endfphm) */
-	if(confirm("确定要打印么？")){
-		fphmlist = null;
-		getPrintsList(row.beginfphm, row.endfphm);
-		if(!SetParameter()){
-			return;
-		}
-		if(!SetPrintLocation()){
-			return;
-		}
-		for(var i=0;i<fphmlist.length;i++){
-			var fpqqlsh = fphmlist[i].fpqqlsh;
-			var fpdm = fphmlist[i].fpdm;
-			var fphm = fphmlist[i].fphm;
-			var isfalse = PrintInvoice(fpqqlsh,fpdm, fphm);
-			if(!isfalse){
+	
+	window.parent.$.messager.confirm("消息","您确定要打印么?",function(r){
+		if(r){
+			fphmlist = null;
+			getPrintsList(row.beginfphm, row.endfphm);
+			if(!SetParameter()){
 				return;
 			}
+			if(!SetPrintLocation()){
+				return;
+			}
+			for(var i=0;i<fphmlist.length;i++){
+				var fpqqlsh = fphmlist[i].fpqqlsh;
+				var fpdm = fphmlist[i].fpdm;
+				var fphm = fphmlist[i].fphm;
+				var isfalse = PrintInvoice(fpqqlsh,fpdm, fphm);
+				if(!isfalse){
+					return;
+				}
+			}
 		}
-	}
+	});
+	
 }
 
 function showDetail(){
 	var row = datagrid_zp.datagrid('getSelected');
 	
 	if(row ==null || row == ''){
-		alert('请选择一项!');
+		window.parent.$.messager.alert('消息','请选择一项!');
 		return;
 	}
 	/* alert(row.beginfphm + ',' + row.endfphm) */

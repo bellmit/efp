@@ -16,25 +16,17 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui_global.css"/>
 
 <script type="text/javascript">
-	function exportData(){
-		var chks = $('.chkbox_ex');
-		for(i=0;i<chks.length;i++){
-			if(chks[i].checked == true){
-				chks[i].name = 'lsh4ept';
-			}
+function exportData(){
+	var row = datagrid.datagrid('getChecked');
+	if(row !=null && row != ''){
+		var fplshs=""; 
+	    for(i=0;i<row.length;i++){
+	    	fplshs += row[i].fpqqlsh+",";
 		}
-		$('#expForm').submit();
+	    $('#fplshs').val(fplshs);
 	}
-	function checkAll(){
-		var chks = $('.chkbox_ex');
-		for(i=0;i<chks.length;i++){
-			chks[i].checked=$('#chkAll').attr('checked');
-		}
-	}
-	//取消全选的勾
-	function ccAll(){
-		$('#chkAll').attr('checked',false);
-	}
+    $('#expForm').submit();
+}
 </script>
 
 
@@ -90,13 +82,13 @@
    </div>
 </div>
 <form id="expForm" action="<%=basePath%>/report/exportExcel" method="post">
-<input type="hidden" name="dateS4save" value="${dateS4save}">
-<input type="hidden" name="dateE4save" value="${dateE4save}">
-<input type="hidden" name="kpdq4save" value="${kpdq4save}">
-<input type="hidden" name="ddh4save" value="${ddh4save}">
-<input type="hidden" name="fpzl4save" value="${fpzl4save}">
-<input type="hidden" name="fplx4save" value="${fplx4save}">
-<input type="hidden" name="fptt4save" value="${fptt4save}">
+<input type="hidden" id ="fplshs" name="fplshs" value="">
+<input type="hidden" id = "dateS4save" name="dateS4save" value="">
+<input type="hidden" id = "dateE4save" name="dateE4save" value="">
+<input type="hidden" id = "kpdq4save" name="kpdq4save" value="">
+<input type="hidden" id = "fpzl4save" name="fpzl4save" value="">
+<input type="hidden" id = "fplx4save" name="fplx4save" value="">
+<input type="hidden" id = "fptt4save" name="fptt4save" value="">
 <table id="datagrid"></table>
 </form>
 
@@ -107,9 +99,11 @@ function initDataGridComponent(){
 	var qParams = form2Json('searchForm');
 	datagrid = $("#datagrid").datagrid({
 				title : "统计发票",
+				checkOnSelect:true,
+				selectOnCheck:false,
 				singleSelect:false,
 				rownumbers:true,
-				idField:'id',
+				idField:'fpqqlsh',
 				url:"<%=basePath %>/report/queryFPstat",
 				pagination : true,
 				pageSize : 50,
@@ -120,8 +114,8 @@ function initDataGridComponent(){
 				     {field:'fpqqlsh',title:'fpqqlsh',width:100,checkbox:true},
 				     {field:'kpdq',title:'发票地区',width:150,editor:'text'},
 		             {field:'fpkh',title:'发票客户',width:100,editor:'text'},
-		             {field:'kprq',title:'开票日期',width:100,editor:'text'},
-		             {field:'fpzl',title:'发票种类',width:100,editor:'text'},
+		             {field:'kprq',title:'开票日期',width:100,editor:'text',formatter:dateFormatter},
+		             {field:'fpzl',title:'发票种类',width:100,editor:'text',formatter:formatFpzl},
 			         {field:'fpdm',title:'发票代码',width:100,editor:'text'}, 
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'},
 		             {field:'ttlx',title:'抬头类型',width:100,editor:'text'},
@@ -153,7 +147,25 @@ function formatKplx(value,row,index){
 		return "蓝字发票";
 	}
 }
-
+/**
+ * 发票种类
+ */
+function formatFpzl(value,row,index){
+	if (value=="004"){
+		return "专票";
+	} else if(value=="007") {
+		return "普票";
+	} else if(value=="026") {
+		return "电子发票";
+	} 
+}
+function dateFormatter(value) {
+	if(value==null || value =='undefined'){
+		return '';
+	}
+	var dateValue = new Date(value);
+	return dateValue.format("yyyy-mm-dd");
+}
 /**
  * 显示或隐藏
  */
@@ -185,6 +197,12 @@ function print(){
  * 查询
  */
 function searchfpList(){
+	$('#dateS4save').val($('#dateS4q').val());
+	$('#dateE4save').val($('#dateE4q').val());
+	$('#kpdq4save').val($('#kpdq4q').val());
+	$('#fpzl4save').val($('#fpzl4q').val());
+	$('#fplx4save').val($('#fplx4q').val());
+	$('#fptt4save').val($('#fptt4q').val());
 	var qParams = form2Json('searchForm');
 	$("#datagrid").datagrid("load", qParams);
 }
@@ -206,6 +224,21 @@ function form2Json(id) {
     return json
 }
 
+Date.prototype.format = function (fmt) { //author: meizz
+    var o = {
+        "m+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "M+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 </script>
 </body>
 </html>
