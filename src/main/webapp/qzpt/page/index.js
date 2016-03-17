@@ -85,15 +85,15 @@ function exitSystem(){
 		if(r){
 			$.ajax({
 				type:"POST",
-		        url: basePath + '/logout',
+		        url: '../logout',
 		        async:false,
 		        success: function (data) {
 		        	if(data== '0'){
-		        		window.location.href= basePath + '/login/login.html';
+		        		window.location.href=  '../../login/login.html';
 		        	}
 		        },
 		        error:function(e) {
-		        	window.top.location.href = basePath + '/login/login.html';
+		        	window.top.location.href = '../../login/login.html';
 		        }
 			});
 			
