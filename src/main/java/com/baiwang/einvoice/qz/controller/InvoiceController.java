@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
+import com.baiwang.einvoice.qz.mq.RequestTsSender;
 import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
 import com.baiwang.einvoice.qz.utils.InvoiceUtil;
@@ -62,6 +63,9 @@ public class InvoiceController {
 	
 	@Autowired
     private JmsTemplate jmsTemplate2;
+	
+	@Resource
+	private RequestTsSender tsSender;
 	
 	/**
 	  * @author zhaowei
@@ -190,7 +194,7 @@ public class InvoiceController {
 	@ResponseBody
 	public HashMap<String, String> kp(HttpServletRequest request){
 	
-		String fpqqlsh =request.getParameter("ph");
+		String fpqqlsh =request.getParameter("fpqqlsh");
 		HashMap<String, String> param = new HashMap<>();
 		if(StringUtils.isEmpty(fpqqlsh)){
 			param.put("status", "error");
@@ -240,7 +244,7 @@ public class InvoiceController {
 	 */
 	@RequestMapping("/callback")
 	@ResponseBody
-	public HashMap<String, Object> callback(String xml , String fpqqlsh){
+	public HashMap<String, Object> callback(String xml , String fpqqlsh ,String xml_bw , String status){
 		
 		HashMap<String, Object> result = new HashMap<>();
 		String returncode = InvoiceUtil.getIntervalValue(xml, "<returncode>", "</returncode>");
@@ -263,12 +267,14 @@ public class InvoiceController {
 		fpxx.setSkm(skm);
 		fpxx.setJym(jym);
 		
-		if("0".equals(returncode)){
-			fpxx.setFpzt("2");
-		}else{
-			fpxx.setFpzt("-1");
-		}
+		fpxx.setFpzt(status);
+		
 		fpService.saveCallBackInfo(fpxx);
+		
+		/*Map<String, String> map = new HashMap<String, String>();
+		map.put("xml", xml_bw);
+		map.put("returnSK", xml);
+		tsSender.sendMessage(map);*/
 		
 		result.put("status", "success");
 		return result;

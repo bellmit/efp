@@ -174,7 +174,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 	function multi_kjfp(){
 		
 		var row = datagrid_zp.datagrid('getChecked');
-		alert(row.length)
+		var xmlList;
 		if(row ==null || row == ''){
 			alert('请选择一项进行开具!');
 			return;
@@ -191,33 +191,14 @@ function getTotalMidValue(source, priStr, suxStr) {
  	        type:"POST",
  	        url:"../fpkj/dzkp",
 			data:param,
-		success : function(data) {
-			var xml = data.xml;
-			for(var i=0;i<xml.length;i++){
-				try {
-					invoiceIssueRet = sk.Operate(xml[i]);
-					var invoiceIssueReturncode = getTotalMidValue(invoiceIssueRet, "<returncode>","</returncode>");
-					var invoiceIssueRetReturnmsg = getTotalMidValue(invoiceIssueRet, "<returnmsg>","</returnmsg>");	
-					var fpqqlsh = getTotalMidValue(xml[i], "<fpqqlsh>","</fpqqlsh>");
-					if(invoiceIssueReturncode==0&&invoiceIssueRetReturnmsg=="成功"){
-						$.ajax({
-					 	    type:"POST",
-					 	    url:"../fpkj/callback",
-							data:{"fpqqlsh":fpqqlsh,"xml":invoiceIssueRet},
-							dataType:'json', 
-							success : function(data) {
-								window.location.href = "../fpkj/plain";
-							}
-						});
-					}else{
-						alert("发票领购信息核对失败，失败原因："+invoiceIssueRetReturnmsg);
-					}
-				} catch (e) {
-					alert(e.message + ",errno:" + e.number);
-				}
+			async: false,
+			success : function(data) {
+				xmlList = data.xml;
 			}
+		});
+		for(var i=0;i<xmlList.length;i++){
+			Kp(xmlList[i]);
 		}
-	});
 	}
 	
 	function hideOrShow(){
@@ -229,6 +210,48 @@ function getTotalMidValue(source, priStr, suxStr) {
 		$("#datagrid_zp").datagrid("load", qParams);
 	}
 	
+	function Kp(str){
+		try {
+			var resultXml = sk.Operate(str);
+			var returncode = getTotalMidValue(resultXml, "<returncode>","</returncode>");
+			var returnmsg = getTotalMidValue(resultXml, "<returnmsg>","</returnmsg>");	
+			var fpqqlsh = getTotalMidValue(str, "<fpqqlsh>","</fpqqlsh>");
+			if(returncode==0&&returnmsg=="成功"){
+				updateStatus(fpqqlsh ,str,resultXml,2);
+				return true;
+			}else{
+				updateStatus(fpqqlsh ,str,resultXml,-1);
+				alert("发票领购信息核对失败，失败原因："+returnmsg);
+				return false;
+			}
+	} catch (e) {
+			alert(e.message + ",errno:" + e.number);
+	}
+	}
+	
+	function updateStatus(fpqqlsh ,str , resultXml , status){
+		$.ajax({
+	 	    type:"POST",
+	 	    url:"../fpkj/callback",
+			data:{"fpqqlsh":fpqqlsh,"xml":resultXml,"xml_bw":str,"status":status},
+			dataType:'json',
+			async: false,
+			success: function (data) {
+	        	if(data.status == 'success'){
+	        		searchZpList();
+	        	}else{
+	        		alert("开具成功,保存状态失败");
+	        	}
+	        },
+	        error:function(XMLHttpRequest, textStatus, errorThrown) {
+	        	if(XMLHttpRequest.responseText=="timeOut"){
+	        		window.top.location.reload();
+	        	}else{
+	        		alert("Error");
+	        	}
+	        }
+		});
+	} 
 	
 </script>
 
