@@ -51,10 +51,13 @@ function baocunsk(){
 	<input type="text" id="url" name="url" placeholder="服务器IP地址"/>
 	<br>
 	<label>服务器端口号:</label>
-	<input type="text" id="port" name="port" placeholder="服务器端口号"/>
-	<!-- <br>
+	<input type="text" id="port" name="port" placeholder="服务器端口号"/><br>
+	<label>开票终端标示:</label>
+	<input type="text" id="kpzdbs" name="kpzdbs" placeholder="开票终端标示"/><br>
+	<label>税控钥匙口令:</label>
+	<input type="text" id="keypwd" name="keypwd" placeholder="税控钥匙口令"/><br>
 	<label style="margin-left: 35px;">安全码:</label>
-	<textarea id='aqm' name='aqm' rows="4" cols="100" style="vertical-align: text-top;" placeholder="安全码"></textarea> -->
+	<textarea id='aqm' name='aqm' rows="4" cols="150" style="vertical-align: text-top;" placeholder="安全码"></textarea>
 	<br>
 	<button type="button" onclick="baocunsk();" style="margin-left: 77px; margin-top: 10px;">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
 </div>
@@ -96,6 +99,9 @@ function init(){
         	}else{
         		$('#url').val(data.skConfig.url);
             	$('#port').val(data.skConfig.port);
+            	$('#kpzdbs').val(data.skConfig.kpzdbs);
+            	$('#keypwd').val(data.skConfig.keypwd);
+            	$('#aqm').val(data.skConfig.aqm);
         	}
         	
         	
