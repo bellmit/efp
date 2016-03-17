@@ -38,7 +38,7 @@
 		</form>
 	</div>
 </div>
-<table id="datagrid_zp"></table>
+<table id="datagrid_pp"></table>
 
 
 <script type="text/javascript">
@@ -60,10 +60,10 @@ function form2Json(id) {
 }
 
 initDataGridComponent();
-var datagrid_zp;
+var datagrid_pp;
 function initDataGridComponent(){
 	var qParams = form2Json('queryForm');
-	datagrid_zp = $("#datagrid_zp").datagrid({
+	datagrid_pp = $("#datagrid_pp").datagrid({
 				title : "待开增值税普通发票",
 				height: "450",
 				//width: '1500',
@@ -173,7 +173,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 
 	function multi_kjfp(){
 		
-		var row = datagrid_zp.datagrid('getChecked');
+		var row = datagrid_pp.datagrid('getChecked');
 		var xmlList;
 		if(row ==null || row == ''){
 			alert('请选择一项进行开具!');
@@ -207,7 +207,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 	
 	function searchZpList(){
 		var qParams = form2Json('queryForm');
-		$("#datagrid_zp").datagrid("load", qParams);
+		$("#datagrid_pp").datagrid("load", qParams);
 	}
 	
 	function Kp(str){
