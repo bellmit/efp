@@ -11,6 +11,8 @@ public class SkConfig {
 
     private Integer kpdq;
 
+    private String nsrsbh;
+    
     private String userId;
     
     private String url;
@@ -91,6 +93,16 @@ public class SkConfig {
 	public void setKpzdbs(String kpzdbs) {
 	
 		this.kpzdbs = kpzdbs;
+	}
+
+	public String getNsrsbh() {
+	
+		return nsrsbh;
+	}
+
+	public void setNsrsbh(String nsrsbh) {
+	
+		this.nsrsbh = nsrsbh;
 	}
     
     
