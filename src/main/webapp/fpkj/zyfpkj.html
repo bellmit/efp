@@ -231,7 +231,9 @@ function Kp(str){
 			updateStatus(fpqqlsh ,str,resultXml,2);
 			return true;
 		}else{
-			updateStatus(fpqqlsh ,str,resultXml,-1);
+			if(returnmsg != "此发票已经开具过"){
+				updateStatus(fpqqlsh ,str,resultXml,-1);
+			}
 			alert("发票领购信息核对失败，失败原因："+returnmsg);
 			return false;
 		}
