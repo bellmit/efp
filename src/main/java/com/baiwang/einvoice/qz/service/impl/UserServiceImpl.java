@@ -1,7 +1,9 @@
 package com.baiwang.einvoice.qz.service.impl;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +21,8 @@ import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.dao.UserMapper;
 import com.baiwang.einvoice.qz.service.IUserService;
 import com.baiwang.einvoice.qz.service.PageServiceImpl;
+import com.baiwang.einvoice.qz.utils.JDBCUtil;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -45,21 +47,22 @@ public class UserServiceImpl implements IUserService {
 	 */
 	public User getUserByName(String name) {
 		User user = new User();
-		String loginDburl ;
-		String loginDbName ;
-		String loginDbPassword ;
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(loginDataSource);
+		Connection conn = JDBCUtil.getConn();
+		Statement stmt = null;
+		ResultSet rs  = null;
 		String sql = "select a.CZYDM,a.CZYMC,yhkl,qybz,yhlx,a.kpddm,b.nsrsbh,a.cjrdm,group_concat(c.FPLXDM) as fplxdm from dj_czyxx a " + 
 				"LEFT JOIN dj_kpdxx b " + 
 				"ON a.KPDDM = b.KPDDM " + 
 				"LEFT JOIN dj_fpcxx c " + 
-				"ON b.KPDDM = c.KPDDM " + 
-				"where a.czydm  =  ?  " + 
+				"ON b.KPDDM = c.KPDDM " +  
+				"where a.czydm  = '"+ name + "' "+
 				"group by a.CZYDM,a.CZYMC,yhkl,qybz,yhlx,a.kpddm,b.nsrsbh,a.cjrdm";
 		logger.info("用户名【" + name + "】正在登录...");
-		user = (User) jdbcTemplate.queryForObject(sql, new Object[] { name }, new RowMapper<Object>() {
-			@Override
-			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		 
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs.first()){
 				String czydm = rs.getString(1);
 				String czymc = rs.getString(2);
 				String yhkl = rs.getString(3);
@@ -69,20 +72,23 @@ public class UserServiceImpl implements IUserService {
 				String nsrsbh = rs.getString(7);
 				String cjrdm = rs.getString(8);
 				String fplxdm = rs.getString(9);
-				User user1 = new User();
-				user1.setYhkl(yhkl);
-				user1.setQybz(qybz);
-				user1.setYhlx(yhlx);
-				user1.setKpddm(kpddm);
-				user1.setNsrsbh(nsrsbh);
-				user1.setCjrdm(cjrdm);
-				user1.setFplxdm(fplxdm);
-				user1.setCzydm(czydm);
-				user1.setCzymc(czymc);
-				return user1;
+				user.setYhkl(yhkl);
+				user.setQybz(qybz);
+				user.setYhlx(yhlx);
+				user.setKpddm(kpddm);
+				user.setNsrsbh(nsrsbh);
+				user.setCjrdm(cjrdm);
+				user.setFplxdm(fplxdm);
+				user.setCzydm(czydm);
+				user.setCzymc(czymc);
 			}
-
-		});
+		} catch (SQLException e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		
 		return user;
 	}
 
@@ -153,12 +159,23 @@ public class UserServiceImpl implements IUserService {
 	  */
 	@Override
 	public List<String> getNsrsbh() {
-		
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(loginDataSource);
-		String sql = "select distinct(nsrsbh) from dj_fpcxx";
-		logger.info("获取纳税人识别号列表");
+		Connection conn = JDBCUtil.getConn();
+		Statement stmt = null;
+		ResultSet result  = null;
+        logger.info("获取纳税人识别号列表");
 		List<String> list = new ArrayList<>();
-		list = jdbcTemplate.queryForList(sql,String.class);
+        try {
+        	stmt = conn.createStatement();
+    		String sql = "select distinct(nsrsbh) from dj_fpcxx"; 
+            result = stmt.executeQuery(sql);
+			while(result.next()){
+				list.add(result.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return list;
 		
 	}
