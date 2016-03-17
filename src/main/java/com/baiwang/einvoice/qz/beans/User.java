@@ -26,6 +26,8 @@ public class User {
     private String nsrsbh;
 
     private String zzjgdm;
+    
+    private String fplxdm;
 
     public String getId() {
         return id;
@@ -122,4 +124,16 @@ public class User {
     public void setZzjgdm(String zzjgdm) {
         this.zzjgdm = zzjgdm == null ? null : zzjgdm.trim();
     }
+
+	public String getFplxdm() {
+	
+		return fplxdm;
+	}
+
+	public void setFplxdm(String fplxdm) {
+	
+		this.fplxdm = fplxdm;
+	}
+    
+    
 }

@@ -2,7 +2,9 @@ package com.baiwang.einvoice.qz.service.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -18,6 +20,7 @@ import com.baiwang.einvoice.qz.dao.UserMapper;
 import com.baiwang.einvoice.qz.service.IUserService;
 import com.baiwang.einvoice.qz.service.PageServiceImpl;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -42,11 +45,17 @@ public class UserServiceImpl implements IUserService {
 	 */
 	public User getUserByName(String name) {
 		User user = new User();
+		String loginDburl ;
+		String loginDbName ;
+		String loginDbPassword ;
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(loginDataSource);
-		String sql = "select yhkl,qybz,yhlx,a.kpddm,b.nsrsbh, a.cjrdm from dj_czyxx a " + 
+		String sql = "select a.CZYDM,a.CZYMC,yhkl,qybz,yhlx,a.kpddm,b.nsrsbh,a.cjrdm,group_concat(c.FPLXDM) as fplxdm from dj_czyxx a " + 
 				"LEFT JOIN dj_kpdxx b " + 
 				"ON a.KPDDM = b.KPDDM " + 
-				" where a.czydm  = ?";
+				"LEFT JOIN dj_fpcxx c " + 
+				"ON b.KPDDM = c.KPDDM " + 
+				"where a.czydm  =  ?  " + 
+				"group by a.CZYDM,a.CZYMC,yhkl,qybz,yhlx,a.kpddm,b.nsrsbh,a.cjrdm";
 		logger.info("用户名【" + name + "】正在登录...");
 		user = (User) jdbcTemplate.queryForObject(sql, new Object[] { name }, new RowMapper<Object>() {
 			@Override
@@ -128,6 +137,24 @@ public class UserServiceImpl implements IUserService {
 		
 		// TODO Auto-generated method stub
 		dao.updateByPrimaryKeySelective(user);
+	}
+
+	/**
+	  * <p>Title: getNsrsbh</p>
+	  * <p>Description: </p>
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.IUserService#getNsrsbh()
+	  */
+	@Override
+	public List<String> getNsrsbh() {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(loginDataSource);
+		String sql = "select distinct(nsrsbh) from dj_fpcxx";
+		logger.info("获取纳税人识别号列表");
+		List<String> list = new ArrayList<>();
+		jdbcTemplate.queryForList(sql, list);
+		return list;
+		
 	}
 
 }
