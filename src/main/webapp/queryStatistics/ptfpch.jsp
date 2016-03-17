@@ -28,7 +28,7 @@ function chFp(){
 		alert('请选择一条记录进行操作!');
 		return;
 	}
-	if(!confirm("确定要发票冲红吗？")){
+	if(!confirm("发票号码："+row.fphm+"；确定要冲红此发票吗？")){
 		return;
 	}
 	if(SetParameter()){
@@ -138,7 +138,7 @@ function insertCh(fpqqlsh,resultXml,newLshao){
         	if(data.status == 'success'){
         		alert("操作成功！")
         	}else{
-        		alert("开具成功,保存发票信息失败!");
+        		alert("冲红成功,保存发票信息失败!");
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
