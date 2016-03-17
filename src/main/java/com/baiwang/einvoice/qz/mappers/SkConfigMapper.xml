@@ -3,6 +3,7 @@
 <mapper namespace="com.baiwang.einvoice.qz.dao.SkConfigMapper" >
   <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.SkConfig" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="nsrsbh" property="nsrsbh" jdbcType="VARCHAR" />
     <result column="userId" property="userId" jdbcType="VARCHAR" />
     <result column="kpdq" property="kpdq" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
@@ -12,28 +13,33 @@
     <result column="kpzdbs" property="kpzdbs" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, userId, kpdq, url, port,keypwd,aqm,kpzdbs
+    id, nsrsbh, userId, kpdq, url, port,keypwd,aqm,kpzdbs
   </sql>
   
   <select id="initsetting" parameterType="string" resultType="com.baiwang.einvoice.qz.beans.SkConfig">
   	select 
 	  <include refid="Base_Column_List" />
 	  from skconfig
-	  where userId = #{userId}
+	  where nsrsbh = #{nsrsbh}
   </select>
   
-  <!-- <select id="querySksetting" parameterType="java.lang.Integer" resultType="com.baiwang.einvoice.qz.beans.SkConfig">
-	  select 
-	  <include refid="Base_Column_List" />
-	  from skconfig
-	  where kpdq = #{kpdq,jdbcType=INTEGER} 
-  </select> -->
-  
   <insert id="saveSksetting" parameterType="com.baiwang.einvoice.qz.beans.SkConfig">
-  	insert into skconfig ( kpdq, url, port,keypwd,aqm,kpzdbs)
-    values ( #{kpdq,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
-      #{port,jdbcType=VARCHAR})
+  	insert into skconfig ( nsrsbh, url, port, aqm)
+    values ( #{nsrsbh,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{port,jdbcType=VARCHAR}, #{aqm,jdbcType=INTEGER})
   </insert>
+  <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.SkConfig" >
+    update skconfig
+    set nsrsbh = #{nsrsbh,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      port = #{port,jdbcType=VARCHAR},
+      aqm = #{aqm,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+  
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -97,11 +103,5 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.baiwang.einvoice.qz.beans.SkConfig" >
-    update skconfig
-    set kpdq = #{kpdq,jdbcType=INTEGER},
-      url = #{url,jdbcType=VARCHAR},
-      port = #{port,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+  
 </mapper>

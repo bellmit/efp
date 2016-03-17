@@ -45,52 +45,72 @@ function baocunsk(){
 </head>
 <body>
 <form id='skForm' action="">
-<div id="toolbar_div" class="toolbar_div" style="line-height: 25px; margin-bottom: 3px;">
+<div id="toolbar_div" class="toolbar_div" style="line-height: 30px; margin-bottom: 3px;">
 	<div class="ftitle">服务器设置</div>
+	<label>纳税人识别号:</label>
+	<select class="form-control" id="nsrsbh" name="nsrsbh" onchange="init();">
+      	<option value="">请选择</option>
+       	<option value="0">北京</option>
+		<option value="1">上海</option>
+   	</select><br>
 	<label>服务器IP地址:</label>
 	<input type="text" id="url" name="url" placeholder="服务器IP地址"/>
 	<br>
 	<label>服务器端口号:</label>
 	<input type="text" id="port" name="port" placeholder="服务器端口号"/><br>
-	<label>开票终端标示:</label>
+	<!-- <label>开票终端标示:</label>
 	<input type="text" id="kpzdbs" name="kpzdbs" placeholder="开票终端标示"/><br>
 	<label>税控钥匙口令:</label>
-	<input type="text" id="keypwd" name="keypwd" placeholder="税控钥匙口令"/><br>
+	<input type="text" id="keypwd" name="keypwd" placeholder="税控钥匙口令"/><br> -->
 	<label style="margin-left: 35px;">安全码:</label>
-	<textarea id='aqm' name='aqm' rows="4" cols="150" style="vertical-align: text-top;" placeholder="安全码"></textarea>
+	<textarea id='aqm' name='aqm' rows="4" cols="150" placeholder="安全码"></textarea>
 	<br>
 	<button type="button" onclick="baocunsk();" style="margin-left: 77px; margin-top: 10px;">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
 </div>
 </form>
 
 
-<!-- <form id='aqmForm' action="">
-<div id="toolbar_div" class="toolbar_div" style="line-height: 25px;">
-	<div class="ftitle">安全码设置</div>
-	<label style="margin-left: 35px;">操作员:</label>
-	<input type="text" id="userid" name="userid" placeholder="操作员"/>
-	<select class="form-control" id="kpdq" name="kpdq">
-      	<option value="">请选择</option>
-       	<option value="0">北京</option>
-		<option value="1">上海</option>
-   	</select>
-	<br>
-	<label style="margin-left: 35px;">安全码:</label>
-	<textarea id='aqm' name='aqm' rows="4" cols="100" style="vertical-align: text-top;" placeholder="安全码"></textarea>
-	<br>
-	<button type="button" onclick="saveaqm();" style="margin-left: 77px; margin-top: 10px;">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
-</div>
-</form> -->
-
 <script type="text/javascript">
-init();
+quNsrsbh();
+function quNsrsbh(){
+	
+	$.ajax({
+		type:"POST",
+        url: "../set/quNsrsbh",
+        async: false,
+        success: function (data) {
+        	//alert(JSON.stringify(data))
+        	if(data.code == '-1'){
+        		window.top.location.href = '../login/login.html'
+        	}else{
+        		var nsrsbh = data.nsrsbh;
+        		$("#nsrsbh option").remove();
+        		$("#nsrsbh").append("<option value=''>请选择</option>");
+        		for (var i = 0; i < nsrsbh.length; i++) {
+        			$("#nsrsbh").append("<option value='"+nsrsbh[i]+"'>"+nsrsbh[i]+"</option>");
+        	    };
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		alert("Error");
+        	}
+        }
+	});
+}
+
 function init(){
-	//var params = $('#skForm').serialize();
+	$('#url').val('');
+	$('#port').val('');
+	$('#aqm').val('');
+	var params = {'nsrsbh':$('#nsrsbh').val()};
 	
 	$.ajax({
 		type:"POST",
         url: "../set/initsetting",
-        //data: params,
+        data: params,
         async: false,
         success: function (data) {
         	//alert(JSON.stringify(data))
@@ -99,8 +119,6 @@ function init(){
         	}else{
         		$('#url').val(data.skConfig.url);
             	$('#port').val(data.skConfig.port);
-            	$('#kpzdbs').val(data.skConfig.kpzdbs);
-            	$('#keypwd').val(data.skConfig.keypwd);
             	$('#aqm').val(data.skConfig.aqm);
         	}
         	

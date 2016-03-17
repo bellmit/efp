@@ -19,5 +19,5 @@ public interface SkConfigMapper {
 
 	/*SkConfig querySksetting(Integer kpdq);*/
 
-	SkConfig initsetting(String userId);
+	SkConfig initsetting(String nsrsbh);
 }

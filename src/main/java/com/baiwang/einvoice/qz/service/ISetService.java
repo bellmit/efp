@@ -10,7 +10,7 @@ public interface ISetService {
 
 	Integer savePrintsetting(PrintConfig printconfig);
 
-	SkConfig initsetting(String czydm);
+	SkConfig initsetting(String nsrsbh);
 
 
 }
