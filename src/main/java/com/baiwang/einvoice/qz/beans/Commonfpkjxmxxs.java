@@ -34,4 +34,9 @@ public class Commonfpkjxmxxs {
         return fpmx;
     }
 
+	public void setFpmx(List<Fpmx> fpmx) {
+	
+		this.fpmx = fpmx;
+	}
+
 }

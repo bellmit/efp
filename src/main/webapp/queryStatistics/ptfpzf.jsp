@@ -17,10 +17,16 @@
 <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
 	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
 <script type="text/javascript">
+var skconfig = null;
+var printconf = null;
+getParameter();
 function concelFp(){
 	var row = datagrid.datagrid('getSelected');
 	if(row ==null || row == ''){
 		alert('请选择一条记录进行操作!');
+		return;
+	}
+	if(!confirm("发票号码："+row.fphm+"；确定要作废此发票吗？")){
 		return;
 	}
 	$.ajax({
@@ -30,7 +36,7 @@ function concelFp(){
         async: false,
         success: function (data) {
         	var kpxx = data.kpxx;
-        	var skconfig = data.skconfig;
+//         	var skconfig = data.skconfig;
         	var setResult = SetParameter(skconfig.aqm,skconfig.keypwd,skconfig.url,skconfig.port);
         	if(setResult){
 	        	var sInvoiceVoidInfo = 
@@ -68,7 +74,30 @@ function concelFp(){
         }
 	});
 }
-
+function getParameter(){
+	var params = {'fplx' : '007'};
+	$.ajax({
+		type:"POST",
+        url: "<%=basePath %>/print/getParameter",
+        data: params,
+        async: false,
+        success: function (data) {
+        	if(data.code == '-1'){
+        		window.top.location.href="../login/login.html";
+        	}else{
+        		skconfig = data.skconf;
+        		printconf = data.printconf;
+        	}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		window.parent.$.messager.alert('消息',"Error");
+        	}
+        }
+	});
+}
 function SetParameter(aqm,keypwd,ip,port) {
 	
 	//01设置初始化参数
