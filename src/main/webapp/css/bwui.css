@@ -1,6 +1,6 @@
-/* easyui-accordion ��ʽ����*/
+
 .easyui-accordion{list-style-type:none;margin:0px; }
-.easyui-accordion li{ padding:0px;margin-top: -12px;}
+.easyui-accordion li{border:1px solid #99BBE8;/* background:#94dfed; */ padding:0px;margin-top: -20px;}
 .easyui-accordion li a{line-height:24px;padding-left: 20px;}
 .easyui-accordion li div{padding:5px; color: #0080ff;}
 .easyui-accordion li div:hover{border:#99BBE8; background:#448eee;cursor:pointer;color: #fff;}
@@ -20,7 +20,7 @@
 .accordion .accordion-header-selected{background: #cae3ff;}
 .accordion .accordion-header-selected .panel-title{color: #05234a;}
 
-/*index.css ͷ����ʽ*/ 
+
 .north_div{height:88px;line-height:88px;/* background:#3573DA url(images/body_bg.png) no-repeat; */border:0px;overflow:hidden;}
 .west_div{width:185px;padding:0px; border-right: 1px solid #959595;}
 .west_index_div{padding:0px;}
@@ -29,9 +29,9 @@
 .center_frame{width:100%;/**width:800px;*/height:500px;}
 .tab-menu-div{width:120px;}
 .selectTheme{float:right;width:100px;margin:33px 20px 10px 0;}
-.password_div{float:right;color:#fff;}
+.password_div{float:right;color:#000000;}
 .password_div a{color:#000000;/* font-weight:bold; */ margin:0 5px; text-decoration:none; padding:5px;}/* 登陆用户 */
-.password_div a:hover{background-color:#c0c0c0;}
+.password_div a:hover{background-color:#94b6ed;}
 .cs-tab-menu{width:120px;}
 .datagrid-wrap{border:0;}
 .west-div{width:185px;padding:0px; border-right: 1px solid #959595;}
