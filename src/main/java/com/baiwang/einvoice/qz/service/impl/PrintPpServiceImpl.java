@@ -131,9 +131,9 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	}
 	
 	@Override
-	public SkConfig getSkParameter(String kpdq) {
+	public SkConfig getSkParameter(String userId) {
 		
-		return skdao.querySksetting(Integer.parseInt(kpdq));
+		return skdao.initsetting(userId);
 	}
 
 	@Override

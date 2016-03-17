@@ -24,7 +24,7 @@ public class SetServiceImpl implements ISetService {
 
 	@Override
 	public int saveSksetting(SkConfig skconfig) {
-		SkConfig sk = skdao.querySksetting(skconfig.getKpdq());
+		SkConfig sk = skdao.initsetting("admin");
 		if(null != sk){
 			skconfig.setId(sk.getId());
 			return skdao.updateByPrimaryKey(skconfig);

@@ -19,15 +19,15 @@
   	select 
 	  <include refid="Base_Column_List" />
 	  from skconfig
-	  where userId = #{czydm}
+	  where userId = #{userId}
   </select>
   
-  <select id="querySksetting" parameterType="java.lang.Integer" resultType="com.baiwang.einvoice.qz.beans.SkConfig">
+  <!-- <select id="querySksetting" parameterType="java.lang.Integer" resultType="com.baiwang.einvoice.qz.beans.SkConfig">
 	  select 
 	  <include refid="Base_Column_List" />
 	  from skconfig
 	  where kpdq = #{kpdq,jdbcType=INTEGER} 
-  </select>
+  </select> -->
   
   <insert id="saveSksetting" parameterType="com.baiwang.einvoice.qz.beans.SkConfig">
   	insert into skconfig ( kpdq, url, port,keypwd,aqm,kpzdbs)

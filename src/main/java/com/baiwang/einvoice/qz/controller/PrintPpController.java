@@ -110,7 +110,7 @@ public class PrintPpController {
 			return map;
 		}else{
 			//String userType = Byte.toString(user.getUserType());
-			SkConfig skconf = service.getSkParameter("0");
+			SkConfig skconf = service.getSkParameter("admin");
 			PrintConfig printconf = service.getPrintParameter(fplx);
 			map.put("code", "0");
 			map.put("msg", "成功");
