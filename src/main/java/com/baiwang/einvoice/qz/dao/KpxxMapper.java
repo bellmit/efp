@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 
 public interface KpxxMapper {
@@ -37,4 +38,7 @@ public interface KpxxMapper {
     
     void saveCallBackInfo(Kpxx kpxx);
     
+    void insertKpxx(Kpxx kpxx);
+    
+    void insertFpmx(Fpmx fpmx);
 }

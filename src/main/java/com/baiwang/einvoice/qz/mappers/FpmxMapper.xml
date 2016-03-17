@@ -41,11 +41,11 @@
   </delete>
   
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.Fpmx" >
-    insert into fpmx (id, fpqqlsh, fphxz, 
+    insert into fpmx (fpqqlsh, fphxz, 
       xmmc, ggxh, dw, xmsl, 
       xmdj, xmje, sl, se, 
       hsbz)
-    values (#{id,jdbcType=BIGINT}, #{fpqqlsh,jdbcType=VARCHAR}, #{fphxz,jdbcType=BIT}, 
+    values (#{fpqqlsh,jdbcType=VARCHAR}, #{fphxz,jdbcType=BIT}, 
       #{xmmc,jdbcType=VARCHAR}, #{ggxh,jdbcType=VARCHAR}, #{dw,jdbcType=VARCHAR}, #{xmsl,jdbcType=REAL}, 
       #{xmdj,jdbcType=REAL}, #{xmje,jdbcType=REAL}, #{sl,jdbcType=REAL}, #{se,jdbcType=REAL}, 
       #{hsbz,jdbcType=BIT})

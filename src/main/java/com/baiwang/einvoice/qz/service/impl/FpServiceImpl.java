@@ -322,4 +322,93 @@ public class FpServiceImpl implements IFpService {
 		
 	}
 
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param param
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月17日 上午11:37:47
+	  */
+	@Override
+	public List<Map<String, Object>> getPlainList4ch(Map<String, Object> param) {
+		
+		// TODO Auto-generated method stub
+		return orderDetailDao.getPlainList4ch(param);
+		
+	}
+
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param param
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月17日 上午11:37:47
+	  */
+	@Override
+	public List<Map<String, Object>> getSpecialList4ch(Map<String, Object> param) {
+		
+		// TODO Auto-generated method stub
+		return orderDetailDao.getSpecialList4ch(param);
+		
+	}
+
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param param
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月17日 上午11:37:47
+	  */
+	@Override
+	public int getPlainList4chCount(Map<String, Object> param) {
+		
+		// TODO Auto-generated method stub
+		return orderDetailDao.getPlainList4chCount(param);
+		
+	}
+
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param param
+	  * @param @return  
+	  * @throws
+	  * @date 2016年3月17日 上午11:37:47
+	  */
+	@Override
+	public int getSpecialList4chCount(Map<String, Object> param) {
+		
+		// TODO Auto-generated method stub
+		return orderDetailDao.getSpecialList4chCount(param);
+		
+	}
+
+	/**
+	  * @author Administrator
+	  * @Description: TODO
+	  * @param @param kpxx
+	  * @param @param fpmxList  
+	  * @throws
+	  * @date 2016年3月17日 下午5:57:56
+	  */
+	@Override
+	public void insertFp(Kpxx kpxx, List<Fpmx> fpmxList) {
+		Kpxx kpxxt = dao.selectByFpqqlsh(kpxx.getFpqqlsh());
+		if(null != kpxxt){
+			String f = XmlUtil.random();
+			kpxx.setFpqqlsh(f);
+			for(Fpmx t:fpmxList){
+				t.setFpqqlsh(f);
+			}
+		}
+		logger.info("插入KPXX数据流水号："+kpxx.getFpqqlsh());
+		dao.insert(kpxx);
+		for(Fpmx tmp:fpmxList){
+			fpmxDao.insert(tmp);
+		}
+	}
+
 }

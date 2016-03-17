@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Business;
+import com.baiwang.einvoice.qz.beans.Commonfpkjxmxxs;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
@@ -24,6 +26,7 @@ import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.IPrintPpService;
 import com.baiwang.einvoice.qz.service.IResultOfSkService;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 import com.baiwang.einvoice.qz.utils.JAXBUtil;
 import com.baiwang.einvoice.qz.utils.ValidateXML;
 import com.baiwang.einvoice.qz.utils.XmlUtil;
@@ -167,4 +170,140 @@ public class FpController {
 			return "1";
 		}
 	}
+	
+	//查询已经开具并打印过的普通正数发票
+		@RequestMapping(value="ptfpch_q")
+		@ResponseBody
+		public Map<String, Object> queryPtfp4ch(HttpServletRequest request,int page, int rows){
+			String beginDate = request.getParameter("beginDate");
+			String endDate = request.getParameter("endDate");
+			String hyid4q = request.getParameter("hyid4q");
+			String fphm4q = request.getParameter("fphm4q");
+			String ddh4q = request.getParameter("ddh4q");
+			String sjh4q = request.getParameter("sjh4q");
+			Map<String, Object> param = new HashMap<>();
+			param.put("beginDate", beginDate);
+			param.put("endDate",endDate );
+			param.put("hyid4q",hyid4q );
+			param.put("fphm4q", fphm4q);
+			param.put("ddh4q",ddh4q );
+			param.put("sjh4q",sjh4q );
+			param.put("startRow", (page-1)*rows);
+			param.put("rows", rows);
+			List<Map<String, Object>> fpxxList = fpService.getPlainList4ch(param);
+			int size = fpService.getPlainList4chCount(param);
+			Map<String, Object> result = new HashMap<>();
+			result.put("rows", fpxxList);
+			result.put("total", size);
+			return result;
+		}
+		//查询已经开具并打印过的专用正数发票
+		@RequestMapping(value="zyfpch_q")
+		@ResponseBody
+		public Map<String, Object> queryZyfp4ch(HttpServletRequest request,int page, int rows){
+			String beginDate = request.getParameter("beginDate");
+			String endDate = request.getParameter("endDate");
+			String hyid4q = request.getParameter("hyid4q");
+			String fphm4q = request.getParameter("fphm4q");
+			String ddh4q = request.getParameter("ddh4q");
+			String sjh4q = request.getParameter("sjh4q");
+			Map<String, Object> param = new HashMap<>();
+			param.put("beginDate", beginDate);
+			param.put("endDate",endDate );
+			param.put("hyid4q",hyid4q );
+			param.put("fphm4q", fphm4q);
+			param.put("ddh4q",ddh4q );
+			param.put("sjh4q",sjh4q );
+			param.put("startRow", (page-1)*rows);
+			param.put("rows", rows);
+			List<Map<String, Object>> fpxxList = fpService.getSpecialList4ch(param);
+			int size = fpService.getSpecialList4chCount(param);
+			Map<String, Object> result = new HashMap<>();
+			result.put("rows", fpxxList);
+			result.put("total", size);
+			return result;
+		}
+		//发票冲红
+		@RequestMapping(value="fpch")
+		@ResponseBody
+		public Map<String, Object> ch(String fpqqlsh){
+			Map<String, Object> param = new HashMap<>();
+			if(StringUtils.isEmpty(fpqqlsh)){
+				param.put("status", "error");
+				param.put("msg", "请至少选择一张发票!");
+				return param;
+			}
+			logger.info("获取到需要冲红的发票请求流水号：" + fpqqlsh);
+			Kpxx kpxx = fpService.getKpxxByFpqqlsh(fpqqlsh);
+			List<Fpmx> fpmxList = fpService.getFpmxByFpqqlsh(fpqqlsh);
+			Map<String, Object> map = getChBean(kpxx,fpmxList);
+			String newLsh = XmlUtil.random();
+			Kpxx kpxx_ch = (Kpxx) map.get("kpxx");
+			kpxx.setFpqqlsh(newLsh);
+			List<Fpmx> fpmxList_ch =(List<Fpmx>) map.get("fpmxList");
+			for(Fpmx fp:fpmxList_ch){
+				fp.setFpqqlsh(newLsh);
+			}
+			String xml = fpService.getXml(kpxx_ch, fpmxList_ch);
+			if(!"".equals(xml)){
+				//开票
+				param.put("status", "success");
+				param.put("xml", xml);
+			}
+			return param;
+		}
+		
+		//发票冲红
+		@RequestMapping(value="insertCh")
+		@ResponseBody
+		public Map<String, Object> insertCh(String fpqqlsh,String newLshao,String resultXml){
+			String jqbh = InvoiceUtil.getIntervalValue(resultXml, "<jqbh>", "</jqbh>");
+			String fpdm = InvoiceUtil.getIntervalValue(resultXml, "<fpdm>", "</fpdm>");
+			String fphm = InvoiceUtil.getIntervalValue(resultXml, "<fphm>", "</fphm>");
+			String kprq = InvoiceUtil.getIntervalValue(resultXml, "<kprq>", "</kprq>");
+			String skm = InvoiceUtil.getIntervalValue(resultXml, "<skm>", "</skm>");
+			String jym = InvoiceUtil.getIntervalValue(resultXml, "<jym>", "</jym>");
+			
+			Kpxx kpxx = fpService.getKpxxByFpqqlsh(fpqqlsh);
+			List<Fpmx> fpmxList = fpService.getFpmxByFpqqlsh(fpqqlsh);
+			Map<String, Object> map = getChBean(kpxx,fpmxList);
+			Kpxx kpxx_ch = (Kpxx) map.get("kpxx");
+			kpxx_ch.setFpqqlsh(newLshao);
+			kpxx_ch.setFpdm(fpdm);
+			kpxx_ch.setFphm(fphm);
+			kpxx_ch.setKprq(kprq);
+			kpxx_ch.setJqbh(jqbh);
+			kpxx_ch.setSkm(skm);
+			kpxx_ch.setJym(jym);
+			List<Fpmx> fpmxList_ch =(List<Fpmx>) map.get("fpmxList");
+			for(Fpmx fp:fpmxList_ch){
+				fp.setFpqqlsh(newLshao);
+			}
+			fpService.insertFp(kpxx_ch, fpmxList_ch);
+			
+			System.out.println("发票代码："+fpdm+"；新发票号码"+fphm);
+			Map<String, Object> result = new HashMap<>();
+			result.put("status", "success");
+			return result;
+		}
+		
+		private Map<String, Object> getChBean(Kpxx kpxx,List<Fpmx> fpmxList){
+			kpxx.setKplx((byte)1);
+			kpxx.setYfpdm(kpxx.getFpdm());
+			kpxx.setYfphm(kpxx.getFphm());
+			kpxx.setHjje(-kpxx.getHjje());
+			kpxx.setHjse(-kpxx.getHjse());
+			kpxx.setJshj(-kpxx.getJshj());
+			
+			for(Fpmx tmp : fpmxList){
+				tmp.setXmsl(-tmp.getXmsl());
+				tmp.setXmje(-tmp.getXmje());
+				tmp.setSe(-tmp.getSe());
+			}
+			Map<String, Object> map = new HashMap<>();
+			map.put("kpxx", kpxx);
+			map.put("fpmxList", fpmxList);
+			return map;
+			
+		}
 }
