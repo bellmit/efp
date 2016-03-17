@@ -22,9 +22,9 @@ function baocunsk(){
         success: function (data) {
         	//alert(JSON.stringify(data))
         	if(data == 1){
-        		alert("保存成功");
+        		window.parent.$.messager.alert('消息',"保存成功");
         	}else{
-        		alert("保存失败")
+        		window.parent.$.messager.alert('消息',"保存失败")
         	}
         	
         },
@@ -32,7 +32,7 @@ function baocunsk(){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error");
         	}
         }
 	});
@@ -95,7 +95,7 @@ function quNsrsbh(){
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error");
         	}
         }
 	});
@@ -121,14 +121,12 @@ function init(){
             	$('#port').val(data.skConfig.port);
             	$('#aqm').val(data.skConfig.aqm);
         	}
-        	
-        	
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error");
         	}
         }
 	});
