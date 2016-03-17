@@ -29,24 +29,24 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	private PrintConfigMapper dydao;
 	
 	@Override
-	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx, int requestPage, int pageSize) {
+	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
 		requestPage = (requestPage - 1) * pageSize;
-		return dao.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx, requestPage, pageSize);
+		return dao.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx, requestPage, pageSize, xsfnsrsbh);
 	}
 	
 	@Override
-	public int queryCount(String beginDate, String endDate, String kpdq, String zddh, String fplx) {
+	public int queryCount(String beginDate, String endDate, String kpdq, String zddh, String fplx, String xsfnsrsbh) {
 		
-		return dao.queryCount(beginDate, endDate, kpdq, zddh, fplx);
+		return dao.queryCount(beginDate, endDate, kpdq, zddh, fplx, xsfnsrsbh);
 	}
 
 	@Override
 	public List<Map<String, String>> getPrintPpsList(String beginDate, String endDate, String beginfphm,
-			String endfphm, String fplx) {
+			String endfphm, String fplx, String xsfnsrsbh) {
 		
 		List<Map<String, String>> _list = new ArrayList<Map<String, String>>();
 		
-		List<Map<String, String>> list = dao.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx);
+		List<Map<String, String>> list = dao.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx, xsfnsrsbh);
 		if(null != list && list.size() > 0){
 			
 			String _beginDate = list.get(0).get("kprq");

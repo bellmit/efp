@@ -26,7 +26,7 @@
   a.gmfmc fptt, b.spzl fpnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
   from kpxx a  
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
-  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
+  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} 
    <if test="beginDate != null and beginDate!=''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>
@@ -47,7 +47,7 @@
   	select count(a.id) count
    	from kpxx a  
 	  LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
-	  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} 
+	  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx}  and a.xsfnsrsbh = #{xsfnsrsbh} 
 	   <if test="beginDate != null and beginDate!=''" >
 	     <![CDATA[and b.ddsj >= #{beginDate} ]]>
 	    </if>
@@ -72,7 +72,7 @@
   <select id="getPrintPpsList" parameterType="map" resultMap="QueryPrintPpsMap">
   	select a.fpqqlsh fpqqlsh, a.kprq kprq, a.fphm fphm 
   	from kpxx a 
-  	WHERE 1=1  and a.fpzt = '2' and a.fplx = #{fplx} 
+  	WHERE 1=1  and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} 
   	<if test="beginDate != null and beginDate!=''" >
      <![CDATA[and a.kprq >= #{beginDate} ]]>
     </if>
