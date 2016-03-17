@@ -158,7 +158,7 @@ public class UserServiceImpl implements IUserService {
 		String sql = "select distinct(nsrsbh) from dj_fpcxx";
 		logger.info("获取纳税人识别号列表");
 		List<String> list = new ArrayList<>();
-		jdbcTemplate.queryForList(sql, list);
+		list = jdbcTemplate.queryForList(sql,String.class);
 		return list;
 		
 	}
