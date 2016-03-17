@@ -323,7 +323,7 @@
       fpzt = #{fpzt,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  
+ 
    <select id="getPlainList" resultMap="QueryMap" parameterType="map" >
 	select a.fpqqlsh,b.zddh,b.fddh,
 	b.hym,b.shr,b.sqsj,b.kpdq,b.spzl,a.gmfmc,a.jshj,a.hjse,a.hjje,a.fplx
@@ -365,7 +365,7 @@
      and b.kpdq = #{kpdq}
     </if>
   </select>
-  
+<!-- 普通发票作废-查询 -->   
   <select id="getPlainList4zf" resultMap="QueryMap4zf" parameterType="map" >
 	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
 	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
@@ -394,6 +394,7 @@
     </if>
   </select>
   
+<!-- 专用发票作废-查询 -->    
   <select id="getSpecialList4zf" resultMap="QueryMap4zf" parameterType="map" >
 	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
 	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
@@ -421,7 +422,7 @@
     LIMIT #{startRow},#{rows}
     </if>
   </select>
-  
+<!-- 普通发票作废-查询总数 -->    
   <select id="getPlainList4zfCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
 	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007'
@@ -444,10 +445,113 @@
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
     </if>
   </select>
-  
+<!-- 专用发票作废-查询总数 -->    
   <select id="getSpecialList4zfCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
 	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004'
+    <if test="beginDate != null and beginDate != ''" >
+     <![CDATA[and k.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''" >
+     <![CDATA[and k.kprq <= #{endDate} ]]>
+    </if>
+    <if test="hyid4q != null and hyid4q != '' " >
+     and o.hyid like CONCAT('%',#{hyid4q },'%' )
+    </if>
+    <if test="fphm4q != null and fphm4q != '' " >
+     and k.fphm like CONCAT('%',#{fphm4q },'%' )
+    </if>
+    <if test="ddh4q != null and ddh4q != '' " >
+     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+    </if>
+    <if test="sjh4q != null and sjh4q != '' " >
+     and o.shrdh like CONCAT('%',#{sjh4q },'%' )
+    </if>
+  </select>
+  <!-- 普通发票冲红-查询 -->   
+  <select id="getPlainList4ch" resultMap="QueryMap4zf" parameterType="map" >
+	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
+	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
+	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007' and k.hjje>0
+    <if test="beginDate != null and beginDate != ''" >
+     <![CDATA[and k.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''" >
+     <![CDATA[and k.kprq <= #{endDate} ]]>
+    </if>
+    <if test="hyid4q != null and hyid4q != '' " >
+     and o.hyid like CONCAT('%',#{hyid4q },'%' )
+    </if>
+    <if test="fphm4q != null and fphm4q != '' " >
+     and k.fphm like CONCAT('%',#{fphm4q },'%' )
+    </if>
+    <if test="ddh4q != null and ddh4q != '' " >
+     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+    </if>
+    <if test="sjh4q != null and sjh4q != '' " >
+     and o.shrdh like CONCAT('%',#{sjh4q },'%' )
+    </if>
+    ORDER BY k.fphm
+    <if test="startRow != null and rows !=null">
+    LIMIT #{startRow},#{rows}
+    </if>
+  </select>
+  
+<!-- 专用发票冲红-查询 -->    
+  <select id="getSpecialList4ch" resultMap="QueryMap4zf" parameterType="map" >
+	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
+	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
+	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004' and k.hjje>0
+    <if test="beginDate != null and beginDate != ''" >
+     <![CDATA[and k.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''" >
+     <![CDATA[and k.kprq <= #{endDate} ]]>
+    </if>
+    <if test="hyid4q != null and hyid4q != '' " >
+     and o.hyid like CONCAT('%',#{hyid4q },'%' )
+    </if>
+    <if test="fphm4q != null and fphm4q != '' " >
+     and k.fphm like CONCAT('%',#{fphm4q },'%' )
+    </if>
+    <if test="ddh4q != null and ddh4q != '' " >
+     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+    </if>
+    <if test="sjh4q != null and sjh4q != '' " >
+     and o.shrdh like CONCAT('%',#{sjh4q },'%' )
+    </if>
+    ORDER BY k.fphm
+    <if test="startRow != null and rows !=null">
+    LIMIT #{startRow},#{rows}
+    </if>
+  </select>
+<!-- 普通发票冲红-查询总数 -->    
+  <select id="getPlainList4chCount" resultType="java.lang.Integer" parameterType="map" >
+	select count(*)
+	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007' and k.hjje>0
+    <if test="beginDate != null and beginDate != ''" >
+     <![CDATA[and k.kprq >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate != ''" >
+     <![CDATA[and k.kprq <= #{endDate} ]]>
+    </if>
+    <if test="hyid4q != null and hyid4q != '' " >
+     and o.hyid like CONCAT('%',#{hyid4q },'%' )
+    </if>
+    <if test="fphm4q != null and fphm4q != '' " >
+     and k.fphm like CONCAT('%',#{fphm4q },'%' )
+    </if>
+    <if test="ddh4q != null and ddh4q != '' " >
+     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+    </if>
+    <if test="sjh4q != null and sjh4q != '' " >
+     and o.shrdh like CONCAT('%',#{sjh4q },'%' )
+    </if>
+  </select>
+<!-- 专用发票冲红-查询总数 -->    
+  <select id="getSpecialList4chCount" resultType="java.lang.Integer" parameterType="map" >
+	select count(*)
+	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004' and k.hjje>0
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and k.kprq >= #{beginDate} ]]>
     </if>

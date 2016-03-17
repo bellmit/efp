@@ -35,5 +35,13 @@ public interface OrderDetailMapper {
     
     int getSpecialList4zfCount(Map<String, Object> param);
     
+    List<Map<String, Object>> getPlainList4ch(Map<String, Object> param);
+    
+    List<Map<String, Object>> getSpecialList4ch(Map<String, Object> param);
+    
+    int getPlainList4chCount(Map<String, Object> param);
+    
+    int getSpecialList4chCount(Map<String, Object> param);
+    
     OrderDetail selectByDdh(@Param("zddh")String zddh , @Param("fddh")String fddh);
 }

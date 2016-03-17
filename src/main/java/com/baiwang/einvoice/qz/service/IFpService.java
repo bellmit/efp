@@ -49,6 +49,16 @@ public interface IFpService {
 	int getPlainList4zfCount(Map<String, Object> param);
     
     int getSpecialList4zfCount(Map<String, Object> param);
+    
+    List<Map<String, Object>> getPlainList4ch(Map<String, Object> param);
+    
+    List<Map<String, Object>> getSpecialList4ch(Map<String, Object> param);
+    
+    int getPlainList4chCount(Map<String, Object> param);
+    
+    int getSpecialList4chCount(Map<String, Object> param);
 	
 	void saveCallBackInfo(Kpxx kpxx);
+	
+	void insertFp(Kpxx kpxx,List<Fpmx> fpmxList);
 }
