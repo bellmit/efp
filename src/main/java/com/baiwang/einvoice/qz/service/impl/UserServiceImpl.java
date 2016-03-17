@@ -43,7 +43,10 @@ public class UserServiceImpl implements IUserService {
 	public User getUserByName(String name) {
 		User user = new User();
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(loginDataSource);
-		String sql = "select yhkl,qybz,yhlx,kpddm,nsrsbh,cjrdm from dj_czyxx where czydm = ?";
+		String sql = "select yhkl,qybz,yhlx,a.kpddm,b.nsrsbh, a.cjrdm from dj_czyxx a " + 
+				"LEFT JOIN dj_kpdxx b " + 
+				"ON a.KPDDM = b.KPDDM " + 
+				" where a.czydm  = ?";
 		logger.info("用户名【" + name + "】正在登录...");
 		user = (User) jdbcTemplate.queryForObject(sql, new Object[] { name }, new RowMapper<Object>() {
 			@Override
