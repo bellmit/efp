@@ -27,7 +27,6 @@
 	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
 	         	
-		     	<br/>
 				<label>主订单号:</label>
 				<input type="text" id="zddh" name="zddh" placeholder="主订单号"/>
 				 <input id="currentPage" name="currentPage" type="hidden"/>
@@ -183,12 +182,17 @@ function getTotalMidValue(source, priStr, suxStr) {
 		var row = datagrid_pp.datagrid('getChecked');
 		var xmlList;
 		if(row ==null || row == ''){
-			alert('请选择一项进行开具!');
+			window.parent.$.messager.alert('消息','请选择一项进行开具!');
 			return;
 		}
-		if(!confirm("确定要开具发票吗？")){
+		/* if(!confirm("确定要开具发票吗？")){
 			return;
-		}
+		} */
+		$.messager.confirm("操作提示", "您确定要执行开票操作吗？", function (data) {  
+            if (!data) {  
+                return;  
+            }  
+        });  
 		if(!SetParameter()){
 			return;
 		}
@@ -242,11 +246,11 @@ function getTotalMidValue(source, priStr, suxStr) {
 				if(returnmsg != "此发票已经开具过"){
 					updateStatus(fpqqlsh ,str,resultXml,-1);
 				}
-				alert("发票领购信息核对失败，失败原因："+returnmsg);
+				window.parent.$.messager.alert('消息',"发票领购信息核对失败，失败原因："+returnmsg);
 				return false;
 			}
 	} catch (e) {
-			alert(e.message + ",errno:" + e.number);
+		window.parent.$.messager.alert('消息',e.message + ",errno:" + e.number);
 	}
 	}
 	
@@ -259,16 +263,17 @@ function getTotalMidValue(source, priStr, suxStr) {
 			async: false,
 			success: function (data) {
 	        	if(data.status == 'success'){
+	        		window.parent.$.messager.alert('消息',"开具成功!发票请求流水号为："+fpqqlsh);
 	        		searchZpList();
 	        	}else{
-	        		alert("开具成功,保存状态失败");
+	        		window.parent.$.messager.alert('消息',"开具成功,保存状态失败!");
 	        	}
 	        },
 	        error:function(XMLHttpRequest, textStatus, errorThrown) {
 	        	if(XMLHttpRequest.responseText=="timeOut"){
 	        		window.top.location.reload();
 	        	}else{
-	        		alert("Error");
+	        		window.parent.$.messager.alert('消息',"error!");
 	        	}
 	        }
 		});

@@ -27,7 +27,6 @@
 	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
 	         	
-		     	<br/>
 				<label>主订单号:</label>
 				<input type="text" id="zddh" name="zddh" placeholder="主订单号"/>
 				 <input id="currentPage" name="currentPage" type="hidden"/>
@@ -64,7 +63,7 @@ var datagrid_zp;
 function initDataGridComponent(){
 	var qParams = form2Json('queryForm');
 	datagrid_zp = $("#datagrid_zp").datagrid({
-				title : "待开增值税专业发票",
+				title : "待开增值税专用发票",
 				height: "450",
 				//width: '1500',
 				checkOnSelect:true,
@@ -183,7 +182,7 @@ function multi_kjfp(){
 	var row = datagrid_zp.datagrid('getChecked');
 	var xmlList;
 	if(row ==null || row == ''){
-		alert('请选择一项进行开具!');
+		window.parent.$.messager.alert('消息',"请选择一项进行开具!");
 		return;
 	}
 	if(!confirm("确定要开具发票吗？")){
@@ -232,7 +231,6 @@ function searchZpList(){
 function Kp(str){
 	try {
 		var resultXml = sk.Operate(str);
-		alert(resultXml);
 		var returncode = getTotalMidValue(resultXml, "<returncode>","</returncode>");
 		var returnmsg = getTotalMidValue(resultXml, "<returnmsg>","</returnmsg>");	
 		var fpqqlsh = getTotalMidValue(str, "<fpqqlsh>","</fpqqlsh>");
@@ -243,18 +241,15 @@ function Kp(str){
 			if(returnmsg != "此发票已经开具过"){
 				updateStatus(fpqqlsh ,str,resultXml,-1);
 			}
-			alert("发票领购信息核对失败，失败原因："+returnmsg);
+			window.parent.$.messager.alert('消息',"发票领购信息核对失败，失败原因："+returnmsg);
 			return false;
 		}
 } catch (e) {
-		alert(e.message + ",errno:" + e.number);
+			window.parent.$.messager.alert('消息',e.message + ",errno:" + e.number);
 }
 }
 
 function updateStatus(fpqqlsh ,str , resultXml ,status){
-	alert(fpqqlsh);
-	alert(str);
-	alert(resultXml);
 	$.ajax({
  	    type:"POST",
  	    url:"../fpkj/callback",
@@ -263,16 +258,17 @@ function updateStatus(fpqqlsh ,str , resultXml ,status){
 		async: false,
 		success: function (data) {
         	if(data.status == 'success'){
+        		window.parent.$.messager.alert('消息',"开具成功!发票请求流水号为："+fpqqlsh);
         		searchZpList();
         	}else{
-        		alert("开具成功,保存状态失败");
+        		window.parent.$.messager.alert('消息',"开具成功,保存状态失败");
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("Error");
+        		window.parent.$.messager.alert('消息',"Error");
         	}
         }
 	});
