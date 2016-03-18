@@ -43,7 +43,8 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	@Override
 	public List<Map<String, String>> getPrintPpsList(String beginDate, String endDate, String beginfphm,
 			String endfphm, String fplx, String xsfnsrsbh) {
-		
+		beginDate = beginDate.replaceAll("-", "");
+		endDate = endDate.replaceAll("-", "");
 		List<Map<String, String>> _list = new ArrayList<Map<String, String>>();
 		
 		List<Map<String, String>> list = dao.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx, xsfnsrsbh);
