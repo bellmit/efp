@@ -169,7 +169,7 @@ public class XmlToUbl {
  		sb.append(				"</cac:PartyIdentification>");
  		sb.append(				"<cac:PartyName>");
  		sb.append(					"<cbc:Name>");
- 		String xsfmc = "中国保险信息技术管理有限责任公司";/*InvoiceUtil.getIntervalValue(xml, "<XSF_MC>", "</XSF_MC>");
+ 		String xsfmc = InvoiceUtil.getIntervalValue(xml, "<XSF_MC>", "</XSF_MC>");/*"中国保险信息技术管理有限责任公司";
  		if (xsfmc!=null && xsfmc.indexOf("百旺")>=0)
  			xsfmc = xsfmc.replaceFirst("百旺", "百望");*/
  		sb.append(						xsfmc);//18

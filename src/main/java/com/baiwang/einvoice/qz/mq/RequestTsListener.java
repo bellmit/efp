@@ -42,7 +42,7 @@ public class RequestTsListener  implements SessionAwareMessageListener{
 		logger.info("***********转换ubl****************" + ubl);
 		
 		String reqestTsPlat = tsService.reqestTsPlat(ubl);
-		System.out.println("请求发票平台返回：" + reqestTsPlat);
+		logger.info("////////请求ts发票平台//////reqestTsPlat///////" + reqestTsPlat);
 		if(!"0000".equals(reqestTsPlat)){
 			
 			final Timer timer = new Timer();

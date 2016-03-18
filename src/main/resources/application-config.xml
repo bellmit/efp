@@ -99,6 +99,8 @@
     
 	<!-- <bean id="EInvoceKjfpfhListener" class="com.baiwang.einvoice.qz.mq.EInvoceKjfpfhListener"></bean> -->
 	
+	
+	<!-- 返回消息的队列（手动接收） -->
     <bean id="einvoiceKjfpfhMQ" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg index="0" value="baiwang.einvoice.kjfpfh" />
 	</bean>
