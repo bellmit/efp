@@ -11,7 +11,25 @@
 
 <SCRIPT type="text/javascript" src="jquery-plugins.js.js"></SCRIPT>
 <script type="text/javascript">
-	
+Date.prototype.format = function (fmt) { //author: meizz
+    var o = {
+        "m+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "M+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+$(function(){
+	$('#kprq').text(new Date().format("yyyy年mm月dd日"));
+})
+
 </script>
 <META content="text/html; charset=GBK" http-equiv="Content-Type">
 <LINK rel="stylesheet" type="text/css" href="template.css">
@@ -53,27 +71,6 @@
 					});
 				</SCRIPT>
 
-				<DIV id="div1">
-					<DIV style="border: 0px currentColor;" id="j_idt33"
-						class="ui-tabmenu ui-widget ui-widget-content ui-corner-all">
-						<UL
-							class="ui-tabmenu-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"
-							role="tablist">
-							<LI aria-expanded="true"
-								class="ui-tabmenuitem ui-state-default ui-state-active ui-corner-top"
-								role="tab"><A style="font-size: 14px; float: none;"
-								id="kjbz" class="ui-menuitem-link ui-corner-all" href=""><SPAN
-									class="ui-menuitem-text">电子发票开具</SPAN></A></LI>
-						</UL>
-					</DIV>
-					<SCRIPT id="j_idt33_s" type="text/javascript">
-						PrimeFaces.cw('TabMenu', 'widget_j_idt33', {
-							id : 'j_idt33'
-						});
-					</SCRIPT>
-
-					<DIV class="redline"></DIV>
-				</DIV>
 				<FORM id="zsfpform" class="fp-main"
 					encType="application/x-www-form-urlencoded" method="post"
 					name="zsfpform" action="../../einvoice/fpkj/ekp">
@@ -86,20 +83,20 @@
 					<DIV class="fp-content">
 						<DIV class="fp-content-left"></DIV>
 						<DIV class="fp-content-center">
-						手机号：<input type="text" name="telphone" value="" style="width:150px"><!-- 18600404122 -->
-							邮箱：<input type="text" name="email" value="" style="width:180px"><!-- xuyunfei@baiwang.com -->
+<!-- 						手机号：<input type="text" name="telphone" value="" style="width:150px">18600404122 -->
+<!-- 							邮箱：<input type="text" name="email" value="" style="width:180px">xuyunfei@baiwang.com -->
 							<H1 class="fp-title">
 								
 								<SPAN class="fpdm"> <!-- <SPAN  --> <!-- id="fpdm">1100098082</SPAN> -->
-								</SPAN><SPAN id="province"></SPAN>北京电子增值税普通发票 <SPAN class="fphm"> <!-- <IMG id="j_idt38" alt="" src="hyfp_no27_26.jpg"  -->
+								</SPAN><SPAN id="province"></SPAN>增值税电子普通发票 <SPAN class="fphm"> <!-- <IMG id="j_idt38" alt="" src="hyfp_no27_26.jpg"  -->
 									<!-- width="20" height="19"> --> <!-- <SPAN style="margin-left: 5px;"  -->
 									<!-- id="fphm">74560028</SPAN> -->
 								</SPAN>
 							</H1>
 							<!-- <SPAN style="line-height: 12px; margin-left: 2%;">机器编号:  -->
 							<!-- </SPAN><SPAN style="color: black;" id="jqbh">499099991291</SPAN> -->
-							<SPAN style="line-height: 12px; margin-left: 44%;">开票日期：</SPAN><SPAN
-								style="color: black;"><SPAN id="kprq">2016年3月10日</SPAN></SPAN>
+							<SPAN style="line-height: 12px; margin-left: 75%;">开票日期：</SPAN><SPAN
+								style="color: black;"><SPAN id="kprq"></SPAN></SPAN>
 							<TABLE
 								style="margin-top: 4px; border-top-color: rgb(140, 64, 11); border-top-width: 1px; border-top-style: solid;"
 								cellSpacing="0" cellPadding="0">

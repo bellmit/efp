@@ -41,6 +41,9 @@ function chFp(){
 					if(data.status=='success'){
 						xml = data.xml;
 						Kp(xml,row.fpqqlsh);
+					}else if(data.status=='-1'){
+						window.parent.$.messager.alert('消息',data.msg);
+						window.top.location.href="../login/login.html"
 					}
 				}	
 		});
@@ -156,7 +159,7 @@ function insertCh(fpqqlsh,resultXml,newLshao){
 </head>
 <body>
 <div id="toolbar_div" class="toolbar_div" >
-   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-filesave" onclick="chFp();" plain="true">冲红</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-tip" onclick="chFp();" plain="true">冲红</a>
    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询条件</a>
    
    <div id="div_search" class="div_search">

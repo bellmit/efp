@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <% String basePath = request.getContextPath(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,6 +39,9 @@ function chFp(){
 					if(data.status=='success'){
 						xml = data.xml;
 						Kp(xml,row.fpqqlsh);
+					}else if(data.status=='-1'){
+						window.parent.$.messager.alert('消息',data.msg);
+						window.top.location.href="../login/login.html"
 					}
 				}	
 		});
@@ -156,7 +157,7 @@ function insertCh(fpqqlsh,resultXml,newLshao){
 </head>
 <body>
 <div id="toolbar_div" class="toolbar_div" >
-   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-filesave" onclick="chFp();" plain="true">冲红</a>
+   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-tip" onclick="chFp();" plain="true">冲红</a>
    <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="hideOrShow();" plain="true">查询条件</a>
    
    <div id="div_search" class="div_search">

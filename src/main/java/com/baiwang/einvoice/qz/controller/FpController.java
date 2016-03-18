@@ -247,6 +247,7 @@ public class FpController {
 			String newLsh = XmlUtil.random();
 			Kpxx kpxx_ch = (Kpxx) map.get("kpxx");
 			kpxx.setFpqqlsh(newLsh);
+			@SuppressWarnings("unchecked")
 			List<Fpmx> fpmxList_ch =(List<Fpmx>) map.get("fpmxList");
 			for(Fpmx fp:fpmxList_ch){
 				fp.setFpqqlsh(newLsh);
@@ -282,6 +283,7 @@ public class FpController {
 			kpxx_ch.setJqbh(jqbh);
 			kpxx_ch.setSkm(skm);
 			kpxx_ch.setJym(jym);
+			@SuppressWarnings("unchecked")
 			List<Fpmx> fpmxList_ch =(List<Fpmx>) map.get("fpmxList");
 			for(Fpmx fp:fpmxList_ch){
 				fp.setFpqqlsh(newLshao);
