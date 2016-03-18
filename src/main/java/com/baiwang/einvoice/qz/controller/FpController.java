@@ -96,6 +96,8 @@ public class FpController {
 		param.put("fphm4q", fphm4q);
 		param.put("ddh4q",ddh4q );
 		param.put("sjh4q",sjh4q );
+		User user = (User)request.getSession().getAttribute("user");
+		param.put("nsrsbh", user.getNsrsbh());
 		param.put("startRow", (page-1)*rows);
 		param.put("rows", rows);
 		List<Map<String, Object>> fpxxList = fpService.getPlainList4zf(param);
@@ -122,6 +124,8 @@ public class FpController {
 		param.put("fphm4q", fphm4q);
 		param.put("ddh4q",ddh4q );
 		param.put("sjh4q",sjh4q );
+		User user = (User)request.getSession().getAttribute("user");
+		param.put("nsrsbh", user.getNsrsbh());
 		param.put("startRow", (page-1)*rows);
 		param.put("rows", rows);
 		List<Map<String, Object>> fpxxList = fpService.getSpecialList4zf(param);
@@ -188,6 +192,8 @@ public class FpController {
 			param.put("fphm4q", fphm4q);
 			param.put("ddh4q",ddh4q );
 			param.put("sjh4q",sjh4q );
+			User user = (User)request.getSession().getAttribute("user");
+			param.put("nsrsbh", user.getNsrsbh());
 			param.put("startRow", (page-1)*rows);
 			param.put("rows", rows);
 			List<Map<String, Object>> fpxxList = fpService.getPlainList4ch(param);
@@ -214,6 +220,8 @@ public class FpController {
 			param.put("fphm4q", fphm4q);
 			param.put("ddh4q",ddh4q );
 			param.put("sjh4q",sjh4q );
+			User user = (User)request.getSession().getAttribute("user");
+			param.put("nsrsbh", user.getNsrsbh());
 			param.put("startRow", (page-1)*rows);
 			param.put("rows", rows);
 			List<Map<String, Object>> fpxxList = fpService.getSpecialList4ch(param);
@@ -261,7 +269,7 @@ public class FpController {
 			return param;
 		}
 		
-		//发票冲红
+		//发票冲红-插入红票数据
 		@RequestMapping(value="insertCh")
 		@ResponseBody
 		public Map<String, Object> insertCh(String fpqqlsh,String newLshao,String resultXml){
