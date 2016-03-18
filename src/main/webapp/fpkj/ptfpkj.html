@@ -188,14 +188,9 @@ function getTotalMidValue(source, priStr, suxStr) {
 			window.parent.$.messager.alert('消息','请选择一项进行开具!');
 			return;
 		}
-		/* if(!confirm("确定要开具发票吗？")){
+		if(!confirm("确定要开具发票吗？")){
 			return;
-		} */
-		$.messager.confirm("操作提示", "您确定要执行开票操作吗？", function (data) {  
-            if (!data) {  
-                return;  
-            }  
-        });  
+		}
 		if(!SetParameter()){
 			return;
 		}
