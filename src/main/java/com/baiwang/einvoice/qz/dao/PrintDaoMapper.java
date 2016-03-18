@@ -8,11 +8,12 @@ import org.apache.ibatis.annotations.Param;
 public interface PrintDaoMapper {
 
 	List<Map<String, String>> getPrintPpList(@Param("beginDate")String beginDate, 
-			@Param("endDate")String endDate, @Param("kpdq")String kpdq, @Param("zddh")String zddh, 
+			@Param("endDate")String endDate, @Param("hyid")String hyid, @Param("fphm")String fphm, @Param("zddh")String zddh, @Param("gmfsjh")String gmfsjh,
 			@Param("fplx")String fplx, @Param("requestPage")int requestPage, @Param("pageSize")int pageSize, @Param("xsfnsrsbh")String xsfnsrsbh);
 	
-	int queryCount(@Param("beginDate")String beginDate, @Param("endDate")String endDate, 
-			@Param("kpdq")String kpdq, @Param("zddh")String zddh, @Param("fplx")String fplx, @Param("xsfnsrsbh")String xsfnsrsbh);
+	int queryCount(@Param("beginDate")String beginDate, 
+			@Param("endDate")String endDate, @Param("hyid")String hyid, @Param("fphm")String fphm, @Param("zddh")String zddh, @Param("gmfsjh")String gmfsjh,
+			@Param("fplx")String fplx, @Param("requestPage")int requestPage, @Param("pageSize")int pageSize, @Param("xsfnsrsbh")String xsfnsrsbh);
 
 	List<Map<String, String>> getPrintPpsList(@Param("beginDate")String beginDate, @Param("endDate")String endDate, 
 			@Param("beginfphm")String beginfphm, @Param("endfphm")String endfphm, @Param("fplx")String fplx, @Param("xsfnsrsbh")String xsfnsrsbh);

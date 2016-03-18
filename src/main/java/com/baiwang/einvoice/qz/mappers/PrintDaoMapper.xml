@@ -7,7 +7,9 @@
     <result column="zddh" property="zddh" jdbcType="VARCHAR" />
     <result column="fddh" property="fddh" jdbcType="VARCHAR" />
     <result column="hym" property="hym" jdbcType="VARCHAR" /><!-- 会员名 -->
+    <result column="hyid" property="hyid" jdbcType="VARCHAR" /><!-- 会员id -->
     <result column="shr" property="shr" jdbcType="VARCHAR" /><!-- 收款人 -->
+    <result column="shrdh" property="shrdh" jdbcType="VARCHAR" /><!-- 收款人 -->
     <result column="sqsj" property="sqsj" jdbcType="DATE" /><!-- 申请时间 --><!-- 地区 -->
     <result column="kpdq" property="kpdq" jdbcType="TINYINT" /><!-- 开票地区 -->
     <result column="gmfmc" property="fptt" jdbcType="VARCHAR" /><!-- 抬头(购买方名称) -->
@@ -22,23 +24,29 @@
   </resultMap>
   
   <select id="getPrintPpList" resultMap="QueryPrintPpMap" parameterType="map">
-  select a.fpqqlsh fpqqlsh, a.zddh zddh, a.fddh fddh, b.hym hym, b.shr shr, b.sqsj, b.kpdq, a.fplx fpzl,
+  select a.fpqqlsh fpqqlsh, a.zddh zddh, a.fddh fddh, b.hym hym, b.hyid hyid, b.shr shr,b.shrdh shrdh, b.sqsj, b.kpdq, a.fplx fpzl,
   a.gmfmc fptt, b.spzl fpnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
   from kpxx a  
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
   WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} 
    <if test="beginDate != null and beginDate!=''" >
-     <![CDATA[and b.ddsj >= #{beginDate} ]]>
+     <![CDATA[and left(a.kprq ,8) >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
-     <![CDATA[and b.ddsj <= #{endDate} ]]>
+     <![CDATA[and left(a.kprq ,8) <= #{endDate} ]]>
+    </if>
+    <if test="hyid != null and hyid !=''" >
+     and b.hyid like CONCAT('%',#{hyid },'%' )
+    </if>
+    <if test="fphm != null and fphm !=''" >
+     and a.fphm = #{fphm} 
     </if>
     <if test="zddh != null and zddh !=''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
-    <if test="kpdq != null and kpdq !=''" >
-     and b.kpdq = #{kpdq}
-    </if>
+    <if test="gmfsjh != null and gmfsjh !=''" >
+     and a.gmfdh = #{gmfsjh}
+    </if> 
     ORDER BY a.fphm 
   	LIMIT #{requestPage},#{pageSize}
   </select>
@@ -49,17 +57,23 @@
 	  LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
 	  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx}  and a.xsfnsrsbh = #{xsfnsrsbh} 
 	   <if test="beginDate != null and beginDate!=''" >
-	     <![CDATA[and b.ddsj >= #{beginDate} ]]>
-	    </if>
-	    <if test="endDate != null and endDate !=''" >
-	     <![CDATA[and b.ddsj <= #{endDate} ]]>
-	    </if>
-	    <if test="zddh != null and zddh !=''" >
-	     and b.zddh like CONCAT('%',#{zddh },'%' )
-	    </if>
-	    <if test="kpdq != null and kpdq !=''" >
-	     and b.kpdq = #{kpdq}
-	    </if> 
+     <![CDATA[and left(a.kprq ,8) >= #{beginDate} ]]>
+    </if>
+    <if test="endDate != null and endDate !=''" >
+     <![CDATA[and left(a.kprq ,8) <= #{endDate} ]]>
+    </if>
+    <if test="hyid != null and hyid !=''" >
+     and b.hyid like CONCAT('%',#{hyid },'%' )
+    </if>
+    <if test="fphm != null and fphm !=''" >
+     and a.fphm = #{fphm} 
+    </if>
+    <if test="zddh != null and zddh !=''" >
+     and b.zddh like CONCAT('%',#{zddh },'%' )
+    </if>
+    <if test="gmfsjh != null and gmfsjh !=''" >
+     and a.gmfdh = #{gmfsjh}
+    </if> 
   
   </select>
   
@@ -74,10 +88,10 @@
   	from kpxx a 
   	WHERE 1=1  and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} 
   	<if test="beginDate != null and beginDate!=''" >
-     <![CDATA[and a.kprq >= #{beginDate} ]]>
+     <![CDATA[and left(a.kprq ,8) >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
-     <![CDATA[and a.kprq <= #{endDate} ]]>
+     <![CDATA[and left(a.kprq ,8) <= #{endDate} ]]>
     </if>
     <if test="beginfphm != null and beginfphm !=''" >
      <![CDATA[and a.fphm >= #{beginfphm} ]]>

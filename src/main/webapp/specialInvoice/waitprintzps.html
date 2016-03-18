@@ -278,8 +278,8 @@ function initDataGridComponent(){
 		             {field:'endfphm',title:'发票号码止',width:100,editor:'text'},
 			         {field:'lxzs',title:'连续张数',width:100,editor:'text'}
 				]],
-				onClickRow:function(index){	
-					
+				onLoadSuccess:function(data){
+					$('#datagrid_zp').datagrid('unselectAll');
 				}
 	});
 	

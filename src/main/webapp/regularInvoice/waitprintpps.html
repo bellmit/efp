@@ -281,6 +281,9 @@ function initDataGridComponent(){
 				]],
 				onClickRow:function(index){	
 					
+				},
+				onLoadSuccess:function(data){
+					$('#datagrid_zp').datagrid('unselectAll');
 				}
 	});
 	

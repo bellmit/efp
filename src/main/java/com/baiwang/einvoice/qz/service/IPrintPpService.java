@@ -8,7 +8,8 @@ import com.baiwang.einvoice.qz.beans.SkConfig;
 
 public interface IPrintPpService {
 
-	List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx, int requestPage, int pageSize, String xsfnsrsbh);
+	List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx, int requestPage, int pageSize, String xsfnsrsbh);
+	int queryCount(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx, int requestPage, int pageSize, String xsfnsrsbh);
 
 	List<Map<String, String>> getPrintPpsList(String beginDate, String endDate, String beginfphm, String endfphm, String fplx, String xsfnsrsbh);
 
@@ -22,7 +23,6 @@ public interface IPrintPpService {
 
 	List<Map<String, String>> getPrintsFphm(String beginfphm, String endfphm);
 
-	int queryCount(String beginDate, String endDate, String kpdq, String zddh, String fplx, String xsfnsrsbh);
 
 	int queryDetailCount(String begin, String end, String fplx);
 

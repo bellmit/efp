@@ -31,16 +31,16 @@ public class PrintPpController {
 	//单打
 	@RequestMapping("printpp/printlist")
 	@ResponseBody
-	public Map<String, Object> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx,
+	public Map<String, Object> getPrintPpList(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx,
 			int page, int rows, HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
 		Map<String, Object> map = new HashMap<>();
 		
 		if(null != user){
-			logger.info("***用户名：" + user.getCzymc() + "," + beginDate +","+endDate +"," +kpdq +","+ zddh +","+fplx);
+			logger.info("***用户名：" + user.getCzymc() + "," + beginDate +","+endDate +"," +hyid +","+ zddh +","+fplx);
 			
-			List<Map<String,String>> list = service.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx, page, rows, user.getNsrsbh());
-			int size = service.queryCount(beginDate, endDate, kpdq, zddh, fplx, user.getNsrsbh());
+			List<Map<String,String>> list = service.getPrintPpList(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, page, rows, user.getNsrsbh());
+			int size = service.queryCount(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, page, rows, user.getNsrsbh());
 			//int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
 			
 			map.put("rows", list);

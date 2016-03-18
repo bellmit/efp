@@ -29,15 +29,18 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	private PrintConfigMapper dydao;
 	
 	@Override
-	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String kpdq, String zddh, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
+	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
 		requestPage = (requestPage - 1) * pageSize;
-		return dao.getPrintPpList(beginDate, endDate, kpdq, zddh, fplx, requestPage, pageSize, xsfnsrsbh);
+		beginDate = beginDate.replaceAll("-", "");
+		endDate = endDate.replaceAll("-", "");
+		return dao.getPrintPpList(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, requestPage, pageSize, xsfnsrsbh);
 	}
 	
 	@Override
-	public int queryCount(String beginDate, String endDate, String kpdq, String zddh, String fplx, String xsfnsrsbh) {
-		
-		return dao.queryCount(beginDate, endDate, kpdq, zddh, fplx, xsfnsrsbh);
+	public int queryCount(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
+		beginDate = beginDate.replaceAll("-", "");
+		endDate = endDate.replaceAll("-", "");
+		return dao.queryCount(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, requestPage, pageSize, xsfnsrsbh);
 	}
 
 	@Override
