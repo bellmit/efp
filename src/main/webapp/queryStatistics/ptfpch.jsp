@@ -191,6 +191,7 @@ function initDataGridComponent(){
 	var qParams = form2Json('searchForm');
 	datagrid = $("#datagrid").datagrid({
 				title : "普通发票冲红",
+				height: "450",
 				singleSelect:true,
 				rownumbers:true,
 				idField:'fpqqlsh',
@@ -220,6 +221,9 @@ function initDataGridComponent(){
 				]],
 				onClickRow:function(index){	
 					
+				},
+				onLoadSuccess:function(){
+					$('#datagrid').datagrid('clearSelections');
 				}
 	});
 	

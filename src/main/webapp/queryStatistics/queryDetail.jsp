@@ -102,6 +102,7 @@ function initDataGridComponent(){
 	var qParams = form2Json('searchForm');
 	datagrid = $("#datagrid").datagrid({
 				title : "查询发票",
+				height: "450",
 				checkOnSelect:true,
 				selectOnCheck:false,
 				singleSelect:false,
@@ -140,6 +141,9 @@ function initDataGridComponent(){
 				]],
 				onClickRow:function(index){	
 					
+				},
+				onLoadSuccess:function(){
+					$('#datagrid').datagrid('clearSelections');
 				}
 	});
 	
