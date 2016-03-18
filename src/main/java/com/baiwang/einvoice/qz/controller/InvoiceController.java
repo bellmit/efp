@@ -258,12 +258,13 @@ public class InvoiceController {
 	  * @param @param fpqqlsh
 	  * @param @return  
 	  * @return HashMap<String,Object>  
+	 * @throws UnsupportedEncodingException 
 	  * @throws
 	  * @date 2016年3月14日 下午4:41:34
 	 */
 	@RequestMapping("/callback")
 	@ResponseBody
-	public HashMap<String, Object> callback(String xml , String fpqqlsh ,String xml_bw , String status){
+	public HashMap<String, Object> callback(String xml , String fpqqlsh ,String xml_bw , String status) throws UnsupportedEncodingException{
 		
 		HashMap<String, Object> result = new HashMap<>();
 		String returncode = InvoiceUtil.getIntervalValue(xml, "<returncode>", "</returncode>");
@@ -290,10 +291,13 @@ public class InvoiceController {
 		
 		fpService.saveCallBackInfo(fpxx);
 		
-		/*Map<String, String> map = new HashMap<String, String>();
-		map.put("xml", xml_bw);
+		System.out.println(xml_bw.getBytes("utf-8"));
+		Map<String, String> map = new HashMap<String, String>();
+		String xml_ts = new String(XmlUtil.convert(xml_bw.getBytes("gbk")),"gbk");
+		logger.info("纸质发票报文发票转换为："+xml_ts);
+		map.put("xml", xml_ts);
 		map.put("returnSK", xml);
-		tsSender.sendMessage(map);*/
+		tsSender.sendMessage(map);
 		
 		result.put("status", "success");
 		return result;

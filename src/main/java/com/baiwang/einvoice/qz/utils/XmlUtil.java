@@ -4,9 +4,21 @@
 
 package com.baiwang.einvoice.qz.utils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
@@ -151,6 +163,8 @@ public class XmlUtil {
 		sb.append("<kplx>"+kpxx.getKplx()+"</kplx>");
 		sb.append("\r\n");
 		sb.append("<tspz>00</tspz>");
+		sb.append("\r\n");
+		sb.append("<sjh>"+kpxx.getSjh()+"</sjh>");
 		sb.append("\r\n");
 		sb.append("<xhdwsbh>"+kpxx.getXsfnsrsbh()+"</xhdwsbh>");
 		sb.append("\r\n");
@@ -340,6 +354,37 @@ public class XmlUtil {
 		}
 		return str;
 	}
+	
+	public static byte[] convert(byte[] ubl){
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    //File xsltFile = new File("src/main/java/com/tan/controller/ubl_ofd.xsl");
+		InputStream is = UBLUtil.class.getResourceAsStream("xml_change.xsl");
+	    Source xsltSource = new StreamSource(is);
+
+	    Source xmlSource = new StreamSource(new ByteArrayInputStream(ubl));
+	    TransformerFactory transFact = TransformerFactory.newInstance();
+	    Transformer trans = null;
+	    byte[] result = null;
+	    try {
+	        trans = transFact.newTransformer(xsltSource);
+	        trans.transform(xmlSource, new StreamResult(baos));
+	        result = baos.toByteArray();
+	    } catch (TransformerConfigurationException e) {
+	        e.printStackTrace();
+	    } catch (TransformerException e) {
+	        e.printStackTrace();
+	    }finally {
+	    	try {
+				is.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	   
+	    return result;
+	}
+	
 	public static void main(String[] args) {
 			  String str="";
 			  for(int i=0;i<20;i++){
