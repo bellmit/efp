@@ -85,7 +85,7 @@ function exitSystem(){
 		if(r){
 			$.ajax({
 				type:"POST",
-		        url: '../logout',
+		        url: '../../logout',
 		        async:false,
 		        success: function (data) {
 		        	if(data== '0'){
