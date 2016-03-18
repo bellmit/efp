@@ -95,6 +95,9 @@ function initDataGridComponent(){
 			         {field:'fplx',title:'发票种类',width:150,editor:'text',formatter: formatUniversal}
 				]],
 				onClickRow:function(index){	
+				},
+				onLoadSuccess:function(){
+					$('#datagrid_pp').datagrid('clearSelections');
 				}
 	});
 	
