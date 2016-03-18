@@ -14,7 +14,7 @@ public interface IPrintPpService {
 
 	List<Map<String, String>> showDetail(String begin, String end, String fplx, int requestPage, int pageSize);
 
-	SkConfig getSkParameter(String userType);
+	SkConfig getSkParameter(String xsfnsrsbh);
 
 	PrintConfig getPrintParameter(String fplx);
 

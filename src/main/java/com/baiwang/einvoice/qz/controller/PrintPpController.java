@@ -108,10 +108,19 @@ public class PrintPpController {
 			map.put("msg", "用户未登陆");
 			return map;
 		}else{
-			//String userType = Byte.toString(user.getUserType());
-			SkConfig skconf = service.getSkParameter("admin");
+			String code = "-2";
+			String[] fplxdm = user.getFplxdm().split(",");
+			if(null != fplxdm && fplxdm.length > 0){
+				for(int i = 0; i < fplxdm.length; i++){
+					if(fplx.equals(fplxdm[i])){
+						code = "0";
+					}
+				}
+			}
+			SkConfig skconf = service.getSkParameter(user.getNsrsbh());
+			skconf.setKpzdbs(user.getKpddm());
 			PrintConfig printconf = service.getPrintParameter(fplx);
-			map.put("code", "0");
+			map.put("code", code);
 			map.put("msg", "成功");
 			map.put("skconf", skconf);
 			map.put("printconf", printconf);

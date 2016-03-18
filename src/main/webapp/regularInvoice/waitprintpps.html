@@ -13,6 +13,8 @@
 <link rel="stylesheet" type="text/css" href="../css/easyui_global.css"/>
 
 <script type="text/javascript">
+var printable = false;
+var keypwd = '123456';
 var skconf = null;
 var printconf = null;
 var fphmlist = null;
@@ -31,9 +33,12 @@ function getParameter(){
         	//alert(JSON.stringify(data))
         	if(data.code == '-1'){
         		window.top.location.href="../login/login.html";
+        	}else if(data.code == '-2'){
+        		printable = false;
         	}else{
         		skconf = data.skconf;
         		printconf = data.printconf;
+        		printable = true;
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
@@ -78,7 +83,7 @@ function SetParameter() {
 		return false;
 	}
 	//01设置初始化参数
-	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>" + skconf.keypwd + "</keypwd>\r\n<aqm>" + skconf.aqm + "</aqm>\r\n</body>\r\n</business>";		
+	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>" + skconf.url + "</servletip>\r\n<servletport>"+ skconf.port +"</servletport>\r\n<keypwd>" + keypwd + "</keypwd>\r\n<aqm>" + skconf.aqm + "</aqm>\r\n</body>\r\n</business>";		
 	try {
 		ret = sk.Operate(sInputInfo);
 		/* var pos=ret.indexOf("<returncode>"); */
@@ -343,6 +348,10 @@ function setSave(){
  * 打印
  */
 function print(){
+	if(!printable){
+		window.parent.$.messager.alert('消息','您没有权限打印增值税专用发票!');
+		return;
+	}
 	var row = datagrid_zp.datagrid('getSelected');
 	
 	if(row ==null || row == ''){
