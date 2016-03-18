@@ -291,12 +291,12 @@ public class InvoiceController {
 		
 		fpService.saveCallBackInfo(fpxx);
 		
-		System.out.println(xml_bw.getBytes("utf-8"));
 		Map<String, String> map = new HashMap<String, String>();
 		String xml_ts = new String(XmlUtil.convert(xml_bw.getBytes("gbk")),"gbk");
+		String return_xml_ts = XmlUtil.returnXml(fpxx);
 		logger.info("纸质发票报文发票转换为："+xml_ts);
 		map.put("xml", xml_ts);
-		map.put("returnSK", xml);
+		map.put("returnSK", return_xml_ts);
 		tsSender.sendMessage(map);
 		
 		result.put("status", "success");

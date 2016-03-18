@@ -385,6 +385,44 @@ public class XmlUtil {
 	    return result;
 	}
 	
+	public static String returnXml(Kpxx kpxx) throws UnsupportedEncodingException{
+		if (null == kpxx ) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("<?xml version=\"1.0\" encoding=\"gbk\"?>");
+		sb.append("\r\n");
+		sb.append("<business id=\"FPKJ\" comment=\"发票开具\">");
+		sb.append("\r\n");
+		sb.append("<REQUEST_COMMON_FPKJ class=\"REQUEST_COMMON_FPKJ\">");
+		sb.append("\r\n");
+		sb.append("<COMMON_FPKJ_FPT class=\"COMMON_FPKJ_FPT\">");//
+		sb.append("\r\n");
+		sb.append("<JQBH>"+kpxx.getJqbh()+"</JQBH>");//
+		sb.append("\r\n");
+		sb.append("<FP_DM>"+kpxx.getFpdm()+"</FP_DM>");
+		sb.append("\r\n");
+		sb.append("<FP_HM>"+kpxx.getFphm()+"</FP_HM>");
+		sb.append("\r\n");
+		sb.append("<KPRQ>"+kpxx.getKprq()+"</KPRQ>");
+		sb.append("\r\n");
+		sb.append("<FP_MW>"+kpxx.getSkm()+"</FP_MW>");
+		sb.append("\r\n");
+		sb.append("<JYM>"+kpxx.getJym()+"</JYM>");
+		sb.append("\r\n");
+		sb.append("<EWM>"+kpxx.getEwm()+"</EWM>");
+		sb.append("\r\n");
+		sb.append("<RETURNCODE>"+kpxx.getResultcode()+"</RETURNCODE>");
+		sb.append("\r\n");
+		sb.append("<RETURNMSG>"+kpxx.getResultmsg()+"</RETURNMSG>");
+		sb.append("\r\n");
+		sb.append("</RESPONSE_COMMON_FPKJ>");
+		sb.append("\r\n");
+		sb.append("</business>");
+
+		return sb.toString();
+	}
+	
 	public static void main(String[] args) {
 			  String str="";
 			  for(int i=0;i<20;i++){
