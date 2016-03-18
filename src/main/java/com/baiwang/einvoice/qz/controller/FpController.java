@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Business;
-import com.baiwang.einvoice.qz.beans.Commonfpkjxmxxs;
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
 import com.baiwang.einvoice.qz.beans.OrderDetail;
 import com.baiwang.einvoice.qz.beans.SkConfig;
+import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.service.IFpService;
 import com.baiwang.einvoice.qz.service.IPrintPpService;
@@ -226,10 +226,17 @@ public class FpController {
 		//发票冲红
 		@RequestMapping(value="fpch")
 		@ResponseBody
-		public Map<String, Object> ch(String fpqqlsh){
+		public Map<String, Object> ch(String fpqqlsh , HttpServletRequest request){
 			Map<String, Object> param = new HashMap<>();
+			User user = (User)request.getSession().getAttribute("user");
+			if(user == null){
+				param.put("status", "-1");
+				param.put("msg", "登录失效，请重新登录!");
+				return param;
+			}
+			
 			if(StringUtils.isEmpty(fpqqlsh)){
-				param.put("status", "error");
+				param.put("status", "-2");
 				param.put("msg", "请至少选择一张发票!");
 				return param;
 			}
@@ -244,7 +251,7 @@ public class FpController {
 			for(Fpmx fp:fpmxList_ch){
 				fp.setFpqqlsh(newLsh);
 			}
-			String xml = fpService.getXml(kpxx_ch, fpmxList_ch);
+			String xml = fpService.getXml(kpxx_ch, fpmxList_ch , user.getKpddm());
 			if(!"".equals(xml)){
 				//开票
 				param.put("status", "success");

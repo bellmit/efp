@@ -178,17 +178,17 @@ public class FpServiceImpl implements IFpService {
 	  * @see com.baiwang.einvoice.qz.service.IFpService#getXml(com.baiwang.einvoice.qz.beans.Kpxx, java.util.List)
 	  */
 	@Override
-	public String getXml(Kpxx kpxx, List<Fpmx> fpmxList) {
+	public String getXml(Kpxx kpxx, List<Fpmx> fpmxList ,String kpzdps) {
 		
 		String xml = "";
 		
 		if(kpxx != null){
 			try {
 			if("004".equals(kpxx.getFplx())){
-				xml = XmlUtil.toSpecialInvoice(kpxx, fpmxList);
+				xml = XmlUtil.toSpecialInvoice(kpxx, fpmxList, kpzdps);
 				logger.info("开具增值税纸质专用发票，报文为："+ xml);
 			}else if("007".equals(kpxx.getFplx())){
-				xml = XmlUtil.toPlainInvoice(kpxx, fpmxList);
+				xml = XmlUtil.toPlainInvoice(kpxx, fpmxList , kpzdps);
 				logger.info("开具增值税纸质普通发票，报文为："+ xml);
 			}else if("026".equals(kpxx.getFplx())){
 				xml = XmlUtil.toEInvoice(kpxx, fpmxList);

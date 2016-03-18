@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baiwang.einvoice.qz.beans.Fpmx;
 import com.baiwang.einvoice.qz.beans.Kpxx;
+import com.baiwang.einvoice.qz.beans.User;
 import com.baiwang.einvoice.qz.mq.EInvoiceSenders;
 import com.baiwang.einvoice.qz.mq.RequestTsSender;
 import com.baiwang.einvoice.qz.service.IFpService;
@@ -153,10 +154,16 @@ public class InvoiceController {
 	@ResponseBody
 	public HashMap<String, Object> dzkp(HttpServletRequest request) throws UnsupportedEncodingException{
 	
-		String[] fp =request.getParameter("arr").split(",");
 		HashMap<String, Object> param = new HashMap<>();
+		User user = (User)request.getSession().getAttribute("user");
+		if(user == null){
+			param.put("status", "-1");
+			param.put("msg", "登录失效，请重新登录!");
+			return param;
+		}
+		String[] fp =request.getParameter("arr").split(",");
 		if(null==fp || fp.length<0){
-			param.put("status", "error");
+			param.put("status", "-2");
 			param.put("msg", "请勾选至少一张发票！");
 			return param;
 		}
@@ -169,7 +176,7 @@ public class InvoiceController {
 			}
 			Kpxx kpxx = fpService.getKpxxByFpqqlsh(fpqqlsh);
 			List<Fpmx> fpmxList = fpService.getFpmxByFpqqlsh(fpqqlsh);
-			String xml = fpService.getXml(kpxx, fpmxList);
+			String xml = fpService.getXml(kpxx, fpmxList ,user.getKpddm());
 			if(!"".equals(xml)){
 				//开票
 				xmlList[i] = xml;
@@ -193,18 +200,24 @@ public class InvoiceController {
 	@RequestMapping("/kp")
 	@ResponseBody
 	public HashMap<String, String> kp(HttpServletRequest request){
-	
-		String fpqqlsh =request.getParameter("fpqqlsh");
 		HashMap<String, String> param = new HashMap<>();
+		User user = (User)request.getSession().getAttribute("user");
+		if(user == null){
+			param.put("status", "-1");
+			param.put("msg", "登录失效，请重新登录!");
+			return param;
+		}
+		String fpqqlsh =request.getParameter("fpqqlsh");
+		
 		if(StringUtils.isEmpty(fpqqlsh)){
-			param.put("status", "error");
+			param.put("status", "-2");
 			param.put("msg", "请至少选择一张发票!");
 			return param;
 		}
 		logger.info("获取到需要开票的发票请求流水号：" + fpqqlsh);
 		Kpxx kpxx = fpService.getKpxxByFpqqlsh(fpqqlsh);
 		List<Fpmx> fpmxList = fpService.getFpmxByFpqqlsh(fpqqlsh);
-		String xml = fpService.getXml(kpxx, fpmxList);
+		String xml = fpService.getXml(kpxx, fpmxList,user.getKpddm());
 		if(!"".equals(xml)){
 			//开票
 			param.put("status", "success");

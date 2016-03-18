@@ -203,7 +203,16 @@ function multi_kjfp(){
 		data:param,
 		async: false,
 		success : function(data) {
-			xmlList = data.xml;
+			if(data.status == '-1'){
+				window.parent.$.messager.alert('消息',"登录失效，请重新登录！");
+        		window.top.location.href="../login/login.html";
+        	}else if(data.status == '-2'){
+        		window.parent.$.messager.alert('消息',"请勾选至少一张发票！");
+        		return;
+        	}
+        	else{
+        		fphmlist = data.list;
+        	}
 		}
 	});
 	for(var i=0;i<xmlList.length;i++){

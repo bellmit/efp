@@ -25,7 +25,7 @@ public class XmlUtil {
         return true;  
     }  
 	
-	public static String toSpecialInvoice(Kpxx kpxx, List<Fpmx> fpmxList) throws UnsupportedEncodingException{
+	public static String toSpecialInvoice(Kpxx kpxx, List<Fpmx> fpmxList,String kpzdbs) throws UnsupportedEncodingException{
 		if (null == kpxx || null == fpmxList) {
 			return null;
 		}
@@ -36,7 +36,7 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<body yylxdm=\"1\">");
 		sb.append("\r\n");
-		sb.append("<kpzdbs>0601</kpzdbs>");//
+		sb.append("<kpzdbs>"+kpzdbs+"</kpzdbs>");//
 		sb.append("\r\n");
 		sb.append("<fplxdm>"+kpxx.getFplx()+"</fplxdm>");//
 		sb.append("\r\n");
@@ -131,7 +131,7 @@ public class XmlUtil {
 		return sb.toString();
 	}
 	
-	public static String toPlainInvoice(Kpxx kpxx, List<Fpmx> fpmxList) throws UnsupportedEncodingException{
+	public static String toPlainInvoice(Kpxx kpxx, List<Fpmx> fpmxList ,String kpzdbs) throws UnsupportedEncodingException{
 		if (null == kpxx || null == fpmxList) {
 			return null;
 		}
@@ -142,7 +142,7 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<body yylxdm=\"1\">");
 		sb.append("\r\n");
-		sb.append("<kpzdbs>"+"0601"+"</kpzdbs>");//
+		sb.append("<kpzdbs>"+kpzdbs+"</kpzdbs>");//
 		sb.append("\r\n");
 		sb.append("<fplxdm>"+kpxx.getFplx()+"</fplxdm>");//
 		sb.append("\r\n");
