@@ -43,14 +43,14 @@ function initDataGridComponent(){
 	var qParams = {'begin' : begin, 'end' : end, 'fplx': fplx};
 	//alert(JSON.stringify(qParams))
 	datagrid_zp = $("#datagrid_zp").datagrid({
-				title : "待打印专用发票列表(单打)",
+				title : "发票详情列表",
 				singleSelect:true,
 				rownumbers:true,
 				height:'500',
 				/* idField:'id', */
 				url:"../printpps/showDetail",
 				pagination : true,
-				pageSize : 50,
+				pageSize : 100,
 				pageNumber:1,
 				pageList: [10,20,50,100],
 				queryParams: qParams,
