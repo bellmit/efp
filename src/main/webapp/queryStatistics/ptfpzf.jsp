@@ -40,7 +40,7 @@ function concelFp(){
         	var setResult = SetParameter(skconfig.aqm,skconfig.keypwd,skconfig.url,skconfig.port);
         	if(setResult){
 	        	var sInvoiceVoidInfo = 
-	        		"<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"10009\" comment=\"发票作废\">\r\n<body yylxdm=\"1\">\r\n<kpzdbs>0601</kpzdbs>\r\n<fplxdm>"+kpxx.fplx+"</fplxdm>\r\n<zflx>1</zflx>\r\n<fpdm>"+kpxx.fpdm+"</fpdm>\r\n<fphm>"+kpxx.fphm+"</fphm>\r\n<hjje>"+kpxx.hjje+"</hjje>\r\n<zfr>"+kpxx.kpr+"</zfr>\r\n</body>\r\n</business>";		
+	        		"<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"10009\" comment=\"发票作废\">\r\n<body yylxdm=\"1\">\r\n<kpzdbs>"+skconfig.kpzdbs+"</kpzdbs>\r\n<fplxdm>"+kpxx.fplx+"</fplxdm>\r\n<zflx>1</zflx>\r\n<fpdm>"+kpxx.fpdm+"</fpdm>\r\n<fphm>"+kpxx.fphm+"</fphm>\r\n<hjje>"+kpxx.hjje+"</hjje>\r\n<zfr>"+kpxx.kpr+"</zfr>\r\n</body>\r\n</business>";		
 	        	try {
 	        		invoiceVoidRet = sk.Operate(sInvoiceVoidInfo);
 	        		/* var pos=ret.indexOf("<returncode>"); */
@@ -99,7 +99,6 @@ function getParameter(){
 	});
 }
 function SetParameter(aqm,keypwd,ip,port) {
-	
 	//01设置初始化参数
 	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>"+ip+"</servletip>\r\n<servletport>"+port+"</servletport>\r\n<keypwd>"+keypwd+"</keypwd>\r\n<aqm>"+aqm+"</aqm>\r\n</body>\r\n</business>";
 	try {
@@ -176,7 +175,7 @@ function initDataGridComponent(){
 				idField:'fpqqlsh',
 				url:"<%=basePath%>/einvoice/ptfpzf_q",
 				pagination : true,
-				pageSize : 50,
+				pageSize : 100,
 				pageNumber:1,
 				pageList: [10,20,50,100],
 				queryParams: qParams,

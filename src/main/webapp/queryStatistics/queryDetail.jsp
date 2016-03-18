@@ -110,7 +110,7 @@ function initDataGridComponent(){
 				idField:'fpqqlsh',
 				url:"<%=basePath %>/report/queryFPlist",
 				pagination : true,
-				pageSize : 50,
+				pageSize : 100,
 				pageNumber:1,
 				pageList: [10,20,50,100],
 				queryParams: qParams,
@@ -159,9 +159,7 @@ function formatFpzl(value,row,index){
 		return "专票";
 	} else if(value=="007") {
 		return "普票";
-	} else if(value=="026") {
-		return "电子发票";
-	} 
+	}
 }
 function dateFormatter(value) {
 	if(value==null || value =='undefined'){
@@ -177,26 +175,6 @@ function hideOrShow(){
 	$("#div_search").toggle();
 }
 
-/**
- * 打印
- */
-function print(){
-	var row = datagrid_zp.datagrid('getSelected');
-	
-	if(row ==null || row == ''){
-		alert('请选择一项进行打印!');
-		return;
-	}
-	alert(row.zddh)
-	
-	if(confirm("确定要打印么？")){
-	 	getParameter();
-		if(!SetParameter()){
-			return;
-		}
-		PrintInvoice(fpqqlsh,fpdm, fphm);
-	}
-}
 /**
  * 查询
  */

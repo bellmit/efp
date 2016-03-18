@@ -107,7 +107,7 @@ function initDataGridComponent(){
 				idField:'fpqqlsh',
 				url:"<%=basePath %>/report/queryFPstat",
 				pagination : true,
-				pageSize : 50,
+				pageSize : 100,
 				pageNumber:1,
 				pageList: [10,20,50,100],
 				queryParams: qParams,
@@ -177,26 +177,6 @@ function hideOrShow(){
 	$("#div_search").toggle();
 }
 
-/**
- * 打印
- */
-function print(){
-	var row = datagrid_zp.datagrid('getSelected');
-	
-	if(row ==null || row == ''){
-		alert('请选择一项进行打印!');
-		return;
-	}
-	alert(row.zddh)
-	
-	if(confirm("确定要打印么？")){
-	 	getParameter();
-		if(!SetParameter()){
-			return;
-		}
-		PrintInvoice(fpqqlsh,fpdm, fphm);
-	}
-}
 /**
  * 查询
  */
