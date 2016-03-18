@@ -330,7 +330,7 @@
 	from kpxx a
 	LEFT JOIN order_detail b
 	ON a.fpqqlsh = b.fpqqlsh
-	WHERE a.fpzt = '1' and a.fplx = '007' 
+	WHERE a.fpzt = '1' and a.fplx = '007'  and a.xsfnsrsbh = #{nsrsbh} 
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>
@@ -351,7 +351,7 @@
 	from kpxx a
 	LEFT JOIN order_detail b
 	ON a.fpqqlsh = b.fpqqlsh
-	WHERE a.fpzt = '1' and  a.fplx = '004'
+	WHERE a.fpzt = '1' and  a.fplx = '004'  and a.xsfnsrsbh = #{nsrsbh} 
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>

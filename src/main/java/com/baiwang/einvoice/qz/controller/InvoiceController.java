@@ -83,24 +83,26 @@ public class InvoiceController {
 	@ResponseBody
 	public Map<String, Object> plainInvoiceList(HttpServletRequest request , HttpSession session , int page, int rows){
 		Map<String, Object> map = new HashMap<>();
-		
-		String beginDate = request.getParameter("beginDate");
-		String endDate = request.getParameter("endDate");
-		String zddh = request.getParameter("zddh");
-		String kpdq = request.getParameter("kpdq");
-		
-		HashMap<String, String> param = new HashMap<>();
-		param.put("beginDate", beginDate);
-		param.put("endDate", endDate);
-		param.put("zddh", zddh);
-		param.put("kpdq", kpdq);
-		
-		//List<Map<String, String>> kpxxList = fpService.getPlainList(param);
-		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listPlain(param,
-				page, rows );
-		
-		map.put("rows", kpxxList);
-		map.put("total", kpxxList.getPaginator().getTotalCount());
+		User user = (User)session.getAttribute("user");
+		if(user != null){
+			String beginDate = request.getParameter("beginDate");
+			String endDate = request.getParameter("endDate");
+			String zddh = request.getParameter("zddh");
+			String kpdq = request.getParameter("kpdq");
+			
+			HashMap<String, String> param = new HashMap<>();
+			param.put("beginDate", beginDate);
+			param.put("endDate", endDate);
+			param.put("zddh", zddh);
+			param.put("kpdq", kpdq);
+			param.put("nsrsbh", user.getNsrsbh());
+			//List<Map<String, String>> kpxxList = fpService.getPlainList(param);
+			PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listPlain(param,
+					page, rows );
+			
+			map.put("rows", kpxxList);
+			map.put("total", kpxxList.getPaginator().getTotalCount());
+		}
 		
 		return map;
 	}
@@ -121,6 +123,8 @@ public class InvoiceController {
 	public Map<String, Object> specialInvoiceList(HttpServletRequest request , HttpSession session , int page, int rows){
 		
 		Map<String, Object> map = new HashMap<>();
+		User user = (User)session.getAttribute("user");
+		if(user != null){
 		String beginDate = request.getParameter("beginDate");
 		String endDate = request.getParameter("endDate");
 		String zddh = request.getParameter("zddh");
@@ -131,12 +135,14 @@ public class InvoiceController {
 		param.put("endDate", endDate);
 		param.put("zddh", zddh);
 		param.put("kpdq", kpdq);
+		param.put("nsrsbh", user.getNsrsbh());
 		
 		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listSpecial(param,
 				page, rows);
 		
 		map.put("rows", kpxxList);
 		map.put("total", kpxxList.getPaginator().getTotalCount());
+		}
 		return map;
 	}
 	
