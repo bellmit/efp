@@ -297,7 +297,6 @@ function chFp(){
 
  
 function Kp(str,fpqqlsh){
-		alert(str);
 	try {
 		var resultXml = sk.Operate(str);
 		var returncode = getTotalMidValue(resultXml, "<returncode>","</returncode>");
