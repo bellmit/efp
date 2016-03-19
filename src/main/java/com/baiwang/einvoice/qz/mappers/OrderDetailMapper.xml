@@ -369,7 +369,7 @@
   <select id="getPlainList4zf" resultMap="QueryMap4zf" parameterType="map" >
 	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
 	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
-	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007' 
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007' 
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -401,7 +401,7 @@
   <select id="getSpecialList4zf" resultMap="QueryMap4zf" parameterType="map" >
 	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
 	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
-	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004'  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004'  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -431,7 +431,7 @@
 <!-- 普通发票作废-查询总数 -->    
   <select id="getPlainList4zfCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
-	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007'  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007'  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -457,7 +457,7 @@
 <!-- 专用发票作废-查询总数 -->    
   <select id="getSpecialList4zfCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
-	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004'  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004'  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -484,7 +484,7 @@
   <select id="getPlainList4ch" resultMap="QueryMap4zf" parameterType="map" >
 	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
 	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
-	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007' and k.hjje>0  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007' and k.hjje>0  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -516,7 +516,7 @@
   <select id="getSpecialList4ch" resultMap="QueryMap4zf" parameterType="map" >
 	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
 	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
-	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004' and k.hjje>0  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004' and k.hjje>0  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -546,7 +546,7 @@
 <!-- 普通发票冲红-查询总数 -->    
   <select id="getPlainList4chCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
-	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007' and k.hjje>0  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '007' and k.hjje>0  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -572,7 +572,7 @@
 <!-- 专用发票冲红-查询总数 -->    
   <select id="getSpecialList4chCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
-	from order_detail o,kpxx k where o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004' and k.hjje>0  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' and k.fplx = '004' and k.hjje>0  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
