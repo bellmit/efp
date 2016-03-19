@@ -190,38 +190,39 @@ function multi_kjfp(){
 		window.parent.$.messager.alert('消息',"请选择一项进行开具!");
 		return;
 	}
-	if(!confirm("确定要开具发票吗？")){
-		return;
-	}
-	if(!SetParameter()){
-		return;
-	}
-	var fpList = ""; 
-    for(i=0;i<row.length;i++){
-			fpList = fpList + row[i].fpqqlsh  + ",";
-	} 
-	var param = {"arr":fpList};
-	$.ajax({
-	        type:"POST",
-	        url:"../fpkj/dzkp",
-		data:param,
-		async: false,
-		success : function(data) {
-			if(data.status == '-1'){
-				window.parent.$.messager.alert('消息',"登录失效，请重新登录！");
-        		window.top.location.href="../login/login.html";
-        	}else if(data.status == '-2'){
-        		window.parent.$.messager.alert('消息',"请勾选至少一张发票！");
+	window.parent.$.messager.confirm("操作提示", "您确定要执行操作吗？", function (data) {  
+        if (data) {  
+        	if(!SetParameter()){
         		return;
         	}
-        	else{
-        		xmlList = data.xml;
+        	var fpList = ""; 
+            for(i=0;i<row.length;i++){
+        			fpList = fpList + row[i].fpqqlsh  + ",";
+        	} 
+        	var param = {"arr":fpList};
+        	$.ajax({
+        	        type:"POST",
+        	        url:"../fpkj/dzkp",
+        		data:param,
+        		async: false,
+        		success : function(data) {
+        			if(data.status == '-1'){
+        				window.parent.$.messager.alert('消息',"登录失效，请重新登录！");
+                		window.top.location.href="../login/login.html";
+                	}else if(data.status == '-2'){
+                		window.parent.$.messager.alert('消息',"请勾选至少一张发票！");
+                		return;
+                	}
+                	else{
+                		xmlList = data.xml;
+                	}
+        		}
+        	});
+        	for(var i=0;i<xmlList.length;i++){
+        		Kp(xmlList[i]);
         	}
-		}
-	});
-	for(var i=0;i<xmlList.length;i++){
-		Kp(xmlList[i]);
-	}
+        }  
+    });  
 }
 
 function hideOrShow(){
@@ -280,6 +281,6 @@ function updateStatus(fpqqlsh ,str , resultXml ,status){
 } 
 	
 </script>
-
+<script type="text/javascript" src="../js/downloadocx.js"></script>
 </body>
 </html>
