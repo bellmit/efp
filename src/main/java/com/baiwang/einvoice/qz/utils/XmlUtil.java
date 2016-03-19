@@ -358,7 +358,7 @@ public class XmlUtil {
 	public static byte[] convert(byte[] ubl){
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    //File xsltFile = new File("src/main/java/com/tan/controller/ubl_ofd.xsl");
-		InputStream is = UBLUtil.class.getResourceAsStream("xml_change.xsl");
+		InputStream is = XmlUtil.class.getResourceAsStream("xml_change.xsl");
 	    Source xsltSource = new StreamSource(is);
 
 	    Source xmlSource = new StreamSource(new ByteArrayInputStream(ubl));
