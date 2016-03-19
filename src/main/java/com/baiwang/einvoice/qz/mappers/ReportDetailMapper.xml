@@ -61,7 +61,7 @@
   <select id="getFpListByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
   	select 
     <include refid="report_Column_List" />
-    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' 
+    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.hjje>0
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -122,7 +122,7 @@
     </if>
   </select>
   <select id="getFpCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
-  	select count(*) from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3'  
+  	select count(*) from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3'  and k.hjje>0
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>

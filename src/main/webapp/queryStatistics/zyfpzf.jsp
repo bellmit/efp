@@ -183,7 +183,6 @@ function initDataGridComponent(){
 				columns:[[
 					 {field:'fpqqlsh',title:'fpqqlsh',width:150,editor:'text',hidden:true},
 				     {field:'zddh',title:'订单号',width:150,editor:'text'},
-				     {field:'zddh',title:'订单号',width:150,editor:'text'},
 		             {field:'hym',title:'会员名',width:100,editor:'text'},
 		             {field:'hyid',title:'会员ID',width:100,editor:'text'},
 			         {field:'shr',title:'收货人',width:100,editor:'text'}, 
