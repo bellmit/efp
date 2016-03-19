@@ -1,6 +1,8 @@
 package com.baiwang.einvoice.qz.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +86,7 @@ public class FpController {
 	@ResponseBody
 	public Map<String, Object> queryPtfp(HttpServletRequest request,int page, int rows){
 		String beginDate = request.getParameter("beginDate");
+		if(null == beginDate) return null;
 		String endDate = request.getParameter("endDate");
 		String hyid4q = request.getParameter("hyid4q");
 		String fphm4q = request.getParameter("fphm4q");
@@ -112,6 +115,7 @@ public class FpController {
 	@ResponseBody
 	public Map<String, Object> queryZyfp(HttpServletRequest request,int page, int rows){
 		String beginDate = request.getParameter("beginDate");
+		if(null == beginDate) return null;
 		String endDate = request.getParameter("endDate");
 		String hyid4q = request.getParameter("hyid4q");
 		String fphm4q = request.getParameter("fphm4q");
@@ -180,6 +184,7 @@ public class FpController {
 		@ResponseBody
 		public Map<String, Object> queryPtfp4ch(HttpServletRequest request,int page, int rows){
 			String beginDate = request.getParameter("beginDate");
+			if(null == beginDate) return null;
 			String endDate = request.getParameter("endDate");
 			String hyid4q = request.getParameter("hyid4q");
 			String fphm4q = request.getParameter("fphm4q");
@@ -208,6 +213,7 @@ public class FpController {
 		@ResponseBody
 		public Map<String, Object> queryZyfp4ch(HttpServletRequest request,int page, int rows){
 			String beginDate = request.getParameter("beginDate");
+			if(null == beginDate) return null;
 			String endDate = request.getParameter("endDate");
 			String hyid4q = request.getParameter("hyid4q");
 			String fphm4q = request.getParameter("fphm4q");
@@ -272,7 +278,7 @@ public class FpController {
 		//发票冲红-插入红票数据
 		@RequestMapping(value="insertCh")
 		@ResponseBody
-		public Map<String, Object> insertCh(String fpqqlsh,String newLshao,String resultXml){
+		public Map<String, Object> insertCh(String fpqqlsh,String newLshao,String resultXml) throws ParseException{
 			String jqbh = InvoiceUtil.getIntervalValue(resultXml, "<jqbh>", "</jqbh>");
 			String fpdm = InvoiceUtil.getIntervalValue(resultXml, "<fpdm>", "</fpdm>");
 			String fphm = InvoiceUtil.getIntervalValue(resultXml, "<fphm>", "</fphm>");
@@ -287,7 +293,8 @@ public class FpController {
 			kpxx_ch.setFpqqlsh(newLshao);
 			kpxx_ch.setFpdm(fpdm);
 			kpxx_ch.setFphm(fphm);
-			kpxx_ch.setKprq(kprq);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			kpxx_ch.setKprq(sdf.parse(kprq));
 			kpxx_ch.setJqbh(jqbh);
 			kpxx_ch.setSkm(skm);
 			kpxx_ch.setJym(jym);
