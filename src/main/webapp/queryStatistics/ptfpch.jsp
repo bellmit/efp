@@ -195,7 +195,7 @@ function initDataGridComponent(){
 				singleSelect:true,
 				rownumbers:true,
 				idField:'fpqqlsh',
-				url:"<%=basePath%>/einvoice/ptfpch_q",
+				url:"",
 				pagination : true,
 				pageSize : 100,
 				pageNumber:1,
@@ -279,6 +279,7 @@ function print(){
  * 查询
  */
 function searchfpList(){
+	$("#datagrid").datagrid({url:'<%=basePath%>/einvoice/ptfpch_q'});
 	var qParams = form2Json('searchForm');
 	$("#datagrid").datagrid("load", qParams);
 }
