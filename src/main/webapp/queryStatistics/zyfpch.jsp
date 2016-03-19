@@ -327,7 +327,7 @@ function insertCh(fpqqlsh,resultXml,newLshao,fpdm,fphm){
 		async: false,
 		success: function (data) {
         	if(data.status == 'success'){
-        		print(fpqqlsh,fpdm,fphm);
+        		print(newLshao,fpdm,fphm);
         	}else{
         		alert("冲红成功,保存发票信息失败!");
         	}
