@@ -84,6 +84,7 @@ public class FpController {
 	@ResponseBody
 	public Map<String, Object> queryPtfp(HttpServletRequest request,int page, int rows){
 		String beginDate = request.getParameter("beginDate");
+		if(null == beginDate) return null;
 		String endDate = request.getParameter("endDate");
 		String hyid4q = request.getParameter("hyid4q");
 		String fphm4q = request.getParameter("fphm4q");
@@ -112,6 +113,7 @@ public class FpController {
 	@ResponseBody
 	public Map<String, Object> queryZyfp(HttpServletRequest request,int page, int rows){
 		String beginDate = request.getParameter("beginDate");
+		if(null == beginDate) return null;
 		String endDate = request.getParameter("endDate");
 		String hyid4q = request.getParameter("hyid4q");
 		String fphm4q = request.getParameter("fphm4q");
@@ -180,6 +182,7 @@ public class FpController {
 		@ResponseBody
 		public Map<String, Object> queryPtfp4ch(HttpServletRequest request,int page, int rows){
 			String beginDate = request.getParameter("beginDate");
+			if(null == beginDate) return null;
 			String endDate = request.getParameter("endDate");
 			String hyid4q = request.getParameter("hyid4q");
 			String fphm4q = request.getParameter("fphm4q");
@@ -208,6 +211,7 @@ public class FpController {
 		@ResponseBody
 		public Map<String, Object> queryZyfp4ch(HttpServletRequest request,int page, int rows){
 			String beginDate = request.getParameter("beginDate");
+			if(null == beginDate) return null;
 			String endDate = request.getParameter("endDate");
 			String hyid4q = request.getParameter("hyid4q");
 			String fphm4q = request.getParameter("fphm4q");

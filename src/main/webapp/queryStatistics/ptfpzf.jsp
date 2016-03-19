@@ -173,12 +173,12 @@ function initDataGridComponent(){
 				singleSelect:true,
 				rownumbers:true,
 				idField:'fpqqlsh',
-				url:"",
+				url:"<%=basePath%>/einvoice/ptfpzf_q",
 				pagination : true,
 				pageSize : 100,
 				pageNumber:1,
 				pageList: [10,20,50,100],
-				queryParams: qParams,
+// 				queryParams: qParams,
 				columns:[[
 				     {field:'fpqqlsh',title:'fpqqlsh',width:150,editor:'text',hidden:true},
 				     {field:'zddh',title:'订单号',width:150,editor:'text'},
@@ -257,7 +257,6 @@ function print(){
  * 查询
  */
 function searchfpList(){
-	$("#datagrid").datagrid({url:'<%=basePath%>/einvoice/ptfpzf_q'});
 	var qParams = form2Json('searchForm');
 	$("#datagrid").datagrid("load", qParams);
 }

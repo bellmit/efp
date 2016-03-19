@@ -51,17 +51,17 @@
   <select id="getFpByLSH" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select 
     <include refid="report_Column_List" />
-    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and o.fpqqlsh=#{fpqqlsh}
+    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where o.fpqqlsh=#{fpqqlsh}
   </select>
   <select id="getFpStatByLSH" parameterType="java.lang.String" resultMap="statMap">
   	select 
   	o.fpqqlsh,o.kpdq as fpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd,o.fptt as ttlx
-    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and o.fpqqlsh=#{fpqqlsh}
+    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where o.fpqqlsh=#{fpqqlsh}
   </select>
   <select id="getFpListByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
   	select 
     <include refid="report_Column_List" />
-    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3' 
+    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' 
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -94,7 +94,7 @@
   <select id="getFpStatListByCondition" parameterType="java.util.Map" resultMap="statMap">
   	select 
   	o.fpqqlsh,o.kpdq as fpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd,o.fptt as ttlx
-    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt in('3','-2')  
+    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt in('3','-2')  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -122,7 +122,7 @@
     </if>
   </select>
   <select id="getFpCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
-  	select count(*) from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt = '3'  
+  	select count(*) from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3'  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -149,7 +149,7 @@
     </if>
   </select>
   <select id="getFpStatCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-  	select count(*) from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh and k.fpzt in('3','-2')  
+  	select count(*) from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt in('3','-2')  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
