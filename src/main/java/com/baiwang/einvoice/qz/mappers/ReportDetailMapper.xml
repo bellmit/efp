@@ -116,7 +116,7 @@
     <if test="fptt4q != null and fptt4q !=''">
     	and o.fptt = #{fptt4q,jdbcType=VARCHAR} 
     </if>
-    ORDER BY k.fphm
+    ORDER BY k.kprq DESC
     <if test="startRow != null and rows !=null">
     LIMIT #{startRow},#{rows}
     </if>

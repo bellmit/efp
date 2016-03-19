@@ -291,6 +291,7 @@ public class FpController {
 			kpxx_ch.setJqbh(jqbh);
 			kpxx_ch.setSkm(skm);
 			kpxx_ch.setJym(jym);
+			kpxx_ch.setFpzt("2");
 			@SuppressWarnings("unchecked")
 			List<Fpmx> fpmxList_ch =(List<Fpmx>) map.get("fpmxList");
 			for(Fpmx fp:fpmxList_ch){
