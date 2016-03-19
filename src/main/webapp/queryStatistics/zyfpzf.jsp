@@ -47,10 +47,10 @@ function concelFp(){
 	        		var invoiceVoidRetReturncode = getTotalMidValue(invoiceVoidRet, "<returncode>","</returncode>");
 	        		var invoiceVoidRetReturnmsg = getTotalMidValue(invoiceVoidRet, "<returnmsg>","</returnmsg>");	
 	        		if(invoiceVoidRetReturncode==0&&invoiceVoidRetReturnmsg=="成功"){
-	        			$.post('<%=basePath %>/einvoice/updateFpzt2zf',{'lsh':lsh},function(text,status){
+	        			$.post('<%=basePath %>/einvoice/updateFpzt2zf',{'lsh':row.fpqqlsh},function(text,status){
 	        				if(text == 0){
 	        					alert('操作成功！');
-	        					$("#searchForm").submit();
+	        					searchfpList();
 	        				}else{
 	        					alert('发票作废操作成功，但更新发票状态时发生异常！');
 	        				}
@@ -101,7 +101,7 @@ function getParameter(){
 function SetParameter(aqm,keypwd,ip,port) {
 	
 	//01设置初始化参数
-	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>"+ip+"</servletip>\r\n<servletport>"+port+"</servletport>\r\n<keypwd>"+keypwd+"</keypwd>\r\n<aqm>"+aqm+"</aqm>\r\n</body>\r\n</business>";
+	var sInputInfo = "<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"20001\" comment=\"参数设置\">\r\n<body yylxdm=\"1\">\r\n<servletip>"+ip+"</servletip>\r\n<servletport>"+port+"</servletport>\r\n<keypwd>123456</keypwd>\r\n<aqm>"+aqm+"</aqm>\r\n</body>\r\n</business>";
 	try {
 		ret = sk.Operate(sInputInfo);
 		/* var pos=ret.indexOf("<returncode>"); */
@@ -194,7 +194,7 @@ function initDataGridComponent(){
 			         {field:'hjje',title:'合计金额',width:100,editor:'text'},
 		             {field:'hjse',title:'合计税额',width:100,editor:'text'},
 			         {field:'jshj',title:'价税合计',width:100,editor:'text'},
-			         {field:'kplx',title:'发票状态',width:100,editor:'text'},
+			         {field:'kplx',title:'发票状态',width:100,editor:'text',formatter:formatKplx},
 		             {field:'kprq',title:'开票日期',width:100,editor:'text',formatter:dateFormatter},
 		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'}

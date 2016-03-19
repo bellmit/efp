@@ -372,7 +372,7 @@ function initDataGridComponent(){
 			         {field:'hjje',title:'合计金额',width:100,editor:'text'},
 		             {field:'hjse',title:'合计税额',width:100,editor:'text'},
 			         {field:'jshj',title:'价税合计',width:100,editor:'text'},
-			         {field:'正数',title:'发票状态',width:100,editor:'text'},
+			         {field:'kplx',title:'发票状态',width:100,editor:'text',formatter:formatKplx},
 		             {field:'kprq',title:'开票日期',width:100,editor:'text',formatter:dateFormatter},
 		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'}
