@@ -39,7 +39,9 @@
 					<GMF_YHZH>
 						<xsl:value-of select="ghdwyhzh" />
 					</GMF_YHZH>
-					<GMF_YX></GMF_YX>
+					<GMF_YX>
+						<xsl:value-of select="yh" />
+					</GMF_YX>
 					<GMF_SJH>
 						<xsl:value-of select="sjh" />
 					</GMF_SJH>
