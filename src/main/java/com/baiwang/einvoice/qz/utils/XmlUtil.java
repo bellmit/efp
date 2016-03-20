@@ -58,6 +58,10 @@ public class XmlUtil {
 		sb.append("\r\n");
 		sb.append("<tspz>00</tspz>");
 		sb.append("\r\n");
+		sb.append("<sjh>"+kpxx.getSjh()+"</sjh>");
+		sb.append("\r\n");
+		sb.append("<yh>"+kpxx.getYx()+"</yh>");
+		sb.append("\r\n");
 		sb.append("<xhdwsbh>"+kpxx.getXsfnsrsbh()+"</xhdwsbh>");
 		sb.append("\r\n");
 		sb.append("<xhdwmc>"+kpxx.getXsfmc()+"</xhdwmc>");
@@ -165,6 +169,8 @@ public class XmlUtil {
 		sb.append("<tspz>00</tspz>");
 		sb.append("\r\n");
 		sb.append("<sjh>"+kpxx.getSjh()+"</sjh>");
+		sb.append("\r\n");
+		sb.append("<yh>"+kpxx.getYx()+"</yh>");
 		sb.append("\r\n");
 		sb.append("<xhdwsbh>"+kpxx.getXsfnsrsbh()+"</xhdwsbh>");
 		sb.append("\r\n");
