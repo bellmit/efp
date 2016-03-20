@@ -36,7 +36,7 @@ function concelFp(){
         async: false,
         success: function (data) {
         	var kpxx = data.kpxx;
-        	var skconfig = data.skconfig;
+//         	var skconfig = data.skconf;
         	var setResult = SetParameter(skconfig.aqm,skconfig.keypwd,skconfig.url,skconfig.port);
         	if(setResult){
 	        	var sInvoiceVoidInfo = 
