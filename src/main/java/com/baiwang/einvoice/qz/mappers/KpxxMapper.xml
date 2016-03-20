@@ -30,7 +30,7 @@
     <result column="hjje" property="hjje" jdbcType="REAL" />
     <result column="hjse" property="hjse" jdbcType="REAL" />
     <result column="bz" property="bz" jdbcType="VARCHAR" />
-    <result column="kprq" property="kprq" jdbcType="VARCHAR" />
+    <result column="kprq" property="kprq" jdbcType="DATE" />
     <result column="jqbh" property="jqbh" jdbcType="VARCHAR" />
     <result column="skm" property="skm" jdbcType="VARCHAR" />
     <result column="jym" property="jym" jdbcType="VARCHAR" />
@@ -110,7 +110,7 @@
       #{gmfdz,jdbcType=VARCHAR}, #{gmfdh,jdbcType=VARCHAR}, #{gmfyhzh,jdbcType=VARCHAR}, 
       #{kpr,jdbcType=VARCHAR}, #{skr,jdbcType=VARCHAR}, #{fhr,jdbcType=VARCHAR}, #{yfpdm,jdbcType=VARCHAR}, 
       #{yfphm,jdbcType=VARCHAR}, #{jshj,jdbcType=REAL}, #{hjje,jdbcType=REAL}, #{hjse,jdbcType=REAL}, 
-      #{bz,jdbcType=VARCHAR}, #{kprq,jdbcType=VARCHAR}, #{jqbh,jdbcType=VARCHAR}, #{skm,jdbcType=VARCHAR}, 
+      #{bz,jdbcType=VARCHAR}, #{kprq,jdbcType=DATE}, #{jqbh,jdbcType=VARCHAR}, #{skm,jdbcType=VARCHAR}, 
       #{jym,jdbcType=VARCHAR}, #{ewm,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.Kpxx" >
@@ -314,7 +314,7 @@
         #{bz,jdbcType=VARCHAR},
       </if>
       <if test="kprq != null" >
-        #{kprq,jdbcType=VARCHAR},
+        #{kprq,jdbcType=DATE},
       </if>
       <if test="jqbh != null" >
         #{jqbh,jdbcType=VARCHAR},
@@ -421,7 +421,7 @@
         bz = #{bz,jdbcType=VARCHAR},
       </if>
       <if test="kprq != null" >
-        kprq = #{kprq,jdbcType=VARCHAR},
+        kprq = #{kprq,jdbcType=DATE},
       </if>
       <if test="jqbh != null" >
         jqbh = #{jqbh,jdbcType=VARCHAR},
@@ -469,7 +469,7 @@
       hjje = #{hjje,jdbcType=REAL},
       hjse = #{hjse,jdbcType=REAL},
       bz = #{bz,jdbcType=VARCHAR},
-      kprq = #{kprq,jdbcType=VARCHAR},
+      kprq = #{kprq,jdbcType=DATE},
       jqbh = #{jqbh,jdbcType=VARCHAR},
       skm = #{skm,jdbcType=VARCHAR},
       jym = #{jym,jdbcType=VARCHAR},
@@ -506,7 +506,7 @@
         resultMsg = #{resultmsg,jdbcType=VARCHAR},
       </if>
       <if test="kprq != null" >
-        kprq = #{kprq,jdbcType=VARCHAR},
+        kprq = #{kprq,jdbcType=DATE},
       </if>
       <if test="jqbh != null" >
         jqbh = #{jqbh,jdbcType=VARCHAR},

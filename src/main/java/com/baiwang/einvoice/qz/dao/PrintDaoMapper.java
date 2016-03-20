@@ -15,7 +15,7 @@ public interface PrintDaoMapper {
 			@Param("endDate")String endDate, @Param("hyid")String hyid, @Param("fphm")String fphm, @Param("zddh")String zddh, @Param("gmfsjh")String gmfsjh,
 			@Param("fplx")String fplx, @Param("requestPage")int requestPage, @Param("pageSize")int pageSize, @Param("xsfnsrsbh")String xsfnsrsbh);
 
-	List<Map<String, String>> getPrintPpsList(@Param("beginDate")String beginDate, @Param("endDate")String endDate, 
+	List<Map<String, Object>> getPrintPpsList(@Param("beginDate")String beginDate, @Param("endDate")String endDate, 
 			@Param("beginfphm")String beginfphm, @Param("endfphm")String endfphm, @Param("fplx")String fplx, @Param("xsfnsrsbh")String xsfnsrsbh);
 
 	List<Map<String, String>> showDetail(@Param("begin")String begin, @Param("end")String end, @Param("fplx")String fplx,

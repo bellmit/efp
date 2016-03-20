@@ -1,6 +1,7 @@
 package com.baiwang.einvoice.qz.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,24 +45,26 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	}
 
 	@Override
-	public List<Map<String, String>> getPrintPpsList(String beginDate, String endDate, String beginfphm,
+	public List<Map<String, Object>> getPrintPpsList(String beginDate, String endDate, String beginfphm,
 			String endfphm, String fplx, String xsfnsrsbh) {
 		beginDate = beginDate.replaceAll("-", "");
 		endDate = endDate.replaceAll("-", "");
-		List<Map<String, String>> _list = new ArrayList<Map<String, String>>();
+		List<Map<String, Object>> _list = new ArrayList<Map<String, Object>>();
 		
-		List<Map<String, String>> list = dao.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx, xsfnsrsbh);
+		List<Map<String, Object>> list = dao.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx, xsfnsrsbh);
 		if(null != list && list.size() > 0){
 			
-			String _beginDate = list.get(0).get("kprq");
-			String _endDate = list.get(0).get("kprq");
-			int _beginfphm = Integer.valueOf(list.get(0).get("fphm"));
+			/*String _beginDate = list.get(0).get("kprq");
+			String _endDate = list.get(0).get("kprq");*/
+			Date _beginDate =(Date) list.get(0).get("kprq");
+			Date _endDate = (Date)list.get(0).get("kprq");
+			int _beginfphm = Integer.valueOf((String) list.get(0).get("fphm"));
 			int _endfphm = _beginfphm;
 			System.out.println("第一个发票号码：" + _beginfphm);
 			
 			int _beforefphm = _endfphm;
 			if(list.size() == 1){
-				Map<String, String> _map = new HashMap<String, String>();
+				Map<String, Object> _map = new HashMap<String, Object>();
 				_map.put("beginfphm", Integer.toString(_beginfphm));
 				_map.put("endfphm", Integer.toString(_endfphm));
 				_map.put("beginDate", _beginDate);
@@ -71,17 +74,17 @@ public class PrintPpServiceImpl implements IPrintPpService {
 			}
 			
 			for(int i = 1; i < list.size(); i++){
-				Map<String, String> _map = new HashMap<String, String>();
+				Map<String, Object> _map = new HashMap<String, Object>();
 				
-				Map<String, String> map = list.get(i);
+				Map<String, Object> map = list.get(i);
 				
-				int fphm = Integer.valueOf(map.get("fphm"));
+				int fphm = Integer.valueOf((String) map.get("fphm"));
 				System.out.println("第" + i + "个发票号码：" + fphm);
 				
 				
 				if(fphm == (_beforefphm + 1)){
 					_endfphm = fphm;
-					_endDate = list.get(i).get("kprq");
+					_endDate = (Date) list.get(i).get("kprq");
 					
 					if(i == (list.size() - 1)){//是否最后一个
 						_map.put("beginfphm", Integer.toString(_beginfphm));
@@ -101,10 +104,10 @@ public class PrintPpServiceImpl implements IPrintPpService {
 					
 					_beginfphm = fphm;
 					_endfphm = fphm;
-					_beginDate = list.get(i).get("kprq");
-					_endDate = list.get(i).get("kprq");
+					_beginDate = (Date) list.get(i).get("kprq");
+					_endDate = (Date) list.get(i).get("kprq");
 					if(i == (list.size() - 1)){//是否最后一个
-						Map<String, String> _map_ = new HashMap<String, String>();
+						Map<String, Object> _map_ = new HashMap<String, Object>();
 						_map_.put("beginfphm", Integer.toString(_beginfphm));
 						_map_.put("endfphm", Integer.toString(_beginfphm));
 						_map_.put("beginDate", _beginDate);

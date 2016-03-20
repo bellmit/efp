@@ -63,11 +63,11 @@ public class PrintPpController {
 		if(null != user){
 			logger.info("***用户名：" + user.getCzymc() + "," + beginDate +","+endDate +"," +beginfphm +","+ endfphm );
 			
-			List<Map<String,String>> list = service.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx, user.getNsrsbh());
+			List<Map<String,Object>> list = service.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx, user.getNsrsbh());
 			int size = list.size();
 			
 			page = (page - 1) * rows;
-			List<Map<String,String>> _list = new ArrayList<>();
+			List<Map<String,Object>> _list = new ArrayList<>();
 			for(int i = 0; i < rows && page + i < size; i++){
 				_list.add(list.get(page + i));
 			}

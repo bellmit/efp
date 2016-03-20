@@ -5,8 +5,6 @@
 package com.baiwang.einvoice.qz.service.impl;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,8 +76,6 @@ public class FpServiceImpl implements IFpService {
 		
 		kpxx.setZddh(zddh);
 		kpxx.setFddh(fddh);
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-		kpxx.setKprq(sf.format(new Date()));
 		kpxx.setFpzt("1");
 		kpxx.setFpqqlsh(fpqqlsh);
 		dao.insert(kpxx);

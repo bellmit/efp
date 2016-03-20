@@ -7,6 +7,8 @@ package com.baiwang.einvoice.qz.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -259,12 +261,13 @@ public class InvoiceController {
 	  * @param @return  
 	  * @return HashMap<String,Object>  
 	 * @throws UnsupportedEncodingException 
+	 * @throws ParseException 
 	  * @throws
 	  * @date 2016年3月14日 下午4:41:34
 	 */
 	@RequestMapping("/callback")
 	@ResponseBody
-	public HashMap<String, Object> callback(String xml , String fpqqlsh ,String xml_bw , String status) throws UnsupportedEncodingException{
+	public HashMap<String, Object> callback(String xml , String fpqqlsh ,String xml_bw , String status) throws UnsupportedEncodingException, ParseException{
 		
 		HashMap<String, Object> result = new HashMap<>();
 		String returncode = InvoiceUtil.getIntervalValue(xml, "<returncode>", "</returncode>");
@@ -276,6 +279,7 @@ public class InvoiceController {
 		String skm = InvoiceUtil.getIntervalValue(xml, "<skm>", "</skm>");
 		String jym = InvoiceUtil.getIntervalValue(xml, "<jym>", "</jym>");
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Kpxx fpxx = new Kpxx();
 		fpxx.setFpqqlsh(fpqqlsh);
 		fpxx.setResultcode(returncode);
@@ -283,7 +287,7 @@ public class InvoiceController {
 		fpxx.setJqbh(jqbh);
 		fpxx.setFpdm(fpdm);
 		fpxx.setFphm(fphm);
-		fpxx.setKprq(kprq);
+		fpxx.setKprq(sdf.parse(kprq));
 		fpxx.setSkm(skm);
 		fpxx.setJym(jym);
 		
