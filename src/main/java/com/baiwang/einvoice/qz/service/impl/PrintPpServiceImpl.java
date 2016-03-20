@@ -32,23 +32,23 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	@Override
 	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
 		requestPage = (requestPage - 1) * pageSize;
-		beginDate = beginDate.replaceAll("-", "");
-		endDate = endDate.replaceAll("-", "");
+		/*beginDate = beginDate.replaceAll("-", "");
+		endDate = endDate.replaceAll("-", "");*/
 		return dao.getPrintPpList(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, requestPage, pageSize, xsfnsrsbh);
 	}
 	
 	@Override
 	public int queryCount(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
-		beginDate = beginDate.replaceAll("-", "");
-		endDate = endDate.replaceAll("-", "");
+		/*beginDate = beginDate.replaceAll("-", "");
+		endDate = endDate.replaceAll("-", "");*/
 		return dao.queryCount(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, requestPage, pageSize, xsfnsrsbh);
 	}
 
 	@Override
 	public List<Map<String, Object>> getPrintPpsList(String beginDate, String endDate, String beginfphm,
 			String endfphm, String fplx, String xsfnsrsbh) {
-		beginDate = beginDate.replaceAll("-", "");
-		endDate = endDate.replaceAll("-", "");
+		/*beginDate = beginDate.replaceAll("-", "");
+		endDate = endDate.replaceAll("-", "");*/
 		List<Map<String, Object>> _list = new ArrayList<Map<String, Object>>();
 		
 		List<Map<String, Object>> list = dao.getPrintPpsList(beginDate, endDate, beginfphm, endfphm, fplx, xsfnsrsbh);

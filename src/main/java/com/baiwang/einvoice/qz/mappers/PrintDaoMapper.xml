@@ -30,10 +30,10 @@
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
   WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} 
    <if test="beginDate != null and beginDate!=''" >
-     <![CDATA[and left(a.kprq ,8) >= #{beginDate} ]]>
+     <![CDATA[and a.kprq  >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
-     <![CDATA[and left(a.kprq ,8) <= #{endDate} ]]>
+     <![CDATA[and a.kprq <= #{endDate} ]]>
     </if>
     <if test="hyid != null and hyid !=''" >
      and b.hyid like CONCAT('%',#{hyid },'%' )
@@ -57,10 +57,10 @@
 	  LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
 	  WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx}  and a.xsfnsrsbh = #{xsfnsrsbh} 
 	   <if test="beginDate != null and beginDate!=''" >
-     <![CDATA[and left(a.kprq ,8) >= #{beginDate} ]]>
+     <![CDATA[and a.kprq >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
-     <![CDATA[and left(a.kprq ,8) <= #{endDate} ]]>
+     <![CDATA[and a.kprq <= #{endDate} ]]>
     </if>
     <if test="hyid != null and hyid !=''" >
      and b.hyid like CONCAT('%',#{hyid },'%' )
@@ -88,10 +88,10 @@
   	from kpxx a 
   	WHERE 1=1  and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} 
   	<if test="beginDate != null and beginDate!=''" >
-     <![CDATA[and left(a.kprq ,8) >= #{beginDate} ]]>
+     <![CDATA[and a.kprq >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
-     <![CDATA[and left(a.kprq ,8) <= #{endDate} ]]>
+     <![CDATA[and a.kprq <= #{endDate} ]]>
     </if>
     <if test="beginfphm != null and beginfphm !=''" >
      <![CDATA[and a.fphm >= #{beginfphm} ]]>
