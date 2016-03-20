@@ -13,7 +13,7 @@
 <script type="text/javascript" src="<%=basePath %>/js/jquery/easyui-lang-zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui_global.css"/>
 <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
-	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"> </OBJECT>
+	codebase="NISEC_SKSCX.ocx#version=1,0,0,1"  style="display: none;"> </OBJECT>
 </head>
 <body>
 <div id="toolbar_div" class="toolbar_div" >
