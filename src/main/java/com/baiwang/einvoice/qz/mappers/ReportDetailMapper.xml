@@ -45,7 +45,7 @@
     <result column="fpjd" property="fpjd" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="report_Column_List" >
-    o.fpqqlsh,o.zddh as ddh, o.sqr, o.hym, o.hyid, o.ddsj, o.sqsj, k.gmfmc as fptt, o.spzl as fplx,k.fplx as fpzl, o.sqrk, k.hjje as je, o.shr, o.shrdh, o.jsdz, o.yjsj, 
+    o.fpqqlsh,o.zddh as ddh, o.sqr, o.hym, o.hyid, o.ddsj, o.sqsj, o.fptt, o.spzl as fplx,k.fplx as fpzl, o.sqrk, k.hjje as je, o.shr, o.shrdh, o.jsdz, o.yjsj, 
     k.fphm, o.fhr, o.wlgs, o.wldh, o.tkzt, o.fpzt,o.bzfp
   </sql>
   <select id="getFpByLSH" parameterType="java.lang.String" resultMap="BaseResultMap">
