@@ -264,7 +264,6 @@ function updateStatus(fpqqlsh ,str , resultXml ,status){
 		async: false,
 		success: function (data) {
         	if(data.status == 'success'){
-        		window.parent.$.messager.alert('消息',"开具成功!发票请求流水号为："+fpqqlsh);
         		searchZpList();
         	}else{
         		window.parent.$.messager.alert('消息',"开具成功,保存状态失败");
