@@ -273,9 +273,11 @@ function chFp(){
 		alert('请选择一条记录进行操作!');
 		return;
 	}
-	if(!confirm("发票号码："+row.fphm+"；确定要冲红此发票吗？")){
-		return;
-	}
+	window.parent.$.messager.confirm("操作提示", "发票号码："+row.fphm+"；确定要冲红此发票吗？", function (data) {  
+        if (!data) { 
+        	return;
+        }
+    })
 	if(SetParameter()){
 		$.ajax({
 		        type:"POST",
