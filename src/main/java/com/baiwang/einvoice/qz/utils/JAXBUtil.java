@@ -131,8 +131,6 @@ public class JAXBUtil{
 				"</business>";
 		/*String xml = readFile("E:\\kjfp\\kjfp.xml");*/
 		Business business = unmarshallObject(xml.getBytes("gbk"));
-		System.out.println(business.getOrderDetail().getZddh());
-		System.out.println(business.getOrderDetail().getFddh());
 		//System.out.println(XmlUtil.toPlainInvoice(business.getREQUESTCOMMONFPKJ().getKpxx(), business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx()));
 	}
 }

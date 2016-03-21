@@ -64,7 +64,11 @@
     from kpxx
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </select>
-  
+  <select id="queryInvoiceNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+  		select COUNT(1) FROM kpxx a
+		WHERE a.fpzt = #{fpzt,jdbcType=VARCHAR}
+		GROUP BY a.fplx,a.fpzt ORDER BY a.fplx ,a.fpzt
+  </select>
   <select id="selectByDdhm" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

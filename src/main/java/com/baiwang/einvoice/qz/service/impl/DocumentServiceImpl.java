@@ -62,7 +62,7 @@ public class DocumentServiceImpl implements IDocumentService {
 	private static final String token_ts_client_secret = ConfigUtil.get("token.ts.client_secret");
 	/**
 	  * <p>Title: query</p>
-	  * <p>Description: </p>
+	  * <p>根据发票号码和发票代码获取发票文件</p>
 	  * @param fphm
 	  * @param fpdm
 	  * @return
@@ -82,14 +82,20 @@ public class DocumentServiceImpl implements IDocumentService {
 		
 		try {
 			//获取TS TOKEN值
+			long time1 = System.currentTimeMillis();
 			String tokenJson = getToken();
+			long time2 = System.currentTimeMillis();
+			System.out.println(time2 - time1);
 			//String tokenJson = "{\"token_type\":\"bearer\",\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJ1c2VySWQiOiI2NjhhMmQ3OC1kOGE0LTRmNTYtODljMi04NDAwNGRhNzliOWQiLCJyb2xlIjoiY29tcGFueSIsImNsaWVudElkIjoiYnd0c19jbGllbnRfdGVzdCIsInRlbmFudElkIjoiYTg1ZGI4ZmUtMzNkYS00NWJkLWJjZWEtMTlhNTFlODQyY2IzIiwiZXhwaXJlVGltZSI6MTQ1ODM2MTAyNTY0OSwiaWF0IjoxNDU4MzU3NDI1fQ.2WV90aXkMrlURZj8lAfuIk2hbkHCCjuPJ7zf6qXYEok\",\"expires_in\":3600,\"refresh_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoicmVmcmVzaFRva2VuIiwidXNlcklkIjoiNjY4YTJkNzgtZDhhNC00ZjU2LTg5YzItODQwMDRkYTc5YjlkIiwicm9sZSI6ImNvbXBhbnkiLCJjbGllbnRJZCI6ImJ3dHNfY2xpZW50X3Rlc3QiLCJ0ZW5hbnRJZCI6ImE4NWRiOGZlLTMzZGEtNDViZC1iY2VhLTE5YTUxZTg0MmNiMyIsImV4cGlyZVRpbWUiOjE0NTg5NjIyMjU2NTUsImlhdCI6MTQ1ODM1NzQyNX0.ay2g64CKBWTgM2RHq3CLeuTIYvA52d_TNCbI8eQUVvc\"}";
 			JSONObject jsonObject =JSON.parseObject(tokenJson);
 			System.out.println(jsonObject.get("access_token"));
 			//请求头增加Authorization
 			hg.setHeader("Authorization", "{"+jsonObject.get("access_token")+"}");
 			//hg.setHeader("Authorization", "bearer{eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJ1c2VySWQiOiI2NjhhMmQ3OC1kOGE0LTRmNTYtODljMi04NDAwNGRhNzliOWQiLCJyb2xlIjoiY29tcGFueSIsImNsaWVudElkIjoiYnd0c19jbGllbnRfdGVzdCIsInRlbmFudElkIjoiYTg1ZGI4ZmUtMzNkYS00NWJkLWJjZWEtMTlhNTFlODQyY2IzIiwiZXhwaXJlVGltZSI6MTQ1ODM1ODA2MDEyNSwiaWF0IjoxNDU4MzU0NDYwfQ.9gAhNkStgeXmIXxNIITGr4ZUEWf17L_3kNMcvsnePFk}");
+			long time3 = System.currentTimeMillis();
 			HttpResponse response = hc.execute(hg);
+			long time4 = System.currentTimeMillis();
+			System.out.println(time4-time3);
 			HttpEntity entity = response.getEntity();
 			byte[] fileContent = null;
 			InputStream htm_in = null;
@@ -104,7 +110,7 @@ public class DocumentServiceImpl implements IDocumentService {
 					if(attachment!=null || "".equals(attachment)){
 						returncode = "0";
 						fileName = attachment.substring(attachment. indexOf("=")+1);
-						fileContent = InputStream2ByteArray(htm_in, "reports" ,attachment.substring(attachment. indexOf("=")+1) );
+						fileContent = InputStream2ByteArray(htm_in,attachment.substring(attachment. indexOf("=")+1) );
 					}
 					
 				}
@@ -131,30 +137,30 @@ public class DocumentServiceImpl implements IDocumentService {
 				logger.info("版式文件查询失败！");
 			}
 		} catch (UnsupportedEncodingException e) {
-			
 			e.printStackTrace();
-			
 		} catch (ClientProtocolException e) {
-			
 			e.printStackTrace();
-			
 		} catch (IllegalStateException e) {
-			
 			e.printStackTrace();
-			
 		} catch (IOException e) {
-			
 			e.printStackTrace();
-			
 		}
-		
 		return sb.toString();
 
 	}
 	
-	public static byte[] InputStream2ByteArray(InputStream in, String filePath ,String name) {
+	/***
+	  * @author zhaowei
+	  * @Description: 输入流转换为字节数组
+	  * @param @param in
+	  * @param @param name
+	  * @param @return  
+	  * @return byte[]  
+	  * @throws
+	  * @date 2016年3月21日 上午10:46:45
+	 */
+	public static byte[] InputStream2ByteArray(InputStream in , String name) {
 		ByteArrayOutputStream fos = null;
-		//String fileName = filePath + File.separator + name;
 		try {
 			int flag = 0;
 			fos = new ByteArrayOutputStream(in.available());
@@ -163,26 +169,30 @@ public class DocumentServiceImpl implements IDocumentService {
 				fos.write(b, 0, flag);
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				in.close();
 				fos.close();
 			} catch (IOException e) {
-
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-
 			}
 		}
 
 		return fos.toByteArray();
 	}
 
+	/***
+	  * @author zhaowei
+	  * @Description: 获取TS平台TOKEN值
+	  * @param @return
+	  * @param @throws UnsupportedEncodingException  
+	  * @return String  
+	  * @throws
+	  * @date 2016年3月21日 上午10:47:17
+	 */
 	public static String getToken() throws UnsupportedEncodingException {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();// 参数列表
 		params.add(new BasicNameValuePair("username", token_ts_username));
@@ -220,13 +230,10 @@ public class DocumentServiceImpl implements IDocumentService {
 
 			}
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return token_json;

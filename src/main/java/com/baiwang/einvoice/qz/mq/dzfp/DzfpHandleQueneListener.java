@@ -66,16 +66,16 @@ public class DzfpHandleQueneListener implements SessionAwareMessageListener {
 				jmsTemplate2.convertAndSend(textMessage);
 			}else{
 				Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
-				OrderDetail orderDetail = business.getOrderDetail();
+				List<OrderDetail> orderDetails = business.getCustomData().getDdxxs().getOrderDetail();
 				Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 				
 				List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
-				System.out.println("订单号："+orderDetail.getZddh());
+				System.out.println("发票请求流水号："+ fpqqlsh);
 				
 				Map<String, String> result = resultService.queryResult(orderDetail.getZddh(), orderDetail.getFddh(), kpxx.getFplx());//根据两个订单号查
 				
 				if(null == result || result.get("returnCode").equals("4000")){
-					fpService.saveInfo(orderDetail, kpxx, list , fpqqlsh);
+					fpService.saveInfo(orderDetails, kpxx, list , fpqqlsh);
 					
 					//Message textMessage = null;
 					String returnSK = "";

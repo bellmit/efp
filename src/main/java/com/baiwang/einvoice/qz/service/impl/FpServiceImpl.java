@@ -407,4 +407,75 @@ public class FpServiceImpl implements IFpService {
 		}
 	}
 
+	/**
+	  * <p>Title: queryInvoiceNum</p>
+	  * <p>Description: </p>
+	  * @return
+	  * @see com.baiwang.einvoice.qz.service.IFpService#queryInvoiceNum()
+	  */
+	@Override
+	public List<Integer> queryInvoiceNum(String fpzt) {
+		
+		// TODO Auto-generated method stub
+		return dao.queryInvoiceNum(fpzt);
+		
+	}
+
+	/**
+	  * <p>Title: saveInfo</p>
+	  * <p>Description: </p>
+	  * @param orderDetails
+	  * @param kpxx
+	  * @param fpmxList
+	  * @param fpqqlsh
+	  * @see com.baiwang.einvoice.qz.service.IFpService#saveInfo(java.util.List, com.baiwang.einvoice.qz.beans.Kpxx, java.util.List, java.lang.String)
+	  */
+	@Override
+	public void saveInfo(List<OrderDetail> orderDetails, Kpxx kpxx, List<Fpmx> fpmxList, String fpqqlsh) {
+		
+		
+		Kpxx tempKpxx = dao.selectByFpqqlsh(fpqqlsh);
+		if(tempKpxx != null){
+			String tempFpqqlsh = tempKpxx.getFpqqlsh();
+			if("1".equals(tempKpxx.getFpzt())||"-1".equals(tempKpxx.getFpzt())){
+				orderDetailDao.deleteByFpqqlsh(tempFpqqlsh);
+				logger.info("订单信息重复，删除发票请求流水号为【"+tempFpqqlsh+"】的订单信息！");
+				dao.deleteByPrimaryKey(tempFpqqlsh);
+				logger.info("发票信息重复，删除发票请求流水号为【"+tempFpqqlsh+"】的开票信息！");
+				fpmxDao.deleteByFpqqlsh(tempFpqqlsh);
+				logger.info("删除发票请求流水号为【"+tempFpqqlsh+"】的发票明细！");
+			}else{
+				logger.info("发票请求流水号为【"+tempFpqqlsh+"】的发票已开具成功,无法再次开具！");
+				return;
+			}
+			
+		}
+		
+		if(orderDetails.size()>0){
+			for(OrderDetail orderDetail: orderDetails){
+				orderDetail.setFpqqlsh(fpqqlsh);
+			}
+			
+			orderDetailDao.insertFromList(orderDetails);
+			logger.info("存入流水号为【"+fpqqlsh+"】的订单信息！");
+		}
+		
+		
+		kpxx.setFpzt("1");
+		kpxx.setFpqqlsh(fpqqlsh);
+		dao.insert(kpxx);
+		logger.info("存入发票请求流水号为【"+fpqqlsh+"】的开票信息！");
+		
+		
+		if(fpmxList.size()>0){
+			for(Fpmx fpmx: fpmxList){
+				fpmx.setFpqqlsh(fpqqlsh);
+			}
+			
+			fpmxDao.insertFromList(fpmxList);
+			logger.info("存入流水号为【"+kpxx.getFpqqlsh()+"】的发票明细！");
+		}
+		
+	}
+
 }

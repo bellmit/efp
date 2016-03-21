@@ -18,6 +18,8 @@ public interface OrderDetailMapper {
     int insertSelective(OrderDetail record);
 
     OrderDetail selectByPrimaryKey(Long id);
+    
+    int insertFromList(List<OrderDetail> orderDetails);
 
     int updateByPrimaryKeySelective(OrderDetail record);
 
