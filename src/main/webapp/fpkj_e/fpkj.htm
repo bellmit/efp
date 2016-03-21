@@ -26,7 +26,27 @@ Date.prototype.format = function (fmt) { //author: meizz
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
-
+function kjefp(){
+	var params = $('#zsfpform').serialize();
+	$.ajax({
+		type:"POST",
+        url: "../../einvoice/fpkj/ekp",
+        data: params,
+        async: false,
+        success: function (data) {
+        	alert(data.returnMsg);
+        	return;
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		window.parent.$.messager.alert('消息',"Error");
+        	}
+        }
+	});
+	
+}
 $(function(){
 	$('#kprq').text(new Date().format("yyyy年mm月dd日"));
 })
@@ -299,8 +319,8 @@ $(function(){
 					<SCRIPT id="syqd_s" type="text/javascript">PrimeFaces.cw('CommandButton','syqdwv',{id:'syqd'});</SCRIPT>
 					<BUTTON id="j_idt65"
 						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-						onclick="alert('开具请求已发送！')"
-						name="j_idt65" type="submit">
+						onclick="kjefp();"
+						name="j_idt65" >
 						<SPAN class="ui-button-text ui-c">开具</SPAN>
 					</BUTTON>
 
