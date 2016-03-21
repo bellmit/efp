@@ -284,6 +284,9 @@ function initDataGridComponent(){
 				},
 				onLoadSuccess:function(data){
 					$('#datagrid_zp').datagrid('unselectAll');
+					if(data.rows.length == 0){
+						window.parent.$.messager.alert('消息',"未查到任何数据");
+					}
 				}
 	});
 	
