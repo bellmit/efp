@@ -103,7 +103,7 @@
   </select>
   
   <select id="showDetail" resultMap="QueryPrintPpMap" parameterType="map">
-  select a.fpqqlsh fpqqlsh, a.zddh zddh, a.fddh fddh, b.hym hym, b.shr shr, b.sqsj, b.kpdq, a.fplx fpzl,
+  select a.fpqqlsh fpqqlsh, a.zddh zddh, a.fddh fddh, b.hym hym, b.hyid hyid, b.shr shr,b.shrdh shrdh, b.sqsj, b.kpdq, a.fplx fpzl,
   a.gmfmc fptt, b.spzl fpnr, a.hjje hjje, a.hjse hjse, a.jshj jshj, a.fpdm fpdm, a.fphm fphm, a.kprq kprq 
   from kpxx a  
   LEFT JOIN order_detail b ON a.fpqqlsh = b.fpqqlsh 
