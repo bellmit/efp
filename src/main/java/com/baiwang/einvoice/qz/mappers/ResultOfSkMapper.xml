@@ -46,7 +46,7 @@
 		select 
 		<include refid="com.baiwang.einvoice.qz.dao.KpxxMapper.Base_Column_List" />
 		from kpxx 
-		where zddh = #{zddh} and fddh = #{fddh} and fplx = #{fplx}
+		where fpqqlsh = #{fpqqlsh} and fplx = #{fplx} 
 	</select>
 
   
