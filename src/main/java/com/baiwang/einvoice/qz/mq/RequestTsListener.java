@@ -44,8 +44,10 @@ public class RequestTsListener  implements SessionAwareMessageListener{
 		String reqestTsPlat = tsService.reqestTsPlat(ubl);
 		logger.info("////////请求ts发票平台//////reqestTsPlat///////" + reqestTsPlat);
 		if(!"0000".equals(reqestTsPlat)){
-			
-			final Timer timer = new Timer();
+			logger.error("-------请求ts发票平台失败xml：" + xml);
+			logger.error("-------请求ts发票平台失败returnSK：" + returnSK);
+			logger.error("-------请求ts发票平台失败：" + reqestTsPlat);
+			/*final Timer timer = new Timer();
 			timer.scheduleAtFixedRate(new TimerTask() {
 				public void run() {
 					String res = tsService.reqestTsPlat(ubl);
@@ -53,13 +55,14 @@ public class RequestTsListener  implements SessionAwareMessageListener{
 						timer.cancel();
 					}
 				}
-			}, 6*1000, 15*60*1000);
+			}, 6*1000, 15*60*1000);*/
 		}
 			
 	}
 	
 	public String afterRequestSK(String xml, String returnSK){
 		
+		logger.info("/////////-----￥----请求ts的xml：////////"+xml);
 		logger.info("/////////-----￥----税控接口返回：////////"+returnSK);
 
 		logger.info("/////////-----￥----税控服务器返回的returncode:///////////"+InvoiceUtil.getIntervalValue(returnSK,"<RETURNCODE>","</RETURNCODE>"));
