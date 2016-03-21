@@ -58,7 +58,7 @@ public class ZzfpHandleQueneListener implements SessionAwareMessageListener{
 			}else{
 				
 				Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
-				OrderDetail orderDetail = business.getOrderDetail();
+				List<OrderDetail> orderDetails = business.getCustomData().getDdxxs().getOrderDetail();
 				Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 				
 				List<Fpmx> list = business.getREQUESTCOMMONFPKJ().getCommonfpkjxmxxs().getFpmx();
@@ -67,7 +67,7 @@ public class ZzfpHandleQueneListener implements SessionAwareMessageListener{
 				Map<String, String> result = resultService.queryResult(orderDetail.getZddh(), orderDetail.getFddh(), kpxx.getFplx());//根据两个订单号查
 				
 				if(null == result || result.get("returnCode").equals("4000")){
-					fpService.saveInfo(orderDetail, kpxx, list , fpqqlsh);
+					fpService.saveInfo(orderDetails, kpxx, list , fpqqlsh);
 					
 					logger.warn("*********订单号：" + orderDetail.getZddh()+"/"+orderDetail.getFddh() + "纸质发票保存成功");
 					textMessage = session.createTextMessage(InvoiceUtil.backMsg("8000", "订单保存成功", xml));

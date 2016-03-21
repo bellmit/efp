@@ -77,6 +77,14 @@ function initDataGridComponent(){
 				]],
 				onClickRow:function(index){	
 					
+				},
+				onLoadSuccess:function(data){
+					//alert(JSON.stringify(data))
+					if(data.code== '-1'){
+						window.top.location.href="../login/login.html";
+					}else if(data.rows.length == 0){
+						window.parent.$.messager.alert('消息',"未查到任何数据");
+					}
 				}
 	});
 	

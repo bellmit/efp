@@ -100,6 +100,26 @@
       #{jsdz,jdbcType=VARCHAR}, #{yjsj,jdbcType=DATE}, #{fhr,jdbcType=VARCHAR}, #{wlgs,jdbcType=VARCHAR}, 
       #{wldh,jdbcType=VARCHAR}, #{tkzt,jdbcType=VARCHAR}, #{fpzt,jdbcType=VARCHAR})
   </insert>
+  
+  <insert id="insertFromList" parameterType="java.util.List">
+  	insert into order_detail (fpqqlsh, zddh, fddh,kpdq, sqr, 
+      hym, hyid, ddsj, sqsj, 
+      spzl, sqrk, shr, shrdh, 
+      jsdz, yjsj, fhr, wlgs, 
+      wldh, tkzt, fpzt)
+    values 
+    <foreach collection="list" item="item" index="index"
+   separator=",">
+    ( #{id,jdbcType=BIGINT}, #{fpqqlsh,jdbcType=VARCHAR},#{zddh,jdbcType=VARCHAR},#{fddh,jdbcType=VARCHAR},
+      #{kpdq,jdbcType=VARCHAR},#{sqr,jdbcType=VARCHAR}, 
+      #{hym,jdbcType=VARCHAR}, #{hyid,jdbcType=VARCHAR}, #{ddsj,jdbcType=DATE}, #{sqsj,jdbcType=DATE}, 
+      #{spzl,jdbcType=VARCHAR}, #{sqrk,jdbcType=VARCHAR}, #{shr,jdbcType=VARCHAR}, #{shrdh,jdbcType=VARCHAR}, 
+      #{jsdz,jdbcType=VARCHAR}, #{yjsj,jdbcType=DATE}, #{fhr,jdbcType=VARCHAR}, #{wlgs,jdbcType=VARCHAR}, 
+      #{wldh,jdbcType=VARCHAR}, #{tkzt,jdbcType=VARCHAR}, #{fpzt,jdbcType=VARCHAR}
+      )
+  </foreach>
+  </insert>
+  
   <insert id="insertSelective" parameterType="com.baiwang.einvoice.qz.beans.OrderDetail" >
     insert into order_detail
     <trim prefix="(" suffix=")" suffixOverrides="," >

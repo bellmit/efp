@@ -23,6 +23,8 @@ public interface IFpService {
 	
 	void saveInfo(OrderDetail orderDetail, Kpxx kpxx, List<Fpmx> fpmxList , String fpqqlsh);
 	
+	void saveInfo(List<OrderDetail> orderDetails, Kpxx kpxx, List<Fpmx> fpmxList , String fpqqlsh);
+	
 	List<Map<String, String>> getPlainList(HashMap<String, String> param);
 	
 	List<Map<String, String>> getSpecialList(HashMap<String, String> param);
@@ -60,4 +62,6 @@ public interface IFpService {
 	void saveCallBackInfo(Kpxx kpxx);
 	
 	void insertFp(Kpxx kpxx,List<Fpmx> fpmxList);
+	
+	List<Integer> queryInvoiceNum(String fpzt);
 }

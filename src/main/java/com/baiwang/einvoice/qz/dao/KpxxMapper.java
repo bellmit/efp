@@ -41,4 +41,6 @@ public interface KpxxMapper {
     void insertKpxx(Kpxx kpxx);
     
     void insertFpmx(Fpmx fpmx);
+    
+    List<Integer> queryInvoiceNum(String fpzt);
 }

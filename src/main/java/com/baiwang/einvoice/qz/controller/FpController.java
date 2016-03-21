@@ -69,7 +69,7 @@ public class FpController {
 		
 		Business business = JAXBUtil.unmarshallObject(xml.getBytes("gbk"));
 		
-		OrderDetail orderDetail = business.getOrderDetail();
+		List<OrderDetail> orderDetail = business.getCustomData().getDdxxs().getOrderDetail();
 		
 		Kpxx kpxx = business.getREQUESTCOMMONFPKJ().getKpxx();
 		

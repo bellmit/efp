@@ -1,87 +1,119 @@
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="business">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="CUSTOMDATA">
-          <xs:complexType>
-            <xs:choice maxOccurs="unbounded" minOccurs="0">
-              <xs:element type="xs:string" name="ZDDH"/>
-              <xs:element type="xs:string" name="FDDH"/>
-              <xs:element type="xs:string" name="SQR"/>
-              <xs:element type="xs:string" name="HYM"/>
-              <xs:element type="xs:string" name="HYID"/>
-              <xs:element type="xs:string" name="DDSJ"/>
-              <xs:element type="xs:string" name="SQSJ"/>
-              <xs:element type="xs:string" name="SPZL"/>
-              <xs:element type="xs:string" name="SQRK"/>
-              <xs:element type="xs:string" name="SHR"/>
-              <xs:element type="xs:long" name="SHRDH"/>
-              <xs:element type="xs:string" name="JSDZ"/>
-              <xs:element type="xs:string" name="YJSJ"/>
-              <xs:element type="xs:string" name="FHR"/>
-              <xs:element type="xs:string" name="WLGS"/>
-              <xs:element type="xs:string" name="WLDH"/>
-              <xs:element type="xs:string" name="TKZT"/>
-            </xs:choice>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="REQUEST_COMMON_FPKJ">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="COMMON_FPKJ_FPT">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element type="xs:byte" name="FPLX"/>
-                    <xs:element type="xs:byte" name="KPLX"/>
-                    <xs:element type="xs:string" name="XSF_NSRSBH"/>
-                    <xs:element type="xs:string" name="XSF_MC"/>
-                    <xs:element type="xs:string" name="XSF_DZ"/>
-                    <xs:element type="xs:long" name="XSF_DH"/>
-                    <xs:element type="xs:long" name="XSF_YHZH"/>
-                    <xs:element type="xs:string" name="GMF_NSRSBH"/>
-                    <xs:element type="xs:string" name="GMF_MC"/>
-                    <xs:element type="xs:string" name="GMF_DZ"/>
-                    <xs:element type="xs:string" name="GMF_DH"/>
-                    <xs:element type="xs:long" name="GMF_YHZH"/>
-                    <xs:element type="xs:string" name="KPR"/>
-                    <xs:element type="xs:string" name="SKR"/>
-                    <xs:element type="xs:string" name="FHR"/>
-                    <xs:element type="xs:string" name="YFP_DM"/>
-                    <xs:element type="xs:string" name="YFP_HM"/>
-                    <xs:element type="xs:float" name="JSHJ"/>
-                    <xs:element type="xs:float" name="HJJE"/>
-                    <xs:element type="xs:float" name="HJSE"/>
-                    <xs:element type="xs:string" name="BZ"/>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-              <xs:element name="COMMON_FPKJ_XMXXS">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="COMMON_FPKJ_XMXX" maxOccurs="unbounded" minOccurs="0">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element type="xs:byte" name="FPHXZ"/>
-                          <xs:element type="xs:string" name="XMMC"/>
-                          <xs:element type="xs:string" name="GGXH"/>
-                          <xs:element type="xs:string" name="DW"/>
-                          <xs:element type="xs:byte" name="XMSL"/>
-                          <xs:element type="xs:float" name="XMDJ"/>
-                          <xs:element type="xs:float" name="XMJE"/>
-                          <xs:element type="xs:float" name="SL"/>
-                          <xs:element type="xs:float" name="SE"/>
-                          <xs:element type="xs:byte" name="HSBZ"/>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-      <xs:attribute type="xs:string" name="id"/>
-    </xs:complexType>
-  </xs:element>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="business">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CUSTOMDATA">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DDXXS">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="DDXX" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ZDDH">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="SQR" type="xs:string"/>
+													<xs:element name="HYM" type="xs:string"/>
+													<xs:element name="HYID" type="xs:string"/>
+													<xs:element name="DDSJ" type="xs:string"/>
+													<xs:element name="SQSJ" type="xs:string"/>
+													<xs:element name="FPTT" type="xs:string"/>
+													<xs:element name="FPKH" type="xs:string"/>
+													<xs:element name="SPZL" type="xs:string"/>
+													<xs:element name="SQRK" type="xs:string"/>
+													<xs:element name="FPDQ" type="xs:string"/>
+													<xs:element name="SHR" type="xs:string"/>
+													<xs:element name="SHRDH" type="xs:string"/>
+													<xs:element name="JSDZ" type="xs:string"/>
+													<xs:element name="TKZT" type="xs:string"/>
+													<xs:element name="FPCLZT" type="xs:string"/>
+													<xs:element name="BZFP" type="xs:string"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="LSH">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="REQUEST_COMMON_FPKJ">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="COMMON_FPKJ_FPT">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="FPLX" type="xs:string"/>
+										<xs:element name="KPLX" type="xs:string"/>
+										<xs:element name="XSF_NSRSBH" type="xs:string"/>
+										<xs:element name="XSF_MC" type="xs:string"/>
+										<xs:element name="XSF_DZ" type="xs:string"/>
+										<xs:element name="XSF_DH" type="xs:string"/>
+										<xs:element name="XSF_YHZH" type="xs:string"/>
+										<xs:element name="GMF_NSRSBH" type="xs:string"/>
+										<xs:element name="GMF_MC" type="xs:string"/>
+										<xs:element name="GMF_DZ" type="xs:string"/>
+										<xs:element name="GMF_DH" type="xs:string"/>
+										<xs:element name="GMF_YHZH" type="xs:string"/>
+										<xs:element name="KPR" type="xs:string"/>
+										<xs:element name="SKR" type="xs:string"/>
+										<xs:element name="FHR" type="xs:string"/>
+										<xs:element name="YFP_DM" type="xs:string"/>
+										<xs:element name="YFP_HM" type="xs:string"/>
+										<xs:element name="JSHJ" type="xs:decimal"/>
+										<xs:element name="HJJE" type="xs:decimal"/>
+										<xs:element name="HJSE" type="xs:string"/>
+										<xs:element name="BZ" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="COMMON_FPKJ_XMXXS">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="COMMON_FPKJ_XMXX" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="FPHXZ" type="xs:string"/>
+													<xs:element name="XMMC" type="xs:string"/>
+													<xs:element name="DW" type="xs:string"/>
+													<xs:element name="GGXH" type="xs:string"/>
+													<xs:element name="XMSL" type="xs:string"/>
+													<xs:element name="XMDJ" type="xs:string"/>
+													<xs:element name="XMJE" type="xs:string"/>
+													<xs:element name="SL" type="xs:string"/>
+													<xs:element name="SE" type="xs:string"/>
+													<xs:element name="HSBZ" type="xs:string"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="id">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>

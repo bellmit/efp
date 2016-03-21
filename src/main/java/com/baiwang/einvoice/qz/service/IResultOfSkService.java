@@ -5,6 +5,6 @@ import java.util.Map;
 public interface IResultOfSkService {
 	public void saveResultOfSk(Map<String, String> map);
 	
-	public Map<String, String> queryResult(String zddh, String fddh, String fplx);
+	public Map<String, String> queryResult(String fpqqlsh, String fplx);
 
 }

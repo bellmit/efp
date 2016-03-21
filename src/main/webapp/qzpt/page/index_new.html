@@ -5,8 +5,92 @@
 <title>电子发票开票模拟系统</title>
 <script type="text/javascript" src="../../js/jquery/jquery.js"></script>
 <script type="text/javascript" src="relogin.js"></script>
+<script type="text/javascript" src="../../js/echarts.min.js"></script>
 </head>
 <body onload="init();">
-电子发票开票模拟系统
+
+ <div id="main"  style="text-align: center;">
+ 		<div id ="top_left" style="width: 500px;height: 400px;float: left;margin-left: 40px;"></div>
+ 		<div id ="top_right" style="width: 500px;height:400px;float: right; margin-left: -20px;"></div>
+ </div>
 </body>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('top_left'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '数量统计'
+            },
+            tooltip: {
+            	trigger: 'axis'
+            },
+            legend: {
+                data:['待开票','待打印','已完成','已作废']
+            },
+            xAxis:[
+                {
+                    type : 'category',  
+                    data :['普通发票','专用发票','电子发票']
+                }
+            ],
+            yAxis: [
+                    {
+                        type : 'value'
+                    }
+                ],
+            series: [ {
+                name:'待开票',
+                type:'bar',
+           		 },
+            {
+                name:'待打印',
+                type:'bar',
+            },
+            {
+                name:'已完成',
+                type:'bar',
+            },
+            {
+                name:'已作废',
+                type:'bar',
+            }]
+        };
+        
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        myChart.hideLoading();  
+        getChartData();
+        function getChartData() {  
+            //获得图表的options对象  
+            var options = myChart.getOption(); 
+            //通过Ajax获取数据  
+            $.ajax({  
+                type : "post",  
+                async : false, //同步执行  
+                url : "../../queryInvoiceNum",  
+                dataType : "json", //返回数据形式为json  
+                success : function(result) {  
+                    if (result) {  
+                        options.legend.data = result.legend;  
+                        options.xAxis[0].data = result.category;  
+                        options.series[0].data = result.series[0].data; 
+                        options.series[1].data = result.series[1].data; 
+                        options.series[2].data = result.series[2].data; 
+                        options.series[3].data = result.series[3].data; 
+  
+                        
+                        myChart.hideLoading();  
+                        myChart.setOption(options);  
+                        
+                    }  
+                },  
+                error : function(errorMsg) {  
+                    alert("不好意思，大爷，图表请求数据失败啦!");  
+                    myChart.hideLoading();  
+                }  
+            });  
+        }  
+    </script>  
 </html>

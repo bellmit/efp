@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baiwang.einvoice.qz.beans.Returnmsg;
 import com.baiwang.einvoice.qz.mq.handleRequest.HandleResponse;
 import com.baiwang.einvoice.qz.utils.InvoiceUtil;
-import com.baiwang.einvoice.qz.utils.XmlUtil;
 
 @RequestMapping("handle")
 //@Scope("prototype")
@@ -58,7 +57,7 @@ public class InvoiceHandleController {
 		
 		Returnmsg returnmsg = new Returnmsg();
 		
-		final String fpqqlsh = XmlUtil.random();
+		final String fpqqlsh = InvoiceUtil.getIntervalValue(xml, "LSH=\"", "\"");
 		logger.info("发票请求流水号：" + fpqqlsh);
 		
 		String fplx = InvoiceUtil.getIntervalValue(xml, "<FPLX>", "</FPLX>");

@@ -42,11 +42,16 @@ public class PrintPpController {
 			List<Map<String,String>> list = service.getPrintPpList(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, page, rows, user.getNsrsbh());
 			int size = service.queryCount(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, page, rows, user.getNsrsbh());
 			//int pageCount = size%pageSize > 0 ? (size/pageSize +1) : size/pageSize;
-			
+			map.put("code", "0");
 			map.put("rows", list);
 			map.put("total", size);
 		}else{
 			logger.info("***用户名未登陆******");
+			map.put("code", "-1");
+			map.put("msg", "用户未登陆");
+			map.put("rows", new ArrayList<Object>());
+			map.put("total", 0);
+			return map;
 		}
 		
 		
@@ -57,7 +62,7 @@ public class PrintPpController {
 	@RequestMapping("printpps/printlist")
 	@ResponseBody
 	public Map<String, Object> getPrintPpsList(String beginDate, String endDate, String beginfphm, String endfphm, String fplx,
-			int page, int rows,HttpServletRequest request){
+			int page, int rows, HttpServletRequest request){
 		User user = (User)request.getSession().getAttribute("user");
 		Map<String, Object> map = new HashMap<>();
 		if(null != user){
@@ -73,8 +78,15 @@ public class PrintPpController {
 			}
 			
 			//int pageCount = size%rows > 0 ? (size/rows +1) : size/rows;
+			map.put("code", "0");
 			map.put("rows", _list);
 			map.put("total", size);
+		}else{
+			map.put("code", "-1");
+			map.put("msg", "用户未登陆");
+			map.put("rows", new ArrayList<Object>());
+			map.put("total", 0);
+			return map;
 		}
 		
 		
@@ -82,19 +94,28 @@ public class PrintPpController {
 	}
 	@RequestMapping("printpps/showDetail")
 	@ResponseBody
-	public Map<String, Object> showDetail(String begin, String end, String fplx, int page, int rows){
-		
-		System.out.println(begin);
-		System.out.println(end);
-		System.out.println(fplx);
-		List<Map<String,String>> list = service.showDetail(begin, end, fplx, page, rows);
-		int size = service.queryDetailCount(begin, end, fplx);
-		//int pageCount = size%rows > 0 ? (size/rows +1) : size/rows;
-		
+	public Map<String, Object> showDetail(String begin, String end, String fplx, int page, int rows, HttpServletRequest request){
+		User user = (User)request.getSession().getAttribute("user");
 		Map<String, Object> map = new HashMap<>();
-		map.put("rows", list);
-		map.put("total", size);
-		return  map;
+		if(null != user){
+			System.out.println(begin);
+			System.out.println(end);
+			System.out.println(fplx);
+			List<Map<String,String>> list = service.showDetail(begin, end, fplx, page, rows);
+			int size = service.queryDetailCount(begin, end, fplx);
+			//int pageCount = size%rows > 0 ? (size/rows +1) : size/rows;
+			
+			map.put("code", "0");
+			map.put("rows", list);
+			map.put("total", size);
+			return  map;
+		}else{
+			map.put("code", "-1");
+			map.put("msg", "用户未登陆");
+			map.put("rows", new ArrayList<Object>());
+			map.put("total", 0);
+			return map;
+		}
 	}
 	
 	@RequestMapping("print/getParameter")

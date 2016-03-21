@@ -23,29 +23,29 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "orderDetail",
+    "customData",
     "requestcommonfpkj"
 })
 @XmlRootElement(name = "business")
 public class Business {
 
     @XmlElement(name = "CUSTOMDATA", required = true)
-    protected OrderDetail orderDetail;
+    protected CustomData customData;
     @XmlElement(name = "REQUEST_COMMON_FPKJ", required = true)
     protected RequestCommonFpkj requestcommonfpkj;
     @XmlAttribute(name = "id")
     protected String id;
 
     
-    public OrderDetail getOrderDetail() {
+	public CustomData getCustomData() {
 	
-		return orderDetail;
+		return customData;
 	}
 
 
-	public void setOrderDetail(OrderDetail orderDetail) {
+	public void setCustomData(CustomData customData) {
 	
-		this.orderDetail = orderDetail;
+		this.customData = customData;
 	}
 
 
