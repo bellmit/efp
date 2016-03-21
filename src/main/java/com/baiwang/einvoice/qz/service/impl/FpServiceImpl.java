@@ -5,6 +5,7 @@
 package com.baiwang.einvoice.qz.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -460,7 +461,18 @@ public class FpServiceImpl implements IFpService {
 			logger.info("存入流水号为【"+fpqqlsh+"】的订单信息！");
 		}
 		
+		Float jshj = kpxx.getJshj();
+		//Double jshj = Double.parseDouble(kpxx.getJshj());//价税合计
+		Double sl = Double.parseDouble("6");
+		Double je = jshj *100/ (100 + sl);//单价
+		DecimalFormat    df   = new DecimalFormat("0.00"); 
+		String hjje = df.format(je);
 		
+		Double se = jshj - Double.valueOf(hjje);//税额
+		String hjse = df.format(se);
+		
+		kpxx.setHjje(Float.parseFloat(hjje));
+		kpxx.setHjse(Float.parseFloat(hjse));
 		kpxx.setFpzt("1");
 		kpxx.setFpqqlsh(fpqqlsh);
 		dao.insert(kpxx);
@@ -470,6 +482,9 @@ public class FpServiceImpl implements IFpService {
 		if(fpmxList.size()>0){
 			for(Fpmx fpmx: fpmxList){
 				fpmx.setFpqqlsh(fpqqlsh);
+				fpmx.setSe(Float.parseFloat(hjse));
+				fpmx.setXmje(Float.parseFloat(hjje));
+				fpmx.setXmdj(Float.parseFloat(hjje));
 			}
 			
 			fpmxDao.insertFromList(fpmxList);

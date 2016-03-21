@@ -75,7 +75,7 @@
 										<xs:element name="YFP_DM" type="xs:string"/>
 										<xs:element name="YFP_HM" type="xs:string"/>
 										<xs:element name="JSHJ" type="xs:decimal"/>
-										<xs:element name="HJJE" type="xs:decimal"/>
+										<xs:element name="HJJE" type="xs:string"/>
 										<xs:element name="HJSE" type="xs:string"/>
 										<xs:element name="BZ" type="xs:string"/>
 									</xs:sequence>

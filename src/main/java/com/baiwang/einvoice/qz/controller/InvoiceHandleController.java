@@ -57,7 +57,7 @@ public class InvoiceHandleController {
 		
 		Returnmsg returnmsg = new Returnmsg();
 		
-		final String fpqqlsh = InvoiceUtil.getIntervalValue(xml, "LSH=\"", "\"");
+		final String fpqqlsh = InvoiceUtil.getIntervalValue(xml, "<DDXXS LSH=\"",xml.indexOf("<DDXXS LSH=\""),"\">");
 		logger.info("发票请求流水号：" + fpqqlsh);
 		
 		String fplx = InvoiceUtil.getIntervalValue(xml, "<FPLX>", "</FPLX>");

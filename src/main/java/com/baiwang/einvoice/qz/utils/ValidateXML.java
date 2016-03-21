@@ -7,6 +7,7 @@ package com.baiwang.einvoice.qz.utils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -46,67 +47,83 @@ public class ValidateXML {
 		return false;
 	}
 	
-	public static void main(String[] args) {
-		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
-				"<business id=\"FPKJ\">\n" + 
-				"	<CUSTOMDATA>\n" + 
-				"		<DD_HM>订单号码</DD_HM>\n" + 
-				"		<DD_SS_DQ>订单所属地区</DD_SS_DQ>\n" + 
-				"		<DD_YW_LX>订单业务类型，B2B,B2C</DD_YW_LX>\n" + 
-				"		<DD_SJ>订单生成时间</DD_SJ>\n" + 
-				"	</CUSTOMDATA>\n" + 
-				"	<REQUEST_COMMON_FPKJ>\n" + 
-				"		<COMMON_FPKJ_FPT>\n" + 
-				"			<FPLX>发票类型</FPLX>\n" + 
-				"			<KPLX>开票类型</KPLX>\n" + 
-				"			<XSF_NSRSBH>销售方纳税人识别号</XSF_NSRSBH>\n" + 
-				"			<XSF_MC>销售方名称</XSF_MC>\n" + 
-				"			<XSF_DZ>销售方地址</XSF_DZ>\n" + 
-				"			<XSF_DH>销售方电话</XSF_DH>\n" + 
-				"			<XSF_YHZH>销售方银行账号</XSF_YHZH>\n" + 
-				"			<GMF_NSRSBH>购买方纳税人识别号</GMF_NSRSBH>\n" + 
-				"			<GMF_MC>购买方名称</GMF_MC>\n" + 
-				"			<GMF_DZ>购买方地址</GMF_DZ>\n" + 
-				"			<GMF_DH>购买方电话</GMF_DH>\n" + 
-				"			<GMF_YHZH>购买方银行账号</GMF_YHZH>\n" + 
-				"			<KPR>开票人</KPR>\n" + 
-				"			<SKR>收款人</SKR>\n" + 
-				"			<FHR>复核人</FHR>\n" + 
-				"			<YFP_DM>原发票代码</YFP_DM>\n" + 
-				"			<YFP_HM>原发票号码</YFP_HM>\n" + 
-				"			<JSHJ>价税合计</JSHJ>\n" + 
-				"			<HJJE>合计金额</HJJE>\n" + 
-				"			<HJSE>合计税额</HJSE>\n" + 
-				"			<BZ>备注</BZ>\n" + 
-				"		</COMMON_FPKJ_FPT>\n" + 
-				"		<COMMON_FPKJ_XMXXS>\n" + 
-				"			<COMMON_FPKJ_XMXX>\n" + 
-				"				<FPHXZ>发票行性质</FPHXZ>\n" + 
-				"				<XMMC>项目名称</XMMC>\n" + 
-				"				<GGXH>规格型号</GGXH>\n" + 
-				"				<DW>单位</DW>\n" + 
-				"				<XMSL>项目数量</XMSL>\n" + 
-				"				<XMDJ>项目单价</XMDJ>\n" + 
-				"				<XMJE>项目金额</XMJE>\n" + 
-				"				<SL>税率</SL>\n" + 
-				"				<SE>税额</SE>\n" + 
-				"				<HSBZ>含税标志</HSBZ>\n" + 
-				"			</COMMON_FPKJ_XMXX>\n" + 
-				"			<COMMON_FPKJ_XMXX>\n" + 
-				"				<FPHXZ>发票行性质</FPHXZ>\n" + 
-				"				<XMMC>项目名称</XMMC>\n" + 
-				"				<GGXH>规格型号</GGXH>\n" + 
-				"				<DW>单位</DW>\n" + 
-				"				<XMSL>项目数量</XMSL>\n" + 
-				"				<XMDJ>项目单价</XMDJ>\n" + 
-				"				<XMJE>项目金额</XMJE>\n" + 
-				"				<SL>税率</SL>\n" + 
-				"				<SE>税额</SE>\n" + 
-				"				<HSBZ>含税标志</HSBZ>\n" + 
-				"			</COMMON_FPKJ_XMXX>\n" + 
-				"		</COMMON_FPKJ_XMXXS>\n" + 
-				"	</REQUEST_COMMON_FPKJ>\n" + 
+	public static void main(String[] args) throws UnsupportedEncodingException {
+		String xml = "<?xml version=\"1.0\" encoding=\"gbk\"?> <business id=\"FPKJ\"> 	\r\n" + 
+				"<CUSTOMDATA>\r\n" + 
+				"<DDXXS LSH=\"11112222333344445555\">\r\n" + 
+				"<DDXX>\r\n" + 
+				"<ZDDH>100008</ZDDH> \r\n" + 
+				"<SQR>张三</SQR>\r\n" + 
+				"<HYM>会员名</HYM>\r\n" + 
+				"<HYID>会员id</HYID>\r\n" + 
+				"<DDSJ>2016-3-21 17:26:31</DDSJ>\r\n" + 
+				"<SQSJ>2016-3-21 17:26:53</SQSJ>\r\n" + 
+				"<FPTT>个人</FPTT>\r\n" + 
+				"<FPKH>B2B/B2C</FPKH>\r\n" + 
+				"<SPZL>服务费</SPZL>\r\n" + 
+				"<SQRK>erp</SQRK>\r\n" + 
+				"<FPDQ>发票地区</FPDQ>\r\n" + 
+				"<SHR>收货人</SHR>\r\n" + 
+				"<SHRDH>收货人电话</SHRDH>\r\n" + 
+				"<JSDZ>寄送地址</JSDZ>\r\n" + 
+				"<TKZT>退款状态</TKZT>\r\n" + 
+				"<FPCLZT>发票处理状态</FPCLZT>\r\n" + 
+				"<BZFP>备注发票信息</BZFP>\r\n" + 
+				"</DDXX>\r\n" + 
+				"</DDXXS>\r\n" + 
+				"</CUSTOMDATA>\r\n" + 
+				"<REQUEST_COMMON_FPKJ>\r\n" + 
+				"<COMMON_FPKJ_FPT>\r\n" + 
+				"<FPLX>026</FPLX>\r\n" + 
+				"<KPLX>0</KPLX>\r\n" + 
+				"<XSF_NSRSBH>11010800000000000006</XSF_NSRSBH>\r\n" + 
+				"<XSF_MC>百旺股份6</XSF_MC>\r\n" + 
+				"<XSF_DZ>销售方地址</XSF_DZ> \r\n" + 
+				"<XSF_DH>11012345678</XSF_DH>\r\n" + 
+				"<XSF_YHZH>622848265825566332</XSF_YHZH>\r\n" + 
+				"<GMF_NSRSBH></GMF_NSRSBH> \r\n" + 
+				"<GMF_MC>个人</GMF_MC> 	\r\n" + 
+				"<GMF_DZ></GMF_DZ> 	\r\n" + 
+				"<GMF_DH></GMF_DH> 			\r\n" + 
+				"<GMF_YHZH>888888888888888</GMF_YHZH> 	\r\n" + 
+				"<KPR>bw0701</KPR> 		\r\n" + 
+				"<SKR>bw0701</SKR> 			\r\n" + 
+				"<FHR>bw0701</FHR> 		\r\n" + 
+				"<YFP_DM></YFP_DM> 		\r\n" + 
+				"<YFP_HM></YFP_HM> 	\r\n" + 
+				"<JSHJ>58.50</JSHJ> 		\r\n" + 
+				"<HJJE>50.00</HJJE> 		\r\n" + 
+				"<HJSE>8.50</HJSE> 		\r\n" + 
+				"<BZ>备注</BZ> 	\r\n" + 
+				"</COMMON_FPKJ_FPT>\r\n" + 
+				"<COMMON_FPKJ_XMXXS> \r\n" + 
+				"<COMMON_FPKJ_XMXX> 		\r\n" + 
+				"<FPHXZ>0</FPHXZ> 				\r\n" + 
+				"<XMMC>公牛（BULL）GN-H111</XMMC>\r\n" + 
+				"<DW></DW> 		\r\n" + 
+				"<GGXH></GGXH> 		\r\n" + 
+				"<XMSL>1</XMSL> 		\r\n" + 
+				"<XMDJ>10.00</XMDJ> 			\r\n" + 
+				"<XMJE>10.00</XMJE> 			\r\n" + 
+				"<SL>0.17</SL> 			\r\n" + 
+				"<SE>1.7</SE> 			\r\n" + 
+				"<HSBZ>0</HSBZ> 		\r\n" + 
+				"</COMMON_FPKJ_XMXX> 	\r\n" + 
+				"<COMMON_FPKJ_XMXX> 		\r\n" + 
+				"<FPHXZ>0</FPHXZ> 		\r\n" + 
+				"<XMMC>华潮 E386</XMMC> 	\r\n" + 
+				"<DW></DW> 			\r\n" + 
+				"<GGXH></GGXH> 			\r\n" + 
+				"<XMSL>2</XMSL> 		\r\n" + 
+				"<XMDJ>20.00</XMDJ> 			\r\n" + 
+				"<XMJE>40.00</XMJE> 			\r\n" + 
+				"<SL>0.17</SL> 			\r\n" + 
+				"<SE>6.80</SE> 			\r\n" + 
+				"<HSBZ>0</HSBZ> 		\r\n" + 
+				"</COMMON_FPKJ_XMXX> \r\n" + 
+				"</COMMON_FPKJ_XMXXS> \r\n" + 
+				"</REQUEST_COMMON_FPKJ>\r\n" + 
 				"</business>";
-			System.out.println(validateXml("wyyy.xsd", xml.getBytes()));
+			System.out.println(validateXml("wyyy.xsd", xml.getBytes("gbk")));
 	}
 }

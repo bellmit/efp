@@ -110,12 +110,12 @@
     values 
     <foreach collection="list" item="item" index="index"
    separator=",">
-    ( #{id,jdbcType=BIGINT}, #{fpqqlsh,jdbcType=VARCHAR},#{zddh,jdbcType=VARCHAR},#{fddh,jdbcType=VARCHAR},
-      #{kpdq,jdbcType=VARCHAR},#{sqr,jdbcType=VARCHAR}, 
-      #{hym,jdbcType=VARCHAR}, #{hyid,jdbcType=VARCHAR}, #{ddsj,jdbcType=DATE}, #{sqsj,jdbcType=DATE}, 
-      #{spzl,jdbcType=VARCHAR}, #{sqrk,jdbcType=VARCHAR}, #{shr,jdbcType=VARCHAR}, #{shrdh,jdbcType=VARCHAR}, 
-      #{jsdz,jdbcType=VARCHAR}, #{yjsj,jdbcType=DATE}, #{fhr,jdbcType=VARCHAR}, #{wlgs,jdbcType=VARCHAR}, 
-      #{wldh,jdbcType=VARCHAR}, #{tkzt,jdbcType=VARCHAR}, #{fpzt,jdbcType=VARCHAR}
+    (  #{item.fpqqlsh,jdbcType=VARCHAR},#{item.zddh,jdbcType=VARCHAR},#{item.fddh,jdbcType=VARCHAR},
+      #{item.kpdq,jdbcType=VARCHAR},#{item.sqr,jdbcType=VARCHAR}, 
+      #{item.hym,jdbcType=VARCHAR}, #{item.hyid,jdbcType=VARCHAR}, #{item.ddsj,jdbcType=DATE}, #{item.sqsj,jdbcType=DATE}, 
+      #{item.spzl,jdbcType=VARCHAR}, #{item.sqrk,jdbcType=VARCHAR}, #{item.shr,jdbcType=VARCHAR}, #{item.shrdh,jdbcType=VARCHAR}, 
+      #{item.jsdz,jdbcType=VARCHAR}, #{item.yjsj,jdbcType=DATE}, #{item.fhr,jdbcType=VARCHAR}, #{item.wlgs,jdbcType=VARCHAR}, 
+      #{item.wldh,jdbcType=VARCHAR}, #{item.tkzt,jdbcType=VARCHAR}, #{item.fpzt,jdbcType=VARCHAR}
       )
   </foreach>
   </insert>

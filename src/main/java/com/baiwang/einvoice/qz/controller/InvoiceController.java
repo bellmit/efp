@@ -4,7 +4,6 @@
 
 package com.baiwang.einvoice.qz.controller;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -21,8 +20,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,9 +57,6 @@ public class InvoiceController {
 	private EInvoiceSenders sender;
 	@Resource
 	private IResultOfSkService resultService;
-	
-	@Autowired
-    private JmsTemplate jmsTemplate2;
 	
 	@Resource
 	private RequestTsSender tsSender;
@@ -290,7 +284,9 @@ public class InvoiceController {
 		fpxx.setJqbh(jqbh);
 		fpxx.setFpdm(fpdm);
 		fpxx.setFphm(fphm);
-		fpxx.setKprq(sdf.parse(kprq));
+		if(!StringUtils.isEmpty(kprq)){
+			fpxx.setKprq(sdf.parse(kprq));
+		}
 		fpxx.setSkm(skm);
 		fpxx.setJym(jym);
 		
