@@ -51,3 +51,25 @@ function formatArray(value,row,index){
 		return value;
 	}
 }
+
+function formatArrayTime(value,row,index){
+	var arr = value.split(",");
+	var result ="";
+	if(arr.length>1){
+		for(var i= 0;i<arr.length;i++){
+			result = result + formatKprq(arr[i]) + "</br>";
+		}
+		return result;
+	}else{
+		return formatKprq(value);
+	}
+}
+
+
+
+function formatKprq(value,row,index){
+	return value.substr(0,10);
+}
+
+
+
