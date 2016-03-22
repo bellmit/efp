@@ -90,7 +90,7 @@ public class XmlUtil {
 				Fpmx temp = fpmxList.get(i);
 				sb.append("<group xh=\""+(i+1)+"\">");
 				sb.append("\r\n");
-				sb.append("<fphxz>"+(temp.getFphxz()==true?1:0)+"</fphxz>");
+				sb.append("<fphxz>"+temp.getFphxz()+"</fphxz>");
 				sb.append("\r\n");
 				sb.append("<spmc>"+temp.getXmmc()+"</spmc>");
 				sb.append("\r\n");
@@ -110,7 +110,7 @@ public class XmlUtil {
 				sb.append("\r\n");
 				sb.append("<se>"+ temp.getSe()+"</se>");
 				sb.append("\r\n");
-				sb.append("<hsbz>"+(temp.getHsbz()==true?1:0)+"</hsbz>");
+				sb.append("<hsbz>"+temp.getHsbz()+"</hsbz>");
 				sb.append("\r\n");
 				sb.append("</group>");
 				sb.append("\r\n");
@@ -200,7 +200,7 @@ public class XmlUtil {
 				Fpmx temp = fpmxList.get(i);
 				sb.append("<group xh=\""+(i+1)+"\">");
 				sb.append("\r\n");
-				sb.append("<fphxz>"+(temp.getFphxz()==true?1:0)+"</fphxz>");
+				sb.append("<fphxz>"+temp.getFphxz()+"</fphxz>");
 				sb.append("\r\n");
 				sb.append("<spmc>"+temp.getXmmc()+"</spmc>");
 				sb.append("\r\n");
@@ -220,7 +220,7 @@ public class XmlUtil {
 				sb.append("\r\n");
 				sb.append("<se>"+ temp.getSe()+"</se>");
 				sb.append("\r\n");
-				sb.append("<hsbz>"+(temp.getHsbz()==true?1:0)+"</hsbz>");
+				sb.append("<hsbz>"+temp.getHsbz()+"</hsbz>");
 				sb.append("\r\n");
 				sb.append("</group>");
 				sb.append("\r\n");
@@ -322,7 +322,7 @@ public class XmlUtil {
 				Fpmx temp = fpmxList.get(i);
 				sb.append("<COMMON_FPKJ_XMXX>");
 				sb.append("\r\n");
-				sb.append("<FPHXZ>"+(temp.getFphxz()==true?1:0)+"</FPHXZ>");
+				sb.append("<FPHXZ>"+temp.getFphxz()+"</FPHXZ>");
 				sb.append("\r\n");
 				sb.append("<XMMC>"+temp.getXmmc()+"</XMMC>");
 				sb.append("\r\n");
@@ -430,10 +430,14 @@ public class XmlUtil {
 	}
 	
 	public static void main(String[] args) {
-			  String str="";
+			  /*String str="";
 			  for(int i=0;i<20;i++){
 			   str+=String.valueOf((ThreadLocalRandom.current().nextInt(0, 9)));
 			  }
-			  System.out.println(str);
+			  System.out.println(str);*/
+		
+		String date = "2016-03-22 10:29:32";
+		System.out.println(date.matches("^\\d{4}[-]([0][1-9]|(1[0-2]))[-]([1-9]|([012]\\d)|(3[01]))([ \\t\\n\\x0B\\f\\r])(([0-1]{1}[0-9]{1})|([2]{1}[0-4]{1}))([:])(([0-5]{1}[0-9]{1}|[6]{1}[0]{1}))([:])((([0-5]{1}[0-9]{1}|[6]{1}[0]{1})))$"));
+		//System.out.println(date.matches("^((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29))\\\\s+([0-1]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$"));
 	}
 }

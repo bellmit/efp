@@ -340,7 +340,7 @@ public class InvoiceController {
 		if(null != xmmc){
 			for(int i=0;i<xmmc.length;i++){
 				Fpmx fpmx = new Fpmx();
-				fpmx.setFphxz(false);
+				fpmx.setFphxz("0");
 				fpmx.setXmmc(xmmc[i]);
 				fpmx.setGgxh(ggxh[i]);
 				fpmx.setDw(dw[i]);
@@ -351,7 +351,7 @@ public class InvoiceController {
 				fpmx.setSl(Float.valueOf(formatNum(sl[i])));
 				fpmx.setSe(Float.valueOf(formatNum(se[i])));
 				hjse+=Float.valueOf(formatNum(se[i]));
-				fpmx.setHsbz(false);
+				fpmx.setHsbz("0");
 				fpmxList.add(fpmx);
 			}
 		}
