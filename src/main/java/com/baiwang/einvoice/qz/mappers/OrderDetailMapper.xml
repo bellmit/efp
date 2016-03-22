@@ -356,7 +356,7 @@
    <select id="getPlainList" resultMap="QueryMap" parameterType="map" >
 	select a.fpqqlsh, a.fpqqlsh as lsh , GROUP_CONCAT(b.zddh) as zddh,
 	b.hyid,b.fpdq,GROUP_CONCAT(b.ddsj) as ddsj,GROUP_CONCAT(b.fksj) as fksj,
-	CONCAT(b.sqsj,'') as sqsj,b.fptt,GROUP_CONCAT(c.xmmc) as xmmc,GROUP_CONCAT(b.bzfp) as bzfp,
+	b.sqsj,b.fptt,GROUP_CONCAT(c.xmmc) as xmmc,GROUP_CONCAT(b.bzfp) as bzfp,
 	a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz,b.sqrk
 	from kpxx a
 	LEFT JOIN order_detail b
@@ -385,7 +385,7 @@
   <select id="getSpecialList" resultMap="QueryMap" parameterType="map" >
 	select a.fpqqlsh, a.fpqqlsh as lsh , GROUP_CONCAT(b.zddh) as zddh,
 	b.hyid,b.fpdq,GROUP_CONCAT(b.ddsj) as ddsj,GROUP_CONCAT(b.fksj) as fksj,
-	CONCAT(b.sqsj,'') as sqsj,b.fptt,GROUP_CONCAT(c.xmmc) as xmmc,GROUP_CONCAT(b.bzfp) as bzfp,
+	b.sqsj,b.fptt,GROUP_CONCAT(c.xmmc) as xmmc,GROUP_CONCAT(b.bzfp) as bzfp,
 	a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz,b.sqrk
 	from kpxx a
 	LEFT JOIN order_detail b
