@@ -253,7 +253,7 @@ function initDataGridComponent(){
 		             {field:'hjje',title:'合计金额',width:100,editor:'text'},
 			         {field:'hjse',title:'合计税额',width:100,editor:'text'},
 		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
-			         {field:'kprq',title:'开票日期',width:100,editor:'text'/* ,formatter: formatKprq */},
+			         {field:'kprq',title:'开票日期',width:100,editor:'text' ,formatter: formatKprq2 },
 		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'}
 				]],
@@ -278,6 +278,30 @@ function formatKplx(value,row,index){
 	} else {
 		return "蓝字发票";
 	}
+}
+
+function formatKprq2(value){
+	if(value==null || value =='undefined'){
+		return '';
+	}
+	var dateValue = new Date(value);
+	return dateValue.format("yyyy-mm-dd");
+}
+
+Date.prototype.format = function (fmt) { //author: meizz
+    var o = {
+        "m+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "M+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
 }
 
 /**
