@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>统计发票</title>
+<title>查询发票</title>
 <script type="text/javascript" src="<%=basePath %>/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<%=basePath %>/js/jquery/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="<%=basePath %>/js/jquery/jquery.easyui.min.js"></script>
@@ -16,17 +16,17 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui_global.css"/>
 
 <script type="text/javascript">
-function exportData(){
-	var row = datagrid.datagrid('getChecked');
-	if(row !=null && row != ''){
-		var fplshs=""; 
-	    for(i=0;i<row.length;i++){
-	    	fplshs += row[i].fpqqlsh+",";
+	function exportData(){
+		var row = datagrid.datagrid('getChecked');
+		if(row !=null && row != ''){
+			var fplshs=""; 
+		    for(i=0;i<row.length;i++){
+		    	fplshs += row[i].fpqqlsh+",";
+			}
+		    $('#fplshs').val(fplshs);
 		}
-	    $('#fplshs').val(fplshs);
+	    $('#expForm').submit();
 	}
-    $('#expForm').submit();
-}
 </script>
 
 
@@ -45,50 +45,30 @@ function exportData(){
 	         	<label>-</label>
 	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
-				<c:if test="${user.yhlx=='0'}">
-					<label>开票地区：</label>
-						<select name="kpdq4q" id="kpdq4q">
-							<option value="">请选择</option>
-							<option value="北京" <c:if test="${kpdq4save=='北京'}">selected="selected"</c:if>>北京</option>
-							<option value="上海" <c:if test="${kpdq4save=='上海'}">selected="selected"</c:if>>上海</option>
-						</select>
-				</c:if>
-				
-				<label>发票种类：</label>
-				<select name="fpzl4q" id="fpzl4q">
-					<option value="">请选择</option>
-					<option value="007" <c:if test="${fpzl4save=='007'}">selected="selected"</c:if>>增值税普通发票</option>
-					<option value="004" <c:if test="${fpzl4save=='004'}">selected="selected"</c:if>>增值税专用发票</option>
-					<option value="026" <c:if test="${fpzl4save=='026'}">selected="selected"</c:if>>增值税电子发票</option>
-				</select>
-				<label>发票内容：</label>
-				<select name="fplx4q" id="fplx4q" >
-					<option value="">请选择</option>
-					<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
-					<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
-					<option <c:if test="${fplx4save=='培训费'}">selected="selected"</c:if>>培训费</option>
-				</select>
-				<label>发票抬头：</label>
-				<select name="fptt4q" id="fptt4q">
-					<option value="">请选择</option>
-					<option value ="个人" <c:if test="${fptt4save=='个人'}">selected="selected"</c:if>>个人</option>
-					<option value ="公司" <c:if test="${fptt4save=='公司'}">selected="selected"</c:if>>公司</option>
-				</select>
+				<label>收货人电话：</label>
+				<input type="text"  id="shrdh4q" name="shrdh4q" placeholder="收货人电话">
+				<label>订单号：</label>
+				<input type="text"  id="ddh4q" name="ddh4q" placeholder="订单号">
+				<label>学员ID：</label>
+				<input type="text"  id="hyid4q" name="hyid4q" placeholder="学员ID">
+				<label>发票号码：</label>
+				<input type="text"  id="fphm4q" name="fphm4q" placeholder="发票号码">
 				
 				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchfpList();" plain="true">查找</a>
-				
 			</div>
+			<input type="hidden" name="fplx" value="004">
 		</form>
    </div>
 </div>
-<form id="expForm" action="<%=basePath%>/report/exportExcel" method="post">
+<form id="expForm" action="<%=basePath%>/report/download" method="post">
 <input type="hidden" id ="fplshs" name="fplshs" value="">
-<input type="hidden" id = "dateS4save" name="dateS4save" value="">
-<input type="hidden" id = "dateE4save" name="dateE4save" value="">
-<input type="hidden" id = "kpdq4save" name="kpdq4save" value="">
-<input type="hidden" id = "fpzl4save" name="fpzl4save" value="">
-<input type="hidden" id = "fplx4save" name="fplx4save" value="">
-<input type="hidden" id = "fptt4save" name="fptt4save" value="">
+<input type="hidden" id = "dateS4save" name="beginDate" value="">
+<input type="hidden" id = "dateE4save" name="endDate" value="">
+<input type="hidden" id = "shrdh4save" name="shrdh4q" value="">
+<input type="hidden" id = "ddh4save" name="ddh4q" value="">
+<input type="hidden" id = "hyid4save" name="hyid4q" value="">
+<input type="hidden" id = "fphm4save" name="fphm4q" value="">
+<input type="hidden" name="fplx" value="004">
 <table id="datagrid"></table>
 </form>
 
@@ -98,36 +78,45 @@ var datagrid;
 function initDataGridComponent(){
 	var qParams = form2Json('searchForm');
 	datagrid = $("#datagrid").datagrid({
-				title : "统计发票",
+				title : "查询发票",
 				height: "450",
 				checkOnSelect:true,
 				selectOnCheck:false,
 				singleSelect:false,
 				rownumbers:true,
 				idField:'fpqqlsh',
-				url:"<%=basePath %>/report/queryFPstat",
+				url:"<%=basePath %>/report/queryFPlist",
 				pagination : true,
 				pageSize : 100,
 				pageNumber:1,
 				pageList: [10,20,50,100],
 				queryParams: qParams,
 				columns:[[
-				     {field:'fpqqlsh',title:'fpqqlsh',width:100,checkbox:true},
-				     {field:'kpdq',title:'发票地区',width:150,editor:'text'},
-		             {field:'fpkh',title:'发票客户',width:100,editor:'text'},
-		             {field:'kprq',title:'开票日期',width:100,editor:'text',formatter:dateFormatter},
-		             {field:'fpzl',title:'发票种类',width:100,editor:'text',formatter:formatFpzl},
-			         {field:'fpdm',title:'发票代码',width:100,editor:'text'}, 
+				     {field:'id',title:'id',width:100,checkbox:true},
+				     {field:'fpqqlsh',title:'流水号',width:150,editor:'text'},
+				     {field:'ddh',title:'订单号',width:150,editor:'text'},
+		             {field:'hyid',title:'学员ID',width:100,editor:'text'},
+		             {field:'fpdq',title:'地区',width:100,editor:'text',formatter:fpdqFormatter},
+			         {field:'ddsj',title:'订单时间',width:100,editor:'text',formatter:dateFormatter}, 
+			         {field:'kfsj',title:'付款时间',width:100,editor:'text',formatter:dateFormatter}, 
+		             {field:'sqsj',title:'发票申请时间',width:100,editor:'text',formatter:dateFormatter},
+		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
+			         {field:'xmmc',title:'发票内容',width:100,editor:'text'},
+			         {field:'bzfp',title:'发票备注',width:100,editor:'text'},
+		             {field:'fplx',title:'发票种类',width:100,editor:'text',formatter:formatFpzl},
+		             {field:'sqrk',title:'申请入口',width:100,editor:'text',formatter:formatSqrk},
+		             {field:'gmfnsrsbh',title:'购方纳税人识别号',width:100,editor:'text'},
+		             {field:'gfdzdh',title:'购方地址、电话',width:100,editor:'text'},
+		             {field:'gmfyhzh',title:'购方开户行及账号',width:100,editor:'text'},
+			         {field:'hjje',title:'发票金额',width:100,editor:'text'},
+			         {field:'shr',title:'收货人',width:100,editor:'text'},
+		             {field:'shrdh',title:'收货人电话',width:100,editor:'text'},
+		             {field:'jsdz',title:'寄送地址',width:100,editor:'text'},
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'},
-		             {field:'ttlx',title:'抬头类型',width:100,editor:'text'},
-			         {field:'gfmc',title:'购方名称',width:100,editor:'text'},
-		             {field:'fpnr',title:'发票内容',width:100,editor:'text'},
-			         {field:'bz',title:'备注',width:100,editor:'text'},
-		             {field:'bszt',title:'报送状态',width:100,editor:'text'},
-			         {field:'fpzt',title:'发票状态',width:100,editor:'text'},
-			         {field:'hjje',title:'合计金额',width:100,editor:'text'},
-		             {field:'hjse',title:'合计税额',width:100,editor:'text'},
-		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
+		             {field:'fhr',title:'发货人',width:100,editor:'text'},
+		             {field:'wlgs',title:'物流公司 ',width:100,editor:'text'},
+		             {field:'wldh',title:'物流单号',width:100,editor:'text'},
+		             {field:'yjsj',title:'邮寄时间',width:100,editor:'text',formatter:dateFormatter},
 				]],
 				onClickRow:function(index){	
 					
@@ -142,16 +131,6 @@ function initDataGridComponent(){
 
 
 /**
- * 开票类型
- */
-function formatKplx(value,row,index){
-	if (value=="1"){
-		return "红字发票";
-	} else {
-		return "蓝字发票";
-	}
-}
-/**
  * 发票种类
  */
 function formatFpzl(value,row,index){
@@ -159,9 +138,21 @@ function formatFpzl(value,row,index){
 		return "专票";
 	} else if(value=="007") {
 		return "普票";
-	} else if(value=="026") {
-		return "电子发票";
-	} 
+	}
+}
+function fpdqFormatter(value,row,index){
+	if (value=="00"){
+		return "北京";
+	} else if(value=="01") {
+		return "上海";
+	}
+}
+function formatSqrk(value,row,index){
+	if (value=="00"){
+		return "前台";
+	} else if(value=="01") {
+		return "后台";
+	}
 }
 function dateFormatter(value) {
 	if(value==null || value =='undefined'){
@@ -181,12 +172,12 @@ function hideOrShow(){
  * 查询
  */
 function searchfpList(){
-	$('#dateS4save').val($('#dateS4q').val());
-	$('#dateE4save').val($('#dateE4q').val());
-	$('#kpdq4save').val($('#kpdq4q').val());
-	$('#fpzl4save').val($('#fpzl4q').val());
-	$('#fplx4save').val($('#fplx4q').val());
-	$('#fptt4save').val($('#fptt4q').val());
+	$('#dateS4save').val($('#beginDate').val());
+	$('#dateE4save').val($('#endDate').val());
+	$('#shrdh4save').val($('#shrdh4q').val());
+	$('#ddh4save').val($('#ddh4q').val());
+	$('#hyid4save').val($('#hyid4q').val());
+	$('#fphm4save').val($('#fphm4q').val());
 	var qParams = form2Json('searchForm');
 	$("#datagrid").datagrid("load", qParams);
 }
@@ -223,6 +214,7 @@ Date.prototype.format = function (fmt) { //author: meizz
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
 </script>
 </body>
 </html>

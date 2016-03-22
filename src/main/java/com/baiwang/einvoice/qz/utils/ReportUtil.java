@@ -5,6 +5,7 @@
 package com.baiwang.einvoice.qz.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -24,7 +25,6 @@ import com.baiwang.einvoice.qz.beans.ReportTotal;
   * @date 2016年3月1日 下午1:13:20
   */
 public class ReportUtil {
-	
 	/**
 	  * @author Administrator
 	  * @Description: 导出excel
@@ -35,7 +35,7 @@ public class ReportUtil {
 	  * @throws
 	  * @date 2016年3月4日 下午1:20:01
 	  */
-	public static HSSFWorkbook  exportExcel(List<ReportDetail> reportList) throws Exception{
+	public static HSSFWorkbook  exportExcel(List<ReportDetail> reportList,String fplx) throws Exception{
 		HSSFWorkbook wb = new HSSFWorkbook();//excel文档
 		HSSFSheet sheet = wb.createSheet("日常发票");//工作薄
 /*		
@@ -112,109 +112,116 @@ public class ReportUtil {
 		 
 */		
 		HSSFRow  row = sheet.createRow(0);
-		HSSFCell cell = row.createCell(0);
+		int a = 0;
+		HSSFCell cell = row.createCell(a++);
 		cell.setCellValue("序号");
-		cell = row.createCell(1);
+		cell = row.createCell(a++);
+		cell.setCellValue("流水号");
+		cell = row.createCell(a++);
 		cell.setCellValue("订单号");
-		cell = row.createCell(2);
-		cell.setCellValue("申请人");
-		cell = row.createCell(3);
-		cell.setCellValue("会员名");
-		cell = row.createCell(4);
-		cell.setCellValue("会员ID");
-		cell = row.createCell(5);
+		cell = row.createCell(a++);
+		cell.setCellValue("学员ID");
+		cell = row.createCell(a++);
+		cell.setCellValue("地区");
+		cell = row.createCell(a++);
 		cell.setCellValue("订单时间");
-		cell = row.createCell(6);
-		cell.setCellValue("申请时间");
-		cell = row.createCell(7);
+		cell = row.createCell(a++);
+		cell.setCellValue("付款时间");
+		cell = row.createCell(a++);
+		cell.setCellValue("发票申请时间");
+		cell = row.createCell(a++);
 		cell.setCellValue("发票抬头");
-		cell = row.createCell(8);
-		cell.setCellValue("发票类型");
-		cell = row.createCell(9);
-		cell.setCellValue("发票种类");
-		cell = row.createCell(10);
+		cell = row.createCell(a++);
+		cell.setCellValue("发票内容");
+		cell = row.createCell(a++);
 		cell.setCellValue("发票备注");
-		cell = row.createCell(11);
+		cell = row.createCell(a++);
+		cell.setCellValue("发票种类");
+		cell = row.createCell(a++);
 		cell.setCellValue("申请入口");
-		cell = row.createCell(12);
-		cell.setCellValue("金额");
-		cell = row.createCell(13);
+		if("004".equals(fplx)){
+			cell = row.createCell(a++);
+			cell.setCellValue("购方纳税人识别号");
+			cell = row.createCell(a++);
+			cell.setCellValue("购方地址、电话");
+			cell = row.createCell(a++);
+			cell.setCellValue("购方开户行及账号");
+		}
+		cell = row.createCell(a++);
+		cell.setCellValue("发票金额");
+		cell = row.createCell(a++);
 		cell.setCellValue("收货人");
-		cell = row.createCell(14);
+		cell = row.createCell(a++);
 		cell.setCellValue("收货人电话");
-		cell = row.createCell(15);
+		cell = row.createCell(a++);
 		cell.setCellValue("寄送地址");
-		cell = row.createCell(16);
-		cell.setCellValue("邮寄时间");
-		cell = row.createCell(17);
+		cell = row.createCell(a++);
 		cell.setCellValue("发票号码");
-		cell = row.createCell(18);
+		cell = row.createCell(a++);
 		cell.setCellValue("发货人");
-		cell = row.createCell(19);
+		cell = row.createCell(a++);
 		cell.setCellValue("物流公司");
-		cell = row.createCell(20);
+		cell = row.createCell(a++);
 		cell.setCellValue("物流单号");
-		cell = row.createCell(21);
-		cell.setCellValue("退款状态");
-		cell = row.createCell(22);
-		cell.setCellValue("发票状态");
+		cell = row.createCell(a++);
+		cell.setCellValue("邮寄时间");
 		
 		for(int i=0 ; i<reportList.size() ; i++){
 			ReportDetail  report = reportList.get(i) ;
 			row = sheet.createRow(i+1);
-			cell = row.createCell(0);
+			int b = 0;
+			cell = row.createCell(b++);
 			cell.setCellValue(i+1);  //序号
-			cell = row.createCell(1);
-			cell.setCellValue(report.getDdh());  //订单号
-			cell = row.createCell(2);
-			cell.setCellValue(report.getSqr());  //申请人
-			cell = row.createCell(3);
-			cell.setCellValue(report.getHym());  //会员名
-			cell = row.createCell(4);
-			cell.setCellValue(report.getHyid()); //会员ID
-			cell = row.createCell(5);
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getFpqqlsh());  //流水号
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getDdh()); //订单号
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getHyid()); //学员ID
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getFpdq()); //地区
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getDdsj()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getDdsj()):"");    //订单时间
-			cell = row.createCell(6);
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getFksj()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getDdsj()):"");    //付款时间
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getSqsj()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getSqsj()):"");   //申请时间
-			cell = row.createCell(7);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getFptt());  //发票抬头
-			cell = row.createCell(8);
-			cell.setCellValue(report.getFplx());  //发票类型
-			cell = row.createCell(9);
-			if("004".equals(report.getFpzl())){
-				cell.setCellValue("增值税专用发票");  //发票种类
-			}else if ("007".equals(report.getFpzl())){
-				cell.setCellValue("增值税普通发票");  //发票种类
-			}else if ("026".equals(report.getFpzl())){
-				cell.setCellValue("增值税电子发票");  //发票种类
-			}
-			cell = row.createCell(10);
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getXmmc());  //发票内容
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getBzfp());  //发票备注
-			cell = row.createCell(11);
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getFplx());  //发票种类
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getSqrk());  //申请入口
-			cell = row.createCell(12);
-			cell.setCellValue(report.getJe()!=null?report.getJe().toString():"");//金额
-			cell = row.createCell(13);
+			if("004".equals(fplx)){
+				cell = row.createCell(b++);
+				cell.setCellValue(report.getGmfnsrsbh());  //购方纳税人识别号
+				cell = row.createCell(b++);
+				cell.setCellValue(report.getGmfdz()+report.getGmfdh());  //购方地址、电话
+				cell = row.createCell(b++);
+				cell.setCellValue(report.getGmfyhzh());  //购方开户行及账号
+			}
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getHjje()!=null?report.getHjje().toString():"");//发票金额
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getShr());//收货人
-			cell = row.createCell(14);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getShrdh());//收货人电话
-			cell = row.createCell(15);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getJsdz());//寄送地址
-			cell = row.createCell(16);
-			cell.setCellValue(report.getYjsj()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getYjsj()):"");//邮寄时间
-			cell = row.createCell(17);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getFphm());//发票号码
-			cell = row.createCell(18);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getFhr());//发货人
-			cell = row.createCell(19);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getWlgs());//物流公司 
-			cell = row.createCell(20);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getWldh());//物流单号
-			cell = row.createCell(21);
-			cell.setCellValue(report.getTkzt());//退款状态
-			cell = row.createCell(22);
-			cell.setCellValue(report.getFpzt());//发票状态
-			
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getYjsj()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getYjsj()):"");//邮寄时间
 		}
 //		FileOutputStream fos = new FileOutputStream(excelpath);
 //		wb.write(fos);

@@ -4,28 +4,29 @@
   <resultMap id="BaseResultMap" type="com.baiwang.einvoice.qz.beans.ReportDetail" >
     <id column="zddh" property="ddh" jdbcType="VARCHAR" />
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
-    <result column="sqr" property="sqr" jdbcType="VARCHAR" />
-    <result column="hym" property="hym" jdbcType="VARCHAR" />
     <result column="hyid" property="hyid" jdbcType="VARCHAR" />
+    <result column="fpdq" property="fpdq" jdbcType="VARCHAR" />
     <result column="ddsj" property="ddsj" jdbcType="DATE" />
+    <result column="fksj" property="fksj" jdbcType="DATE" />
     <result column="sqsj" property="sqsj" jdbcType="DATE" />
     <result column="fptt" property="fptt" jdbcType="VARCHAR" />
-    <result column="fplx" property="fplx" jdbcType="VARCHAR" />
-    <result column="fpzl" property="fpzl" jdbcType="VARCHAR" />
+    <result column="xmmc" property="xmmc" jdbcType="VARCHAR" />
     <result column="bzfp" property="bzfp" jdbcType="VARCHAR" />
+    <result column="fplx" property="fplx" jdbcType="VARCHAR" />
     <result column="sqrk" property="sqrk" jdbcType="VARCHAR" />
-    <result column="je" property="je" jdbcType="REAL" />
+    <result column="gmfnsrsbh" property="gmfnsrsbh" jdbcType="VARCHAR" />
+    <result column="gmfdh" property="gmfdh" jdbcType="VARCHAR" />
+    <result column="gmfdz" property="gmfdz" jdbcType="VARCHAR" />
+    <result column="gmfyhzh" property="gmfyhzh" jdbcType="VARCHAR" />
+    <result column="hjje" property="hjje" jdbcType="REAL" />
     <result column="shr" property="shr" jdbcType="VARCHAR" />
     <result column="shrdh" property="shrdh" jdbcType="VARCHAR" />
     <result column="jsdz" property="jsdz" jdbcType="VARCHAR" />
-    <result column="yjsj" property="yjsj" jdbcType="DATE" />
     <result column="fphm" property="fphm" jdbcType="VARCHAR" />
     <result column="fhr" property="fhr" jdbcType="VARCHAR" />
     <result column="wlgs" property="wlgs" jdbcType="VARCHAR" />
     <result column="wldh" property="wldh" jdbcType="VARCHAR" />
-    <result column="tkzt" property="tkzt" jdbcType="VARCHAR" />
-    <result column="fpzt" property="fpzt" jdbcType="VARCHAR" />
-    <result column="ddzt" property="ddzt" jdbcType="VARCHAR" />
+    <result column="yjsj" property="yjsj" jdbcType="DATE" />
   </resultMap>
   <resultMap id="statMap" type="com.baiwang.einvoice.qz.beans.ReportTotal" >
   	<result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
@@ -45,55 +46,54 @@
     <result column="fpjd" property="fpjd" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="report_Column_List" >
-    o.fpqqlsh,o.zddh as ddh, o.sqr, o.hym, o.hyid, o.ddsj, o.sqsj, o.fptt, o.spzl as fplx,k.fplx as fpzl, o.sqrk, k.hjje as je, o.shr, o.shrdh, o.jsdz, o.yjsj, 
-    k.fphm, o.fhr, o.wlgs, o.wldh, o.tkzt, o.fpzt,o.bzfp
+    k.fpqqlsh,o.zddh,o.hyid,o.fpdq, o.ddsj,o.fksj, o.sqsj, o.fptt,f.xmmc,o.bzfp, k.fplx,o.sqrk,k.gmfnsrsbh,k.gmfdh,k.gmfdz,k.gmfyhzh, k.hjje, o.shr, o.shrdh, o.jsdz,
+    k.fphm, o.fhr, o.wlgs, o.wldh,o.yjsj
   </sql>
   <select id="getFpByLSH" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select 
     <include refid="report_Column_List" />
-    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where o.fpqqlsh=#{fpqqlsh}
+    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where o.fpqqlsh=#{fpqqlsh}
   </select>
   <select id="getFpStatByLSH" parameterType="java.lang.String" resultMap="statMap">
   	select 
-  	o.fpqqlsh,o.kpdq as fpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd,o.fptt as ttlx
+  	o.fpqqlsh,o.fpdq as fpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd,o.fptt as ttlx
     from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where o.fpqqlsh=#{fpqqlsh}
   </select>
   <select id="getFpListByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
-  	select 
-    <include refid="report_Column_List" />
-    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.hjje>0
+    select <include refid="report_Column_List" />
+    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh where k.fpzt = '3' and k.hjje>0
+	<if test="fplx != null and fplx != '' " >
+      and k.fplx = #{fplx}
+    </if>
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
+    </if>
+    <if test="dateS != null and dateS !=''">
+	   <![CDATA[and k.kprq >= #{dateS} ]]>
+    </if>
+    <if test="dateE != null and dateE !=''">
+	   <![CDATA[and k.kprq <= #{dateE} ]]>
     </if>
     <if test="ddh4q != null and ddh4q !=''">
 	   and o.zddh = #{ddh4q,jdbcType=VARCHAR} 
     </if>
-    <if test="dateS != null and dateS !=''">
-	   <![CDATA[and o.sqsj >= #{dateS} ]]>
+    <if test="shrdh4q != null and shrdh4q !=''">
+	   and o.shrdh = #{shrdh4q,jdbcType=VARCHAR} 
     </if>
-    <if test="dateE != null and dateE !=''">
-	   <![CDATA[and o.sqsj <= #{dateE} ]]>
+    <if test="hyid4q != null and hyid4q !=''">
+	   and o.hyid = #{hyid4q,jdbcType=VARCHAR} 
     </if>
-    <if test="kpdq4q != null and kpdq4q !=''">
-	   and o.kpdq = #{kpdq4q,jdbcType=VARCHAR} 
+    <if test="fphm4q != null and fphm4q !=''">
+	   and k.fphm = #{fphm4q,jdbcType=VARCHAR} 
     </if>
-    <if test="fpzl4q != null and fpzl4q !=''">
-	   and k.fplx = #{fpzl4q,jdbcType=VARCHAR} 
-    </if>
-    <if test="fplx4q != null and fplx4q !=''">
-	   and o.spzl = #{fplx4q,jdbcType=VARCHAR} 
-    </if>
-    <if test="fptt4q != null and fptt4q !=''">
-    	and o.fptt = #{fptt4q,jdbcType=VARCHAR} 
-    </if>
-    ORDER BY k.fphm
+    ORDER BY k.kprq
     <if test="startRow != null and rows !=null">
     LIMIT #{startRow},#{rows}
     </if>
   </select>
   <select id="getFpStatListByCondition" parameterType="java.util.Map" resultMap="statMap">
   	select 
-  	o.fpqqlsh,o.kpdq as fpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd,o.fptt as ttlx
+  	o.fpqqlsh,o.fpdq as fpdq,o.fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,k.gmfmc as gfmc,o.spzl as fpnr,k.bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd,o.fptt as ttlx
     from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt in('3','-2')  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
@@ -105,7 +105,7 @@
 	   <![CDATA[and k.kprq <= #{dateE} ]]>
     </if>
     <if test="kpdq4q != null and kpdq4q !=''">
-	   and o.kpdq = #{kpdq4q,jdbcType=VARCHAR} 
+	   and o.fpdq = #{kpdq4q,jdbcType=VARCHAR} 
     </if>
     <if test="fpzl4q != null and fpzl4q !=''">
 	   and k.fplx = #{fpzl4q,jdbcType=VARCHAR} 
@@ -122,30 +122,31 @@
     </if>
   </select>
   <select id="getFpCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
-  	select count(*) from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3'  and k.hjje>0
+	select count(*)
+    from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh where k.fpzt = '3' and k.hjje>0
+	<if test="fplx != null and fplx != '' " >
+      and k.fplx = #{fplx}
+    </if>
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
+    </if>
+    <if test="dateS != null and dateS !=''">
+	   <![CDATA[and k.kprq >= #{dateS} ]]>
+    </if>
+    <if test="dateE != null and dateE !=''">
+	   <![CDATA[and k.kprq <= #{dateE} ]]>
     </if>
     <if test="ddh4q != null and ddh4q !=''">
 	   and o.zddh = #{ddh4q,jdbcType=VARCHAR} 
     </if>
-    <if test="dateS != null and dateS !=''">
-	   <![CDATA[and o.sqsj >= #{dateS} ]]>
+    <if test="shrdh4q != null and shrdh4q !=''">
+	   and o.shrdh = #{shrdh4q,jdbcType=VARCHAR} 
     </if>
-    <if test="dateE != null and dateE !=''">
-	   <![CDATA[and o.sqsj <= #{dateE} ]]>
+    <if test="hyid4q != null and hyid4q !=''">
+	   and o.hyid = #{hyid4q,jdbcType=VARCHAR} 
     </if>
-    <if test="kpdq4q != null and kpdq4q !=''">
-	   and o.kpdq = #{kpdq4q,jdbcType=VARCHAR} 
-    </if>
-    <if test="fpzl4q != null and fpzl4q !=''">
-	   and k.fplx = #{fpzl4q,jdbcType=VARCHAR} 
-    </if>
-    <if test="fplx4q != null and fplx4q !=''">
-	   and o.spzl = #{fplx4q,jdbcType=VARCHAR} 
-    </if>
-    <if test="fptt4q != null and fptt4q !=''">
-    	and o.fptt = #{fptt4q,jdbcType=VARCHAR} 
+    <if test="fphm4q != null and fphm4q !=''">
+	   and k.fphm = #{fphm4q,jdbcType=VARCHAR} 
     </if>
   </select>
   <select id="getFpStatCount" parameterType="java.util.Map" resultType="java.lang.Integer">
@@ -160,7 +161,7 @@
 	   <![CDATA[and k.kprq <= #{dateE} ]]>
     </if>
     <if test="kpdq4q != null and kpdq4q !=''">
-	   and o.kpdq = #{kpdq4q,jdbcType=VARCHAR} 
+	   and o.fpdq = #{kpdq4q,jdbcType=VARCHAR} 
     </if>
     <if test="fpzl4q != null and fpzl4q !=''">
 	   and k.fplx = #{fpzl4q,jdbcType=VARCHAR} 
