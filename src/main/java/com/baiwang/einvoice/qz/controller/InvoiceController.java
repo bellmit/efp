@@ -87,13 +87,15 @@ public class InvoiceController {
 			String beginDate = request.getParameter("beginDate");
 			String endDate = request.getParameter("endDate");
 			String zddh = request.getParameter("zddh");
-			String kpdq = request.getParameter("kpdq");
+			String hyid = request.getParameter("hyid");
+			String shrdh = request.getParameter("shrdh");
 			
 			HashMap<String, String> param = new HashMap<>();
 			param.put("beginDate", beginDate);
 			param.put("endDate", endDate);
 			param.put("zddh", zddh);
-			param.put("kpdq", kpdq);
+			param.put("hyid", hyid);
+			param.put("shrdh", shrdh);
 			param.put("nsrsbh", user.getNsrsbh());
 			//List<Map<String, String>> kpxxList = fpService.getPlainList(param);
 			PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listPlain(param,
@@ -127,13 +129,15 @@ public class InvoiceController {
 		String beginDate = request.getParameter("beginDate");
 		String endDate = request.getParameter("endDate");
 		String zddh = request.getParameter("zddh");
-		String kpdq = request.getParameter("kpdq");
+		String hyid = request.getParameter("hyid");
+		String shrdh = request.getParameter("shrdh");
 		
 		HashMap<String, String> param = new HashMap<>();
 		param.put("beginDate", beginDate);
 		param.put("endDate", endDate);
 		param.put("zddh", zddh);
-		param.put("kpdq", kpdq);
+		param.put("hyid", hyid);
+		param.put("shrdh", shrdh);
 		param.put("nsrsbh", user.getNsrsbh());
 		
 		PageList<HashMap<String, Object>> kpxxList = (PageList<HashMap<String, Object>>) fpService.listSpecial(param,
@@ -277,6 +281,7 @@ public class InvoiceController {
 		String jym = InvoiceUtil.getIntervalValue(xml, "<jym>", "</jym>");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Kpxx fpxx = new Kpxx();
 		fpxx.setFpqqlsh(fpqqlsh);
 		fpxx.setResultcode(returncode);
@@ -285,7 +290,7 @@ public class InvoiceController {
 		fpxx.setFpdm(fpdm);
 		fpxx.setFphm(fphm);
 		if(!StringUtils.isEmpty(kprq)){
-			fpxx.setKprq(sdf.parse(kprq));
+			fpxx.setKprq(sdf2.format(sdf.parse(kprq)));
 		}
 		fpxx.setSkm(skm);
 		fpxx.setJym(jym);

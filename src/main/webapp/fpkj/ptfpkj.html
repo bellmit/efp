@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="../css/easyui.css"/>
 <script type="text/javascript" src="../js/jquery/easyui-lang-zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/easyui_global.css"/>
+<script type="text/javascript" src="../js/format.js"></script>
 
 </head>
 <body>
@@ -27,12 +28,13 @@
 	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
 	         	
-				<label>主订单号:</label>
-				<input type="text" id="zddh" name="zddh" placeholder="主订单号"/>
-				 <input id="currentPage" name="currentPage" type="hidden"/>
-				
+				<label>订单号:</label>
+				<input type="text" id="zddh" name="zddh" placeholder="订单号"/>
+				<label>学员编号:</label>
+				<input type="text" id="hyid" name="hyid" placeholder="学员编号"/>
+				<label>收货人电话:</label>
+				<input type="text" id="shrdh" name="shrdh" placeholder="学员编号"/>
 				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchZpList();" plain="true">查找</a>
-				<!-- <input id="setParameter" type="button" value="设置环境变量" onclick="SetParameter()"> -->
 			</div>
 		</form>
 	</div>
@@ -79,20 +81,26 @@ function initDataGridComponent(){
 				pageList: [10,20,50,100],
 				queryParams: qParams,
 				columns:[[
-				     {field:'fpqqlsh',title:'fpqqlsh',width:100,checkbox:true},
-				     {field:'zddh',title:'主订单号',width:150,editor: {
-				    	 type: 'text'
-	                 }},
-	                 {field:'fddh',title:'副订单号',width:100,editor: 'text'},
-		             {field:'hym',title:'会员名',width:100,editor:'text'},
-		             {field:'shr',title:'收货人',width:100,editor:'text'},
-		             {field:'sqsj',title:'申请时间',width:100,editor: {type: 'text'}/* ,formatter: formatUniversal */},
-		             {field:'gmfmc',title:'发票抬头',width:100,editor:'text'},
-			         {field:'spzl',title:'发票内容',width:100,editor:'text'},
+					 {field:'fpqqlsh',title:'fpqqlsh',width:100,checkbox:true},
+					 {field:'lsh',title:'流水号',width:100,editor:'text'},
+				     {field:'zddh',title:'主订单号',width:150,editor:'text',formatter: formatArray},
+	                 {field:'hyid',title:'学员id',width:100,editor: 'text'},
+		             {field:'fpdq',title:'发票地区',width:100,editor:'text',formatter: formatfpdq},
+		             {field:'ddsj',title:'订单时间',width:100,editor:'text',formatter: formatArrayTime},
+		             {field:'fksj',title:'付款时间',width:100,editor:'text',formatter: formatArrayTime},
+		             {field:'sqsj',title:'申请时间',width:100,editor:'text',formatter: formatKprq2},
+		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
+			         {field:'xmmc',title:'发票内容',width:100,editor:'text'},
+			         {field:'bzfp',title:'发票备注',width:100,editor:'text',formatter: formatArray},
+			         {field:'fplx',title:'发票种类',width:150,editor:'text',formatter: formatKplx},
+			         {field:'sqrk',title:'申请入口',width:100,editor:'text',formatter: formatsqrk},
+			         {field:'shr',title:'收货人',width:100,editor:'text'},
+			         {field:'shrdh',title:'收货人电话',width:100,editor:'text'},
+			         {field:'jsdz',title:'寄送人地址',width:100,editor:'text'},   
 		             {field:'hjje',title:'合计金额',width:100,editor:'text'},
 			         {field:'hjse',title:'合计税额',width:100,editor:'text'},
 		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
-			         {field:'fplx',title:'发票种类',width:150,editor:'text',formatter: formatUniversal}
+			         
 				]],
 				onClickRow:function(index){	
 				},
@@ -101,17 +109,6 @@ function initDataGridComponent(){
 				}
 	});
 	
-}
-
-/**
- * 是否含税价标志（通用类型）
- */
-function formatUniversal(value,row,index){
-	if (value=="004"){
-		return "增值税纸质专用发票";
-	}else if (value=="007"){
-		return "增值税纸质普通发票";
-	}
 }
 
 var skconf = null;
