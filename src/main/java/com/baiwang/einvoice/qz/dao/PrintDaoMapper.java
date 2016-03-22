@@ -11,7 +11,7 @@ public interface PrintDaoMapper {
 			@Param("endDate")String endDate, @Param("hyid")String hyid, @Param("fphm")String fphm, @Param("zddh")String zddh, @Param("shrdh")String shrdh,
 			@Param("fplx")String fplx, @Param("requestPage")int requestPage, @Param("pageSize")int pageSize, @Param("xsfnsrsbh")String xsfnsrsbh);
 	
-	int queryCount(@Param("beginDate")String beginDate, 
+	List<Integer> queryCount(@Param("beginDate")String beginDate, 
 			@Param("endDate")String endDate, @Param("hyid")String hyid, @Param("fphm")String fphm, @Param("zddh")String zddh, @Param("shrdh")String shrdh,
 			@Param("fplx")String fplx, @Param("requestPage")int requestPage, @Param("pageSize")int pageSize, @Param("xsfnsrsbh")String xsfnsrsbh);
 
