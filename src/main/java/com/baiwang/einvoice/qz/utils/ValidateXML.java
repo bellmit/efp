@@ -56,8 +56,8 @@ public class ValidateXML {
 				"<SQR>张三</SQR>\r\n" + 
 				"<HYM>会员名</HYM>\r\n" + 
 				"<HYID>会员id</HYID>\r\n" + 
-				"<DDSJ>2016-3-21 17:26:31</DDSJ>\r\n" + 
-				"<SQSJ>2016-3-21 17:26:53</SQSJ>\r\n" + 
+				"<DDSJ>2016-03-22 10:29:32</DDSJ>\r\n" + 
+				"<SQSJ>2016-03-22 10:29:33</SQSJ>\r\n" + 
 				"<FPTT>个人</FPTT>\r\n" + 
 				"<FPKH>B2B/B2C</FPKH>\r\n" + 
 				"<SPZL>服务费</SPZL>\r\n" + 

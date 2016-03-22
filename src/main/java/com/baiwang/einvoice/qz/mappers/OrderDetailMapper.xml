@@ -6,12 +6,13 @@
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
     <result column="zddh" property="zddh" jdbcType="VARCHAR" />
     <result column="fddh" property="fddh" jdbcType="VARCHAR" />
-    <result column="kpdq" property="kpdq" jdbcType="TINYINT" />
+    <result column="fpdq" property="fpdq" jdbcType="VARCHAR" />
     <result column="sqr" property="sqr" jdbcType="VARCHAR" />
     <result column="hym" property="hym" jdbcType="VARCHAR" />
     <result column="hyid" property="hyid" jdbcType="VARCHAR" />
-    <result column="ddsj" property="ddsj" jdbcType="DATE" />
-    <result column="sqsj" property="sqsj" jdbcType="DATE" />
+    <result column="ddsj" property="ddsj" jdbcType="VARCHAR" />
+    <result column="sqsj" property="sqsj" jdbcType="VARCHAR" />
+    <result column="fksj" property="fksj" jdbcType="VARCHAR" />
     <result column="spzl" property="spzl" jdbcType="VARCHAR" />
     <result column="sqrk" property="sqrk" jdbcType="VARCHAR" />
     <result column="shr" property="shr" jdbcType="VARCHAR" />
@@ -23,16 +24,20 @@
     <result column="wldh" property="wldh" jdbcType="VARCHAR" />
     <result column="tkzt" property="tkzt" jdbcType="VARCHAR" />
     <result column="fpzt" property="fpzt" jdbcType="VARCHAR" />
+    <result column="sjhm" property="sjhm" jdbcType="VARCHAR" />
+    <result column="yx" property="yx" jdbcType="VARCHAR" />
+    <result column="fptt" property="fptt" jdbcType="VARCHAR" />
+    <result column="fpttlx" property="fpttlx" jdbcType="VARCHAR" />
   </resultMap>
   
    <resultMap id="QueryMap" type="hashmap">
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
     <result column="zddh" property="zddh" jdbcType="VARCHAR" />
     <result column="fddh" property="fddh" jdbcType="VARCHAR" />
-    <result column="kpdq" property="kpdq" jdbcType="TINYINT" />
-    <result column="kprq" property="kprq" jdbcType="VARCHAR" /> 
+    <result column="fpdq" property="fpdq" jdbcType="VARCHAR" />
+    <result column="sqrk" property="sqrk" jdbcType="VARCHAR" /> 
     <result column="hym" property="hym" jdbcType="VARCHAR" />
-    <result column="sqsj" property="sqsj" jdbcType="DATE" />
+    <result column="sqsj" property="sqsj" jdbcType="VARCHAR" />
     <result column="spzl" property="spzl" jdbcType="VARCHAR" />
     <result column="shr" property="shr" jdbcType="VARCHAR" />
     <result column="jshj" property="jshj" jdbcType="REAL" />
@@ -61,7 +66,7 @@
     <result column="fphm" property="fphm" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, fpqqlsh,zddh,fddh, kpdq,sqr, hym, hyid, ddsj, sqsj, spzl, sqrk, shr, shrdh, jsdz, yjsj, fhr, wlgs, 
+    id, fpqqlsh,zddh,fddh, fpdq,sqr, hym, hyid, ddsj, sqsj, spzl, sqrk, shr, shrdh, jsdz, yjsj, fhr, wlgs, 
     wldh, tkzt, fpzt
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -88,34 +93,33 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.baiwang.einvoice.qz.beans.OrderDetail" >
-    insert into order_detail (id, fpqqlsh, zddh, fddh,kpdq, sqr, 
+    insert into order_detail (id, fpqqlsh, zddh, fddh,fpdq, sqr, 
       hym, hyid, ddsj, sqsj, 
       spzl, sqrk, shr, shrdh, 
       jsdz, yjsj, fhr, wlgs, 
       wldh, tkzt, fpzt)
     values (#{id,jdbcType=BIGINT}, #{fpqqlsh,jdbcType=VARCHAR},#{zddh,jdbcType=VARCHAR},#{fddh,jdbcType=VARCHAR},
-      #{kpdq,jdbcType=VARCHAR},#{sqr,jdbcType=VARCHAR}, 
-      #{hym,jdbcType=VARCHAR}, #{hyid,jdbcType=VARCHAR}, #{ddsj,jdbcType=DATE}, #{sqsj,jdbcType=DATE}, 
+      #{fpdq,jdbcType=VARCHAR},#{sqr,jdbcType=VARCHAR}, 
+      #{hym,jdbcType=VARCHAR}, #{hyid,jdbcType=VARCHAR}, #{ddsj,jdbcType=VARCHAR}, #{sqsj,jdbcType=VARCHAR}, 
       #{spzl,jdbcType=VARCHAR}, #{sqrk,jdbcType=VARCHAR}, #{shr,jdbcType=VARCHAR}, #{shrdh,jdbcType=VARCHAR}, 
       #{jsdz,jdbcType=VARCHAR}, #{yjsj,jdbcType=DATE}, #{fhr,jdbcType=VARCHAR}, #{wlgs,jdbcType=VARCHAR}, 
       #{wldh,jdbcType=VARCHAR}, #{tkzt,jdbcType=VARCHAR}, #{fpzt,jdbcType=VARCHAR})
   </insert>
   
   <insert id="insertFromList" parameterType="java.util.List">
-  	insert into order_detail (fpqqlsh, zddh, fddh,kpdq, sqr, 
-      hym, hyid, ddsj, sqsj, 
-      spzl, sqrk, shr, shrdh, 
-      jsdz, yjsj, fhr, wlgs, 
-      wldh, tkzt, fpzt)
+  	insert into order_detail (fpqqlsh, zddh,fpdq, 
+       hyid, ddsj, sqsj,fksj, 
+      sqrk, shr, shrdh, 
+      jsdz,bzfp,sjhm,yx,
+      fptt,fpttlx,fpkhlx)
     values 
     <foreach collection="list" item="item" index="index"
    separator=",">
-    (  #{item.fpqqlsh,jdbcType=VARCHAR},#{item.zddh,jdbcType=VARCHAR},#{item.fddh,jdbcType=VARCHAR},
-      #{item.kpdq,jdbcType=VARCHAR},#{item.sqr,jdbcType=VARCHAR}, 
-      #{item.hym,jdbcType=VARCHAR}, #{item.hyid,jdbcType=VARCHAR}, #{item.ddsj,jdbcType=DATE}, #{item.sqsj,jdbcType=DATE}, 
-      #{item.spzl,jdbcType=VARCHAR}, #{item.sqrk,jdbcType=VARCHAR}, #{item.shr,jdbcType=VARCHAR}, #{item.shrdh,jdbcType=VARCHAR}, 
-      #{item.jsdz,jdbcType=VARCHAR}, #{item.yjsj,jdbcType=DATE}, #{item.fhr,jdbcType=VARCHAR}, #{item.wlgs,jdbcType=VARCHAR}, 
-      #{item.wldh,jdbcType=VARCHAR}, #{item.tkzt,jdbcType=VARCHAR}, #{item.fpzt,jdbcType=VARCHAR}
+    ( #{item.fpqqlsh,jdbcType=VARCHAR},#{item.zddh,jdbcType=VARCHAR}, #{item.fpdq,jdbcType=VARCHAR},
+      #{item.hyid,jdbcType=VARCHAR}, #{item.ddsj,jdbcType=VARCHAR}, #{item.sqsj,jdbcType=VARCHAR},#{item.fksj,jdbcType=VARCHAR}, 
+      #{item.sqrk,jdbcType=VARCHAR}, #{item.shr,jdbcType=VARCHAR}, #{item.shrdh,jdbcType=VARCHAR}, 
+      #{item.jsdz,jdbcType=VARCHAR}, #{item.bzfp,jdbcType=VARCHAR}, #{item.sjhm,jdbcType=VARCHAR}, #{item.yx,jdbcType=VARCHAR}, 
+      #{item.fptt,jdbcType=VARCHAR}, #{item.fpttlx,jdbcType=VARCHAR}, #{item.fpkhlx,jdbcType=VARCHAR}
       )
   </foreach>
   </insert>
@@ -135,8 +139,8 @@
       <if test="fddh != null" >
         fddh,
       </if>
-      <if test="kpdq != null" >
-        kpdq,
+      <if test="fpdq != null" >
+        fpdq,
       </if>
       <if test="sqr != null" >
         sqr,
@@ -200,8 +204,8 @@
       <if test="fddh != null" >
         #{fddh,jdbcType=VARCHAR},
       </if>
-      <if test="kpdq != null" >
-        #{kpdq,jdbcType=VARCHAR},
+      <if test="fpdq != null" >
+        #{fpdq,jdbcType=VARCHAR},
       </if>
       <if test="sqr != null" >
         #{sqr,jdbcType=VARCHAR},
@@ -213,7 +217,7 @@
         #{hyid,jdbcType=VARCHAR},
       </if>
       <if test="ddsj != null" >
-        #{ddsj,jdbcType=DATE},
+        #{ddsj,jdbcType=VARCHAR},
       </if>
       <if test="sqsj != null" >
         #{sqsj,jdbcType=DATE},
@@ -265,8 +269,8 @@
       <if test="fddh != null" >
         fddh = #{fddh,jdbcType=VARCHAR},
       </if>
-       <if test="kpdq != null" >
-        kpdq = #{kpdq,jdbcType=VARCHAR},
+       <if test="fpdq != null" >
+        fpdq = #{fpdq,jdbcType=VARCHAR},
       </if>
       <if test="sqr != null" >
         sqr = #{sqr,jdbcType=VARCHAR},
@@ -278,7 +282,7 @@
         hyid = #{hyid,jdbcType=VARCHAR},
       </if>
       <if test="ddsj != null" >
-        ddsj = #{ddsj,jdbcType=DATE},
+        ddsj = #{ddsj,jdbcType=VARCHAR},
       </if>
       <if test="sqsj != null" >
         sqsj = #{sqsj,jdbcType=DATE},
@@ -324,12 +328,12 @@
     set fpqqlsh = #{ddh = #{ddh,jdbcType=VARCHAR},,jdbcType=VARCHAR},
       zddh = #{zddh,jdbcType=VARCHAR},
       fddh = #{fddh,jdbcType=VARCHAR},
-      kpdq = #{kpdq,jdbcType=VARCHAR},
+      fpdq = #{fpdq,jdbcType=VARCHAR},
       sqr = #{sqr,jdbcType=VARCHAR},
       hym = #{hym,jdbcType=VARCHAR},
       hyid = #{hyid,jdbcType=VARCHAR},
-      ddsj = #{ddsj,jdbcType=DATE},
-      sqsj = #{sqsj,jdbcType=DATE},
+      ddsj = #{ddsj,jdbcType=VARCHAR},
+      sqsj = #{sqsj,jdbcType=VARCHAR},
       spzl = #{spzl,jdbcType=VARCHAR},
       sqrk = #{sqrk,jdbcType=VARCHAR},
       shr = #{shr,jdbcType=VARCHAR},
@@ -345,11 +349,13 @@
   </update>
  
    <select id="getPlainList" resultMap="QueryMap" parameterType="map" >
-	select a.fpqqlsh,b.zddh,b.fddh,
-	b.hym,b.shr,b.sqsj,b.kpdq,b.spzl,a.gmfmc,a.jshj,a.hjse,a.hjje,a.fplx
+	select a.fpqqlsh,GROUP_CONCAT(b.zddh),
+	b.hyid,b.fpdq,GROUP_CONCAT(b.ddsj),GROUP_CONCAT(b.fksj),b.sqsj,b.fptt,c.xmmc,GROUP_CONCAT(b.bzfp),a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
 	from kpxx a
 	LEFT JOIN order_detail b
 	ON a.fpqqlsh = b.fpqqlsh
+  LEFT JOIN fpmx c
+  on  a.fpqqlsh = c.fpqqlsh
 	WHERE a.fpzt = '1' and a.fplx = '007'  and a.xsfnsrsbh = #{nsrsbh} 
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
@@ -360,14 +366,15 @@
     <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
-    <if test="kpdq != null and kpdq != '-1'" >
-     and b.kpdq = #{kpdq}
+    <if test="fpdq != null and fpdq != '-1'" >
+     and b.fpdq = #{fpdq}
     </if>
+    GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,c.xmmc,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
   </select>
   
   <select id="getSpecialList" resultMap="QueryMap" parameterType="map" >
 	select a.fpqqlsh,b.zddh,b.fddh,
-	b.hym,b.shr,b.sqsj,b.kpdq,b.spzl,a.gmfmc,a.jshj,a.hjse,a.hjje,a.fplx
+	b.hym,b.shr,b.sqsj,b.fpdq,b.spzl,a.gmfmc,a.jshj,a.hjse,a.hjje,a.fplx
 	from kpxx a
 	LEFT JOIN order_detail b
 	ON a.fpqqlsh = b.fpqqlsh
@@ -381,8 +388,8 @@
     <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
-    <if test="kpdq != null and kpdq != '-1'" >
-     and b.kpdq = #{kpdq}
+    <if test="fpdq != null and fpdq != '-1'" >
+     and b.fpdq = #{fpdq}
     </if>
   </select>
 <!-- 普通发票作废-查询 -->   
