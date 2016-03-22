@@ -130,16 +130,27 @@ public class PrintPpController {
 			return map;
 		}else{
 			String code = "-2";
-			String[] fplxdm = user.getFplxdm().split(",");
-			if(null != fplxdm && fplxdm.length > 0){
-				for(int i = 0; i < fplxdm.length; i++){
-					if(fplx.equals(fplxdm[i])){
-						code = "0";
+			if(null == user.getFplxdm()){
+				logger.info("用户操作员代码：" + user.getCzydm() + "发票类型代码为null");
+				code = "0";
+			}else{
+				String[] fplxdm = user.getFplxdm().split(",");
+				if(null != fplxdm && fplxdm.length > 0){
+					for(int i = 0; i < fplxdm.length; i++){
+						if(fplx.equals(fplxdm[i])){
+							code = "0";
+						}
 					}
 				}
 			}
+			
 			SkConfig skconf = service.getSkParameter(user.getNsrsbh());
-			skconf.setKpzdbs(user.getKpddm());
+			try{
+				skconf.setKpzdbs(user.getKpddm());
+			}catch(Exception e){
+				logger.info("用户操作员代码：" + user.getCzydm() + "开票终端代码为null");
+				e.printStackTrace();
+			}
 			PrintConfig printconf = service.getPrintParameter(fplx);
 			map.put("code", code);
 			map.put("msg", "成功");
