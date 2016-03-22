@@ -24,7 +24,7 @@
    <div id="div_search" class="div_search">
 		<form id='searchForm' action="">
 			<div class="" style="line-height: 30px;">
-				<label>开票起止日期:</label>
+				<label>开票日期:</label>
 				<input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始时间" value=""
 	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
 	         	<label>-</label>
@@ -36,9 +36,9 @@
 				<input type="text" id="fphm4q" name="fphm4q" placeholder="发票号码">
 				<label>订单号：</label>
 				<input type="text" id="ddh4q" name="ddh4q" placeholder="订单号">
-				<label>手机号：</label>
+				<label>收货人电话：</label>
 				<input type="text" id="sjh4q" name="sjh4q" placeholder="手机号">
-				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchfpList();" plain="true">查找</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchfpList();" plain="true">查询</a>
 			</div>
 		</form>
    </div>
@@ -361,10 +361,10 @@ function initDataGridComponent(){
 				pageList: [10,20,50,100],
 // 				queryParams: qParams,
 				columns:[[
-				     {field:'fpqqlsh',title:'fpqqlsh',width:150,editor:'text',hidden:true},
+				     {field:'fpqqlsh',title:'流水号',width:150,editor:'text'},
 				     {field:'zddh',title:'订单号',width:150,editor:'text'},
 		             {field:'hym',title:'会员名',width:100,editor:'text'},
-		             {field:'hyid',title:'会员ID',width:100,editor:'text'},
+		             {field:'hyid',title:'学员ID',width:100,editor:'text'},
 			         {field:'shr',title:'收货人',width:100,editor:'text'}, 
 		             {field:'shrdh',title:'收货人电话',width:100,editor:'text'},
 		             {field:'sqsj',title:'申请时间',width:100,editor:'text',formatter:dateFormatter},

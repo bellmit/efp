@@ -34,7 +34,9 @@ function kjefp(){
         data: params,
         async: false,
         success: function (data) {
-        	alert(data.returnMsg);
+        	if(data.returnMsg != ''){
+	        	alert(data.returnMsg);
+        	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
@@ -48,6 +50,22 @@ function kjefp(){
 }
 $(function(){
 	$('#kprq').text(new Date().format("yyyy年mm月dd日"));
+	$.ajax({
+		type:"POST",
+        url: "../../einvoice/fpkj/getUserInfo",
+        data: {},
+        async: false,
+        success: function (data) {
+        	$('#xhdwdm').html(data.nsrsbh);
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        	if(XMLHttpRequest.responseText=="timeOut"){
+        		window.top.location.reload();
+        	}else{
+        		window.parent.$.messager.alert('消息',"Error");
+        	}
+        }
+	});
 })
 
 </script>
@@ -94,7 +112,7 @@ $(function(){
 				<FORM id="zsfpform" class="fp-main"
 					encType="application/x-www-form-urlencoded" method="post"
 					name="zsfpform" action="">
-					<input type="hidden" name ="telphone" value="17710708213">
+					<input type="hidden" name ="telphone" value="13331092132">
 					<input type="hidden" name ="email" value="48089778@qq.com">
 					<INPUT name="zsfpform" value="zsfpform" type="hidden"><INPUT
 						id="cxfp" value="0" type="hidden"><INPUT id="nowSelectRow"
@@ -250,7 +268,7 @@ $(function(){
 												src="dot_clear.gif.gif" width="56" height="0">称：
 										</SPAN><SPAN style="color: black;" id="xhdwmc" title="中国保险信息技术管理有限责任公司">中国保险信息技术管理有限责任公司</SPAN><BR>
 										<SPAN style="width: 98px; display: inline-block;">纳税人识别号：
-										</SPAN><SPAN style="color: black;" id="xhdwdm">11010800000000000006</SPAN><BR>
+										</SPAN><SPAN style="color: black;" id="xhdwdm"></SPAN><BR>
 										<SPAN style="width: 98px; display: inline-block;">地<IMG
 												id="j_idt58" alt="" src="dot_clear.gif.gif" width="7"
 												height="0">址、电<IMG id="j_idt60" alt=""

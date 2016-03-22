@@ -37,6 +37,7 @@ import com.baiwang.einvoice.qz.utils.ReportUtil;
 @Controller
 @RequestMapping(value="report")
 public class ReportController implements ServletConfigAware {
+	
 	@Resource
 	private ServletContext servletContext;
 	@Resource
@@ -52,28 +53,22 @@ public class ReportController implements ServletConfigAware {
 	public Map<String, Object> queryReport(HttpServletRequest request,int page, int rows){
 		User user = (User)request.getSession().getAttribute("user");
 		//获取查询条件
-		String ddh4q = request.getParameter("ddh4q");
-		String fplx4q = request.getParameter("fplx4q");
-		String kpdq4q = request.getParameter("kpdq4q");
-		String fpzl4q = request.getParameter("fpzl4q");
-		String fptt4q = request.getParameter("fptt4q");
 		String dateS = request.getParameter("beginDate");
 		String dateE = request.getParameter("endDate");
-		request.setAttribute("ddh4save", ddh4q);
-		request.setAttribute("fplx4save", fplx4q);
-		request.setAttribute("kpdq4save", kpdq4q);
-		request.setAttribute("fpzl4save", fpzl4q);
-		request.setAttribute("fptt4save", fptt4q);
-		request.setAttribute("dateS4save", dateS);
-		request.setAttribute("dateE4save", dateE);
+		String shrdh4q = request.getParameter("shrdh4q");
+		String ddh4q = request.getParameter("ddh4q");
+		String hyid4q = request.getParameter("hyid4q");
+		String fphm4q = request.getParameter("fphm4q");
+		String fplx = request.getParameter("fplx");
+		
 		Map<String, Object> condition = new HashMap<>();
 		condition.put("dateS", dateS);
 		condition.put("dateE", dateE);
+		condition.put("shrdh4q", shrdh4q);
 		condition.put("ddh4q", ddh4q);
-		condition.put("fplx4q", fplx4q);
-		condition.put("kpdq4q", kpdq4q);
-		condition.put("fpzl4q", fpzl4q);
-		condition.put("fptt4q", fptt4q);
+		condition.put("hyid4q", hyid4q);
+		condition.put("fphm4q", fphm4q);
+		condition.put("fplx", fplx);
 		condition.put("nsrsbh", user.getNsrsbh());
 		condition.put("startRow", (page-1)*rows);
 		condition.put("rows", rows);
@@ -92,36 +87,37 @@ public class ReportController implements ServletConfigAware {
 		if(null != lshs && lshs.trim().length()>0){
 			lsh4ept = lshs.split(",");
 		}
-		List<ReportDetail> list = new ArrayList<>();
+		String fplx = request.getParameter("fplx");
+		List<ReportDetail> beanList = new ArrayList<>();
 		if(null != lsh4ept && lsh4ept.length>0){
 			for(String tmp:lsh4ept){
-				list.add(reportService.getFpByLSH(tmp));
+				beanList.add(reportService.getFpByLSH(tmp));
 			}
 		}else{
 			//获取查询条件
-			String dateS = request.getParameter("dateS4save");
-			String dateE = request.getParameter("dateE4save");
-			String ddh4q = request.getParameter("ddh4save");
-			String fplx4q = request.getParameter("fplx4save");
-			String kpdq4q = request.getParameter("kpdq4save");
-			String fpzl4q = request.getParameter("fpzl4save");
-			String fptt4q = request.getParameter("fptt4save");
+			String dateS = request.getParameter("beginDate");
+			String dateE = request.getParameter("endDate");
+			String shrdh4q = request.getParameter("shrdh4q");
+			String ddh4q = request.getParameter("ddh4q");
+			String hyid4q = request.getParameter("hyid4q");
+			String fphm4q = request.getParameter("fphm4q");
+			
 			Map<String, Object> condition = new HashMap<>();
 			condition.put("dateS", dateS);
 			condition.put("dateE", dateE);
+			condition.put("shrdh4q", shrdh4q);
 			condition.put("ddh4q", ddh4q);
-			condition.put("fplx4q", fplx4q);
-			condition.put("kpdq4q", kpdq4q);
-			condition.put("fpzl4q", fpzl4q);
-			condition.put("fptt4q", fptt4q);
+			condition.put("hyid4q", hyid4q);
+			condition.put("fphm4q", fphm4q);
+			condition.put("fplx", fplx);
 			User user = (User)request.getSession().getAttribute("user");
 			condition.put("nsrsbh", user.getNsrsbh());
-			list = reportService.getFpListByCondition4d(condition);//查询结果
+			beanList = reportService.getFpListByCondition4d(condition);//查询结果
 		}
 		//生成excel
-		if(list.size()>0){
+		if(beanList.size()>0){
 			try {
-				HSSFWorkbook wb = ReportUtil.exportExcel(list);
+				HSSFWorkbook wb = ReportUtil.exportExcel(beanList,fplx);
 				response.setContentType("application/ms-excel");
 				response.setHeader("Content-Disposition", "attachment;Filename=new.xls");
 				OutputStream os = response.getOutputStream();

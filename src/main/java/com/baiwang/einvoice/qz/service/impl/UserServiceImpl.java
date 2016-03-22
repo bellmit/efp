@@ -53,7 +53,7 @@ public class UserServiceImpl implements IUserService {
 				"ON a.KPDDM = b.KPDDM " + 
 				"LEFT JOIN dj_fpcxx c " + 
 				"ON b.KPDDM = c.KPDDM " +  
-				"where a.czydm  = '"+ name + "' "+
+				"where a.czymc  = '"+ name + "' "+
 				"group by a.CZYDM,a.CZYMC,yhkl,qybz,yhlx,a.kpddm,b.nsrsbh,a.cjrdm";
 		logger.info("用户名【" + name + "】正在登录...");
 		 
