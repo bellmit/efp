@@ -340,7 +340,7 @@ public class InvoiceController {
 		if(null != xmmc){
 			for(int i=0;i<xmmc.length;i++){
 				Fpmx fpmx = new Fpmx();
-				fpmx.setFphxz(false);
+				fpmx.setFphxz("0");
 				fpmx.setXmmc(xmmc[i]);
 				fpmx.setGgxh(ggxh[i]);
 				fpmx.setDw(dw[i]);
@@ -351,7 +351,7 @@ public class InvoiceController {
 				fpmx.setSl(Float.valueOf(formatNum(sl[i])));
 				fpmx.setSe(Float.valueOf(formatNum(se[i])));
 				hjse+=Float.valueOf(formatNum(se[i]));
-				fpmx.setHsbz(false);
+				fpmx.setHsbz("0");
 				fpmxList.add(fpmx);
 			}
 		}
@@ -359,7 +359,6 @@ public class InvoiceController {
 		kpxx.setHjse((float)(Math.round(hjse*100))/100);
 		kpxx.setJshj((float)(Math.round((hjje+hjse)*100))/100);
 		Map<String, String> result = resultService.queryResult(fpqqlsh, kpxx.getFplx());//根据两个订单号查
-		
 		if(null == result){
 			if("026".equals(kpxx.getFplx())){
 				try{
@@ -380,6 +379,8 @@ public class InvoiceController {
 							map.put("returnCode", "0000");
 							map.put("returnMsg", "发票已开具成功");
 						}
+					}else{
+						map.put("returnMsg", RETURNMSG);
 					}
 				}catch(Exception e){
 					logger.error("*********发票请求流水号：" + fpqqlsh + ",与税控连接异常");
@@ -391,6 +392,9 @@ public class InvoiceController {
 				map.put("returnCode", "1234");
 	        	map.put("returnMsg", "开票失败，未知错误！");
 			}
+		}else{
+			map.put("returnCode", "abcd");
+        	map.put("returnMsg", "开票失败，未知错误！");
 		}
 		return map;
 //		try {
@@ -402,5 +406,12 @@ public class InvoiceController {
 	public static String formatNum(String je){
 		DecimalFormat df = new DecimalFormat("0.00");
 		return df.format(Double.parseDouble(je));
+	}
+	
+	@RequestMapping("/getUserInfo")
+	@ResponseBody
+	public User getUserInfo( HttpSession session){
+		User user = (User) session.getAttribute("user");
+		return user;
 	}
 }
