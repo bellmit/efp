@@ -1,7 +1,7 @@
 /**
  * 是否含税价标志（通用类型）
  */
-function formatUniversal(value,row,index){
+function formatKplx(value,row,index){
 	if (value=="004"){
 		return "增值税纸质专用发票";
 	}else if (value=="007"){
@@ -23,9 +23,9 @@ function formatfpdq(value,row,index){
  */
 function formatfpkhlx(value,row,index){
 	if (value=="00"){
-		return "北京";
+		return "B2B";
 	}else if (value=="01"){
-		return "上海";
+		return "B2C";
 	}
 }
 /*
