@@ -33,7 +33,7 @@ public class Fpmx {
 	@XmlElement(name = "FPQQLSH", required = true)
     private String fpqqlsh;
 	@XmlElement(name = "FPHXZ", required = true)
-    private Boolean fphxz;
+    private String fphxz;
 	@XmlElement(name = "XMMC", required = true)
     private String xmmc;
 	@XmlElement(name = "GGXH", required = true)
@@ -51,7 +51,7 @@ public class Fpmx {
 	@XmlElement(name = "SE", required = true)
     private Float se;
 	@XmlElement(name = "HSBZ", required = true)
-    private Boolean hsbz;
+    private String hsbz;
 
     public Long getId() {
         return id;
@@ -67,14 +67,6 @@ public class Fpmx {
 
     public void setFpqqlsh(String fpqqlsh) {
         this.fpqqlsh = fpqqlsh == null ? null : fpqqlsh.trim();
-    }
-
-    public Boolean getFphxz() {
-        return fphxz;
-    }
-
-    public void setFphxz(Boolean fphxz) {
-        this.fphxz = fphxz;
     }
 
     public String getXmmc() {
@@ -141,11 +133,24 @@ public class Fpmx {
         this.se = se;
     }
 
-    public Boolean getHsbz() {
-        return hsbz;
-    }
+	public String getFphxz() {
+	
+		return fphxz;
+	}
 
-    public void setHsbz(Boolean hsbz) {
-        this.hsbz = hsbz;
-    }
+	public void setFphxz(String fphxz) {
+	
+		this.fphxz = fphxz;
+	}
+
+	public String getHsbz() {
+	
+		return hsbz;
+	}
+
+	public void setHsbz(String hsbz) {
+	
+		this.hsbz = hsbz;
+	}
+
 }

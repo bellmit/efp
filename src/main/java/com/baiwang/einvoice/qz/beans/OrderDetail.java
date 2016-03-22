@@ -19,13 +19,14 @@ import javax.xml.bind.annotation.XmlType;
 	"fpqqlsh",
 	"zddh",
 	"fddh",
-	"kpdq",
-	"fpkh",
+	"fpdq",
+	"fpkhlx",
     "sqr",
     "hym",
     "hyid",
     "ddsj",
     "sqsj",
+    "fksj",
     "spzl",
     "sqrk",
     "shr",
@@ -37,7 +38,11 @@ import javax.xml.bind.annotation.XmlType;
     "wldh",
     "tkzt",
     "fpzt",
-    "bzfp"
+    "bzfp",
+    "sjhm",
+    "yx",
+    "fptt",
+    "fpttlx"
     
 })
 public class OrderDetail {
@@ -49,20 +54,26 @@ public class OrderDetail {
     private String zddh;
 	@XmlElement(name = "FDDH", required = true)
     private String fddh;
-	@XmlElement(name = "KPDQ", required = true)
-	private String kpdq;
+	@XmlElement(name = "FPDQ", required = true)
+	private String fpdq;
+	@XmlElement(name = "FPKHLX", required = true)
+	private String fpkhlx;
+	@XmlElement(name = "FPTT", required = true)
+	private String fptt;
+	@XmlElement(name = "FPTTLX", required = true)
+	private String fpttlx;
 	@XmlElement(name = "SQR", required = true)
-	private Byte fpkh;
-	@XmlElement(name = "FPKH", required = true)
     private String sqr;
 	@XmlElement(name = "HYM", required = true)
     private String hym;
 	@XmlElement(name = "HYID", required = true)
     private String hyid;
 	@XmlElement(name = "DDSJ", required = true)
-    private Date ddsj;
+    private String ddsj;
 	@XmlElement(name = "SQSJ", required = true)
-    private Date sqsj;
+    private String sqsj;
+	@XmlElement(name = "FKSJ", required = true)
+    private String fksj;
 	@XmlElement(name = "SPZL", required = true)
     private String spzl;
 	@XmlElement(name = "SQRK", required = true)
@@ -75,15 +86,6 @@ public class OrderDetail {
     private String jsdz;
 	@XmlElement(name = "YJSJ", required = true)
     private Date yjsj;
-	public Byte getFpkh() {
-	
-		return fpkh;
-	}
-
-	public void setFpkh(Byte fpkh) {
-	
-		this.fpkh = fpkh;
-	}
 
 	@XmlElement(name = "FHR", required = true)
     private String fhr;
@@ -97,6 +99,10 @@ public class OrderDetail {
     private String fpzt;
 	@XmlElement(name = "BZFP", required = true)
 	private String bzfp;
+	@XmlElement(name = "SJHM", required = true)
+	private String sjhm;
+	@XmlElement(name = "YX", required = true)
+	private String yx;
     public Long getId() {
         return id;
     }
@@ -127,22 +133,6 @@ public class OrderDetail {
 
     public void setHyid(String hyid) {
         this.hyid = hyid == null ? null : hyid.trim();
-    }
-
-    public Date getDdsj() {
-        return ddsj;
-    }
-
-    public void setDdsj(Date ddsj) {
-        this.ddsj = ddsj;
-    }
-
-    public Date getSqsj() {
-        return sqsj;
-    }
-
-    public void setSqsj(Date sqsj) {
-        this.sqsj = sqsj;
     }
 
     public String getSpzl() {
@@ -264,16 +254,6 @@ public class OrderDetail {
 	}
 
 
-	public String getKpdq() {
-	
-		return kpdq;
-	}
-
-	public void setKpdq(String kpdq) {
-	
-		this.kpdq = kpdq;
-	}
-
 	public String getBzfp() {
 	
 		return bzfp;
@@ -282,6 +262,96 @@ public class OrderDetail {
 	public void setBzfp(String bzfp) {
 	
 		this.bzfp = bzfp;
+	}
+
+	public String getFpdq() {
+	
+		return fpdq;
+	}
+
+	public void setFpdq(String fpdq) {
+	
+		this.fpdq = fpdq;
+	}
+
+	public String getFpkhlx() {
+	
+		return fpkhlx;
+	}
+
+	public void setFpkhlx(String fpkhlx) {
+	
+		this.fpkhlx = fpkhlx;
+	}
+
+	public String getDdsj() {
+	
+		return ddsj;
+	}
+
+	public void setDdsj(String ddsj) {
+	
+		this.ddsj = ddsj;
+	}
+
+	public String getSqsj() {
+	
+		return sqsj;
+	}
+
+	public void setSqsj(String sqsj) {
+	
+		this.sqsj = sqsj;
+	}
+
+	public String getFksj() {
+	
+		return fksj;
+	}
+
+	public void setFksj(String fksj) {
+	
+		this.fksj = fksj;
+	}
+
+	public String getSjhm() {
+	
+		return sjhm;
+	}
+
+	public void setSjhm(String sjhm) {
+	
+		this.sjhm = sjhm;
+	}
+
+	public String getYx() {
+	
+		return yx;
+	}
+
+	public void setYx(String yx) {
+	
+		this.yx = yx;
+	}
+
+	public String getFptt() {
+	
+		return fptt;
+	}
+
+	public void setFptt(String fptt) {
+	
+		this.fptt = fptt;
+	}
+
+	public String getFpttlx() {
+	
+		return fpttlx;
+	}
+
+	public void setFpttlx(String fpttlx) {
+	
+		this.fpttlx = fpttlx;
 	}
 
     
