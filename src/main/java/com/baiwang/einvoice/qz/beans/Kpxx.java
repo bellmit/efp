@@ -1,6 +1,5 @@
 package com.baiwang.einvoice.qz.beans;
 
-import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -115,7 +114,7 @@ public class Kpxx {
 	@XmlElement(name = "BZ", required = true)
     private String bz;
 	@XmlElement(name = "KPRQ", required = true)
-    private Date kprq;
+    private String kprq;
 	@XmlElement(name = "JQBH")
 	private String jqbh;
 	@XmlElement(name = "SKM")
@@ -356,12 +355,12 @@ public class Kpxx {
     }
 
 
-	public Date getKprq() {
+	public String getKprq() {
 	
 		return kprq;
 	}
 
-	public void setKprq(Date kprq) {
+	public void setKprq(String kprq) {
 	
 		this.kprq = kprq;
 	}

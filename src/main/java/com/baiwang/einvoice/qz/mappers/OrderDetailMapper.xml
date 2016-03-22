@@ -32,19 +32,24 @@
   
    <resultMap id="QueryMap" type="hashmap">
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
+    <result column="lsh" property="lsh" jdbcType="VARCHAR" />
     <result column="zddh" property="zddh" jdbcType="VARCHAR" />
-    <result column="fddh" property="fddh" jdbcType="VARCHAR" />
+    <result column="hyid" property="hyid" jdbcType="VARCHAR" />
     <result column="fpdq" property="fpdq" jdbcType="VARCHAR" />
-    <result column="sqrk" property="sqrk" jdbcType="VARCHAR" /> 
-    <result column="hym" property="hym" jdbcType="VARCHAR" />
+    <result column="ddsj" property="ddsj" jdbcType="VARCHAR" />
+    <result column="fksj" property="fksj" jdbcType="VARCHAR" />
     <result column="sqsj" property="sqsj" jdbcType="VARCHAR" />
-    <result column="spzl" property="spzl" jdbcType="VARCHAR" />
-    <result column="shr" property="shr" jdbcType="VARCHAR" />
+    <result column="fptt" property="fptt" jdbcType="VARCHAR" />
+    <result column="xmmc" property="xmmc" jdbcType="VARCHAR" />
+    <result column="sqrk" property="sqrk" jdbcType="VARCHAR" />
+    <result column="bzfp" property="bzfp" jdbcType="VARCHAR" /> 
+    <result column="fplx" property="fplx" jdbcType="VARCHAR" />
     <result column="jshj" property="jshj" jdbcType="REAL" />
     <result column="hjje" property="hjje" jdbcType="REAL" />
     <result column="hjse" property="hjse" jdbcType="REAL" />
-    <result column="gmfmc" property="gmfmc" jdbcType="VARCHAR" />
-    <result column="fplx" property="fplx" jdbcType="VARCHAR" />
+    <result column="shr" property="shr" jdbcType="VARCHAR" />
+    <result column="shrdh" property="shrdh" jdbcType="VARCHAR" />
+    <result column="jsdz" property="jsdz" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="QueryMap4zf" type="map">
     <result column="fpqqlsh" property="fpqqlsh" jdbcType="VARCHAR" />
@@ -349,13 +354,15 @@
   </update>
  
    <select id="getPlainList" resultMap="QueryMap" parameterType="map" >
-	select a.fpqqlsh,GROUP_CONCAT(b.zddh),
-	b.hyid,b.fpdq,GROUP_CONCAT(b.ddsj),GROUP_CONCAT(b.fksj),b.sqsj,b.fptt,c.xmmc,GROUP_CONCAT(b.bzfp),a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
+	select a.fpqqlsh, a.fpqqlsh as lsh , GROUP_CONCAT(b.zddh) as zddh,
+	b.hyid,b.fpdq,GROUP_CONCAT(b.ddsj) as ddsj,GROUP_CONCAT(b.fksj) as fksj,
+	b.sqsj,b.fptt,GROUP_CONCAT(c.xmmc) as xmmc,GROUP_CONCAT(b.bzfp) as bzfp,
+	a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz,b.sqrk
 	from kpxx a
 	LEFT JOIN order_detail b
 	ON a.fpqqlsh = b.fpqqlsh
-  LEFT JOIN fpmx c
-  on  a.fpqqlsh = c.fpqqlsh
+  	LEFT JOIN fpmx c
+  	ON  a.fpqqlsh = c.fpqqlsh
 	WHERE a.fpzt = '1' and a.fplx = '007'  and a.xsfnsrsbh = #{nsrsbh} 
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
@@ -366,19 +373,26 @@
     <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
-    <if test="fpdq != null and fpdq != '-1'" >
-     and b.fpdq = #{fpdq}
+    <if test="hyid != null and hyid != ''" >
+     and b.hyid = #{hyid}
     </if>
-    GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,c.xmmc,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
+    <if test="shrdh != null and shrdh != ''" >
+     and b.shrdh = #{shrdh}
+    </if>
+    GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
   </select>
   
   <select id="getSpecialList" resultMap="QueryMap" parameterType="map" >
-	select a.fpqqlsh,b.zddh,b.fddh,
-	b.hym,b.shr,b.sqsj,b.fpdq,b.spzl,a.gmfmc,a.jshj,a.hjse,a.hjje,a.fplx
+	select a.fpqqlsh, a.fpqqlsh as lsh , GROUP_CONCAT(b.zddh) as zddh,
+	b.hyid,b.fpdq,GROUP_CONCAT(b.ddsj) as ddsj,GROUP_CONCAT(b.fksj) as fksj,
+	b.sqsj,b.fptt,GROUP_CONCAT(c.xmmc) as xmmc,GROUP_CONCAT(b.bzfp) as bzfp,
+	a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz,b.sqrk
 	from kpxx a
 	LEFT JOIN order_detail b
 	ON a.fpqqlsh = b.fpqqlsh
-	WHERE a.fpzt = '1' and  a.fplx = '004'  and a.xsfnsrsbh = #{nsrsbh} 
+  	LEFT JOIN fpmx c
+  	ON  a.fpqqlsh = c.fpqqlsh
+	WHERE a.fpzt = '1' and a.fplx = '004'  and a.xsfnsrsbh = #{nsrsbh} 
     <if test="beginDate != null and beginDate != ''" >
      <![CDATA[and b.ddsj >= #{beginDate} ]]>
     </if>
@@ -388,9 +402,13 @@
     <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
-    <if test="fpdq != null and fpdq != '-1'" >
-     and b.fpdq = #{fpdq}
+    <if test="hyid != null and hyid != ''" >
+     and b.hyid = #{hyid}
     </if>
+    <if test="shrdh != null and shrdh != ''" >
+     and b.shrdh = #{shrdh}
+    </if>
+    GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
   </select>
 <!-- 普通发票作废-查询 -->   
   <select id="getPlainList4zf" resultMap="QueryMap4zf" parameterType="map" >

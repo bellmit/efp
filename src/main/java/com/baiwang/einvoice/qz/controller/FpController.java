@@ -294,7 +294,8 @@ public class FpController {
 			kpxx_ch.setFpdm(fpdm);
 			kpxx_ch.setFphm(fphm);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			kpxx_ch.setKprq(sdf.parse(kprq));
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			kpxx_ch.setKprq(sdf2.format(sdf.parse(kprq)));
 			kpxx_ch.setJqbh(jqbh);
 			kpxx_ch.setSkm(skm);
 			kpxx_ch.setJym(jym);
