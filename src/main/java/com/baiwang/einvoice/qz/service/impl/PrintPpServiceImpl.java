@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.baiwang.einvoice.qz.beans.PrintConfig;
@@ -30,18 +31,20 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	private PrintConfigMapper dydao;
 	
 	@Override
-	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
+	public List<Map<String,String>> getPrintPpList(String beginDate, String endDate, String hyid, String fphm, String zddh, String shrdh,
+			String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
 		requestPage = (requestPage - 1) * pageSize;
 		/*beginDate = beginDate.replaceAll("-", "");
 		endDate = endDate.replaceAll("-", "");*/
-		return dao.getPrintPpList(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, requestPage, pageSize, xsfnsrsbh);
+		return dao.getPrintPpList(beginDate, endDate, hyid, fphm, zddh, shrdh, fplx, requestPage, pageSize, xsfnsrsbh);
 	}
 	
 	@Override
-	public int queryCount(String beginDate, String endDate, String hyid, String fphm, String zddh, String gmfsjh, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
+	public int queryCount(String beginDate, String endDate, String hyid, String fphm, String zddh, String shrdh,
+			String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
 		/*beginDate = beginDate.replaceAll("-", "");
 		endDate = endDate.replaceAll("-", "");*/
-		return dao.queryCount(beginDate, endDate, hyid, fphm, zddh, gmfsjh, fplx, requestPage, pageSize, xsfnsrsbh);
+		return dao.queryCount(beginDate, endDate, hyid, fphm, zddh, shrdh, fplx, requestPage, pageSize, xsfnsrsbh);
 	}
 
 	@Override
@@ -126,15 +129,15 @@ public class PrintPpServiceImpl implements IPrintPpService {
 	}
 
 	@Override
-	public List<Map<String, String>> showDetail(String begin, String end, String fplx, int requestPage, int pageSize) {
+	public List<Map<String, String>> showDetail(String begin, String end, String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
 		requestPage = (requestPage - 1) * pageSize;
-		return dao.showDetail(begin, end, fplx, requestPage, pageSize);
+		return dao.showDetail(begin, end, fplx, requestPage, pageSize, xsfnsrsbh);
 	}
 
 	@Override
-	public int queryDetailCount(String begin, String end, String fplx) {
+	public int queryDetailCount(String begin, String end, String fplx, String xsfnsrsbh) {
 		
-		return dao.queryDetailCount(begin, end, fplx);
+		return dao.queryDetailCount(begin, end, fplx, xsfnsrsbh);
 	}
 	
 	@Override

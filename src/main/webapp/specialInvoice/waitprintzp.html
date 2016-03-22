@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="../css/easyui.css"/>
 <script type="text/javascript" src="../js/jquery/easyui-lang-zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/easyui_global.css"/>
+<script type="text/javascript" src="../js/format.js"></script>
 <script type="text/javascript">
 var printable = false;
 var keypwd = '123456';
@@ -151,7 +152,7 @@ function getTotalMidValue(source, priStr, suxStr) {
 	         	<label>-</label>
 	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
 	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
-				<label>会员ID:</label>
+				<label>学员ID:</label>
 				<input type="text" id="hyid" name="hyid" placeholder="会员ID"/>
 		     	<label>发票号码:</label>
 				<input type="text" id="fphm" name="fphm" placeholder="发票号码"/>
@@ -159,8 +160,8 @@ function getTotalMidValue(source, priStr, suxStr) {
 				<input type="text" id="zddh" name="zddh" placeholder="订单号"/>
 				<!-- <label>副订单号:</label>
 				<input type="text" id="fddh" name="fddh" placeholder="副订单号"/> -->
-				<label>手机号:</label>
-				<input type="text" id="gmfsjh" name="gmfsjh" placeholder="手机号"/>
+				<label>收货人电话:</label>
+				<input type="text" id="shrdh" name="shrdh" placeholder="收货人电话"/>
 				<input type="hidden" id='fplx' name='fplx' value='004'>
 				
 				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchZpList();" plain="true">查找</a>
@@ -232,21 +233,25 @@ function initDataGridComponent(){
 				queryParams: qParams,
 				columns:[[
 				     /* {field:'id',title:'id',width:100,checkbox:true}, */
-				     {field:'zddh',title:'订单号',width:150,editor: {
-				    	 type: 'text'
-	                 }},
-		             {field:'fpqqlsh',title:'发票请求流水号',width:100,editor:'text',hidden:true},
+		             {field:'fpqqlsh',title:'发票请求流水号',width:100,editor:'text'},
+				     {field:'zddh',title:'订单号',width:150,editor:'text',formatter: formatArray},
 		             /* {field:'hym',title:'会员名',width:100,editor:'text'}, */
-		             {field:'hyid',title:'会员ID',width:100,editor:'text'},
+		             {field:'hyid',title:'学员ID',width:100,editor:'text'},
+		             {field:'fpdq',title:'地区',width:100,editor:'text',formatter:formatfpdq},
+		             {field:'ddsj',title:'订单时间',width:100,editor: 'text',formatter: formatArray },
+		             {field:'fksj',title:'付款时间',width:100,editor: 'text',formatter: formatArray},
+		             {field:'sqsj',title:'发票申请时间',width:100,editor: 'text',formatter: formatArray},
+		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
+			         {field:'fpnr',title:'发票内容',width:100,editor:'text',formatter: formatArray},
+			         {field:'bzfp',title:'发票备注',width:100,editor:'text',formatter: formatArray},
+			         {field:'kpzl',title:'开票种类',width:100,editor:'text',formatter: formatKplx},
+		             {field:'sqrk',title:'申请入口',width:100,editor:'text',formatter: formatsqrk},
 		             {field:'shr',title:'收货人',width:100,editor:'text'},
 			         {field:'shrdh',title:'收货人电话',width:100,editor:'text'}, 
-		             {field:'sqsj',title:'申请时间',width:100,editor: {type: 'text'}/* ,formatter: formatUniversal */},
-		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
-			         {field:'fpnr',title:'发票内容',width:100,editor:'text'},
+			         {field:'jsdz',title:'寄送地址',width:100,editor:'text'}, 
 		             {field:'hjje',title:'合计金额',width:100,editor:'text'},
 			         {field:'hjse',title:'合计税额',width:100,editor:'text'},
 		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
-			         {field:'kplx',title:'开票类型',width:100,editor:'text',formatter: formatKplx},
 			         {field:'kprq',title:'开票日期',width:100,editor:'text',formatter: formatKprq},
 		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'}
