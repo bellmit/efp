@@ -111,7 +111,7 @@ function initDataGridComponent(){
 		             {field:'fpnr',title:'发票内容',width:100,editor:'text'},
 			         {field:'bz',title:'发票备注',width:100,editor:'text'},
 		             {field:'bszt',title:'报送状态',width:100,editor:'text'},
-			         {field:'fpzt',title:'发票状态',width:100,editor:'text'},
+			         {field:'fpzt',title:'发票状态',width:100,editor:'text',formatter:formatFpzt1},
 			         {field:'hjje',title:'合计金额',width:100,editor:'text'},
 		             {field:'hjse',title:'合计税额',width:100,editor:'text'},
 		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
@@ -165,6 +165,18 @@ function formatTtlx(value,row,index){
 	} else if(value=="01") {
 		return "公司";
 	}
+}
+function formatFpzt1(value,row,index){
+	var a ='';
+	if(row.hjje>0){
+		a = "正数";
+	}else if(row.hjje<0){
+		a = "负数";
+	}
+	if(row.fpjd=='-2'){
+		a+="作废";
+	}
+	return a;
 }
 /**
  * 发票种类
