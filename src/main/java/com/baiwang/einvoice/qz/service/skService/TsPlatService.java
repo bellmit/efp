@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.baiwang.einvoice.qz.utils.ConfigUtil;
+import com.baiwang.einvoice.qz.utils.InvoiceUtil;
 import com.baiwang.einvoice.qz.utils.token.TokenHelper;
 
 @Service
@@ -20,25 +21,20 @@ public class TsPlatService {
 //	private String tsUrl = "http://192.168.6.12:19922/external/documents";
 	private String tsUrl = ConfigUtil.get("request.ts.url");
 	
-	//供应商税控编号，需要与UBL中的 <cac:AccountingSupplierParty><cbc:CustomerAssignedAccountID> 一致
-    private static final String supplierTaxNumber = "0000000001000032";
-
-    //该公司持有的token_key
-    private static final String tokenKey = "OMJXJ9YYALR4YX0M";
-
-    private static final String tokenValue = TokenHelper.generateToken(supplierTaxNumber, tokenKey);
-	
 	public String reqestTsPlat(String ubl){
 		logger.info("////////////////请求ts发票平台接收ubl//////////////" + ubl);
 		BufferedReader in = null;
 		String success = "";
+		String supplierTaxNumber = InvoiceUtil.getIntervalValue(ubl, "<cbc:CustomerAssignedAccountID>", "</cbc:CustomerAssignedAccountID>");
+		String tokenKey = ConfigUtil.get(supplierTaxNumber);
+		String tokenValue = TokenHelper.generateToken(supplierTaxNumber, tokenKey);
 		try{
 			URL url = new URL(tsUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "text/html;charset=UTF-8");
 			conn.setRequestProperty("Connection", "Keep-Alive");
-			/*conn.setRequestProperty("BWTS-TOKEN", "{"+tokenValue+"}");*/
+			conn.setRequestProperty("BWTS-TOKEN", "{"+tokenValue+"}");
 			conn.setUseCaches(false);
 			conn.setDoOutput(true);
 			
