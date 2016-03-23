@@ -49,30 +49,18 @@ function exportData(){
 					<label>开票地区：</label>
 						<select name="kpdq4q" id="kpdq4q">
 							<option value="">请选择</option>
-							<option value="北京" <c:if test="${kpdq4save=='北京'}">selected="selected"</c:if>>北京</option>
-							<option value="上海" <c:if test="${kpdq4save=='上海'}">selected="selected"</c:if>>上海</option>
+							<option value="00" >北京</option>
+							<option value="01" >上海</option>
 						</select>
 				</c:if>
-				
+				<label>发票号码：</label>
+				<input type="text"  id="fphm4q" name="fphm4q" placeholder="发票号码">
 				<label>发票种类：</label>
 				<select name="fpzl4q" id="fpzl4q">
 					<option value="">请选择</option>
-					<option value="007" <c:if test="${fpzl4save=='007'}">selected="selected"</c:if>>增值税普通发票</option>
-					<option value="004" <c:if test="${fpzl4save=='004'}">selected="selected"</c:if>>增值税专用发票</option>
-					<option value="026" <c:if test="${fpzl4save=='026'}">selected="selected"</c:if>>增值税电子发票</option>
-				</select>
-				<label>发票内容：</label>
-				<select name="fplx4q" id="fplx4q" >
-					<option value="">请选择</option>
-					<option <c:if test="${fplx4save=='服务费'}">selected="selected"</c:if>>服务费</option>
-					<option <c:if test="${fplx4save=='咨询费'}">selected="selected"</c:if>>咨询费</option>
-					<option <c:if test="${fplx4save=='培训费'}">selected="selected"</c:if>>培训费</option>
-				</select>
-				<label>发票抬头：</label>
-				<select name="fptt4q" id="fptt4q">
-					<option value="">请选择</option>
-					<option value ="个人" <c:if test="${fptt4save=='个人'}">selected="selected"</c:if>>个人</option>
-					<option value ="公司" <c:if test="${fptt4save=='公司'}">selected="selected"</c:if>>公司</option>
+					<option value="007" >增值税普通发票</option>
+					<option value="004" >增值税专用发票</option>
+					<option value="026" >增值税电子发票</option>
 				</select>
 				
 				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchfpList();" plain="true">查找</a>
@@ -87,8 +75,7 @@ function exportData(){
 <input type="hidden" id = "dateE4save" name="dateE4save" value="">
 <input type="hidden" id = "kpdq4save" name="kpdq4save" value="">
 <input type="hidden" id = "fpzl4save" name="fpzl4save" value="">
-<input type="hidden" id = "fplx4save" name="fplx4save" value="">
-<input type="hidden" id = "fptt4save" name="fptt4save" value="">
+<input type="hidden" id = "fphm4save" name="fphm4save" value="">
 <table id="datagrid"></table>
 </form>
 
@@ -113,16 +100,16 @@ function initDataGridComponent(){
 				queryParams: qParams,
 				columns:[[
 				     {field:'fpqqlsh',title:'fpqqlsh',width:100,checkbox:true},
-				     {field:'kpdq',title:'发票地区',width:150,editor:'text'},
-		             {field:'fpkh',title:'发票客户',width:100,editor:'text'},
+				     {field:'fpdq',title:'发票地区',width:150,editor:'text',formatter:fpdqFormatter},
+		             {field:'fpkh',title:'发票客户',width:100,editor:'text',formatter:fpkhFormatter},
 		             {field:'kprq',title:'开票日期',width:100,editor:'text',formatter:dateFormatter},
 		             {field:'fpzl',title:'发票种类',width:100,editor:'text',formatter:formatFpzl},
 			         {field:'fpdm',title:'发票代码',width:100,editor:'text'}, 
 		             {field:'fphm',title:'发票号码',width:100,editor:'text'},
-		             {field:'ttlx',title:'抬头类型',width:100,editor:'text'},
+		             {field:'ttlx',title:'抬头类型',width:100,editor:'text',formatter:formatTtlx},
 			         {field:'gfmc',title:'购方名称',width:100,editor:'text'},
 		             {field:'fpnr',title:'发票内容',width:100,editor:'text'},
-			         {field:'bz',title:'备注',width:100,editor:'text'},
+			         {field:'bz',title:'发票备注',width:100,editor:'text'},
 		             {field:'bszt',title:'报送状态',width:100,editor:'text'},
 			         {field:'fpzt',title:'发票状态',width:100,editor:'text'},
 			         {field:'hjje',title:'合计金额',width:100,editor:'text'},
@@ -149,6 +136,34 @@ function formatKplx(value,row,index){
 		return "红字发票";
 	} else {
 		return "蓝字发票";
+	}
+}
+function fpdqFormatter(value,row,index){
+	if (value=="00"){
+		return "北京";
+	} else if(value=="01") {
+		return "上海";
+	}
+}
+function fpkhFormatter(value,row,index){
+	if (value=="00"){
+		return "B2B";
+	} else if(value=="01") {
+		return "B2C";
+	}
+}
+function formatSqrk(value,row,index){
+	if (value=="00"){
+		return "前台";
+	} else if(value=="01") {
+		return "后台";
+	}
+}
+function formatTtlx(value,row,index){
+	if (value=="00"){
+		return "个人";
+	} else if(value=="01") {
+		return "公司";
 	}
 }
 /**
@@ -185,8 +200,7 @@ function searchfpList(){
 	$('#dateE4save').val($('#dateE4q').val());
 	$('#kpdq4save').val($('#kpdq4q').val());
 	$('#fpzl4save').val($('#fpzl4q').val());
-	$('#fplx4save').val($('#fplx4q').val());
-	$('#fptt4save').val($('#fptt4q').val());
+	$('#fphm4save').val($('#fphm4q').val());
 	var qParams = form2Json('searchForm');
 	$("#datagrid").datagrid("load", qParams);
 }

@@ -179,7 +179,11 @@ public class ReportUtil {
 			cell = row.createCell(b++);
 			cell.setCellValue(report.getHyid()); //学员ID
 			cell = row.createCell(b++);
-			cell.setCellValue(report.getFpdq()); //地区
+			if("00".equals(report.getFpdq())){
+				cell.setCellValue("北京");  //发票地区
+			}else if("01".equals(report.getFpdq())){
+				cell.setCellValue("上海");  //发票地区
+			}
 			cell = row.createCell(b++);
 			cell.setCellValue(report.getDdsj()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getDdsj()):"");    //订单时间
 			cell = row.createCell(b++);
@@ -193,9 +197,19 @@ public class ReportUtil {
 			cell = row.createCell(b++);
 			cell.setCellValue(report.getBzfp());  //发票备注
 			cell = row.createCell(b++);
-			cell.setCellValue(report.getFplx());  //发票种类
+			if("004".equals(report.getFplx())){
+				cell.setCellValue("专票");  //发票种类
+			}else if ("007".equals(report.getFplx())){
+				cell.setCellValue("普票");  //发票种类
+			}else if ("026".equals(report.getFplx())){
+				cell.setCellValue("电子发票");  //发票种类
+			}
 			cell = row.createCell(b++);
-			cell.setCellValue(report.getSqrk());  //申请入口
+			if("00".equals(report.getSqrk())){
+				cell.setCellValue("前台");  //申请入口
+			}else if ("01".equals(report.getSqrk())){
+				cell.setCellValue("后台");  //申请入口
+			}
 			if("004".equals(fplx)){
 				cell = row.createCell(b++);
 				cell.setCellValue(report.getGmfnsrsbh());  //购方纳税人识别号
@@ -243,77 +257,89 @@ public class ReportUtil {
 		HSSFWorkbook wb = new HSSFWorkbook();//excel文档
 		HSSFSheet sheet = wb.createSheet("发票统计");//工作薄
 		HSSFRow  row = sheet.createRow(0);
-		HSSFCell cell = row.createCell(0);
+		int a =0;
+		HSSFCell cell = row.createCell(a++);
 		cell.setCellValue("发票地区");
-		cell = row.createCell(1);
+		cell = row.createCell(a++);
 		cell.setCellValue("发票客户");
-		cell = row.createCell(2);
+		cell = row.createCell(a++);
 		cell.setCellValue("开票日期");
-		cell = row.createCell(3);
+		cell = row.createCell(a++);
 		cell.setCellValue("发票种类");
-		cell = row.createCell(4);
+		cell = row.createCell(a++);
 		cell.setCellValue("发票代码");
-		cell = row.createCell(5);
+		cell = row.createCell(a++);
 		cell.setCellValue("发票号码");
-		cell = row.createCell(6);
+		cell = row.createCell(a++);
 		cell.setCellValue("抬头类型");
-		cell = row.createCell(7);
+		cell = row.createCell(a++);
 		cell.setCellValue("购方名称");
-		cell = row.createCell(8);
+		cell = row.createCell(a++);
 		cell.setCellValue("发票内容");
-		cell = row.createCell(9);
+		cell = row.createCell(a++);
 		cell.setCellValue("备注");
-		cell = row.createCell(10);
+		cell = row.createCell(a++);
 		cell.setCellValue("报送状态");
-		cell = row.createCell(11);
+		cell = row.createCell(a++);
 		cell.setCellValue("发票状态");
-		cell = row.createCell(12);
+		cell = row.createCell(a++);
 		cell.setCellValue("合计金额");
-		cell = row.createCell(13);
+		cell = row.createCell(a++);
 		cell.setCellValue("合计税额");
-		cell = row.createCell(14);
+		cell = row.createCell(a++);
 		cell.setCellValue("价税合计");
 		
 		for(int i=0 ; i<reportList.size() ; i++){
 			ReportTotal  report = reportList.get(i) ;
 			row = sheet.createRow(i+1);
-//			cell = row.createCell(0);
-//			cell.setCellValue(i+1);  //序号
-			cell = row.createCell(0);
-			cell.setCellValue(report.getFpdq());  //发票地区
-			cell = row.createCell(1);
-			cell.setCellValue(report.getFpkh());  //发票客户
-			cell = row.createCell(2);
-			cell.setCellValue(report.getKprq()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getKprq()):"");  //开票日期
-			cell = row.createCell(3);
-			if("004".equals(report.getFpzl())){
-				cell.setCellValue("增值税专用发票");  //发票种类
-			}else if ("007".equals(report.getFpzl())){
-				cell.setCellValue("增值税普通发票");  //发票种类
-			}else if ("026".equals(report.getFpzl())){
-				cell.setCellValue("增值税电子发票");  //发票种类
+			int b = 0;
+			cell = row.createCell(b++);
+			if("00".equals(report.getFpdq())){
+				cell.setCellValue("北京");  //发票地区
+			}else if("01".equals(report.getFpdq())){
+				cell.setCellValue("上海");  //发票地区
 			}
-			cell = row.createCell(4);
+			cell = row.createCell(b++);
+			if("00".equals(report.getFpkh())){
+				cell.setCellValue("B2B");  //发票客户
+			}else if("01".equals(report.getFpkh())){
+				cell.setCellValue("B2C");  //发票客户
+			}
+			cell = row.createCell(b++);
+			cell.setCellValue(report.getKprq()!=null?new SimpleDateFormat("yyyy-MM-dd").format(report.getKprq()):"");  //开票日期
+			cell = row.createCell(b++);
+			if("004".equals(report.getFpzl())){
+				cell.setCellValue("专票");  //发票种类
+			}else if ("007".equals(report.getFpzl())){
+				cell.setCellValue("普票");  //发票种类
+			}else if ("026".equals(report.getFpzl())){
+				cell.setCellValue("电子发票");  //发票种类
+			}
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getFpdm()); //发票代码
-			cell = row.createCell(5);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getFphm());   //发票号码
-			cell = row.createCell(6);
-			cell.setCellValue(report.getTtlx());  //抬头类型
-			cell = row.createCell(7);
+			cell = row.createCell(b++);
+			if("00".equals(report.getTtlx())){
+				cell.setCellValue("个人");  //抬头类型
+			}else if("01".equals(report.getTtlx())){
+				cell.setCellValue("公司");  //抬头类型
+			}
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getGfmc());  //购方名称
-			cell = row.createCell(8);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getFpnr());  //发票内容
-			cell = row.createCell(9);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getBz());  //备注
-			cell = row.createCell(10);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getBszt());//报送状态
-			cell = row.createCell(11);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getFpzt());//发票状态
-			cell = row.createCell(12);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getHjje());//合计金额
-			cell = row.createCell(13);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getHjse());//合计税额
-			cell = row.createCell(14);
+			cell = row.createCell(b++);
 			cell.setCellValue(report.getJshj());//价税合计
 			
 		}

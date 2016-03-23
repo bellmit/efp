@@ -144,25 +144,17 @@ public class ReportController implements ServletConfigAware {
 	@ResponseBody
 	public Map<String, Object> queryStatReport(HttpServletRequest request,int page, int rows){
 		//获取查询条件
-		String fplx4q = request.getParameter("fplx4q");
 		String kpdq4q = request.getParameter("kpdq4q");
 		String fpzl4q = request.getParameter("fpzl4q");
-		String fptt4q = request.getParameter("fptt4q");
+		String fphm4q = request.getParameter("fphm4q");
 		String dateS = request.getParameter("beginDate");
 		String dateE = request.getParameter("endDate");
-		request.setAttribute("fplx4save", fplx4q);
-		request.setAttribute("kpdq4save", kpdq4q);
-		request.setAttribute("fpzl4save", fpzl4q);
-		request.setAttribute("fptt4save", fptt4q);
-		request.setAttribute("dateS4save", dateS);
-		request.setAttribute("dateE4save", dateE);
 		Map<String, Object> condition = new HashMap<>();
 		condition.put("dateS", dateS);
 		condition.put("dateE", dateE);
-		condition.put("fplx4q", fplx4q);
 		condition.put("kpdq4q", kpdq4q);
 		condition.put("fpzl4q", fpzl4q);
-		condition.put("fptt4q", fptt4q);
+		condition.put("fphm4q", fphm4q);
 		User user = (User)request.getSession().getAttribute("user");
 		condition.put("nsrsbh", user.getNsrsbh());
 		condition.put("startRow",  (page-1)*rows);
@@ -191,19 +183,15 @@ public class ReportController implements ServletConfigAware {
 			//获取查询条件
 			String dateS = request.getParameter("dateS4save");
 			String dateE = request.getParameter("dateE4save");
-			String ddh4q = request.getParameter("ddh4save");
-			String fplx4q = request.getParameter("fplx4save");
 			String kpdq4q = request.getParameter("kpdq4save");
 			String fpzl4q = request.getParameter("fpzl4save");
-			String fptt4q = request.getParameter("fptt4save");
+			String fphm4q = request.getParameter("fphm4save");
 			Map<String, Object> condition = new HashMap<>();
 			condition.put("dateS", dateS);
 			condition.put("dateE", dateE);
-			condition.put("ddh4q", ddh4q);
-			condition.put("fplx4q", fplx4q);
 			condition.put("kpdq4q", kpdq4q);
 			condition.put("fpzl4q", fpzl4q);
-			condition.put("fptt4q", fptt4q);
+			condition.put("fphm4q", fphm4q);
 			User user = (User)request.getSession().getAttribute("user");
 			condition.put("nsrsbh", user.getNsrsbh());
 			list = reportService.getFpListByCondition4e(condition);//查询结果

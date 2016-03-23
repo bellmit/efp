@@ -361,22 +361,27 @@ function initDataGridComponent(){
 				pageList: [10,20,50,100],
 // 				queryParams: qParams,
 				columns:[[
-				     {field:'fpqqlsh',title:'流水号',width:150,editor:'text'},
-				     {field:'zddh',title:'订单号',width:150,editor:'text'},
-		             {field:'hym',title:'会员名',width:100,editor:'text'},
-		             {field:'hyid',title:'学员ID',width:100,editor:'text'},
-			         {field:'shr',title:'收货人',width:100,editor:'text'}, 
-		             {field:'shrdh',title:'收货人电话',width:100,editor:'text'},
-		             {field:'sqsj',title:'申请时间',width:100,editor:'text',formatter:dateFormatter},
-			         {field:'gmfmc',title:'发票抬头',width:100,editor:'text'},
-		             {field:'spzl',title:'发票内容',width:100,editor:'text'},
-			         {field:'hjje',title:'合计金额',width:100,editor:'text'},
-		             {field:'hjse',title:'合计税额',width:100,editor:'text'},
-			         {field:'jshj',title:'价税合计',width:100,editor:'text'},
-			         {field:'kplx',title:'发票状态',width:100,editor:'text',formatter:formatKplx},
-		             {field:'kprq',title:'开票日期',width:100,editor:'text',formatter:dateFormatter},
-		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
-		             {field:'fphm',title:'发票号码',width:100,editor:'text'}
+					{field:'fpqqlsh',title:'流水号',width:150,editor:'text'},
+					{field:'ddh',title:'订单号',width:150,editor:'text'},
+					{field:'hyid',title:'学员ID',width:100,editor:'text'},
+					{field:'fpdq',title:'地区',width:100,editor:'text',formatter:fpdqFormatter},
+					{field:'ddsj',title:'订单时间',width:100,editor:'text',formatter:dateFormatter}, 
+					{field:'fksj',title:'付款时间',width:100,editor:'text',formatter:dateFormatter}, 
+					{field:'sqsj',title:'发票申请时间',width:100,editor:'text',formatter:dateFormatter},
+					{field:'fptt',title:'发票抬头',width:100,editor:'text'},
+					{field:'xmmc',title:'发票内容',width:100,editor:'text'},
+					{field:'bzfp',title:'发票备注',width:100,editor:'text'},
+					{field:'fplx',title:'发票种类',width:100,editor:'text',formatter:formatFpzl},
+					{field:'sqrk',title:'申请入口',width:100,editor:'text',formatter:formatSqrk},
+					{field:'shr',title:'收货人',width:100,editor:'text'},
+					{field:'shrdh',title:'收货人电话',width:100,editor:'text'},
+					{field:'jsdz',title:'寄送地址',width:100,editor:'text'},
+		            {field:'jshj',title:'价税合计',width:100,editor:'text'},
+					{field:'hjje',title:'合计金额',width:100,editor:'text'},
+		            {field:'hjse',title:'合计税额',width:100,editor:'text'},
+		            {field:'kprq',title:'开票日期',width:100,editor:'text'},
+					{field:'fpdm',title:'发票代码',width:100,editor:'text'},
+					{field:'fphm',title:'发票号码',width:100,editor:'text'}
 				]],
 				onClickRow:function(index){	
 					
@@ -388,7 +393,15 @@ function initDataGridComponent(){
 	
 }
 
-
+function formatFpzl(value,row,index){
+	if (value=="004"){
+		return "专票";
+	} else if(value=="007") {
+		return "普票";
+	} else if(value=="026") {
+		return "电子发票";
+	} 
+}
 
 /**
  * 开票类型
@@ -398,6 +411,20 @@ function formatKplx(value,row,index){
 		return "红字发票";
 	} else {
 		return "蓝字发票";
+	}
+}
+function fpdqFormatter(value,row,index){
+	if (value=="00"){
+		return "北京";
+	} else if(value=="01") {
+		return "上海";
+	}
+}
+function formatSqrk(value,row,index){
+	if (value=="00"){
+		return "前台";
+	} else if(value=="01") {
+		return "后台";
 	}
 }
 function dateFormatter(value) {

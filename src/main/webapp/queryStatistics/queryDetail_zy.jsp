@@ -98,7 +98,7 @@ function initDataGridComponent(){
 		             {field:'hyid',title:'学员ID',width:100,editor:'text'},
 		             {field:'fpdq',title:'地区',width:100,editor:'text',formatter:fpdqFormatter},
 			         {field:'ddsj',title:'订单时间',width:100,editor:'text',formatter:dateFormatter}, 
-			         {field:'kfsj',title:'付款时间',width:100,editor:'text',formatter:dateFormatter}, 
+			         {field:'fksj',title:'付款时间',width:100,editor:'text',formatter:dateFormatter}, 
 		             {field:'sqsj',title:'发票申请时间',width:100,editor:'text',formatter:dateFormatter},
 		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
 			         {field:'xmmc',title:'发票内容',width:100,editor:'text'},

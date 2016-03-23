@@ -411,10 +411,11 @@
     GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
   </select>
 <!-- 普通发票作废-查询 -->   
-  <select id="getPlainList4zf" resultMap="QueryMap4zf" parameterType="map" >
-	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
-	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
-	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.fplx = '007' 
+  <select id="getPlainList4zf" resultType="java.util.HashMap" parameterType="map" >
+	select 
+	k.fpqqlsh,o.zddh as ddh,o.hyid,o.fpdq, o.ddsj,o.fksj, o.sqsj, o.fptt,f.xmmc,o.bzfp, k.fplx,o.sqrk,
+	o.shr,o.shrdh,o.jsdz,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '007' 
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -431,7 +432,7 @@
      and k.fphm like CONCAT('%',#{fphm4q },'%' )
     </if>
     <if test="ddh4q != null and ddh4q != '' " >
-     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+     and o.zddh like CONCAT('%',#{ddh4q },'%' )
     </if>
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
@@ -443,10 +444,11 @@
   </select>
   
 <!-- 专用发票作废-查询 -->    
-  <select id="getSpecialList4zf" resultMap="QueryMap4zf" parameterType="map" >
-	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
-	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
-	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.fplx = '004'  
+  <select id="getSpecialList4zf" resultType="java.util.HashMap" parameterType="map" >
+	select 
+	k.fpqqlsh,o.zddh as ddh,o.hyid,o.fpdq, o.ddsj,o.fksj, o.sqsj, o.fptt,f.xmmc,o.bzfp, k.fplx,o.sqrk,
+	k.gmfnsrsbh,k.gmfyhzh,CONCAT(k.gmfdz,gmfdh) as gfdzdh,o.shr,o.shrdh,o.jsdz,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '004'  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -463,7 +465,7 @@
      and k.fphm like CONCAT('%',#{fphm4q },'%' )
     </if>
     <if test="ddh4q != null and ddh4q != '' " >
-     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+     and o.zddh like CONCAT('%',#{ddh4q },'%' )
     </if>
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
@@ -476,7 +478,7 @@
 <!-- 普通发票作废-查询总数 -->    
   <select id="getPlainList4zfCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
-	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.fplx = '007'  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '007'  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -493,7 +495,7 @@
      and k.fphm like CONCAT('%',#{fphm4q },'%' )
     </if>
     <if test="ddh4q != null and ddh4q != '' " >
-     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+     and o.zddh like CONCAT('%',#{ddh4q },'%' )
     </if>
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
@@ -502,7 +504,7 @@
 <!-- 专用发票作废-查询总数 -->    
   <select id="getSpecialList4zfCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
-	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.fplx = '004'  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '004'  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -519,17 +521,18 @@
      and k.fphm like CONCAT('%',#{fphm4q },'%' )
     </if>
     <if test="ddh4q != null and ddh4q != '' " >
-     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+     and o.zddh like CONCAT('%',#{ddh4q },'%' )
     </if>
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
     </if>
   </select>
   <!-- 普通发票冲红-查询 -->   
-  <select id="getPlainList4ch" resultMap="QueryMap4zf" parameterType="map" >
-	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
-	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
-	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.fplx = '007' and k.hjje>0  
+  <select id="getPlainList4ch" resultType="java.util.HashMap" parameterType="map" >
+	select 
+	k.fpqqlsh,o.zddh as ddh,o.hyid,o.fpdq, o.ddsj,o.fksj, o.sqsj, o.fptt,f.xmmc,o.bzfp, k.fplx,o.sqrk,
+	o.shr,o.shrdh,o.jsdz,k.hjje,k.hjse,k.jshj,k.kprq,k.fpdm,k.fphm
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '007' and k.hjje>0
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -546,7 +549,7 @@
      and k.fphm like CONCAT('%',#{fphm4q },'%' )
     </if>
     <if test="ddh4q != null and ddh4q != '' " >
-     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+     and o.zddh like CONCAT('%',#{ddh4q },'%' )
     </if>
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
@@ -558,8 +561,8 @@
   </select>
   
 <!-- 专用发票冲红-查询 -->    
-  <select id="getSpecialList4ch" resultMap="QueryMap4zf" parameterType="map" >
-	select k.fpqqlsh,k.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
+  <select id="getSpecialList4ch" resultType="java.util.HashMap" parameterType="map" >
+	select k.fpqqlsh,o.zddh,k.fddh,o.hym,o.hyid,o.shr,o.shrdh,o.sqsj,
 	k.gmfmc,o.spzl,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
 	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.fplx = '004' and k.hjje>0  
 	<if test="nsrsbh != null and nsrsbh != '' " >
@@ -578,7 +581,7 @@
      and k.fphm like CONCAT('%',#{fphm4q },'%' )
     </if>
     <if test="ddh4q != null and ddh4q != '' " >
-     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+     and o.zddh like CONCAT('%',#{ddh4q },'%' )
     </if>
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
@@ -591,7 +594,7 @@
 <!-- 普通发票冲红-查询总数 -->    
   <select id="getPlainList4chCount" resultType="java.lang.Integer" parameterType="map" >
 	select count(*)
-	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh where k.fpzt = '3' and k.fplx = '007' and k.hjje>0  
+	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '007' and k.hjje>0  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -608,7 +611,7 @@
      and k.fphm like CONCAT('%',#{fphm4q },'%' )
     </if>
     <if test="ddh4q != null and ddh4q != '' " >
-     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+     and o.zddh like CONCAT('%',#{ddh4q },'%' )
     </if>
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
@@ -634,7 +637,7 @@
      and k.fphm like CONCAT('%',#{fphm4q },'%' )
     </if>
     <if test="ddh4q != null and ddh4q != '' " >
-     and k.zddh like CONCAT('%',#{ddh4q },'%' )
+     and o.zddh like CONCAT('%',#{ddh4q },'%' )
     </if>
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
