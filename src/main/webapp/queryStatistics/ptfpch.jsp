@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui.css"/>
 <script type="text/javascript" src="<%=basePath %>/js/jquery/easyui-lang-zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui_global.css"/>
+<script type="text/javascript" src="../js/format.js"></script>
 <OBJECT ID=sk CLASSID="clsid:003BD8F2-A6C3-48EF-9B72-ECFD8FC4D49F"
 	codebase="NISEC_SKSCX.ocx#version=1,0,0,1" style="display: none;"> </OBJECT>
 </head>
@@ -362,15 +363,15 @@ function initDataGridComponent(){
 // 				queryParams: qParams,
 				columns:[[
 					{field:'fpqqlsh',title:'流水号',width:150,editor:'text'},
-					{field:'ddh',title:'订单号',width:150,editor:'text'},
+					{field:'ddh',title:'订单号',width:150,editor:'text',formatter: formatArray},
 					{field:'hyid',title:'学员ID',width:100,editor:'text'},
 					{field:'fpdq',title:'地区',width:100,editor:'text',formatter:fpdqFormatter},
-					{field:'ddsj',title:'订单时间',width:100,editor:'text',formatter:dateFormatter}, 
-					{field:'fksj',title:'付款时间',width:100,editor:'text',formatter:dateFormatter}, 
+					{field:'ddsj',title:'订单时间',width:100,editor:'text',formatter: formatArrayTime}, 
+					{field:'fksj',title:'付款时间',width:100,editor:'text',formatter: formatArrayTime}, 
 					{field:'sqsj',title:'发票申请时间',width:100,editor:'text',formatter:dateFormatter},
 					{field:'fptt',title:'发票抬头',width:100,editor:'text'},
 					{field:'xmmc',title:'发票内容',width:100,editor:'text'},
-					{field:'bzfp',title:'发票备注',width:100,editor:'text'},
+					{field:'bzfp',title:'发票备注',width:100,editor:'text',formatter: formatArray},
 					{field:'fplx',title:'发票种类',width:100,editor:'text',formatter:formatFpzl},
 					{field:'sqrk',title:'申请入口',width:100,editor:'text',formatter:formatSqrk},
 					{field:'shr',title:'收货人',width:100,editor:'text'},

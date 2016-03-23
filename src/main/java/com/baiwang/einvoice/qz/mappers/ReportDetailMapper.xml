@@ -46,7 +46,7 @@
     <result column="fpjd" property="fpjd" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="report_Column_List" >
-    k.fpqqlsh,o.zddh,o.hyid,o.fpdq, o.ddsj,o.fksj, o.sqsj, o.fptt,f.xmmc,o.bzfp, k.fplx,o.sqrk,k.gmfnsrsbh,k.gmfdh,k.gmfdz,k.gmfyhzh, k.hjje, o.shr, o.shrdh, o.jsdz,
+    k.fpqqlsh,GROUP_CONCAT(o.zddh) as zddh,o.hyid,o.fpdq, GROUP_CONCAT(o.ddsj) as ddsj,GROUP_CONCAT(o.fksj) as fksj, o.sqsj, o.fptt,GROUP_CONCAT(f.xmmc) as xmmc,GROUP_CONCAT(o.bzfp) as bzfp, k.fplx,o.sqrk,k.gmfnsrsbh,k.gmfdh,k.gmfdz,k.gmfyhzh, k.hjje, o.shr, o.shrdh, o.jsdz,
     k.fphm, o.fhr, o.wlgs, o.wldh,o.yjsj
   </sql>
   <select id="getFpByLSH" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -86,6 +86,7 @@
     <if test="fphm4q != null and fphm4q !=''">
 	   and k.fphm = #{fphm4q,jdbcType=VARCHAR} 
     </if>
+    GROUP BY k.fpqqlsh,o.hyid,o.fpdq,o.sqsj,o.fptt,k.fplx,k.jshj,k.hjse,k.hjje,o.shr,o.shrdh,o.jsdz
     ORDER BY k.kprq
     <if test="startRow != null and rows !=null">
     LIMIT #{startRow},#{rows}

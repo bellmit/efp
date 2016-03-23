@@ -413,7 +413,8 @@
 <!-- 普通发票作废-查询 -->   
   <select id="getPlainList4zf" resultType="java.util.HashMap" parameterType="map" >
 	select 
-	k.fpqqlsh,o.zddh as ddh,o.hyid,o.fpdq, o.ddsj,o.fksj, o.sqsj, o.fptt,f.xmmc,o.bzfp, k.fplx,o.sqrk,
+	k.fpqqlsh,GROUP_CONCAT(o.zddh) as ddh,o.hyid,o.fpdq, GROUP_CONCAT(o.ddsj) as ddsj,GROUP_CONCAT(o.fksj) as fksj,
+	o.sqsj, o.fptt,GROUP_CONCAT(f.xmmc) as xmmc,GROUP_CONCAT(o.bzfp) as bzfp, k.fplx,o.sqrk,
 	o.shr,o.shrdh,o.jsdz,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
 	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '007' 
 	<if test="nsrsbh != null and nsrsbh != '' " >
@@ -437,7 +438,8 @@
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
     </if>
-    ORDER BY k.fphm
+    GROUP BY k.fpqqlsh,o.hyid,o.fpdq,o.sqsj,o.fptt,k.fplx,k.jshj,k.hjse,k.hjje,o.shr,o.shrdh,o.jsdz
+    ORDER BY k.kprq
     <if test="startRow != null and rows !=null">
     LIMIT #{startRow},#{rows}
     </if>
@@ -446,8 +448,9 @@
 <!-- 专用发票作废-查询 -->    
   <select id="getSpecialList4zf" resultType="java.util.HashMap" parameterType="map" >
 	select 
-	k.fpqqlsh,o.zddh as ddh,o.hyid,o.fpdq, o.ddsj,o.fksj, o.sqsj, o.fptt,f.xmmc,o.bzfp, k.fplx,o.sqrk,
-	k.gmfnsrsbh,k.gmfyhzh,CONCAT(k.gmfdz,gmfdh) as gfdzdh,o.shr,o.shrdh,o.jsdz,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
+	k.fpqqlsh,GROUP_CONCAT(o.zddh) as ddh,o.hyid,o.fpdq, GROUP_CONCAT(o.ddsj) as ddsj,GROUP_CONCAT(o.fksj) as fksj,
+	o.sqsj, o.fptt,GROUP_CONCAT(f.xmmc) as xmmc,GROUP_CONCAT(o.bzfp) as bzfp, k.fplx,o.sqrk,
+	k.gmfnsrsbh,k.gmfyhzh,CONCAT(k.gmfdz,k.gmfdh) as gfdzdh,o.shr,o.shrdh,o.jsdz,k.hjje,k.hjse,k.jshj,k.kplx,k.kprq,k.fpdm,k.fphm
 	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '004'  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
@@ -470,7 +473,8 @@
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
     </if>
-    ORDER BY k.fphm
+    GROUP BY k.fpqqlsh,o.hyid,o.fpdq,o.sqsj,o.fptt,k.fplx,k.jshj,k.hjse,k.hjje,o.shr,o.shrdh,o.jsdz
+    ORDER BY k.kprq
     <if test="startRow != null and rows !=null">
     LIMIT #{startRow},#{rows}
     </if>
@@ -530,7 +534,8 @@
   <!-- 普通发票冲红-查询 -->   
   <select id="getPlainList4ch" resultType="java.util.HashMap" parameterType="map" >
 	select 
-	k.fpqqlsh,o.zddh as ddh,o.hyid,o.fpdq, o.ddsj,o.fksj, o.sqsj, o.fptt,f.xmmc,o.bzfp, k.fplx,o.sqrk,
+	k.fpqqlsh,GROUP_CONCAT(o.zddh) as ddh,o.hyid,o.fpdq, GROUP_CONCAT(o.ddsj) as ddsj,GROUP_CONCAT(o.fksj) as fksj,
+	o.sqsj, o.fptt,GROUP_CONCAT(f.xmmc) as xmmc,GROUP_CONCAT(o.bzfp) as bzfp, k.fplx,o.sqrk,
 	o.shr,o.shrdh,o.jsdz,k.hjje,k.hjse,k.jshj,k.kprq,k.fpdm,k.fphm
 	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh  LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt = '3' and k.fplx = '007' and k.hjje>0
 	<if test="nsrsbh != null and nsrsbh != '' " >
@@ -554,7 +559,8 @@
     <if test="sjh4q != null and sjh4q != '' " >
      and o.shrdh like CONCAT('%',#{sjh4q },'%' )
     </if>
-    ORDER BY k.fphm
+    GROUP BY k.fpqqlsh,o.hyid,o.fpdq,o.sqsj,o.fptt,k.fplx,k.jshj,k.hjse,k.hjje,o.shr,o.shrdh,o.jsdz
+    ORDER BY k.kprq
     <if test="startRow != null and rows !=null">
     LIMIT #{startRow},#{rows}
     </if>
