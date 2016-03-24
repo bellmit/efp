@@ -40,6 +40,9 @@ function formatsqrk(value,row,index){
 }
 
 function formatArray(value,row,index){
+	if(value == null){
+		return '';
+	}
 	var arr = value.split(",");
 	var result ="";
 	if(arr.length>1){
@@ -53,6 +56,9 @@ function formatArray(value,row,index){
 }
 
 function formatArrayTime(value,row,index){
+	if(value == null){
+		return '';
+	}
 	var arr = value.split(",");
 	var result ="";
 	if(arr.length>1){

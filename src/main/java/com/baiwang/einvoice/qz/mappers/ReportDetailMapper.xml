@@ -69,10 +69,10 @@
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
     <if test="dateS != null and dateS !=''">
-	   <![CDATA[and k.kprq >= #{dateS} ]]>
+	   <![CDATA[and DATE_FORMAT(k.kprq,'%Y-%m-%d') >= #{dateS} ]]>
     </if>
     <if test="dateE != null and dateE !=''">
-	   <![CDATA[and k.kprq <= #{dateE} ]]>
+	   <![CDATA[and DATE_FORMAT(k.kprq,'%Y-%m-%d') <= #{dateE} ]]>
     </if>
     <if test="ddh4q != null and ddh4q !=''">
 	   and o.zddh = #{ddh4q,jdbcType=VARCHAR} 
@@ -92,7 +92,7 @@
     LIMIT #{startRow},#{rows}
     </if>
   </select>
-  <select id="getFpStatListByCondition" parameterType="java.util.Map" resultType="map">
+  <select id="getFpStatListByCondition" parameterType="java.util.Map" resultType="com.baiwang.einvoice.qz.beans.ReportTotal">
   	select 
   	o.fpqqlsh,o.fpdq,o.fpkhlx as fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,o.fpttlx as ttlx,k.gmfmc as gfmc,f.xmmc as fpnr,o.bzfp as bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd
     from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt in('3','-2')  
@@ -100,10 +100,10 @@
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
     <if test="dateS != null and dateS !=''">
-	   <![CDATA[and k.kprq >= #{dateS} ]]>
+	   <![CDATA[and DATE_FORMAT(k.kprq,'%Y-%m-%d') >= #{dateS} ]]>
     </if>
     <if test="dateE != null and dateE !=''">
-	   <![CDATA[and k.kprq <= #{dateE} ]]>
+	   <![CDATA[and DATE_FORMAT(k.kprq,'%Y-%m-%d') <= #{dateE} ]]>
     </if>
     <if test="kpdq4q != null and kpdq4q !=''">
 	   and o.fpdq = #{kpdq4q,jdbcType=VARCHAR} 
@@ -129,10 +129,10 @@
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
     <if test="dateS != null and dateS !=''">
-	   <![CDATA[and k.kprq >= #{dateS} ]]>
+	   <![CDATA[and DATE_FORMAT(k.kprq,'%Y-%m-%d') >= #{dateS} ]]>
     </if>
     <if test="dateE != null and dateE !=''">
-	   <![CDATA[and k.kprq <= #{dateE} ]]>
+	   <![CDATA[and DATE_FORMAT(k.kprq,'%Y-%m-%d') <= #{dateE} ]]>
     </if>
     <if test="ddh4q != null and ddh4q !=''">
 	   and o.zddh = #{ddh4q,jdbcType=VARCHAR} 
@@ -153,10 +153,10 @@
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
     <if test="dateS != null and dateS !=''">
-	   <![CDATA[and k.kprq >= #{dateS} ]]>
+	   <![CDATA[and DATE_FORMAT(k.kprq,'%Y-%m-%d') >= #{dateS} ]]>
     </if>
     <if test="dateE != null and dateE !=''">
-	   <![CDATA[and k.kprq <= #{dateE} ]]>
+	   <![CDATA[and DATE_FORMAT(k.kprq,'%Y-%m-%d') <= #{dateE} ]]>
     </if>
     <if test="kpdq4q != null and kpdq4q !=''">
 	   and o.fpdq = #{kpdq4q,jdbcType=VARCHAR} 

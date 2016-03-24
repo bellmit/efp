@@ -24,59 +24,57 @@ getParameter();
 function concelFp(){
 	var row = datagrid.datagrid('getSelected');
 	if(row ==null || row == ''){
-		alert('请选择一条记录进行操作!');
+		window.parent.$.messager.alert('消息','请选择一项进行作废!');
 		return;
 	}
-	window.parent.$.messager.confirm("操作提示", "发票号码："+row.fphm+"；确定要作废此发票吗？", function (data) {  
-        if (!data) { 
-        	return;
-        }
-    })
-	
-	$.ajax({
-		type:"GET",
-        url: "<%=basePath %>/einvoice/ptfpzf",
-        data: {'lsh':row.fpqqlsh},
-        async: false,
-        success: function (data) {
-        	var kpxx = data.kpxx;
-//         	var skconfig = data.skconf;
-        	var setResult = SetParameter(skconfig.aqm,skconfig.keypwd,skconfig.url,skconfig.port);
-        	if(setResult){
-	        	var sInvoiceVoidInfo = 
-	        		"<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"10009\" comment=\"发票作废\">\r\n<body yylxdm=\"1\">\r\n<kpzdbs>"+skconfig.kpzdbs+"</kpzdbs>\r\n<fplxdm>"+kpxx.fplx+"</fplxdm>\r\n<zflx>1</zflx>\r\n<fpdm>"+kpxx.fpdm+"</fpdm>\r\n<fphm>"+kpxx.fphm+"</fphm>\r\n<hjje>"+kpxx.hjje+"</hjje>\r\n<zfr>"+kpxx.kpr+"</zfr>\r\n</body>\r\n</business>";		
-	        	try {
-	        		invoiceVoidRet = sk.Operate(sInvoiceVoidInfo);
-	        		/* var pos=ret.indexOf("<returncode>"); */
-	        		var invoiceVoidRetReturncode = getTotalMidValue(invoiceVoidRet, "<returncode>","</returncode>");
-	        		var invoiceVoidRetReturnmsg = getTotalMidValue(invoiceVoidRet, "<returnmsg>","</returnmsg>");	
-	        		if(invoiceVoidRetReturncode==0&&invoiceVoidRetReturnmsg=="成功"){
-	        			$.post('<%=basePath %>/einvoice/updateFpzt2zf',{'lsh':row.fpqqlsh},function(text,status){
-	        				if(text == 0){
-	        					alert('操作成功！');
-	        					searchfpList();
-	        				}else{
-	        					alert('发票作废操作成功，但更新发票状态时发生异常！');
-	        				}
-	        				
-	        			})
-	        		}else{
-	        			alert("发票领购信息核对失败，失败原因："+invoiceVoidRetReturnmsg);
-	        		}
-	        	} catch (e) {
-	        		alert(e.message + ",errno:" + e.number);
-	        	}
-        	}
-        	
-        },
-        error:function(XMLHttpRequest, textStatus, errorThrown) {
-        	if(XMLHttpRequest.responseText=="timeOut"){
-        		location.reload();
-        	}else{
-        		alert("Error");
-        	}
-        }
-	});
+	window.parent.$.messager.confirm("操作提示", "发票号码："+row.fphm+"；确定要作废此发票吗？", function (data) {
+		if(data){
+			$.ajax({
+				type:"GET",
+		        url: "<%=basePath %>/einvoice/ptfpzf",
+		        data: {'lsh':row.fpqqlsh},
+		        async: false,
+		        success: function (data) {
+		        	var kpxx = data.kpxx;
+		//         	var skconfig = data.skconf;
+		        	var setResult = SetParameter(skconfig.aqm,skconfig.keypwd,skconfig.url,skconfig.port);
+		        	if(setResult){
+			        	var sInvoiceVoidInfo = 
+			        		"<?xml version=\"1.0\" encoding=\"gbk\"?>\r\n<business id=\"10009\" comment=\"发票作废\">\r\n<body yylxdm=\"1\">\r\n<kpzdbs>"+skconfig.kpzdbs+"</kpzdbs>\r\n<fplxdm>"+kpxx.fplx+"</fplxdm>\r\n<zflx>1</zflx>\r\n<fpdm>"+kpxx.fpdm+"</fpdm>\r\n<fphm>"+kpxx.fphm+"</fphm>\r\n<hjje>"+kpxx.hjje+"</hjje>\r\n<zfr>"+kpxx.kpr+"</zfr>\r\n</body>\r\n</business>";		
+			        	try {
+			        		invoiceVoidRet = sk.Operate(sInvoiceVoidInfo);
+			        		/* var pos=ret.indexOf("<returncode>"); */
+			        		var invoiceVoidRetReturncode = getTotalMidValue(invoiceVoidRet, "<returncode>","</returncode>");
+			        		var invoiceVoidRetReturnmsg = getTotalMidValue(invoiceVoidRet, "<returnmsg>","</returnmsg>");	
+			        		if(invoiceVoidRetReturncode==0&&invoiceVoidRetReturnmsg=="成功"){
+			        			$.post('<%=basePath %>/einvoice/updateFpzt2zf',{'lsh':row.fpqqlsh},function(text,status){
+			        				if(text == 0){
+			        					alert('操作成功！');
+			        					searchfpList();
+			        				}else{
+			        					alert('发票作废操作成功，但更新发票状态时发生异常！');
+			        				}
+			        				
+			        			})
+			        		}else{
+			        			alert("发票领购信息核对失败，失败原因："+invoiceVoidRetReturnmsg);
+			        		}
+			        	} catch (e) {
+			        		alert(e.message + ",errno:" + e.number);
+			        	}
+		        	}
+		        	
+		        },
+		        error:function(XMLHttpRequest, textStatus, errorThrown) {
+		        	if(XMLHttpRequest.responseText=="timeOut"){
+		        		location.reload();
+		        	}else{
+		        		alert("Error");
+		        	}
+		        }
+			});
+		}
+	})
 }
 function getParameter(){
 	var params = {'fplx' : '004'};
@@ -328,4 +326,5 @@ Date.prototype.format = function (fmt) { //author: meizz
     return fmt;
 }
 </script>
+<script type="text/javascript" src="../js/downloadocx.js"></script>
 </html>

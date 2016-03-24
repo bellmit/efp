@@ -271,31 +271,30 @@ function chFp(){
 	var row = datagrid.datagrid('getSelected');
 	var xml;
 	if(row ==null || row == ''){
-		alert('请选择一条记录进行操作!');
+		window.parent.$.messager.alert('消息','请选择一项进行冲红!');
 		return;
 	}
 	window.parent.$.messager.confirm("操作提示", "发票号码："+row.fphm+"；确定要冲红此发票吗？", function (data) {  
-        if (!data) { 
-        	return;
-        }
-    })
-	if(SetParameter()){
-		$.ajax({
-		        type:"POST",
-		        url:"<%=basePath %>/einvoice/fpch",
-				data:{'fpqqlsh':row.fpqqlsh},
-				async: false,
-				success : function(data) {
-					if(data.status=='success'){
-						xml = data.xml;
-						Kp(xml,row.fpqqlsh);
-					}else if(data.status=='-1'){
-						window.parent.$.messager.alert('消息',data.msg);
-						window.top.location.href="../login/login.html"
-					}
-				}	
-		});
-	}
+		if(data){
+			if(SetParameter()){
+				$.ajax({
+				        type:"POST",
+				        url:"<%=basePath %>/einvoice/fpch",
+						data:{'fpqqlsh':row.fpqqlsh},
+						async: false,
+						success : function(data) {
+							if(data.status=='success'){
+								xml = data.xml;
+								Kp(xml,row.fpqqlsh);
+							}else if(data.status=='-1'){
+								window.parent.$.messager.alert('消息',data.msg);
+								window.top.location.href="../login/login.html"
+							}
+						}	
+				});
+			}
+		}
+	})
 }
 
  
@@ -380,7 +379,7 @@ function initDataGridComponent(){
 		            {field:'jshj',title:'价税合计',width:100,editor:'text'},
 					{field:'hjje',title:'合计金额',width:100,editor:'text'},
 		            {field:'hjse',title:'合计税额',width:100,editor:'text'},
-		            {field:'kprq',title:'开票日期',width:100,editor:'text'},
+		            {field:'kprq',title:'开票日期',width:100,editor:'text',formatter:dateFormatter},
 					{field:'fpdm',title:'发票代码',width:100,editor:'text'},
 					{field:'fphm',title:'发票号码',width:100,editor:'text'}
 				]],
