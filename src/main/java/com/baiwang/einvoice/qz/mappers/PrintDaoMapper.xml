@@ -38,10 +38,10 @@
   LEFT JOIN fpmx c ON  a.fpqqlsh = c.fpqqlsh 
   WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} and a.kplx = '0' 
    <if test="beginDate != null and beginDate!=''" >
-     <![CDATA[and a.kprq  >= #{beginDate} ]]>
+     <![CDATA[and DATE_FORMAT(a.kprq,'%Y-%m-%d')  >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
-     <![CDATA[and a.kprq <= #{endDate} ]]>
+     <![CDATA[and DATE_FORMAT(a.kprq,'%Y-%m-%d') <= #{endDate} ]]>
     </if>
     <if test="hyid != null and hyid !=''" >
      and b.hyid like CONCAT('%',#{hyid },'%' )
@@ -67,10 +67,10 @@
     LEFT JOIN fpmx c ON  a.fpqqlsh = c.fpqqlsh 
     WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} and a.kplx = '0' 
    <if test="beginDate != null and beginDate!=''" >
-     <![CDATA[and a.kprq  >= #{beginDate} ]]>
+     <![CDATA[and DATE_FORMAT(a.kprq,'%Y-%m-%d')  >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
-     <![CDATA[and a.kprq <= #{endDate} ]]>
+     <![CDATA[and DATE_FORMAT(a.kprq,'%Y-%m-%d') <= #{endDate} ]]>
     </if>
     <if test="hyid != null and hyid !=''" >
      and b.hyid like CONCAT('%',#{hyid },'%' )
@@ -100,10 +100,10 @@
   	from kpxx a 
   	WHERE 1=1  and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} and a.kplx = '0' 
   	<if test="beginDate != null and beginDate!=''" >
-     <![CDATA[and a.kprq >= #{beginDate} ]]>
+     <![CDATA[and DATE_FORMAT(a.kprq,'%Y-%m-%d') >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate !=''" >
-     <![CDATA[and a.kprq <= #{endDate} ]]>
+     <![CDATA[and DATE_FORMAT(a.kprq,'%Y-%m-%d') <= #{endDate} ]]>
     </if>
     <if test="beginfphm != null and beginfphm !=''" >
      <![CDATA[and a.fphm >= #{beginfphm} ]]>
