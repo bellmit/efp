@@ -52,6 +52,9 @@ public class ReportController implements ServletConfigAware {
 	@ResponseBody
 	public Map<String, Object> queryReport(HttpServletRequest request,int page, int rows){
 		User user = (User)request.getSession().getAttribute("user");
+		if(null ==user){
+			return null;
+		}
 		//获取查询条件
 		String dateS = request.getParameter("beginDate");
 		String dateE = request.getParameter("endDate");
@@ -81,7 +84,10 @@ public class ReportController implements ServletConfigAware {
 	}
 	@RequestMapping(value="download")
 	public void exportReport(HttpServletRequest request,HttpServletResponse response){
-		
+		User user = (User)request.getSession().getAttribute("user");
+		if(null ==user){
+			return ;
+		}
 		String lshs = request.getParameter("fplshs");
 		String[] lsh4ept=null;
 		if(null != lshs && lshs.trim().length()>0){
@@ -110,7 +116,6 @@ public class ReportController implements ServletConfigAware {
 			condition.put("hyid4q", hyid4q);
 			condition.put("fphm4q", fphm4q);
 			condition.put("fplx", fplx);
-			User user = (User)request.getSession().getAttribute("user");
 			condition.put("nsrsbh", user.getNsrsbh());
 			beanList = reportService.getFpListByCondition4d(condition);//查询结果
 		}
@@ -143,6 +148,10 @@ public class ReportController implements ServletConfigAware {
 	@RequestMapping(value="queryFPstat")
 	@ResponseBody
 	public Map<String, Object> queryStatReport(HttpServletRequest request,int page, int rows){
+		User user = (User)request.getSession().getAttribute("user");
+		if(null ==user){
+			return null;
+		}
 		//获取查询条件
 		String kpdq4q = request.getParameter("kpdq4q");
 		String fpzl4q = request.getParameter("fpzl4q");
@@ -155,7 +164,6 @@ public class ReportController implements ServletConfigAware {
 		condition.put("kpdq4q", kpdq4q);
 		condition.put("fpzl4q", fpzl4q);
 		condition.put("fphm4q", fphm4q);
-		User user = (User)request.getSession().getAttribute("user");
 		condition.put("nsrsbh", user.getNsrsbh());
 		condition.put("startRow",  (page-1)*rows);
 		condition.put("rows", rows);
@@ -169,6 +177,10 @@ public class ReportController implements ServletConfigAware {
 	}
 	@RequestMapping(value="exportExcel")
 	public void exportExcel(HttpServletRequest request,HttpServletResponse response){
+		User user = (User)request.getSession().getAttribute("user");
+		if(null ==user){
+			return;
+		}
 		String lshs = request.getParameter("fplshs");
 		String[] lsh4ept=null;
 		if(null != lshs  && lshs.trim().length()>0){
@@ -192,7 +204,6 @@ public class ReportController implements ServletConfigAware {
 			condition.put("kpdq4q", kpdq4q);
 			condition.put("fpzl4q", fpzl4q);
 			condition.put("fphm4q", fphm4q);
-			User user = (User)request.getSession().getAttribute("user");
 			condition.put("nsrsbh", user.getNsrsbh());
 			list = reportService.getFpListByCondition4e(condition);//查询结果
 		}
