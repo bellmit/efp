@@ -56,7 +56,7 @@
      and b.shrdh = #{shrdh} 
     </if> 
     GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,c.xmmc,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz 
-    ORDER BY a.kprq 
+    order by CAST(a.fphm AS SIGNED) 
   	LIMIT #{requestPage},#{pageSize} 
   </select>
   
@@ -98,7 +98,7 @@
   <select id="getPrintPpsList" parameterType="map" resultMap="QueryPrintPpsMap">
   	select a.fpqqlsh fpqqlsh, a.kprq kprq, a.fphm fphm 
   	from kpxx a 
-  	WHERE 1=1  and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} 
+  	WHERE 1=1  and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} and a.kplx = '0' 
   	<if test="beginDate != null and beginDate!=''" >
      <![CDATA[and a.kprq >= #{beginDate} ]]>
     </if>
@@ -125,7 +125,8 @@
   WHERE 1=1 and a.fpzt = '2' and a.fplx = #{fplx} and a.xsfnsrsbh = #{xsfnsrsbh} and a.kplx = '0' 
   <![CDATA[and a.fphm <= #{end} and a.fphm >= #{begin} ]]>
   GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,c.xmmc,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz 
-  LIMIT #{requestPage},#{pageSize}
+  order by CAST(a.fphm AS SIGNED)
+  LIMIT #{requestPage},#{pageSize} 
   </select>
   
   <select id="queryDetailCount" parameterType="map" resultType="int">
