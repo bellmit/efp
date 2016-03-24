@@ -7,6 +7,7 @@
     <script type="text/javascript" src="./../js/jquery/jquery.js"></script>
     <script type="text/javascript" src="./../js/jquery/jquery.md5.js"></script>
     <script type="text/javascript" src="./../js/jquery/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css"/>
     <script type="text/javascript">
     $(document).ready(function() {
     	/* $.ajax({
@@ -33,11 +34,11 @@
 	        	    $("#myform").serialize(),
 	        	    function(data) {
 	        	        if(data == '4001') {
-	                        alert("用户名或密码输入错误!");
+	        	        	window.parent.$.messager.alert('消息',"用户名或密码输入错误!");
 	                    }else if(data == '4002'){
-	                    	alert("账户未启用!");
+	                    	window.parent.$.messager.alert('消息',"账户未启用!");
 	                    }else if(data == '4003'){
-	                    	alert("非开票员账户!");
+	                    	window.parent.$.messager.alert('消息',"非开票员账户!");
 	                    }else if(data == '8888'){
 	                    	user = $("#userName").val();
 	                        location.href="../qzpt/page/index.html";
