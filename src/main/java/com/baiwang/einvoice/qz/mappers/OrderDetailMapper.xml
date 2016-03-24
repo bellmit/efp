@@ -374,10 +374,10 @@
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
     <if test="hyid != null and hyid != ''" >
-     and b.hyid = like CONCAT('%',#{hyid},'%' )
+     and b.hyid like CONCAT('%',#{hyid},'%' )
     </if>
     <if test="shrdh != null and shrdh != ''" >
-     and b.shrdh = like CONCAT('%',#{shrdh},'%' )
+     and b.shrdh like CONCAT('%',#{shrdh},'%' )
     </if>
     GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
   </select>
@@ -403,10 +403,10 @@
      and b.zddh like CONCAT('%',#{zddh },'%' )
     </if>
     <if test="hyid != null and hyid != ''" >
-     and b.hyid = like CONCAT('%',#{hyid},'%' )
+     and b.hyid like CONCAT('%',#{hyid},'%' )
     </if>
     <if test="shrdh != null and shrdh != ''" >
-     and b.shrdh = like CONCAT('%',#{shrdh},'%' )
+     and b.shrdh like CONCAT('%',#{shrdh},'%' )
     </if>
     GROUP BY a.fpqqlsh,b.hyid,b.fpdq,b.sqsj,b.fptt,a.fplx,a.jshj,a.hjse,a.hjje,b.shr,b.shrdh,b.jsdz
   </select>

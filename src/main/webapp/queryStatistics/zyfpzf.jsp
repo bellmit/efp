@@ -49,18 +49,18 @@ function concelFp(){
 			        		if(invoiceVoidRetReturncode==0&&invoiceVoidRetReturnmsg=="成功"){
 			        			$.post('<%=basePath %>/einvoice/updateFpzt2zf',{'lsh':row.fpqqlsh},function(text,status){
 			        				if(text == 0){
-			        					alert('操作成功！');
+			        					window.parent.$.messager.alert('消息','操作成功！');
 			        					searchfpList();
 			        				}else{
-			        					alert('发票作废操作成功，但更新发票状态时发生异常！');
+			        					window.parent.$.messager.alert('消息','发票作废操作成功，但更新发票状态时发生异常！');
 			        				}
 			        				
 			        			})
 			        		}else{
-			        			alert("发票领购信息核对失败，失败原因："+invoiceVoidRetReturnmsg);
+			        			window.parent.$.messager.alert('消息',"发票领购信息核对失败，失败原因："+invoiceVoidRetReturnmsg);
 			        		}
 			        	} catch (e) {
-			        		alert(e.message + ",errno:" + e.number);
+			        		window.parent.$.messager.alert('消息',e.message + ",errno:" + e.number);
 			        	}
 		        	}
 		        	
@@ -69,7 +69,7 @@ function concelFp(){
 		        	if(XMLHttpRequest.responseText=="timeOut"){
 		        		location.reload();
 		        	}else{
-		        		alert("Error");
+		        		window.parent.$.messager.alert('消息',"Error");
 		        	}
 		        }
 			});
@@ -112,11 +112,11 @@ function SetParameter(aqm,keypwd,ip,port) {
 		if(returncode==0&&returnmsg=="成功"){
 			return true	;
 		}else{
-			alert("参数设置失败，失败原因："+returnmsg);
+			window.parent.$.messager.alert('消息',"参数设置失败，失败原因："+returnmsg);
 			return false ;
 		}
 	} catch (e) {
-		alert(e.message + ",errno:" + e.number);
+		window.parent.$.messager.alert('消息',e.message + ",errno:" + e.number);
 		return false;
 	}
 }
@@ -273,10 +273,10 @@ function print(){
 	var row = datagrid_zp.datagrid('getSelected');
 	
 	if(row ==null || row == ''){
-		alert('请选择一项进行打印!');
+		window.parent.$.messager.alert('消息','请选择一项进行打印!');
 		return;
 	}
-	alert(row.zddh)
+	window.parent.$.messager.alert('消息',row.zddh)
 	
 	if(confirm("确定要打印么？")){
 	 	getParameter();

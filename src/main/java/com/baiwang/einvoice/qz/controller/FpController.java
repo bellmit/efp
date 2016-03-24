@@ -85,6 +85,10 @@ public class FpController {
 	@RequestMapping(value="ptfpzf_q")
 	@ResponseBody
 	public Map<String, Object> queryPtfp(HttpServletRequest request,int page, int rows){
+		User user = (User)request.getSession().getAttribute("user");
+		if(null ==user){
+			return null;
+		}
 		String beginDate = request.getParameter("beginDate");
 		if(null == beginDate) return null;
 		String endDate = request.getParameter("endDate");
@@ -99,7 +103,6 @@ public class FpController {
 		param.put("fphm4q", fphm4q);
 		param.put("ddh4q",ddh4q );
 		param.put("sjh4q",sjh4q );
-		User user = (User)request.getSession().getAttribute("user");
 		param.put("nsrsbh", user.getNsrsbh());
 		param.put("startRow", (page-1)*rows);
 		param.put("rows", rows);
@@ -114,6 +117,10 @@ public class FpController {
 	@RequestMapping(value="zyfpzf_q")
 	@ResponseBody
 	public Map<String, Object> queryZyfp(HttpServletRequest request,int page, int rows){
+		User user = (User)request.getSession().getAttribute("user");
+		if(null ==user){
+			return null;
+		}
 		String beginDate = request.getParameter("beginDate");
 		if(null == beginDate) return null;
 		String endDate = request.getParameter("endDate");
@@ -128,7 +135,6 @@ public class FpController {
 		param.put("fphm4q", fphm4q);
 		param.put("ddh4q",ddh4q );
 		param.put("sjh4q",sjh4q );
-		User user = (User)request.getSession().getAttribute("user");
 		param.put("nsrsbh", user.getNsrsbh());
 		param.put("startRow", (page-1)*rows);
 		param.put("rows", rows);
@@ -183,6 +189,10 @@ public class FpController {
 		@RequestMapping(value="ptfpch_q")
 		@ResponseBody
 		public Map<String, Object> queryPtfp4ch(HttpServletRequest request,int page, int rows){
+			User user = (User)request.getSession().getAttribute("user");
+			if(null ==user){
+				return null;
+			}
 			String beginDate = request.getParameter("beginDate");
 			if(null == beginDate) return null;
 			String endDate = request.getParameter("endDate");
@@ -197,7 +207,6 @@ public class FpController {
 			param.put("fphm4q", fphm4q);
 			param.put("ddh4q",ddh4q );
 			param.put("sjh4q",sjh4q );
-			User user = (User)request.getSession().getAttribute("user");
 			param.put("nsrsbh", user.getNsrsbh());
 			param.put("startRow", (page-1)*rows);
 			param.put("rows", rows);
