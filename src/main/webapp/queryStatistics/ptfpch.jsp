@@ -210,7 +210,7 @@ function savePrintResult(fpqqlsh,fpzt){
         success: function (data) {
         	//alert(JSON.stringify(data))
         	if(data == '1'){
-        		window.parent.$.messager.alert('消息',"打印成功！");
+//         		window.parent.$.messager.alert('消息',"打印成功！");
 //         		searchZpList();
         	}else{
         		window.parent.$.messager.alert('消息',"打印成功,保存失败");
