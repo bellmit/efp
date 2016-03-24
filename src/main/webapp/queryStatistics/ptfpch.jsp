@@ -311,11 +311,11 @@ function Kp(str,fpqqlsh){
 			return true;
 		}else{
 // 			updateStatus(fpqqlsh ,str,resultXml,-1);
-			alert("发票领购信息核对失败，失败原因："+returnmsg);
+			window.parent.$.messager.alert('消息',"发票领购信息核对失败，失败原因："+returnmsg);
 			return false;
 		}
 	} catch (e) {
-			alert(e.message + ",errno:" + e.number);
+		window.parent.$.messager.alert('消息',e.message + ",errno:" + e.number);
 	}
 }
 
@@ -330,14 +330,14 @@ function insertCh(fpqqlsh,resultXml,newLshao,fpdm,fphm){
         	if(data.status == 'success'){
         		print(newLshao,fpdm,fphm);
         	}else{
-        		alert("冲红成功,保存发票信息失败!");
+        		window.parent.$.messager.alert('消息',"冲红成功,保存发票信息失败!");
         	}
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
         	if(XMLHttpRequest.responseText=="timeOut"){
         		window.top.location.reload();
         	}else{
-        		alert("error!冲红成功,保存发票信息失败!");
+        		window.parent.$.messager.alert('消息',"error!冲红成功,保存发票信息失败!");
         	}
         }
 	});
