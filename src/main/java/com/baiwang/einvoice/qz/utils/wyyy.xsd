@@ -1,5 +1,6 @@
-<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by () -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="business">
 		<xs:complexType>
 			<xs:sequence>
@@ -15,111 +16,112 @@
 													<xs:element name="ZDDH">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:minLength value="1"/>
-																<xs:maxLength value="20"/>
+																<xs:minLength value="1" />
+																<xs:maxLength value="20" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="HYID">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:minLength value="1"/>
-																<xs:maxLength value="20"/>
+																<xs:minLength value="1" />
+																<xs:maxLength value="20" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="DDSJ">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:pattern value="([0-9]{4})[-]([0-1]?[0-9]{1})[-]([0-3]?[0-9]{1}).?([0-2]?[0-9](:[0-6][0-9]){2})?"/>
+																<xs:pattern
+																	value="([0-9]{4})[-]([0-1]?[0-9]{1})[-]([0-3]?[0-9]{1}).?([0-2]?[0-9](:[0-6][0-9]){2})?" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="SQSJ">
-													<xs:simpleType>
+														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:pattern value="([0-9]{4})[-]([0-1]?[0-9]{1})[-]([0-3]?[0-9]{1}).?([0-2]?[0-9](:[0-6][0-9]){2})?"/>
+																<xs:pattern
+																	value="([0-9]{4})[-]([0-1]?[0-9]{1})[-]([0-3]?[0-9]{1}).?([0-2]?[0-9](:[0-6][0-9]){2})?" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="FKSJ">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:pattern value="([0-9]{4})[-]([0-1]?[0-9]{1})[-]([0-3]?[0-9]{1}).?([0-2]?[0-9](:[0-6][0-9]){2})?"/>
+																<xs:pattern
+																	value="([0-9]{4})[-]([0-1]?[0-9]{1})[-]([0-3]?[0-9]{1}).?([0-2]?[0-9](:[0-6][0-9]){2})?" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="FPTTLX">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:length value="2"/>
+																<xs:length value="2" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="FPTT">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:minLength value="1"/>
-																<xs:maxLength value="30"/>
+																<xs:minLength value="1" />
+																<xs:maxLength value="30" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="FPKHLX">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:length value="2"/>
+																<xs:length value="2" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="SQRK">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:length value="2"/>
+																<xs:length value="2" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="FPDQ">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:length value="2"/>
+																<xs:length value="2" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="SHR">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:minLength value="1"/>
-																<xs:maxLength value="50"/>
+																<xs:minLength value="1" />
+																<xs:maxLength value="50" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="SHRDH">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:minLength value="1"/>
-																<xs:maxLength value="20"/>
+																<xs:minLength value="1" />
+																<xs:maxLength value="20" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="JSDZ">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:minLength value="1"/>
-																<xs:maxLength value="50"/>
+																<xs:minLength value="1" />
+																<xs:maxLength value="50" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="BZFP">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:maxLength value="70"/>
+																<xs:maxLength value="70" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
-													<xs:choice>
-														<xs:element name="SJHM"/>
-														<xs:element name="YX"/>
-													</xs:choice>
+													<xs:element name="SJHM" nillable="true" minOccurs="1"/>
+													<xs:element name="YX" nillable="true" minOccurs="1"/>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
@@ -127,7 +129,7 @@
 									<xs:attribute name="LSH">
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
-												<xs:length value="20"/>
+												<xs:length value="20" />
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:attribute>
@@ -145,128 +147,129 @@
 										<xs:element name="FPLX">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:length value="3"/>
+													<xs:length value="3" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="KPLX">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:length value="1"/>
+													<xs:length value="1" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="XSF_NSRSBH">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:minLength value="1"/>
+													<xs:minLength value="1" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="XSF_MC">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:minLength value="1"/>
-													<xs:maxLength value="100"/>
+													<xs:minLength value="1" />
+													<xs:maxLength value="100" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="XSF_DZ">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:minLength value="1"/>
-													<xs:maxLength value="100"/>
+													<xs:minLength value="1" />
+													<xs:maxLength value="100" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="XSF_DH">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:minLength value="1"/>
-													<xs:maxLength value="100"/>
+													<xs:minLength value="1" />
+													<xs:maxLength value="100" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="XSF_YHZH">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:minLength value="1"/>
-													<xs:maxLength value="100"/>
+													<xs:minLength value="1" />
+													<xs:maxLength value="100" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="GMF_NSRSBH">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:maxLength value="20"/>
+													<xs:maxLength value="20" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="GMF_MC">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:minLength value="1"/>
-													<xs:maxLength value="100"/>
+													<xs:minLength value="1" />
+													<xs:maxLength value="100" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
-										<xs:element name="GMF_DZ" type="xs:string"/>
-										<xs:element name="GMF_DH" type="xs:string"/>
-										<xs:element name="GMF_YHZH" type="xs:string"/>
+										<xs:element name="GMF_DZ" type="xs:string" />
+										<xs:element name="GMF_DH" type="xs:string" />
+										<xs:element name="GMF_YHZH" type="xs:string" />
 										<xs:element name="KPR">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:minLength value="1"/>
-													<xs:maxLength value="8"/>
+													<xs:minLength value="1" />
+													<xs:maxLength value="8" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
-										<xs:element name="SKR" type="xs:string"/>
-										<xs:element name="FHR" type="xs:string"/>
-										<xs:element name="YFP_DM" type="xs:string"/>
-										<xs:element name="YFP_HM" type="xs:string"/>
+										<xs:element name="SKR" type="xs:string" />
+										<xs:element name="FHR" type="xs:string" />
+										<xs:element name="YFP_DM" type="xs:string" />
+										<xs:element name="YFP_HM" type="xs:string" />
 										<xs:element name="JSHJ">
 											<xs:simpleType>
 												<xs:restriction base="xs:decimal">
-													<xs:fractionDigits value="2"/>
+													<xs:fractionDigits value="2" />
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
-										<xs:element name="HJJE" type="xs:string"/>
-										<xs:element name="HJSE" type="xs:string"/>
-										<xs:element name="BZ" type="xs:string"/>
+										<xs:element name="HJJE" type="xs:string" />
+										<xs:element name="HJSE" type="xs:string" />
+										<xs:element name="BZ" type="xs:string" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="COMMON_FPKJ_XMXXS">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="COMMON_FPKJ_XMXX" minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="COMMON_FPKJ_XMXX" minOccurs="0"
+											maxOccurs="unbounded">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="FPHXZ" type="xs:string"/>
+													<xs:element name="FPHXZ" type="xs:string" />
 													<xs:element name="XMMC">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:minLength value="1"/>
-																<xs:maxLength value="90"/>
+																<xs:minLength value="1" />
+																<xs:maxLength value="90" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
-													<xs:element name="DW" type="xs:string"/>
-													<xs:element name="GGXH" type="xs:string"/>
-													<xs:element name="XMSL" type="xs:string"/>
-													<xs:element name="XMDJ" type="xs:string"/>
-													<xs:element name="XMJE" type="xs:string"/>
+													<xs:element name="DW" type="xs:string" />
+													<xs:element name="GGXH" type="xs:string" />
+													<xs:element name="XMSL" type="xs:string" />
+													<xs:element name="XMDJ" type="xs:string" />
+													<xs:element name="XMJE" type="xs:string" />
 													<xs:element name="SL">
 														<xs:simpleType>
 															<xs:restriction base="xs:decimal">
-																<xs:fractionDigits value="6"/>
+																<xs:fractionDigits value="6" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
-													<xs:element name="SE" type="xs:string"/>
-													<xs:element name="HSBZ" type="xs:string"/>
+													<xs:element name="SE" type="xs:string" />
+													<xs:element name="HSBZ" type="xs:string" />
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
@@ -280,7 +283,7 @@
 			<xs:attribute name="id">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:minLength value="1"/>
+						<xs:minLength value="1" />
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
