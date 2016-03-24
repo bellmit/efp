@@ -121,7 +121,13 @@
 														</xs:simpleType>
 													</xs:element>
 													<xs:element name="SJHM" nillable="true" minOccurs="1"/>
-													<xs:element name="YX" nillable="true" minOccurs="1"/>
+													<xs:element name="YX" nillable="true" minOccurs="1">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
