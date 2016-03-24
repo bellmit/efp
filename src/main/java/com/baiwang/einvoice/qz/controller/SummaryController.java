@@ -19,14 +19,14 @@ import com.baiwang.einvoice.qz.beans.Series;
 import com.baiwang.einvoice.qz.service.IFpService;
 
 /**
-  * @ClassName: SkQueryController
-  * @Description: 查询Skserver相关信息
+  * @ClassName: SummaryController
+  * @Description: 查询发票统计相关信息
   * @author zhaowei
   * @date 2016年3月17日 上午11:35:14
   */
 @RequestMapping("")
 @Controller
-public class SkQueryController {
+public class SummaryController {
 
 	@Resource
 	private IFpService fpService;
