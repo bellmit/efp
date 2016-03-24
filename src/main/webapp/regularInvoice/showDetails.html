@@ -55,48 +55,29 @@ function initDataGridComponent(){
 				pageList: [10,20,50,100],
 				queryParams: qParams,
 				columns:[[
-				    /*  {field:'zddh',title:'订单号',width:150,editor: {
-				    	 type: 'text'
-	                 }},
-		             {field:'fpqqlsh',title:'发票请求流水号',width:100,editor:'text',hidden:true},
-		             {field:'hym',title:'会员名',width:100,editor:'text'},
-		             {field:'hyid',title:'会员ID',width:100,editor:'text'},
-		             {field:'shr',title:'收货人',width:100,editor:'text'},
-			         {field:'shrdh',title:'收货人电话',width:100,editor:'text'}, 
-		             {field:'sqsj',title:'申请时间',width:100,editor: {type: 'text'}},
-		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
-			         {field:'fpnr',title:'发票内容',width:100,editor:'text'},
-		             {field:'hjje',title:'合计金额',width:100,editor:'text'},
-			         {field:'hjse',title:'合计税额',width:100,editor:'text'},
-		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
-			         {field:'kplx',title:'开票类型',width:100,editor:'text',formatter: formatKplx},
-			         {field:'kprq',title:'开票日期',width:100,editor:'text',formatter: formatKprq},
-		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
-		             {field:'fphm',title:'发票号码',width:100,editor:'text'} */
-		             
-		             /* {field:'id',title:'id',width:100,checkbox:true}, */
-		             {field:'fpqqlsh',title:'发票请求流水号',width:100,editor:'text'},
-				     {field:'zddh',title:'订单号',width:150,editor:'text',formatter: formatArray},
-		             /* {field:'hym',title:'会员名',width:100,editor:'text'}, */
-		             {field:'hyid',title:'学员ID',width:100,editor:'text'},
-		             {field:'fpdq',title:'地区',width:100,editor:'text',formatter:formatfpdq},
-		             {field:'ddsj',title:'订单时间',width:100,editor: 'text',formatter: formatArrayTime },
-		             {field:'fksj',title:'付款时间',width:100,editor: 'text',formatter: formatArrayTime},
-		             {field:'sqsj',title:'发票申请时间',width:100,editor: 'text',formatter: formatArrayTime},
-		             {field:'fptt',title:'发票抬头',width:100,editor:'text'},
-			         {field:'fpnr',title:'发票内容',width:100,editor:'text',formatter: formatArray},
-			         {field:'bzfp',title:'发票备注',width:100,editor:'text',formatter: formatArray},
-			         {field:'kpzl',title:'开票种类',width:100,editor:'text',formatter: formatKplx},
-		             {field:'sqrk',title:'申请入口',width:100,editor:'text',formatter: formatsqrk},
-		             {field:'shr',title:'收货人',width:100,editor:'text'},
-			         {field:'shrdh',title:'收货人电话',width:100,editor:'text'}, 
-			         {field:'jsdz',title:'寄送地址',width:100,editor:'text'}, 
-		             {field:'hjje',title:'合计金额',width:100,editor:'text'},
-			         {field:'hjse',title:'合计税额',width:100,editor:'text'},
-		             {field:'jshj',title:'价税合计',width:100,editor:'text'},
-			         {field:'kprq',title:'开票日期',width:100,editor:'text',formatter: formatKprq2},
-		             {field:'fpdm',title:'发票代码',width:100,editor:'text'},
-		             {field:'fphm',title:'发票号码',width:100,editor:'text'}
+					/* {field:'id',title:'id',width:100,checkbox:true}, */
+					{field:'fpqqlsh',title:'流水号',width:140,editor:'text'},
+					{field:'zddh',title:'订单号',width:100,editor:'text',formatter: formatArray},
+					/* {field:'hym',title:'会员名',width:100,editor:'text'}, */
+					{field:'hyid',title:'学员ID',width:80,editor:'text'},
+					{field:'fpdq',title:'地区',width:40,editor:'text',formatter:formatfpdq},
+					{field:'ddsj',title:'订单时间',width:80,editor: 'text',formatter: formatArrayTime },
+					{field:'fksj',title:'付款时间',width:80,editor: 'text',formatter: formatArrayTime},
+					{field:'sqsj',title:'发票申请时间',width:80,editor: 'text',formatter: formatArrayTime},
+					{field:'fptt',title:'发票抬头',width:100,editor:'text'},
+					{field:'fpnr',title:'发票内容',width:100,editor:'text',formatter: formatArray},
+					{field:'bzfp',title:'发票备注',width:100,editor:'text',formatter: formatArray},
+					{field:'kpzl',title:'开票种类',width:60,editor:'text',formatter: formatKplx},
+					{field:'sqrk',title:'申请入口',width:50,editor:'text',formatter: formatsqrk},
+					{field:'shr',title:'收货人',width:50,editor:'text'},
+					{field:'shrdh',title:'收货人电话',width:100,editor:'text'}, 
+					{field:'jsdz',title:'寄送地址',width:100,editor:'text'}, 
+					{field:'jshj',title:'价税合计',width:50,editor:'text'},
+					{field:'hjje',title:'合计金额',width:50,editor:'text'},
+					{field:'hjse',title:'合计税额',width:50,editor:'text'},
+					{field:'kprq',title:'开票日期',width:80,editor:'text' ,formatter: formatKprq2 },
+					{field:'fpdm',title:'发票代码',width:100,editor:'text'},
+					{field:'fphm',title:'发票号码',width:100,editor:'text'}		             
 				]],
 				onClickRow:function(index){	
 					

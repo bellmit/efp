@@ -44,7 +44,8 @@ public class PrintPpServiceImpl implements IPrintPpService {
 			String fplx, int requestPage, int pageSize, String xsfnsrsbh) {
 		/*beginDate = beginDate.replaceAll("-", "");
 		endDate = endDate.replaceAll("-", "");*/
-		return dao.queryCount(beginDate, endDate, hyid, fphm, zddh, shrdh, fplx, requestPage, pageSize, xsfnsrsbh).size();
+		List<Integer> queryCount = dao.queryCount(beginDate, endDate, hyid, fphm, zddh, shrdh, fplx, requestPage, pageSize, xsfnsrsbh);
+		return queryCount==null ? 0 :queryCount.size();
 	}
 
 	@Override
@@ -136,8 +137,8 @@ public class PrintPpServiceImpl implements IPrintPpService {
 
 	@Override
 	public int queryDetailCount(String begin, String end, String fplx, String xsfnsrsbh) {
-		
-		return dao.queryDetailCount(begin, end, fplx, xsfnsrsbh);
+		List<Integer> queryDetailCount = dao.queryDetailCount(begin, end, fplx, xsfnsrsbh);
+		return queryDetailCount == null ? 0: queryDetailCount.size();
 	}
 	
 	@Override
