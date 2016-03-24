@@ -365,10 +365,10 @@
   	ON  a.fpqqlsh = c.fpqqlsh
 	WHERE a.fpzt = '1' and a.fplx = '007'  and a.xsfnsrsbh = #{nsrsbh} 
     <if test="beginDate != null and beginDate != ''" >
-     <![CDATA[and b.ddsj >= #{beginDate} ]]>
+     <![CDATA[and DATE_FORMAT(b.ddsj,'%Y-%m-%d') >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate != ''" >
-     <![CDATA[and b.ddsj <= #{endDate} ]]>
+     <![CDATA[and DATE_FORMAT(b.ddsj,'%Y-%m-%d') <= #{endDate} ]]>
     </if>
     <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )
@@ -394,10 +394,10 @@
   	ON  a.fpqqlsh = c.fpqqlsh
 	WHERE a.fpzt = '1' and a.fplx = '004'  and a.xsfnsrsbh = #{nsrsbh} 
     <if test="beginDate != null and beginDate != ''" >
-     <![CDATA[and b.ddsj >= #{beginDate} ]]>
+     <![CDATA[and DATE_FORMAT(b.ddsj,'%Y-%m-%d') >= #{beginDate} ]]>
     </if>
     <if test="endDate != null and endDate != ''" >
-     <![CDATA[and b.ddsj <= #{endDate} ]]>
+     <![CDATA[and DATE_FORMAT(b.ddsj,'%Y-%m-%d') <= #{endDate} ]]>
     </if>
     <if test="zddh != null and zddh != ''" >
      and b.zddh like CONCAT('%',#{zddh },'%' )

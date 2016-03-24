@@ -64,11 +64,25 @@
     from kpxx
     where fpqqlsh = #{fpqqlsh,jdbcType=VARCHAR}
   </select>
-  <select id="queryInvoiceNum" resultType="java.lang.Integer" parameterType="java.lang.String">
-  		select COUNT(1) FROM kpxx a
-		WHERE a.fpzt = #{fpzt,jdbcType=VARCHAR}
-		GROUP BY a.fplx,a.fpzt ORDER BY a.fplx ,a.fpzt
-  </select>
+  <select id="queryInvoiceNum" resultType="java.lang.Integer"
+	parameterType="java.lang.String">
+	select
+	count(t3.fplx) as  num
+	from
+	(select fplx
+	from kpxx
+	group by fplx) t1
+	inner join (
+	select fpzt
+	from kpxx
+	group by fpzt
+	) t2 on 1=1
+	left join kpxx t3
+	on t1.fplx=t3.fplx
+	and t2.fpzt=t3.fpzt
+	where t2.fpzt =#{fpzt,jdbcType=VARCHAR}
+	group by t1.fplx, t2.fpzt
+</select>
   <select id="selectByDdhm" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
