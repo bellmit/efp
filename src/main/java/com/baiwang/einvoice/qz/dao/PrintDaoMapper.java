@@ -21,7 +21,7 @@ public interface PrintDaoMapper {
 	List<Map<String, String>> showDetail(@Param("begin")String begin, @Param("end")String end, @Param("fplx")String fplx,
 			@Param("requestPage")int requestPage, @Param("pageSize")int pageSize, @Param("xsfnsrsbh")String xsfnsrsbh);
 
-	int queryDetailCount(@Param("begin")String begin, @Param("end")String end, @Param("fplx")String fplx, @Param("xsfnsrsbh")String xsfnsrsbh);
+	List<Integer> queryDetailCount(@Param("begin")String begin, @Param("end")String end, @Param("fplx")String fplx, @Param("xsfnsrsbh")String xsfnsrsbh);
 	
 	int savePrintResult(@Param("fpqqlsh")String fpqqlsh, @Param("fpzt")String fpzt);
 
