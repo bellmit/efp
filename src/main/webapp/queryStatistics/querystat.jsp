@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui.css"/>
 <script type="text/javascript" src="<%=basePath %>/js/jquery/easyui-lang-zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=basePath %>/css/easyui_global.css"/>
-
+<script type="text/javascript" src="../js/format.js"></script>
 <script type="text/javascript">
 function exportData(){
 	var row = datagrid.datagrid('getChecked');
@@ -109,7 +109,7 @@ function initDataGridComponent(){
 		             {field:'ttlx',title:'抬头类型',width:100,editor:'text',formatter:formatTtlx},
 			         {field:'gfmc',title:'购方名称',width:100,editor:'text'},
 		             {field:'fpnr',title:'发票内容',width:100,editor:'text'},
-			         {field:'bz',title:'发票备注',width:100,editor:'text'},
+			         {field:'bz',title:'发票备注',width:100,editor:'text',formatter: formatArray},
 		             {field:'bszt',title:'报送状态',width:100,editor:'text'},
 			         {field:'fpzt',title:'发票状态',width:100,editor:'text',formatter:formatFpzt1},
 			         {field:'hjje',title:'合计金额',width:100,editor:'text'},

@@ -94,7 +94,7 @@
   </select>
   <select id="getFpStatListByCondition" parameterType="java.util.Map" resultType="com.baiwang.einvoice.qz.beans.ReportTotal">
   	select 
-  	o.fpqqlsh,o.fpdq,o.fpkhlx as fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,o.fpttlx as ttlx,k.gmfmc as gfmc,f.xmmc as fpnr,o.bzfp as bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd
+  	o.fpqqlsh,o.fpdq,o.fpkhlx as fpkh,k.kprq,k.fplx as fpzl,k.fpdm,k.fphm,o.fpttlx as ttlx,k.gmfmc as gfmc,f.xmmc as fpnr,GROUP_CONCAT(o.bzfp) as bz,k.hjje,k.hjse,k.jshj,k.fpzt as fpjd
     from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt in('3','-2')  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
@@ -114,13 +114,15 @@
     <if test="fphm4q != null and fphm4q !=''">
 	   and k.fphm = #{fphm4q,jdbcType=VARCHAR} 
     </if>
+    GROUP BY k.fpqqlsh
     ORDER BY k.kprq DESC
     <if test="startRow != null and rows !=null">
     LIMIT #{startRow},#{rows}
     </if>
   </select>
   <select id="getFpCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
-	select count(*)
+	SELECT COUNT(1) from (
+	select k.fpqqlsh
     from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh where k.fpzt = '3' and k.hjje>0
 	<if test="fplx != null and fplx != '' " >
       and k.fplx = #{fplx}
@@ -146,9 +148,13 @@
     <if test="fphm4q != null and fphm4q !=''">
 	   and k.fphm = #{fphm4q,jdbcType=VARCHAR} 
     </if>
+    GROUP BY k.fpqqlsh
+	) aa
   </select>
   <select id="getFpStatCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-  	select count(*) from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt in('3','-2')  
+  	SELECT COUNT(1) from (
+	select k.fpqqlsh
+  	from kpxx k LEFT JOIN order_detail o ON o.fpqqlsh=k.fpqqlsh LEFT JOIN fpmx f ON k.fpqqlsh=f.fpqqlsh  where k.fpzt in('3','-2')  
 	<if test="nsrsbh != null and nsrsbh != '' " >
       and k.xsfnsrsbh = #{nsrsbh}
     </if>
@@ -167,6 +173,8 @@
     <if test="fphm4q != null and fphm4q !=''">
 	   and k.fphm = #{fphm4q,jdbcType=VARCHAR} 
     </if>
+    GROUP BY k.fpqqlsh
+	) aa
   </select>
   
 </mapper>
