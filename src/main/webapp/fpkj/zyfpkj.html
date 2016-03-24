@@ -23,10 +23,10 @@
 			<div class="" style="line-height: 30px;">
 				<label>申请开票日期起：</label>
 				<input type="text" class="form-control" id="beginDate" name="beginDate" placeholder="开始时间" value=""
-	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
+	         	onfocus="var endDate=$dp.$('endDate');WdatePicker({dateFmt:'yyyy-MM-dd 00:00:00',readOnly:true,onpicked:function(){endDate.focus();},maxDate:'#F{$dp.$D(\'endDate\')}'})">
 	         	<label>申请开票日期止：</label>
 	         	<input type="text" class="form-control" id="endDate" name="endDate" placeholder="结束时间" value=""
-	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
+	         	onfocus="WdatePicker({dateFmt:'yyyy-MM-dd 24:00:00',readOnly:true,minDate:'#F{$dp.$D(\'beginDate\')}'})">
 	         	
 				<label>订单号:</label>
 				<input type="text" id="zddh" name="zddh" placeholder="主订单号"/>
@@ -34,7 +34,7 @@
 				<label>学员ID:</label>
 				<input type="text" id="hyid" name="hyid" placeholder="学员编号"/>
 				<label>收货人电话:</label>
-				<input type="text" id="shrdh" name="shrdh" placeholder="学员编号"/>		
+				<input type="text" id="shrdh" name="shrdh" placeholder="收货人电话"/>		
 				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="searchZpList();" plain="true">查找</a>
 				<!-- <input id="setParameter" type="button" value="设置环境变量" onclick="SetParameter()"> -->
 			</div>
