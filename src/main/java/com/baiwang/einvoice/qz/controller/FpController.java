@@ -315,8 +315,7 @@ public class FpController {
 				fp.setFpqqlsh(newLshao);
 			}
 			fpService.insertFp(kpxx_ch, fpmxList_ch);
-			
-			System.out.println("发票代码："+fpdm+"；新发票号码"+fphm);
+			logger.info("发票冲红-新票写入数据库：新发票代码："+fpdm+"；新发票号码"+fphm);
 			Map<String, Object> result = new HashMap<>();
 			result.put("status", "success");
 			return result;
